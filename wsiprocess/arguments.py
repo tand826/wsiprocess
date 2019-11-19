@@ -5,19 +5,20 @@ from pathlib import Path
 class Args:
     def __init__(self):
         self.get_args()
-        self.add_args()
 
     def get_args(self):
         parser = argparse.ArgumentParser()
         parser.add_argument("wsi", type=Path,
                             help="Path to the target wsi.")
         parser.add_argument("method", type=str,
-                            choices={"none", "classification", "object_detection", "segmentation"},
+                            choices={"none", "classification", "detection", "segmentation"},
                             help="Method to use.")
         parser.add_argument("-os", "--one_shot", action="store_true",
                             help="[For object_detection] One annotation extracted only once.")
         parser.add_argument("-wa", "--patch_without_annotation", action="store_true",
-                            help="[For object_detection] Extract patches without annotations")
+                            help="Extract patches without annotations")
+        parser.add_argument("-od", "--output_dir", type=Path,
+                            help="Where to save the data.")
         parser.add_argument("-an", "--annotation", type=Path,
                             help="Path to the annotation xml file.")
         parser.add_argument("-of", "--only_foreground", action="store_true",
@@ -41,7 +42,7 @@ class Args:
         parser.add_argument("-ma", "--magnification", choices={40, 20, 10},
                             default=40, type=int,
                             help="Magnification to process.")
-        parser.add_argument("-ie", "--include_exclude_classes", type=Path,
+        parser.add_argument("-ie", "--inclusion_relationship", type=Path,
                             help="File to define the inclusion relationship.")
 
         args = parser.parse_args()

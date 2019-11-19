@@ -1,10 +1,20 @@
 from slide import Slide
 from mask import Mask
 from annotation import Annotation
-from classes import Classes
+from inclusion import Inclusion
 
 
 def slideread(path):
+    """[summary]
+
+    [description]
+
+    Arguments:
+        path {pathlib.PosixPath} -- Path to the wsi data.
+
+    Returns:
+        [slide.Slide] -- Slide object with the wsi info.
+    """
     return Slide(path)
 
 
@@ -36,14 +46,105 @@ def annotationwrite(save_as, annotation):
     pass
 
 
-def classesread(path):
-    return Classes(path)
+def inclusionread(path):
+    return Inclusion(path)
 
 
-def classeswrite(save_as, classes):
+def inclusionwrite(save_as, inclusion):
     pass
 
 
 if __name__ == '__main__':
     # Test codes
     from arguments import Args
+
+    def run():
+        args = Args()
+        slide = Slide(args.wsi)
+        wsi_width, wsi_height = slide.slide.dimensions
+
+        if args.method == "none":
+
+            if args.annotation:
+                annot = Annotation(args.annotation)
+
+                if args.inclusion_relationship:
+                    inclusion = Inclusion(args.inclusion_relationship)
+                    annot.to_mask(wsi_height, wsi_width, inclusion)
+                else:
+                    annot.to_mask(wsi_height, wsi_width)
+                slide.to_patch(args.method, args.patch_width, args.overlap_width,
+                               annot, args.patch_without_annotation,
+                               args.only_foreground, args.patch_on_annotated,
+                               args.start_sample, args.finished_sample,
+                               args.extract_patches, args.magnification)
+
+            else:
+                slide.to_patch(args.method, args.patch_width, args.overlap_width,
+                               args.only_foreground,
+                               args.start_sample, args.finished_sample,
+                               args.extract_patches, args.magnification)
+
+        elif args.method == "classification":
+
+            if args.annotation:
+                annot = Annotation(args.annotation)
+
+                if args.inclusion_relationship:
+                    inclusion = Inclusion(args.inclusion_relationship)
+                    annot.to_mask(wsi_height, wsi_width, inclusion)
+                else:
+                    annot.to_mask(wsi_height, wsi_width)
+                slide.to_patch(args.method, args.patch_width, args.overlap_width,
+                               annot, args.patch_without_annotation,
+                               args.only_foreground, args.patch_on_annotated,
+                               args.start_sample, args.finished_sample,
+                               args.extract_patches, args.magnification)
+            else:
+                slide.to_patch(args.method, args.patch_width, args.overlap_width,
+                               args.only_foreground,
+                               args.start_sample, args.finished_sample,
+                               args.extract_patches, args.magnification)
+
+        elif args.method == "detection":
+
+            if args.annotation:
+                annot = Annotation(args.annotation)
+
+                if args.inclusion_relationship:
+                    inclusion = Inclusion(args.inclusion_relationship)
+                    annot.to_mask(wsi_height, wsi_width, inclusion)
+                else:
+                    annot.to_mask(wsi_height, wsi_width)
+                slide.to_patch(args.method, args.patch_width, args.overlap_width,
+                               annot, args.one_shot, args.patch_without_annotation,
+                               args.only_foreground, args.patch_on_annotated,
+                               args.start_sample, args.finished_sample,
+                               args.extract_patches, args.magnification)
+            else:
+                slide.to_patch(args.method, args.patch_width, args.overlap_width,
+                               args.only_foreground,
+                               args.start_sample, args.finished_sample,
+                               args.extract_patches, args.magnification)
+
+        elif args.method == "segmentation":
+
+            if args.annotation:
+                annot = Annotation(args.annotation)
+
+                if args.inclusion_relationship:
+                    inclusion = Inclusion(args.inclusion_relationship)
+                    annot.to_mask(wsi_height, wsi_width, inclusion)
+                else:
+                    annot.to_mask(wsi_height, wsi_width)
+                slide.to_patch(args.method, args.patch_width, args.overlap_width,
+                               annot, args.patch_without_annotation,
+                               args.only_foreground, args.patch_on_annotated,
+                               args.start_sample, args.finished_sample,
+                               args.extract_patches, args.magnification)
+
+            else:
+                slide.to_patch(args.method, args.patch_width, args.overlap_width,
+                               args.only_foreground,
+                               args.start_sample, args.finished_sample,
+                               args.extract_patches, args.magnification)
