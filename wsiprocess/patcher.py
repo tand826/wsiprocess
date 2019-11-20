@@ -30,20 +30,20 @@ class Patcher:
         patch = self.slide.crop(x, y, self.p_width, self.p_height)
         patch.pngsave("{}/{}/patches/{}/{:06}_{:06}.png".format(self.output_dir, self.filename, cls, x, y))
 
-    def get_parallel(self, cores=-1):
+    def get_parallel(self, cls, cores=-1):
         parallel = Parallel(n_jobs=cores, backend="threading")
 
         # from the left top to just before the right bottom.
-        parallel([delayed(self.get_patch)(x, y) for x, y in self.iterator])
+        parallel([delayed(self.get_patch)(cls, x, y) for x, y in self.iterator])
 
         # the bottom edge.
-        parallel([delayed(self.get_patch)(x, self.last_y) for x in self.x_lefttop])
+        parallel([delayed(self.get_patch)(cls, x, self.last_y) for x in self.x_lefttop])
 
         # the right edge
-        parallel([delayed(self.get_patch)(self.last_x, y) for y in self.y_lefttop])
+        parallel([delayed(self.get_patch)(cls, self.last_x, y) for y in self.y_lefttop])
 
         # right bottom patch
-        self.get_patch(self.last_x, self.last_y)
+        self.get_patch(cls, self.last_x, self.last_y)
 
     def is_foreground(self, x, y):
         patch_mask = self.annotation.masks["foreground"][x:x+self.p_width, y:y+self.p_height]

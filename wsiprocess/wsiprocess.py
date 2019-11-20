@@ -81,7 +81,8 @@ if __name__ == '__main__':
                                   args.on_foreground, args.on_annotation,
                                   args.start_sample, args.finished_sample,
                                   args.extract_patches, args.output_dir)
-                patcher.get_patch_parallel(12)
+                for cls in annot.clses:
+                    patcher.get_patch_parallel(cls, 12)
 
             else:
                 slide.to_patch(args.method, args.patch_width, args.overlap_width,
