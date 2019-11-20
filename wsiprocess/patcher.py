@@ -1,6 +1,7 @@
 import random
 from joblib import Parallel, delayed
 from itertools import product
+import csv
 
 
 class Patcher:
@@ -26,9 +27,25 @@ class Patcher:
 
         self.output_dir = output_dir
 
+        self.on_foreground = on_foreground
+        self.on_annotation = on_annotation
+        self.start_sample = start_sample
+        self.finished_sample = finished_sample
+        self.extract_patches = extract_patches
+
+        self.result = []
+
     def get_patch(self, cls, x, y):
         patch = self.slide.crop(x, y, self.p_width, self.p_height)
-        patch.pngsave("{}/{}/patches/{}/{:06}_{:06}.png".format(self.output_dir, self.filename, cls, x, y))
+        if self.on_foreground:
+            if not self.is_on_foreground(x, y):
+                return
+        if self.on_annotation:
+            if not self.is_on_annotation(cls, x, y):
+                return
+        self.result.append([x, y, self.p_width, self.p_height, cls])
+        if self.extract_patches:
+            patch.pngsave("{}/{}/patches/{}/{:06}_{:06}.png".format(self.output_dir, self.filename, cls, x, y))
 
     def get_parallel(self, cls, cores=-1):
         parallel = Parallel(n_jobs=cores, backend="threading")
@@ -45,11 +62,16 @@ class Patcher:
         # right bottom patch
         self.get_patch(cls, self.last_x, self.last_y)
 
-    def is_foreground(self, x, y):
+        # save results
+        with open("{}/{}/{}.csv".format(self.output_dir, self.filename, self.filename), "w") as f:
+            writer = csv.writer(f)
+            writer.rows(self.result)
+
+    def is_on_foreground(self, x, y):
         patch_mask = self.annotation.masks["foreground"][x:x+self.p_width, y:y+self.p_height]
         return (patch_mask.sum() / self.p_area) > self.on_foreground
 
-    def is_annotated(self, cls, x, y):
+    def is_on_annotation(self, cls, x, y):
         patch_mask = self.annotation.masks[cls][x:x+self.p_width, y:y+self.p_height]
         return (patch_mask.sum() / self.p_area) > self.on_annotation
 

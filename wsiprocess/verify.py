@@ -21,9 +21,3 @@ def verify_magnification(slide, magnification):
     basemsg = "Magnification for this slide has to be smaller than"
     msg = "{} {}".format(basemsg, slide.slide.magnification)
     assert slide.slide.magnification < magnification, msg
-
-
-def verify_patch_size(method, patch_height, patch_width, overlap_height, overlap_width):
-    if not method == "object_detection":
-        assert patch_height == patch_width, "Height and width have to be same for {}.".format(method)
-        assert overlap_height == overlap_width, "Height and width have to be same for {}.".format(method)
