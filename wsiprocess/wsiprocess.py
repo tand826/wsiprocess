@@ -1,4 +1,5 @@
 from slide import Slide
+from patcher import Patcher
 from mask import Mask
 from annotation import Annotation
 from inclusion import Inclusion
@@ -61,7 +62,8 @@ if __name__ == '__main__':
     def run():
         args = Args()
         slide = Slide(args.wsi)
-        wsi_width, wsi_height = slide.slide.dimensions
+        wsi_width = slide.wsi_width
+        wsi_height = slide.wsi_height
 
         if args.method == "none":
 
@@ -73,11 +75,13 @@ if __name__ == '__main__':
                     annot.to_mask(wsi_height, wsi_width, inclusion)
                 else:
                     annot.to_mask(wsi_height, wsi_width)
-                slide.to_patch(args.method, args.patch_width, args.overlap_width,
-                               annot, args.patch_without_annotation,
-                               args.only_foreground, args.patch_on_annotated,
-                               args.start_sample, args.finished_sample,
-                               args.extract_patches, args.magnification)
+                patcher = Patcher(slide, args.method, args.patch_width,
+                                  args.patch_height, args.overlap_width,
+                                  args.overlap_height, annot,
+                                  args.on_foreground, args.on_annotation,
+                                  args.start_sample, args.finished_sample,
+                                  args.extract_patches, args.output_dir)
+                patcher.get_patch_parallel(12)
 
             else:
                 slide.to_patch(args.method, args.patch_width, args.overlap_width,

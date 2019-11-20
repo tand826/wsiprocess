@@ -35,7 +35,7 @@ class Annotation:
                 x = np.float(coord.attrib["X"])
                 y = np.float(coord.attrib["Y"])
                 contour.append([[x, y]])
-            contour = contour.astype(np.int32)
+            contour = np.concatenate(contour).astype(np.int32)
             self.masks[cls] = cv2.drawContours(self.masks[cls], [contour], 0, True, thickness=cv2.FILLED)
 
     def exclude_mask(self, inclusion):
@@ -48,20 +48,21 @@ class Annotation:
         self.masks = self.masks_exclude
 
     def foreground_mask(self, slide, args, size=2000, save_as=False):
-        thumb = slide.slide.get_thumbnail((size, size))
-        thumb = np.array(thumb.convert("L"))
-        _, th = cv2.threshold(thumb, 0, 1, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-        wsi_width, wsi_height = slide.slide.dimensions
-        scale = max(size / wsi_width, size / wsi_height)
-        self.foreground = cv2.resize(th, dsize=None, fx=scale, fy=scale)
+        thumb = slide.slide.thumbnail_image(size, height=size)
+        thumb = np.array(buffer=thumb.write_to_memory(), dtype=np.uint8, shape=[thumb.height, thumb.width, thumb.bands])
+        thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
+        _, th = cv2.threshold(thumb_gray, 0, 1, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+        scale = max(size / slide.wsi_width, size / slide.wsi_height)
+        self.masks["foreground"] = cv2.resize(th, dsize=None, fx=scale, fy=scale)
         if save_as:
-            cv2.imwrite(str(args.output_dir/"masks"/"{}_fg.png".format(args.wsi.stem)), self.foreground, (cv2.IMWRITE_PXM_BINARY, 1))
+            cv2.imwrite(str(args.output_dir/"masks"/"{}_fg.png".format(args.wsi.stem)), self.masks["foreground"], (cv2.IMWRITE_PXM_BINARY, 1))
 
     def export_mask_thumb(self, args, size=512):
         for cls, mask in self.masks.items():
             height, width = mask.shape
             scale = max(size / height, size / width)
-            mask_scaled = cv2.resize(mask, dsize=None, fx=scale, fy=scale)
+            mask_resized = cv2.resize(mask, dsize=None, fx=scale, fy=scale)
+            mask_scaled = mask_resized * 255
             cv2.imwrite(str(args.output_dir/"masks"/"{}_thumb.png".format(cls)), mask_scaled)
 
     def export_mask(self, args):

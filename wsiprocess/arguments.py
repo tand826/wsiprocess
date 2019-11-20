@@ -21,13 +21,13 @@ class Args:
                             help="Where to save the data.")
         parser.add_argument("-an", "--annotation", type=Path,
                             help="Path to the annotation xml file.")
-        parser.add_argument("-of", "--only_foreground", action="store_true",
-                            help="Crop the patches only from the foreground.")
-        parser.add_argument("-pa", "--patch_on_annotated", type=float, default=1.,
+        parser.add_argument("-of", "--on_foreground", type=float, default=1.,
+                            help="The ratio of overlapped area of a patch and the foreground area.")
+        parser.add_argument("-pa", "--on_annotation", type=float, default=1.,
                             help="The ratio of overlapped area of a patch and the annotated area.")
-        parser.add_argument("-pw", "--patch_width", type=int, default=254,
+        parser.add_argument("-pw", "--patch_width", type=int, default=256,
                             help="Width of patches.")
-        parser.add_argument("-ph", "--patch_height", type=int, default=254,
+        parser.add_argument("-ph", "--patch_height", type=int, default=256,
                             help="Height of patches.")
         parser.add_argument("-ow", "--overlap_width", type=int, default=1,
                             help="Width of the overlapped area of patches.")
