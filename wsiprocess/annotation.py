@@ -1,6 +1,7 @@
 from lxml import etree
 import cv2
 import numpy as np
+from pathlib import Path
 
 
 class Annotation:
@@ -16,8 +17,8 @@ class Annotation:
         self.clses = [grp.attrib["Name"] for grp in self.annot_grps]
         assert len(self.annots) > 0, "No annotations found."
 
-    def to_mask(self, wsi_height, wsi_width, inclusion=False):
-        self.base_mask(self, wsi_height, wsi_width)
+    def to_mask(self, slide, inclusion=False):
+        self.base_mask(self, slide.wsi_height, slide.wsi_width)
         self.main_mask(self)
         if inclusion:
             self.exclude_mask(self, inclusion)
@@ -47,7 +48,7 @@ class Annotation:
                     self.masks_exclude[cls] = cv2.bitwise_xor(self.masks[cls], overlap_area)
         self.masks = self.masks_exclude
 
-    def foreground_mask(self, slide, args, size=2000, save_as=False):
+    def foreground_mask(self, slide, output_dir, size=2000, save_as=False):
         thumb = slide.slide.thumbnail_image(size, height=size)
         thumb = np.array(buffer=thumb.write_to_memory(), dtype=np.uint8, shape=[thumb.height, thumb.width, thumb.bands])
         thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
@@ -55,16 +56,16 @@ class Annotation:
         scale = max(size / slide.wsi_width, size / slide.wsi_height)
         self.masks["foreground"] = cv2.resize(th, dsize=None, fx=scale, fy=scale)
         if save_as:
-            cv2.imwrite(str(args.output_dir/"masks"/"{}_fg.png".format(args.wsi.stem)), self.masks["foreground"], (cv2.IMWRITE_PXM_BINARY, 1))
+            cv2.imwrite(str(Path(output_dir)/"masks"/"{}_fg.png".format(slide.filename)), self.masks["foreground"], (cv2.IMWRITE_PXM_BINARY, 1))
 
-    def export_mask_thumb(self, args, size=512):
+    def export_mask_thumb(self, output_dir, size=512):
         for cls, mask in self.masks.items():
             height, width = mask.shape
             scale = max(size / height, size / width)
             mask_resized = cv2.resize(mask, dsize=None, fx=scale, fy=scale)
             mask_scaled = mask_resized * 255
-            cv2.imwrite(str(args.output_dir/"masks"/"{}_thumb.png".format(cls)), mask_scaled)
+            cv2.imwrite(str(Path(output_dir)/"masks"/"{}_thumb.png".format(cls)), mask_scaled)
 
-    def export_mask(self, args):
+    def export_mask(self, output_dir):
         for cls, mask in self.masks.items():
-            cv2.imwrite(str(args.output_dir/"masks"/"{}.png".format(cls)), mask, (cv2.IMWRITE_PXM_BINARY, 1))
+            cv2.imwrite(str(Path(output_dir)/"masks"/"{}.png".format(cls)), mask, (cv2.IMWRITE_PXM_BINARY, 1))

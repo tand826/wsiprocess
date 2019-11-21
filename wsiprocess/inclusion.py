@@ -6,7 +6,9 @@ class Inclusion:
         self.readinclusion()
 
     def read_inclusion(self):
-        # {"malignant", ["benign", "stroma", "vessel"]}
+        # One line like -> {"malignant", ["benign", "stroma", "vessel"]}
+        # becomes {"malignant", ["benign", "stroma", "vessel"]} of python dict.
+        # It means the mask excludes "benign, stroma, vessel from malignant".
         self.inclusion = {}
         for line in self.inclusion_file:
             line_ = line.strip().split(" ")

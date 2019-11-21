@@ -6,7 +6,7 @@ import csv
 
 class Patcher:
 
-    def __init__(self, slide, method, annotation, output_dir=".", patch_width=256, patch_height=256,
+    def __init__(self, slide, method, annotation=False, output_dir=".", patch_width=256, patch_height=256,
                  overlap_width=1, overlap_height=1, on_foreground=1., on_annotation=1.,
                  start_sample=True, finished_sample=True, extract_patches=True):
         self.slide = slide

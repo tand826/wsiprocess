@@ -10,6 +10,7 @@ class Slide:
         self.filename = Path(path).stem
         self.wsi_width = self.slide.width
         self.wsi_height = self.slide.height
+        self.set_properties()
 
     def export_thumbnail(self, save_to, size=500):
         thumb = self.get_thumbnail(size)
@@ -18,8 +19,6 @@ class Slide:
     def get_thumbnail(self, size=500):
         return self.slide.slide.thumbnail_image(size, height=size)
 
-    def properties(self):
-        properties = {}
+    def set_properties(self):
         for field in self.slide.get_fields():
-            properties[field] = self.slide.get(field)
-        return properties
+            setattr(self, field, self.slide.get(field))
