@@ -1,5 +1,69 @@
 # wsiprocess
-Open Source WSI Processing Library
+Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
+
+# What can wsiprocess do?
+1. Just make tiles from WSIs without the annotation data.
+2. Extract patches from WSIs within the annotated area.
+	- Classification: Patch + CSV
+	- Object Detection: Patch + CSV
+	- Segmentation: Patch + Mask
+
+# Installation
+1. Install [libvips](https://libvips.github.io/libvips/)
+	- MacOS
+		- `brew install vips`
+	- Linux
+		- `apt install libvips`
+	- Windows
+		- Install tarball from [here](https://github.com/libvips/build-win64)
+
+2. [For magnification utility] Install [openslide](https://openslide.org/)
+	- MacOS
+		- `brew install openslide`
+	- Linux
+		- `apt install libvips  # automatically instaled`
+	- Windows
+		- Download the precompiled binary from [here](https://openslide.org/download/#windows-binaries)
+
+3. Install wsiprocess
+	- `pip install wsiprocess`
+
+# Example
+
+### Basic usage
+
+```python
+import wsiprocess as wp
+slide = wp.Slide("xxx.tiff")
+annotation = wp.Annotation("xxx.xml")
+inclusion = wp.Inclusion("xxx.txt")
+
+annotation.to_mask(slide, inclusion)
+
+patcher = wp.Patcher(slide, "classification", annotation)
+patcher.get_patch_parallel("benign")
+```
+
+### Export annotaton xml of one class as mask image
+
+```python
+import wsiprocess as wp
+slide = wp.Slide("xxx.tiff")
+annotation = wp.Annotation("xxx.xml")
+annotation.make_mask(slide)
+annotation.export_mask("xxx/masks", "benign")
+```
+
+### Export annotation xml with inclusion definition as mask images, and save their thumbs
+
+```python
+import wsiprocess as wp
+slide = wp.Slide("xxx.tiff")
+annotation = wp.Annotation("xxx.xml")
+inclusion = wp.Inclusion("xxx.txt")
+annotation.make_masks(slide, inclusion)
+annotation.export_thumb_masks("xxx/masks")
+```
 
 # Flow
 0. Options(for all)
@@ -48,42 +112,3 @@ Open Source WSI Processing Library
 				+ (left, top, right, bottom), ((coordx1, coordy1), (coordx2, coordy2),..., class), ... per patch
 			+ xxx/left_top_right_bottom.png
 			+ xxx.cls
-
-# Example
-
-### Basic usage
-
-```python
-import wsiprocess as wp
-slide = wp.Slide(path_slide)
-annotation = wp.Annotation(path_annotation)
-inclusion = wp.Inclusion(path_inclusion)
-
-annotation.to_mask(slide, inclusion)
-
-patcher = wp.Patcher(slide, method, annotation, output_dir, patch_width, patch_height,
-                     overlap_width, overlap_height, on_foreground, on_annotation,
-                     start_sample, finished_sample, extract_patches)
-patcher.get_patch_parallel(cls, 12)
-```
-
-### Export annotaton xml of one class as mask image
-
-```python
-import wsiprocess as wp
-slide = wp.Slide(path_slide)
-annotation = wp.Annotation(path_annotation)
-annotation.make_mask(slide)
-annotation.export_mask(save_to, cls)
-```
-
-### Export annotation xml with inclusion definition as mask images, and save their thumbs
-
-```python
-import wsiprocess as wp
-slide = wp.Slide(path_slide)
-annotation = wp.Annotation(path_annotation)
-inclusion = wp.Inclusion(path_inclusion)
-annotation.make_masks(slide, inclusion)
-annotation.export_thumb_masks(save_to)
-```

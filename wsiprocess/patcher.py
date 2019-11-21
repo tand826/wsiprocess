@@ -3,7 +3,7 @@ from joblib import Parallel, delayed
 from itertools import product
 import csv
 
-from verify import Verify
+from .verify import Verify
 
 
 class Patcher:
