@@ -54,18 +54,21 @@ class Annotation:
         thumb = slide.slide.thumbnail_image(size, height=size)
         thumb = np.ndarray(buffer=thumb.write_to_memory(), dtype=np.uint8, shape=[thumb.height, thumb.width, thumb.bands])
         thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
-        _, th = cv2.threshold(thumb_gray, 0, 1, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-        scale = max(size / slide.wsi_width, size / slide.wsi_height)
-        self.masks["foreground"] = ~cv2.resize(th, dsize=None, fx=scale, fy=scale)
+        _, th = cv2.threshold(thumb_gray, 0, 1, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
+        self.masks["foreground"] = cv2.resize(th, (slide.width, slide.height))
         self.classes.append("foreground")
 
-    def export_thumb_mask(self, save_to, size=512):
-        for cls, mask in self.masks.items():
-            height, width = mask.shape
-            scale = max(size / height, size / width)
-            mask_resized = cv2.resize(mask, dsize=None, fx=scale, fy=scale)
-            mask_scaled = mask_resized * 255
-            cv2.imwrite(str(Path(save_to)/"{}_thumb.png".format(cls)), mask_scaled)
+    def export_thumb_masks(self, save_to, size=512):
+        for cls in self.masks.keys():
+            self.export_thumb_mask(cls, save_to, size)
+
+    def export_thumb_mask(self, cls, save_to, size=512):
+        mask = self.masks[cls]
+        height, width = mask.shape
+        scale = max(size / height, size / width)
+        mask_resized = cv2.resize(mask, dsize=None, fx=scale, fy=scale)
+        mask_scaled = mask_resized * 255
+        cv2.imwrite(str(Path(save_to)/"{}_thumb.png".format(cls)), mask_scaled)
 
     def export_masks(self, save_to):
         for cls in self.masks.keys():

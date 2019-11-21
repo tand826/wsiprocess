@@ -3,7 +3,7 @@ from joblib import Parallel, delayed
 from itertools import product
 import csv
 
-from .verify import Verify
+from verify import Verify
 
 
 class Patcher:
@@ -27,8 +27,10 @@ class Patcher:
         self.last_x = self.slide.width - patch_width
         self.last_y = self.slide.height - patch_height
 
-        self.masks = annotation.masks
-        self.classes = annotation.classes
+        if annotation:
+            self.annotation = annotation
+            self.masks = annotation.masks
+            self.classes = annotation.classes
 
         self.save_to = save_to
 
@@ -47,16 +49,14 @@ class Patcher:
     def get_patch(self, x, y, cls=False):
         if self.on_foreground:
             if not self.patch_on_foreground(x, y):
-                print("1")
                 return
-        if self.annotation:
+        if self.on_annotation:
             if not self.patch_on_annotation(cls, x, y):
                 return
         self.result.append([x, y, self.p_width, self.p_height, cls])
         if self.extract_patches:
             patch = self.slide.slide.crop(x, y, self.p_width, self.p_height)
-            print("{}/{}/patches/{}/{:06}_{:06}.png".format(self.save_to, self.filename, cls, x, y))
-            patch.pngsave("{}/{}/patches/{}/{:06}_{:06}.png".format(self.save_to, self.filename, cls, x, y))
+            patch.pngsave("{}/{}/patches/{}/{:06}_{:06}.png".format(self.save_to, self.filestem, cls, x, y))
 
     def get_patch_parallel(self, cls=False, cores=-1):
         if self.start_sample:
@@ -86,10 +86,6 @@ class Patcher:
 
     def patch_on_foreground(self, x, y):
         patch_mask = self.masks["foreground"][y:y+self.p_height, x:x+self.p_width]
-        print(patch_mask.sum())
-        print(self.p_area)
-        print(patch_mask.sum() / self.p_area)
-        print(self.on_foreground)
         return (patch_mask.sum() / self.p_area) >= self.on_foreground
 
     def patch_on_annotation(self, cls, x, y):
