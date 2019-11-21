@@ -65,7 +65,10 @@ patcher.get_patch_parallel(cls, 12)
 #### Export annotaton xml as mask image
 
 ```python
-annotation = wp.annotation(path)
+import wsiprocess as wp
+slide = wp.slide(path_slide)
+annotation = wp.annotation(path_annotation)
+annotation.to_mask(slide)
 annotation.export_mask(output_dir)
 ```
 
