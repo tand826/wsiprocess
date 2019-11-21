@@ -44,25 +44,22 @@ Open Source WSI Processing Library
 		- xxx/left_top_right_bottom.png
 		- xxx.cls
 
-# memo
+# Example
 
-```
+```python: Basic
 import wsiprocess as wp
-slide = wp.slideread(path)
-slide = wp.cvtColor(slide, wp.COLOR_RGB2HSD)
-slide = wp.cvtColor(slide, cv2.COLOR_BGR2HSV)
-wp.slidewrite("slide.tiff", slide)
+slide = wp.slide(path)
+annotation = wp.annotation(path)
+inclusion = wp.inclusion(path)
 
-mask = wp.maskread(path)
-wp.maskwrite("mask.png", mask)
-wp.maskwrite("mask_thumb.png", mask.thumb)
+annotation.to_mask(slide, inclusion)
 
-new_mask = mask['benign'] - mask['blood_vessel']
-wp.maskwrite("new_mask.png", new_mask)
+patcher = wp.patcher(slide, method, patch_width, patch_height, overlap_width, overlap_height, annotation,
+					 on_foreground, on_annotation, start_sample, finished_sample, extract_patches, output_dir)
+patcher.get_patch_parallel(class, 12)
+```
 
-patcher = wp.patchread(path)
-patcher = wp.cvtColor(patcher, wp.COLOR_RGB2HSD)
-wp.patchwrite("outdir", patcher)
-wp.patchwrite("outdir", patcher, mask=mask)
-wp.slidewrite("slide.tiff", patcher)
+```python: Export annotation xml as mask image
+annotation = wp.annotation(path)
+annotation.export_mask(output_dir)
 ```
