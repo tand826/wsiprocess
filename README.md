@@ -20,55 +20,70 @@ Open Source WSI Processing Library
     	+ yes
     		+ Targets in the annotated area.
 2. Task
-	- N/A(in case of no annotations)
-		- xxx.csv
-			- (left, top, right, bottom) per patch
-		- xxx/left_top_right_bottom.png
+	- none
+		+ w/ annotation
+			+ xxx.csv
+				+ (left, top, right, bottom) per patch
+			+ xxx/left_top_right_bottom.png
+		+ w/o annotation
+			+ xxx.csv
+				+ (left, top, right, bottom) per patch
+			+ xxx/left_top_right_bottom.png
 	- classification
-		- xxx.csv
-			- (left, top, right, bottom, class) per patch
-		- xxx/left_top_right_bottom.png
-		- xxx.cls
-			- (0: classname1, 1: classname2,...) per patch
+			+ xxx.csv
+				+ (left, top, right, bottom, class) per patch
+			+ xxx/left_top_right_bottom.png
+			+ xxx.cls
+				+ (0: classname1, 1: classname2,...) per patch
 	- object detection
-		- xxx.csv
-			- (left, top, right, bottom), (left, top, right, bottom (of annotation), class),... per patch
-		- xxx/left_top_right_bottom.png
-		- xxx.cls
-		- option
-			- extract one crop per one annotation?
-			- extract patch without annotation?
+			+ xxx.csv
+				+ (left, top, right, bottom), (left, top, right, bottom (of annotation), class),... per patch
+			+ xxx/left_top_right_bottom.png
+			+ xxx.cls
+			+ option
+				+ extract one crop per one annotation?
+				+ extract patch without annotation?
 	- segmentation
-		- xxx.csv
-			- (left, top, right, bottom), ((coordx1, coordy1), (coordx2, coordy2),..., class), ... per patch
-		- xxx/left_top_right_bottom.png
-		- xxx.cls
+			+ xxx.csv
+				+ (left, top, right, bottom), ((coordx1, coordy1), (coordx2, coordy2),..., class), ... per patch
+			+ xxx/left_top_right_bottom.png
+			+ xxx.cls
 
 # Example
 
-#### Basic usage
+### Basic usage
 
 ```python
 import wsiprocess as wp
-slide = wp.slide(path_slide)
-annotation = wp.annotation(path_annotation)
-inclusion = wp.inclusion(path_inclusion)
+slide = wp.Slide(path_slide)
+annotation = wp.Annotation(path_annotation)
+inclusion = wp.Inclusion(path_inclusion)
 
 annotation.to_mask(slide, inclusion)
 
-patcher = wp.patcher(slide, method, patch_width, patch_height, overlap_width,
-                     overlap_height, annotation, on_foreground, on_annotation,
-                     start_sample, finished_sample, extract_patches, output_dir)
+patcher = wp.Patcher(slide, method, annotation, output_dir, patch_width, patch_height,
+                     overlap_width, overlap_height, on_foreground, on_annotation,
+                     start_sample, finished_sample, extract_patches)
 patcher.get_patch_parallel(cls, 12)
 ```
 
-#### Export annotaton xml as mask image
+### Export annotaton xml of one class as mask image
 
 ```python
 import wsiprocess as wp
-slide = wp.slide(path_slide)
-annotation = wp.annotation(path_annotation)
-annotation.to_mask(slide)
-annotation.export_mask(output_dir)
+slide = wp.Slide(path_slide)
+annotation = wp.Annotation(path_annotation)
+annotation.make_mask(slide)
+annotation.export_mask(save_to, cls)
 ```
 
+### Export annotation xml with inclusion definition as mask images, and save their thumbs
+
+```python
+import wsiprocess as wp
+slide = wp.Slide(path_slide)
+annotation = wp.Annotation(path_annotation)
+inclusion = wp.Inclusion(path_inclusion)
+annotation.make_masks(slide, inclusion)
+annotation.export_thumb_masks(save_to)
+```

@@ -36,7 +36,6 @@ class Patcher:
         self.result = []
 
     def get_patch(self, cls, x, y):
-        patch = self.slide.crop(x, y, self.p_width, self.p_height)
         if self.on_foreground:
             if not self.is_on_foreground(x, y):
                 return
@@ -45,9 +44,13 @@ class Patcher:
                 return
         self.result.append([x, y, self.p_width, self.p_height, cls])
         if self.extract_patches:
+            patch = self.slide.crop(x, y, self.p_width, self.p_height)
             patch.pngsave("{}/{}/patches/{}/{:06}_{:06}.png".format(self.output_dir, self.filename, cls, x, y))
 
-    def get_parallel(self, cls, cores=-1):
+    def get_patch_parallel(self, cls=False, cores=-1):
+        if self.start_sample:
+            self.get_random_sample("start", 3)
+
         parallel = Parallel(n_jobs=cores, backend="threading")
 
         # from the left top to just before the right bottom.
@@ -67,12 +70,15 @@ class Patcher:
             writer = csv.writer(f)
             writer.rows(self.result)
 
+        if self.finished_sample:
+            self.get_random_sample("finished", 3)
+
     def is_on_foreground(self, x, y):
-        patch_mask = self.annotation.masks["foreground"][x:x+self.p_width, y:y+self.p_height]
+        patch_mask = self.annotation.masks["foreground"][y:y+self.p_height, x:x+self.p_width]
         return (patch_mask.sum() / self.p_area) > self.on_foreground
 
     def is_on_annotation(self, cls, x, y):
-        patch_mask = self.annotation.masks[cls][x:x+self.p_width, y:y+self.p_height]
+        patch_mask = self.annotation.masks[cls][y:y+self.p_height, x:x+self.p_width]
         return (patch_mask.sum() / self.p_area) > self.on_annotation
 
     def get_random_sample(self, phase, sample_count=1):

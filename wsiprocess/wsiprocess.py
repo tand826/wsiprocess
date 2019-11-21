@@ -1,58 +1,27 @@
 from slide import Slide
 from patcher import Patcher
-from mask import Mask
 from annotation import Annotation
 from inclusion import Inclusion
 
 
-def slideread(path):
-    """[summary]
-
-    [description]
-
-    Arguments:
-        path {pathlib.PosixPath} -- Path to the wsi data.
-
-    Returns:
-        [slide.Slide] -- Slide object with the wsi info.
-    """
+def slide(path):
     return Slide(path)
 
 
-def slidewrite(save_as, slide):
-    pass
-
-
-def maskread(path):
-    return Mask(path)
-
-
-def maskwrite(save_as, mask):
-    pass
-
-
-def patchread(path):
-    pass
-
-
-def patchwrite(save_as, patch):
-    pass
-
-
-def annotationread(path):
+def annotation(path):
     return Annotation(path)
 
 
-def annotationwrite(save_as, annotation):
-    pass
-
-
-def inclusionread(path):
+def inclusion(path):
     return Inclusion(path)
 
 
-def inclusionwrite(save_as, inclusion):
-    pass
+def patcher(slide, method, annotation, output_dir, patch_width, patch_height,
+            overlap_width, overlap_height, on_foreground, on_annotation,
+            start_sample, finished_sample, extract_patches):
+    return Patcher(slide, method, annotation, output_dir, patch_width, patch_height,
+                   overlap_width, overlap_height, on_foreground, on_annotation,
+                   start_sample, finished_sample, extract_patches)
 
 
 if __name__ == '__main__':
