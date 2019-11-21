@@ -46,20 +46,26 @@ Open Source WSI Processing Library
 
 # Example
 
-```python: Basic
+#### Basic usage
+
+```python
 import wsiprocess as wp
-slide = wp.slide(path)
-annotation = wp.annotation(path)
-inclusion = wp.inclusion(path)
+slide = wp.slide(path_slide)
+annotation = wp.annotation(path_annotation)
+inclusion = wp.inclusion(path_inclusion)
 
 annotation.to_mask(slide, inclusion)
 
-patcher = wp.patcher(slide, method, patch_width, patch_height, overlap_width, overlap_height, annotation,
-					 on_foreground, on_annotation, start_sample, finished_sample, extract_patches, output_dir)
-patcher.get_patch_parallel(class, 12)
+patcher = wp.patcher(slide, method, patch_width, patch_height, overlap_width,
+	 			     overlap_height, annotation, on_foreground, on_annotation,
+	 			     start_sample, finished_sample, extract_patches, output_dir)
+patcher.get_patch_parallel(cls, 12)
 ```
 
-```python: Export annotation xml as mask image
+#### Export annotaton xml as mask image
+
+```python
 annotation = wp.annotation(path)
 annotation.export_mask(output_dir)
 ```
+
