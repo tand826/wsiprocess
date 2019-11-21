@@ -50,7 +50,7 @@ patcher.get_patch_parallel("benign")
 import wsiprocess as wp
 slide = wp.Slide("xxx.tiff")
 annotation = wp.Annotation("xxx.xml")
-annotation.make_mask(slide)
+annotation.make_masks(slide)
 annotation.export_mask("xxx/masks", "benign")
 ```
 
