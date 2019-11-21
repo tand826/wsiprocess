@@ -57,8 +57,8 @@ inclusion = wp.inclusion(path_inclusion)
 annotation.to_mask(slide, inclusion)
 
 patcher = wp.patcher(slide, method, patch_width, patch_height, overlap_width,
-	 			     overlap_height, annotation, on_foreground, on_annotation,
-	 			     start_sample, finished_sample, extract_patches, output_dir)
+                     overlap_height, annotation, on_foreground, on_annotation,
+                     start_sample, finished_sample, extract_patches, output_dir)
 patcher.get_patch_parallel(cls, 12)
 ```
 
