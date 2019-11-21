@@ -27,24 +27,30 @@ class Patcher:
         self.last_x = self.slide.width - patch_width
         self.last_y = self.slide.height - patch_height
 
-        if annotation:
-            self.annotation = annotation
-            self.masks = annotation.masks
-            self.classes = annotation.classes
-
-        self.save_to = save_to
-
-        self.on_foreground = on_foreground
-        self.on_annotation = on_annotation
         self.start_sample = start_sample
         self.finished_sample = finished_sample
         self.extract_patches = extract_patches
 
+        if annotation:
+            self.annotation = annotation
+            self.masks = annotation.masks
+            self.classes = annotation.classes
+            self.on_foreground = on_foreground
+            self.on_annotation = on_annotation
+        else:
+            self.annotation = False
+            self.masks = False
+            self.classes = False
+            self.on_foreground = False
+            self.on_annotation = False
+
+        self.save_to = save_to
+
         self.result = []
 
-        verify = Verify(save_to, annotation.classes, self.filestem, method,
-                        start_sample, finished_sample, extract_patches)
-        verify.verify_dirs()
+        self.verify = Verify(save_to, self.filestem, method,
+                             start_sample, finished_sample, extract_patches)
+        self.verify.verify_dirs()
 
     def get_patch(self, x, y, cls=False):
         if self.on_foreground:
@@ -59,6 +65,9 @@ class Patcher:
             patch.pngsave("{}/{}/patches/{}/{:06}_{:06}.png".format(self.save_to, self.filestem, cls, x, y))
 
     def get_patch_parallel(self, cls=False, cores=-1):
+        if self.extract_patches:
+            self.verify.verify_dir("{}/{}/patches/{}".format(self.save_to, self.filestem, cls))
+
         if self.start_sample:
             self.get_random_sample("start", 3)
 
