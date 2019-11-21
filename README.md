@@ -55,31 +55,35 @@ Open Source WSI Processing Library
 
 ```python
 import wsiprocess as wp
-slide = wp.Slide("xxx.tiff")
-annotation = wp.Annotation("xxx.xml")
-annotation.make_masks(slide)
-patcher = wp.Patcher(slide, "classification", annotation)
-patcher.get_patch_parallel(cls="benign", cores=12)
+slide = wp.Slide(path_slide)
+annotation = wp.Annotation(path_annotation)
+inclusion = wp.Inclusion(path_inclusion)
+
+annotation.to_mask(slide, inclusion)
+
+patcher = wp.Patcher(slide, method, annotation, output_dir, patch_width, patch_height,
+                     overlap_width, overlap_height, on_foreground, on_annotation,
+                     start_sample, finished_sample, extract_patches)
+patcher.get_patch_parallel(cls, 12)
 ```
 
 ### Export annotaton xml of one class as mask image
 
 ```python
 import wsiprocess as wp
-slide = wp.Slide("xxx.tiff")
-annotation = wp.Annotation("xxx.xml")
-annotation.make_masks(slide)
-annotation.export_mask("xxx/masks", "benign")
+slide = wp.Slide(path_slide)
+annotation = wp.Annotation(path_annotation)
+annotation.make_mask(slide)
+annotation.export_mask(save_to, cls)
 ```
 
-### Export annotation xml with inclusion relationship as mask images, and save their thumbs
+### Export annotation xml with inclusion definition as mask images, and save their thumbs
 
 ```python
 import wsiprocess as wp
-slide = wp.Slide("xxx.tiff")
-annotation = wp.Annotation("xxx.xml")
-inclusion = wp.Inclusion("xxx.txt")
+slide = wp.Slide(path_slide)
+annotation = wp.Annotation(path_annotation)
+inclusion = wp.Inclusion(path_inclusion)
 annotation.make_masks(slide, inclusion)
-annotation.export_thumb_masks("xxx/thumbs")
+annotation.export_thumb_masks(save_to)
 ```
-

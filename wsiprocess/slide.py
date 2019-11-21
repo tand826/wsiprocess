@@ -7,7 +7,7 @@ class Slide:
     def __init__(self, path):
         self.slide = pyvips.Image.new_from_file(path)
         self.magnification = self.slide.get("openslide.objective-power")
-        self.filestem = Path(path).stem
+        self.filename = Path(path).stem
         self.wsi_width = self.slide.width
         self.wsi_height = self.slide.height
         self.set_properties()

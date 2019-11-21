@@ -18,13 +18,11 @@ class Annotation:
         self.classes = [group.attrib["Name"] for group in self.annotation_groups]
         assert len(self.annotations) > 0, "No annotations found."
 
-    def make_masks(self, slide, inclusion=False, foreground=False, size=2000):
+    def make_masks(self, slide, inclusion=False):
         self.base_masks(slide.wsi_height, slide.wsi_width)
-        self.main_masks()
+        self.main_mask()
         if inclusion:
             self.exclude_mask(inclusion)
-        if foreground:
-            self.make_foreground_mask(slide, size)
 
     def base_masks(self, wsi_height, wsi_width):
         for cls in self.classes:
@@ -56,7 +54,7 @@ class Annotation:
         thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
         _, th = cv2.threshold(thumb_gray, 0, 1, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
         scale = max(size / slide.wsi_width, size / slide.wsi_height)
-        self.masks["foreground"] = ~cv2.resize(th, dsize=None, fx=scale, fy=scale)
+        self.masks["foreground"] = cv2.resize(th, dsize=None, fx=scale, fy=scale)
         self.classes.append("foreground")
 
     def export_thumb_mask(self, save_to, size=512):
