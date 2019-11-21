@@ -16,10 +16,10 @@ def inclusion(path):
     return Inclusion(path)
 
 
-def patcher(slide, method, annotation, output_dir, patch_width, patch_height,
+def patcher(slide, method, annotation, save_to, patch_width, patch_height,
             overlap_width, overlap_height, on_foreground, on_annotation,
             start_sample, finished_sample, extract_patches):
-    return Patcher(slide, method, annotation, output_dir, patch_width, patch_height,
+    return Patcher(slide, method, annotation, save_to, patch_width, patch_height,
                    overlap_width, overlap_height, on_foreground, on_annotation,
                    start_sample, finished_sample, extract_patches)
 

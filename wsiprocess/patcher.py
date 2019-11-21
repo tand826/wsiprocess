@@ -3,29 +3,34 @@ from joblib import Parallel, delayed
 from itertools import product
 import csv
 
+from .verify import Verify
+
 
 class Patcher:
 
-    def __init__(self, slide, method, annotation=False, output_dir=".", patch_width=256, patch_height=256,
+    def __init__(self, slide, method, annotation=False, save_to=".", patch_width=256, patch_height=256,
                  overlap_width=1, overlap_height=1, on_foreground=1., on_annotation=1.,
                  start_sample=True, finished_sample=True, extract_patches=True):
         self.slide = slide
-        self.filename = slide.filename
+        self.filepath = slide.filename
+        self.filestem = slide.filestem
+        self.wsi_width = slide.wsi_width
+        self.wsi_height = slide.wsi_height
         self.p_width = patch_width
         self.p_height = patch_height
-        self.p_area = self.p_width * self.p_height
+        self.p_area = patch_width * patch_height
         self.o_width = overlap_width
         self.o_height = overlap_height
-        self.x_lefttop = [i for i in range(0, self.wsi_width, self.p_width - self.o_width)][:-1]
-        self.y_lefttop = [i for i in range(0, self.wsi_height, self.p_height - self.o_height)][:-1]
+        self.x_lefttop = [i for i in range(0, self.wsi_width, patch_width - overlap_width)][:-1]
+        self.y_lefttop = [i for i in range(0, self.wsi_height, patch_height - overlap_height)][:-1]
         self.iterator = product(self.x_lefttop, self.y_lefttop)
-        self.last_x = self.slide.width - self.p_width
-        self.last_y = self.slide.height - self.p_height
+        self.last_x = self.slide.width - patch_width
+        self.last_y = self.slide.height - patch_height
 
-        self.annot = annotation
-        self.clses = annotation.clses
+        self.masks = annotation.masks
+        self.classes = annotation.classes
 
-        self.output_dir = output_dir
+        self.save_to = save_to
 
         self.on_foreground = on_foreground
         self.on_annotation = on_annotation
@@ -35,82 +40,65 @@ class Patcher:
 
         self.result = []
 
-    def get_patch(self, cls, x, y):
+        verify = Verify(save_to, annotation.classes, self.filestem, method,
+                        start_sample, finished_sample, extract_patches)
+        verify.verify_dirs()
+
+    def get_patch(self, x, y, cls=False):
         if self.on_foreground:
-            if not self.is_on_foreground(x, y):
+            if not self.patch_on_foreground(x, y):
+                print("1")
                 return
-        if self.on_annotation:
-            if not self.is_on_annotation(cls, x, y):
+        if self.annotation:
+            if not self.patch_on_annotation(cls, x, y):
                 return
         self.result.append([x, y, self.p_width, self.p_height, cls])
         if self.extract_patches:
-            patch = self.slide.crop(x, y, self.p_width, self.p_height)
-            patch.pngsave("{}/{}/patches/{}/{:06}_{:06}.png".format(self.output_dir, self.filename, cls, x, y))
+            patch = self.slide.slide.crop(x, y, self.p_width, self.p_height)
+            print("{}/{}/patches/{}/{:06}_{:06}.png".format(self.save_to, self.filename, cls, x, y))
+            patch.pngsave("{}/{}/patches/{}/{:06}_{:06}.png".format(self.save_to, self.filename, cls, x, y))
 
     def get_patch_parallel(self, cls=False, cores=-1):
         if self.start_sample:
             self.get_random_sample("start", 3)
 
-        parallel = Parallel(n_jobs=cores, backend="threading")
+        parallel = Parallel(n_jobs=cores, backend="threading", verbose=1)
 
         # from the left top to just before the right bottom.
-        parallel([delayed(self.get_patch)(cls, x, y) for x, y in self.iterator])
+        parallel([delayed(self.get_patch)(x, y, cls) for x, y in self.iterator])
 
         # the bottom edge.
-        parallel([delayed(self.get_patch)(cls, x, self.last_y) for x in self.x_lefttop])
+        parallel([delayed(self.get_patch)(x, self.last_y, cls) for x in self.x_lefttop])
 
         # the right edge
-        parallel([delayed(self.get_patch)(cls, self.last_x, y) for y in self.y_lefttop])
+        parallel([delayed(self.get_patch)(self.last_x, y, cls) for y in self.y_lefttop])
 
         # right bottom patch
-        self.get_patch(cls, self.last_x, self.last_y)
+        self.get_patch(self.last_x, self.last_y, cls)
 
         # save results
-        with open("{}/{}/{}.csv".format(self.output_dir, self.filename, self.filename), "w") as f:
+        with open("{}/{}/result.csv".format(self.save_to, self.filestem), "w") as f:
             writer = csv.writer(f)
-            writer.rows(self.result)
+            writer.writerows(self.result)
 
         if self.finished_sample:
             self.get_random_sample("finished", 3)
 
-    def is_on_foreground(self, x, y):
-        patch_mask = self.annotation.masks["foreground"][y:y+self.p_height, x:x+self.p_width]
-        return (patch_mask.sum() / self.p_area) > self.on_foreground
+    def patch_on_foreground(self, x, y):
+        patch_mask = self.masks["foreground"][y:y+self.p_height, x:x+self.p_width]
+        print(patch_mask.sum())
+        print(self.p_area)
+        print(patch_mask.sum() / self.p_area)
+        print(self.on_foreground)
+        return (patch_mask.sum() / self.p_area) >= self.on_foreground
 
-    def is_on_annotation(self, cls, x, y):
-        patch_mask = self.annotation.masks[cls][y:y+self.p_height, x:x+self.p_width]
-        return (patch_mask.sum() / self.p_area) > self.on_annotation
+    def patch_on_annotation(self, cls, x, y):
+        patch_mask = self.masks[cls][y:y+self.p_height, x:x+self.p_width]
+        return (patch_mask.sum() / self.p_area) >= self.on_annotation
 
     def get_random_sample(self, phase, sample_count=1):
         for i in range(sample_count):
             x = random.choice(self.x_lefttop)
             y = random.choice(self.y_lefttop)
-            patch = self.slide.crop(x, y, self.p_width, self.p_height)
-            patch.pngsave("{}/{}/{}_sample/{:06}_{:06}.png".format(self.output_dir, self.filename, phase, x, y))
-
-
-class Classification(Patcher):
-
-    def __init__(self, slide, patch_width, patch_height, overlap_width,
-                 overlap_height, output_dir):
-        super().__init__(slide, patch_width, patch_height, overlap_width,
-                         overlap_height, output_dir)
-        pass
-
-
-class Detection(Patcher):
-
-    def __init__(self, slide, patch_width, patch_height, overlap_width,
-                 overlap_height, output_dir):
-        super().__init__(slide, patch_width, patch_height, overlap_width,
-                         overlap_height, output_dir)
-        pass
-
-
-class Segmentation(Patcher):
-
-    def __init__(self, slide, patch_width, patch_height, overlap_width,
-                 overlap_height, output_dir):
-        super().__init__(slide, patch_width, patch_height, overlap_width,
-                         overlap_height, output_dir)
-        pass
+            patch = self.slide.slide.crop(x, y, self.p_width, self.p_height)
+            patch.pngsave("{}/{}/{}_sample/{:06}_{:06}.png".format(self.save_to, self.filestem, phase, x, y))
