@@ -17,7 +17,9 @@ def test_slide():
 
 
 def test_annotation():
+    slide = wp.Slide("CMU-1.ndpi")
     annotation = wp.Annotation("CMU-1.xml")
+    annotation.make_masks(slide, foreground=True)
     annotation.export_thumb_mask(cls="foreground", save_to=".")
     annotation.export_thumb_masks(".")
 
@@ -42,7 +44,8 @@ def test_none():
 
     # with annotation file
     annotation = wp.Annotation("CMU-1.xml")
-    annotation.make_masks(slide)
+    annotation.make_masks(slide, foreground=True)
+    annotation.export_thumb_masks(slide)
     patcher = wp.Patcher(slide, "none", annotation, start_sample=False, finished_sample=False, on_foreground=False, on_annotation=False)
     patcher.get_patch_parallel(annotation.classes[0])
 
@@ -55,10 +58,6 @@ def test_none():
 
 def test_classification():
     slide = wp.Slide("CMU-1.ndpi")
-
-    # no annotation file
-    patcher = wp.Patcher(slide, "classification", start_sample=False, finished_sample=False, on_foreground=False, on_annotation=False)
-    patcher.get_patch_parallel()
 
     # with annotation file
     annotation = wp.Annotation("CMU-1.xml")
@@ -76,10 +75,6 @@ def test_classification():
 def test_detection():
     slide = wp.Slide("CMU-1.ndpi")
 
-    # no annotation file
-    patcher = wp.Patcher(slide, "detection", start_sample=False, finished_sample=False, on_foreground=False, on_annotation=False)
-    patcher.get_patch_parallel()
-
     # with annotation file
     annotation = wp.Annotation("CMU-1.xml")
     annotation.make_masks(slide)
@@ -95,10 +90,6 @@ def test_detection():
 
 def test_segmentation():
     slide = wp.Slide("CMU-1.ndpi")
-
-    # no annotation file
-    patcher = wp.Patcher(slide, "segmentation", start_sample=False, finished_sample=False, on_foreground=False, on_annotation=False)
-    patcher.get_patch_parallel()
 
     # with annotation file
     annotation = wp.Annotation("CMU-1.xml")

@@ -13,10 +13,6 @@ class Args:
         parser.add_argument("method", type=str,
                             choices={"none", "classification", "detection", "segmentation"},
                             help="Method to use.")
-        parser.add_argument("-os", "--one_shot", action="store_true",
-                            help="[For object_detection] One annotation extracted only once.")
-        parser.add_argument("-wa", "--patch_without_annotation", action="store_true",
-                            help="Extract patches without annotations")
         parser.add_argument("-od", "--output_dir", type=Path,
                             help="Where to save the data.")
         parser.add_argument("-an", "--annotation", type=Path,
