@@ -1,14 +1,4 @@
 import wsiprocess as wp
-from pathlib import Path
-import urllib.request
-
-
-def download_test_file():
-    url = "http://openslide.cs.cmu.edu/download/openslide-testdata/Hamamatsu/"
-    filename = "CMU-1.ndpi"
-    data = urllib.request.urlopen(url+filename).read()
-    with open(filename, "wb") as f:
-        f.write(data.content)
 
 
 def test_slide():
@@ -26,7 +16,6 @@ def test_annotation():
 
 def test_inclusion():
     inclusion = wp.Inclusion("CMU-1.txt")
-    print(inclusion)
 
 
 def test_none():
@@ -102,3 +91,13 @@ def test_segmentation():
     annotation.make_masks(slide, inclusion, foreground=True)
     patcher = wp.Patcher(slide, "segmentation", annotation, start_sample=False, finished_sample=False, on_foreground=False, on_annotation=False)
     patcher.get_patch_parallel(annotation.classes[0])
+
+
+if __name__ == '__main__':
+    test_slide()
+    test_annotation()
+    test_inclusion()
+    test_none()
+    test_classification()
+    test_detection()
+    test_segmentation()

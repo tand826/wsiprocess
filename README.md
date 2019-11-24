@@ -21,7 +21,7 @@ Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 	- MacOS
 		- `brew install openslide`
 	- Linux
-		- `apt install libvips  # automatically instaled`
+		- `apt install libvips  # automatically instaled with libvips`
 	- Windows
 		- Download the precompiled binary from [here](https://openslide.org/download/#windows-binaries)
 
@@ -30,7 +30,7 @@ Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 
 # Example
 
-### Basic usage
+### Basic Usage
 
 ```python
 import wsiprocess as wp
@@ -38,7 +38,7 @@ slide = wp.Slide("xxx.tiff")
 annotation = wp.Annotation("xxx.xml")
 inclusion = wp.Inclusion("xxx.txt")
 
-annotation.to_mask(slide, inclusion)
+annotation.make_masks(slide, inclusion)
 
 patcher = wp.Patcher(slide, "classification", annotation)
 patcher.get_patch_parallel("benign")
@@ -64,6 +64,25 @@ inclusion = wp.Inclusion("xxx.txt")
 annotation.make_masks(slide, inclusion)
 annotation.export_thumb_masks("xxx/masks")
 ```
+
+# Test
+
+1. Download sample WSI
+```
+curl -O -C - http://openslide.cs.cmu.edu/download/openslide-testdata/Hamamatsu/CMU-1.ndpi
+```
+
+2. Make random annotation
+- Install ASAP ( Linux / Windows )
+	- https://github.com/computationalpathologygroup/ASAP/releases
+- Open CMU-1.ndpi and make some random annotation.
+	- Save the annotation xml as "CMU-1.xml".
+
+3. Run test.py
+```
+python test.py
+```
+
 
 # Flow
 0. Options(for all)
