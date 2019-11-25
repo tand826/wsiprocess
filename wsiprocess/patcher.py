@@ -70,12 +70,13 @@ class Patcher:
 
         elif self.method == "detection":
             bbs = []
-            for bb in self.find_bbs(x, y):
-                bbs.append({"x": bb["x"],
-                            "y": bb["y"],
-                            "w": bb["width"],
-                            "h": bb["height"],
-                            "class": bb["class"]})
+            for cls in self.classes:
+                for bb in self.find_bbs(x, y, cls):
+                    bbs.append({"x": bb["x"],
+                                "y": bb["y"],
+                                "w": bb["width"],
+                                "h": bb["height"],
+                                "class": bb["class"]})
             self.result["result"].append({"x": x,
                                           "y": y,
                                           "w": self.p_width,
@@ -84,9 +85,10 @@ class Patcher:
 
         elif self.method == "segmentation":
             masks = []
-            for mask in self.find_masks(x, y):
-                masks.append({"coords": mask["coords"],
-                              "class": mask["class"]})
+            for cls in self.classes:
+                for mask in self.find_masks(x, y):
+                    masks.append({"coords": mask["coords"],
+                                  "class": mask["class"]})
             self.result["result"] = {"x": x,
                                      "y": y,
                                      "w": self.p_width,
@@ -96,53 +98,61 @@ class Patcher:
         else:
             raise NotImplementedError
 
-    def find_bbs(self, x, y, cls=False):
-        if cls:
-            if not self.patch_on_annotation(cls, x, y):
-                return []
-            else:
-                # Find bounding boxes which are on the patch
-                coords = self.annotation.mask_coords[cls]
-                coords = np.array(coords)
-                bblefts = np.min(coords, axis=1)[:, 0]
-                bbtops = np.min(coords, axis=1)[:, 1]
-                bbrights = np.max(coords, axis=1)[:, 0]
-                bbbottoms = np.max(coords, axis=1)[:, 1]
-
-                # ex : annotation.mask_coords["benign"][0]
-                #  = [small_x, small_y, large_x, large_y]
-                #  = [bbleft, bbtop, bbright, bbbottom]
-                # Bounding boxes with one of its corners on the patch is on the patch.
-
-                patch_left = x
-                patch_right = x + self.p_width
-                patch_top = y
-                patch_bottom = y + self.p_height
-
-                bbleft_right_of_patch_left = set(np.where(bblefts >= patch_left)[0])
-                bbleft_left_of_patch_right = set(np.where(bblefts <= patch_right)[0])
-                bbright_right_of_patch_left = set(np.where(bbrights >= patch_left)[0])
-                bbright_left_of_patch_right = set(np.where(bbrights <= patch_right)[0])
-                bbtop_below_patch_top = set(np.where(bbtops >= patch_top)[0])
-                bbtop_above_patch_bottom = set(np.where(bbtops <= patch_bottom)[0])
-                bbbottom_below_patch_top = set(np.where(bbbottoms >= patch_top)[0])
-                bbbottom_above_patch_bottom = set(np.where(bbbottoms <= patch_bottom))
-
-                bbleft_on_patch = bbleft_right_of_patch_left & bbleft_left_of_patch_right
-                bbright_on_patch = bbright_right_of_patch_left & bbright_left_of_patch_right
-                bbtop_on_patch = bbtop_above_patch_bottom & bbtop_below_patch_top
-                bbbottom_on_patch = bbbottom_above_patch_bottom & bbbottom_below_patch_top
-
-                bb_lefttop_on_patch = bbleft_on_patch & bbtop_on_patch
-                bb_leftbottom_on_patch = bbleft_on_patch & bbbottom_on_patch
-                bb_righttop_on_patch = bbright_on_patch & bbtop_on_patch
-                bb_rightbottom_on_patch = bbright_on_patch & bbbottom_on_patch
-
-                on_patch_bb_idx = bb_lefttop_on_patch | bb_leftbottom_on_patch | bb_righttop_on_patch | bb_rightbottom_on_patch
+    def find_bbs(self, x, y, cls):
+        if not self.patch_on_annotation(cls, x, y):
+            return []
         else:
-            pass
+            # Find bounding boxes which are on the patch
+            coords = self.annotation.mask_coords[cls]
+            coords = np.array(coords)
+            bblefts = np.min(coords, axis=1)[:, 0]
+            bbtops = np.min(coords, axis=1)[:, 1]
+            bbrights = np.max(coords, axis=1)[:, 0]
+            bbbottoms = np.max(coords, axis=1)[:, 1]
 
-    def find_masks(self, x, y, cls=False):
+            # ex : annotation.mask_coords["benign"][0]
+            #  = [small_x, small_y, large_x, large_y]
+            #  = [bbleft, bbtop, bbright, bbbottom]
+            # Bounding boxes with one of its corners on the patch is on the patch.
+
+            patch_left = x
+            patch_right = x + self.p_width
+            patch_top = y
+            patch_bottom = y + self.p_height
+
+            bbleft_right_of_patch_left = set(np.where(bblefts >= patch_left)[0])
+            bbleft_left_of_patch_right = set(np.where(bblefts <= patch_right)[0])
+            bbright_right_of_patch_left = set(np.where(bbrights >= patch_left)[0])
+            bbright_left_of_patch_right = set(np.where(bbrights <= patch_right)[0])
+            bbtop_below_patch_top = set(np.where(bbtops >= patch_top)[0])
+            bbtop_above_patch_bottom = set(np.where(bbtops <= patch_bottom)[0])
+            bbbottom_below_patch_top = set(np.where(bbbottoms >= patch_top)[0])
+            bbbottom_above_patch_bottom = set(np.where(bbbottoms <= patch_bottom))
+
+            bbleft_on_patch = bbleft_right_of_patch_left & bbleft_left_of_patch_right
+            bbright_on_patch = bbright_right_of_patch_left & bbright_left_of_patch_right
+            bbtop_on_patch = bbtop_above_patch_bottom & bbtop_below_patch_top
+            bbbottom_on_patch = bbbottom_above_patch_bottom & bbbottom_below_patch_top
+
+            bb_lefttop_on_patch = bbleft_on_patch & bbtop_on_patch
+            bb_leftbottom_on_patch = bbleft_on_patch & bbbottom_on_patch
+            bb_righttop_on_patch = bbright_on_patch & bbtop_on_patch
+            bb_rightbottom_on_patch = bbright_on_patch & bbbottom_on_patch
+
+            idx_of_bb_on_patch = bb_lefttop_on_patch | bb_leftbottom_on_patch | bb_righttop_on_patch | bb_rightbottom_on_patch
+
+            bbs_raw = coords[idx_of_bb_on_patch]
+            bbs = []
+            for bb_raw in bbs_raw:
+                bb = {"x": bb_raw[:, 0].min(),
+                      "y": bb_raw[:, 1].min(),
+                      "w": bb_raw[:, 0].max() - bb_raw[:, 0].min(),
+                      "h": bb_raw[:, 1].max() - bb_raw[:, 1].min(),
+                      "class": cls}
+                bbs.append(bb)
+            return bbs
+
+    def find_masks(self, x, y, cls):
         pass
 
     def save_results(self):

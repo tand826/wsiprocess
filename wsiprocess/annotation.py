@@ -40,7 +40,7 @@ class Annotation:
             for coord in annotation.xpath("Coordinates/Coordinate"):
                 x = np.float(coord.attrib["X"])
                 y = np.float(coord.attrib["Y"])
-                contour.append([x, y])
+                contour.append([round(float(x)), round(float(y))])
             self.mask_coords[cls].append(contour)
         for cls in self.classes:
             contours = np.array(self.mask_coords[cls])
