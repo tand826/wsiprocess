@@ -177,9 +177,28 @@
 				<Coordinate Order="3" X="6599.18604" Y="20779.4277" />
 			</Coordinates>
 		</Annotation>
+		<Annotation Name="Annotation 22" Type="Rectangle" PartOfGroup="benign" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="8580.30371" Y="19946.959" />
+				<Coordinate Order="1" X="8599.74707" Y="19946.959" />
+				<Coordinate Order="2" X="8599.74707" Y="19966.4043" />
+				<Coordinate Order="3" X="8580.30371" Y="19966.4043" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 23" Type="Rectangle" PartOfGroup="benign" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="8681.54004" Y="19897.0137" />
+				<Coordinate Order="1" X="8700.3125" Y="19897.0137" />
+				<Coordinate Order="2" X="8700.3125" Y="19917.125" />
+				<Coordinate Order="3" X="8681.54004" Y="19917.125" />
+			</Coordinates>
+		</Annotation>
 	</Annotations>
 	<AnnotationGroups>
 		<Group Name="malignant" PartOfGroup="None" Color="#64FE2E">
+			<Attributes />
+		</Group>
+		<Group Name="benign" PartOfGroup="None" Color="#64FE2E">
 			<Attributes />
 		</Group>
 	</AnnotationGroups>

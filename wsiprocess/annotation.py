@@ -24,7 +24,7 @@ class Annotation:
         self.base_masks(slide.wsi_height, slide.wsi_width)
         self.main_masks()
         if inclusion:
-            self.exclude_mask(inclusion)
+            self.exclude_masks(inclusion)
         if foreground:
             self.make_foreground_mask(slide, size)
 
@@ -64,11 +64,11 @@ class Annotation:
         self.masks["foreground"] = cv2.resize(th, (slide.width, slide.height))
         self.classes.append("foreground")
 
-    def export_thumb_masks(self, save_to, size=512):
+    def export_thumb_masks(self, save_to=".", size=512):
         for cls in self.masks.keys():
             self.export_thumb_mask(cls, save_to, size)
 
-    def export_thumb_mask(self, cls, save_to, size=512):
+    def export_thumb_mask(self, cls, save_to=".", size=512):
         mask = self.masks[cls]
         height, width = mask.shape
         scale = max(size / height, size / width)

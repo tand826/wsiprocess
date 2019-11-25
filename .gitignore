@@ -1,6 +1,8 @@
 # test wsi
 test/CMU-1.ndpi
 sample/CMU-1.ndpi
+CMU-1/
+./test.py
 
 # MacOS
 .DS_Store

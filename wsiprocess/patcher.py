@@ -11,7 +11,7 @@ from .verify import Verify
 class Patcher:
 
     def __init__(self, slide, method, annotation=False, save_to=".", patch_width=256, patch_height=256,
-                 overlap_width=1, overlap_height=1, on_foreground=1., on_annotation=1.,
+                 overlap_width=1, overlap_height=1, on_foreground=0.8, on_annotation=1.,
                  start_sample=True, finished_sample=True, extract_patches=True):
         self.slide = slide
         self.filepath = slide.filename
@@ -180,8 +180,8 @@ class Patcher:
         self.result["on_foreground"] = self.on_foreground
         self.result["on_annotation"] = self.on_annotation
 
-        with open("{}/{}/results.json", "w") as f:
-            json.dump(self.result, f)
+        with open("{}/{}/results.json".format(self.save_to, self.filestem), "w") as f:
+            json.dump(self.result, f, indent=4)
 
     def get_patch(self, x, y, cls=False):
         if self.on_foreground:
