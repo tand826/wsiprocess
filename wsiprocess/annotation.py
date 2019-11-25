@@ -10,6 +10,7 @@ class Annotation:
         self.path = path
         self.read_annotation()
         self.masks = {}
+        self.mask_coords = {}
 
     def read_annotation(self):
         tree = etree.parse(self.path)
@@ -39,8 +40,9 @@ class Annotation:
                 x = np.float(coord.attrib["X"])
                 y = np.float(coord.attrib["Y"])
                 contour.append([[x, y]])
-            contour = np.concatenate(contour).astype(np.int32)
-            self.masks[cls] = cv2.drawContours(self.masks[cls], [contour], 0, True, thickness=cv2.FILLED)
+            contours = np.concatenate(contour).astype(np.int32)
+            self.masks[cls] = cv2.drawContours(self.masks[cls], contours, 0, True, thickness=cv2.FILLED)
+            self.mask_coords[cls] = contours
 
     def exclude_masks(self, inclusion):
         self.masks_exclude = self.masks.copy()

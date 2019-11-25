@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<ASAP_Annotations>
+	<Annotations>
+		<Annotation Name="Annotation 0" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6513.42529" Y="20190.4805" />
+				<Coordinate Order="1" X="6586.93359" Y="20190.4805" />
+				<Coordinate Order="2" X="6586.93359" Y="20283.2402" />
+				<Coordinate Order="3" X="6513.42529" Y="20283.2402" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 1" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6379.53418" Y="20248.2383" />
+				<Coordinate Order="1" X="6458.29346" Y="20248.2383" />
+				<Coordinate Order="2" X="6458.29346" Y="20328.75" />
+				<Coordinate Order="3" X="6379.53418" Y="20328.75" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 2" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6329.65283" Y="20346.25" />
+				<Coordinate Order="1" X="6404.91162" Y="20346.25" />
+				<Coordinate Order="2" X="6404.91162" Y="20416.2578" />
+				<Coordinate Order="3" X="6329.65283" Y="20416.2578" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 3" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6261.39453" Y="20348.875" />
+				<Coordinate Order="1" X="6338.4043" Y="20348.875" />
+				<Coordinate Order="2" X="6338.4043" Y="20415.3809" />
+				<Coordinate Order="3" X="6261.39453" Y="20415.3809" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 4" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6194.88623" Y="20326.998" />
+				<Coordinate Order="1" X="6257.89404" Y="20326.998" />
+				<Coordinate Order="2" X="6257.89404" Y="20397.0059" />
+				<Coordinate Order="3" X="6194.88623" Y="20397.0059" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 5" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6333.15283" Y="20426.7598" />
+				<Coordinate Order="1" X="6424.16455" Y="20426.7598" />
+				<Coordinate Order="2" X="6424.16455" Y="20488.0176" />
+				<Coordinate Order="3" X="6333.15283" Y="20488.0176" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 6" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6455.66846" Y="20318.2461" />
+				<Coordinate Order="1" X="6536.17822" Y="20318.2461" />
+				<Coordinate Order="2" X="6536.17822" Y="20407.5059" />
+				<Coordinate Order="3" X="6455.66846" Y="20407.5059" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 7" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6508.1748" Y="20397.8809" />
+				<Coordinate Order="1" X="6571.18262" Y="20397.8809" />
+				<Coordinate Order="2" X="6571.18262" Y="20457.3867" />
+				<Coordinate Order="3" X="6508.1748" Y="20457.3867" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 8" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6357.65576" Y="20481.8926" />
+				<Coordinate Order="1" X="6424.16455" Y="20481.8926" />
+				<Coordinate Order="2" X="6424.16455" Y="20555.4023" />
+				<Coordinate Order="3" X="6357.65576" Y="20555.4023" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 9" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6390.91064" Y="20530.0234" />
+				<Coordinate Order="1" X="6455.66797" Y="20530.0234" />
+				<Coordinate Order="2" X="6455.66797" Y="20631.5371" />
+				<Coordinate Order="3" X="6390.91064" Y="20631.5371" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 10" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6525.67676" Y="20612.2832" />
+				<Coordinate Order="1" X="6579.93359" Y="20612.2832" />
+				<Coordinate Order="2" X="6579.93359" Y="20691.041" />
+				<Coordinate Order="3" X="6525.67676" Y="20691.041" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 11" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6561.55615" Y="20525.6465" />
+				<Coordinate Order="1" X="6640.31592" Y="20525.6465" />
+				<Coordinate Order="2" X="6640.31592" Y="20606.1562" />
+				<Coordinate Order="3" X="6561.55615" Y="20606.1562" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 12" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6551.92969" Y="20424.1348" />
+				<Coordinate Order="1" X="6611.4375" Y="20424.1348" />
+				<Coordinate Order="2" X="6611.4375" Y="20518.6465" />
+				<Coordinate Order="3" X="6551.92969" Y="20518.6465" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 13" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6619.31348" Y="20265.7402" />
+				<Coordinate Order="1" X="6729.57666" Y="20265.7402" />
+				<Coordinate Order="2" X="6729.57666" Y="20333.998" />
+				<Coordinate Order="3" X="6619.31348" Y="20333.998" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 14" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6637.69043" Y="20312.1211" />
+				<Coordinate Order="1" X="6737.45264" Y="20312.1211" />
+				<Coordinate Order="2" X="6737.45264" Y="20385.6289" />
+				<Coordinate Order="3" X="6637.69043" Y="20385.6289" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 15" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6642.06641" Y="20404.8828" />
+				<Coordinate Order="1" X="6747.0791" Y="20404.8828" />
+				<Coordinate Order="2" X="6747.0791" Y="20495.8945" />
+				<Coordinate Order="3" X="6642.06641" Y="20495.8945" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 16" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6703.32373" Y="20477.5156" />
+				<Coordinate Order="1" X="6789.08447" Y="20477.5156" />
+				<Coordinate Order="2" X="6789.08447" Y="20563.2773" />
+				<Coordinate Order="3" X="6703.32373" Y="20563.2773" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 17" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6659.56787" Y="20539.6484" />
+				<Coordinate Order="1" X="6733.07715" Y="20539.6484" />
+				<Coordinate Order="2" X="6733.07715" Y="20604.4043" />
+				<Coordinate Order="3" X="6659.56787" Y="20604.4043" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 18" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6803.08594" Y="20309.4961" />
+				<Coordinate Order="1" X="6883.59619" Y="20309.4961" />
+				<Coordinate Order="2" X="6883.59619" Y="20384.7539" />
+				<Coordinate Order="3" X="6803.08594" Y="20384.7539" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 19" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6567.68164" Y="20203.6074" />
+				<Coordinate Order="1" X="6698.94824" Y="20203.6074" />
+				<Coordinate Order="2" X="6698.94824" Y="20312.123" />
+				<Coordinate Order="3" X="6567.68164" Y="20312.123" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 20" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6579.93408" Y="20179.9805" />
+				<Coordinate Order="1" X="6632.43994" Y="20179.9805" />
+				<Coordinate Order="2" X="6632.43994" Y="20269.2402" />
+				<Coordinate Order="3" X="6579.93408" Y="20269.2402" />
+			</Coordinates>
+		</Annotation>
+		<Annotation Name="Annotation 21" Type="Rectangle" PartOfGroup="malignant" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="6599.18604" Y="20698.918" />
+				<Coordinate Order="1" X="6672.69531" Y="20698.918" />
+				<Coordinate Order="2" X="6672.69531" Y="20779.4277" />
+				<Coordinate Order="3" X="6599.18604" Y="20779.4277" />
+			</Coordinates>
+		</Annotation>
+	</Annotations>
+	<AnnotationGroups>
+		<Group Name="malignant" PartOfGroup="None" Color="#64FE2E">
+			<Attributes />
+		</Group>
+	</AnnotationGroups>
+</ASAP_Annotations>
