@@ -31,6 +31,7 @@ class Annotation:
             self.masks[cls] = np.zeros((wsi_height, wsi_width), dtype=np.uint8)
 
     def main_masks(self):
+        self.mask_coords = []
         for annotation in self.annotations:
             cls = annotation.attrib["PartOfGroup"]
             contour = []

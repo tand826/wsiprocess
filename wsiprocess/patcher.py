@@ -96,7 +96,11 @@ class Patcher:
             raise NotImplementedError
 
     def find_bbs(self, x, y, cls=False):
-        pass
+        if cls:
+            if not self.patch_on_annotation(cls, x, y):
+                return []
+            else:
+                pass
 
     def find_masks(self, x, y, cls=False):
         pass
@@ -139,16 +143,12 @@ class Patcher:
             self.get_random_sample("start", 3)
 
         parallel = Parallel(n_jobs=cores, backend="threading", verbose=1)
-
         # from the left top to just before the right bottom.
         parallel([delayed(self.get_patch)(x, y, cls) for x, y in self.iterator])
-
         # the bottom edge.
         parallel([delayed(self.get_patch)(x, self.last_y, cls) for x in self.x_lefttop])
-
         # the right edge
         parallel([delayed(self.get_patch)(self.last_x, y, cls) for y in self.y_lefttop])
-
         # right bottom patch
         self.get_patch(self.last_x, self.last_y, cls)
 
@@ -157,7 +157,6 @@ class Patcher:
 
         if self.finished_sample:
             self.get_random_sample("finished", 3)
-
 
     def patch_on_foreground(self, x, y):
         patch_mask = self.masks["foreground"][y:y+self.p_height, x:x+self.p_width]

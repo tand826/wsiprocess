@@ -5,8 +5,8 @@ import wsiprocess as wp
 def args():
     parser = argparse.ArgumentParser()
     parser.add_argument("wsi")
-    parser.add_argument("-a", "--annotation")
-    parser.add_argument("-i", "--inclusion")
+    parser.add_argument("annotation")
+    parser.add_argument("inclusion")
     return parser.parse_args()
 
 
@@ -103,10 +103,11 @@ def test_segmentation(wsi, annotation, inclusion):
 
 
 if __name__ == '__main__':
-    test_slide()
-    test_annotation()
-    test_inclusion()
-    test_none()
-    test_classification()
-    test_detection()
-    test_segmentation()
+    args = args()
+    test_slide(args.wsi)
+    test_annotation(args.wsi, args.annotation)
+    test_inclusion(args.inclusion)
+    test_none(args.wsi, args.annotation, args.inclusion)
+    test_classification(args.wsi, args.annotation, args.inclusion)
+    test_detection(args.wsi, args.annotation, args.inclusion)
+    test_segmentation(args.wsi, args.annotation, args.inclusion)
