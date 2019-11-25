@@ -1,7 +1,7 @@
 import random
 from joblib import Parallel, delayed
 from itertools import product
-import csv
+import json
 
 from .verify import Verify
 
@@ -14,6 +14,7 @@ class Patcher:
         self.slide = slide
         self.filepath = slide.filename
         self.filestem = slide.filestem
+        self.method = method
         self.wsi_width = slide.wsi_width
         self.wsi_height = slide.wsi_height
         self.p_width = patch_width
@@ -46,11 +47,77 @@ class Patcher:
 
         self.save_to = save_to
 
-        self.result = []
+        self.result = {"result": []}
 
         self.verify = Verify(save_to, self.filestem, method,
                              start_sample, finished_sample, extract_patches)
         self.verify.verify_dirs()
+
+    def save_patch_result(self, x, y, cls):
+        if self.method == "none":
+            self.result["result"].append({"x": x,
+                                          "y": y,
+                                          "w": self.p_width,
+                                          "h": self.p_height})
+
+        elif self.method == "classification":
+            self.result["result"].append({"x": x,
+                                          "y": y,
+                                          "w": self.p_width,
+                                          "h": self.p_height,
+                                          "class": cls})
+
+        elif self.method == "detection":
+            bbs = []
+            for bb in self.find_bbs(x, y):
+                bbs.append({"x": bb["x"],
+                            "y": bb["y"],
+                            "w": bb["width"],
+                            "h": bb["height"],
+                            "class": bb["class"]})
+            self.result["result"].append({"x": x,
+                                          "y": y,
+                                          "w": self.p_width,
+                                          "h": self.p_height,
+                                          "bbs": bbs})
+
+        elif self.method == "segmentation":
+            masks = []
+            for mask in self.find_masks(x, y):
+                masks.append({"coords": mask["coords"],
+                              "class": mask["class"]})
+            self.result["result"] = {"x": x,
+                                     "y": y,
+                                     "w": self.p_width,
+                                     "h": self.p_height,
+                                     "masks": masks}
+
+        else:
+            raise NotImplementedError
+
+    def find_bbs(self, x, y, cls=False):
+        pass
+
+    def find_masks(self, x, y, cls=False):
+        pass
+
+    def save_results(self):
+        self.result["slide"] = self.filepath
+        self.result["method"] = self.method
+        self.result["wsi_width"] = self.wsi_width
+        self.result["wsi_height"] = self.wsi_height
+        self.result["patch_width"] = self.p_width
+        self.result["patch_height"] = self.p_height
+        self.result["overlap_width"] = self.o_width
+        self.result["overlap_hegiht"] = self.o_height
+        self.result["start_sample"] = self.start_sample
+        self.result["finished_sample"] = self.finished_sample
+        self.result["extract_patches"] = self.extract_patches
+        self.result["on_foreground"] = self.on_foreground
+        self.result["on_annotation"] = self.on_annotation
+
+        with open("{}/{}/results.json", "w") as f:
+            json.dump(self.result, f)
 
     def get_patch(self, x, y, cls=False):
         if self.on_foreground:
@@ -59,10 +126,10 @@ class Patcher:
         if self.on_annotation:
             if not self.patch_on_annotation(cls, x, y):
                 return
-        self.result.append([x, y, self.p_width, self.p_height, cls])
         if self.extract_patches:
             patch = self.slide.slide.crop(x, y, self.p_width, self.p_height)
             patch.pngsave("{}/{}/patches/{}/{:06}_{:06}.png".format(self.save_to, self.filestem, cls, x, y))
+        self.save_patch_result(x, y, cls)
 
     def get_patch_parallel(self, cls=False, cores=-1):
         if self.extract_patches:
@@ -86,12 +153,11 @@ class Patcher:
         self.get_patch(self.last_x, self.last_y, cls)
 
         # save results
-        with open("{}/{}/result.csv".format(self.save_to, self.filestem), "w") as f:
-            writer = csv.writer(f)
-            writer.writerows(self.result)
+        self.save_results()
 
         if self.finished_sample:
             self.get_random_sample("finished", 3)
+
 
     def patch_on_foreground(self, x, y):
         patch_mask = self.masks["foreground"][y:y+self.p_height, x:x+self.p_width]

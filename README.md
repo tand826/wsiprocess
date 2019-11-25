@@ -10,22 +10,14 @@ Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 
 # Installation
 1. Install [libvips](https://libvips.github.io/libvips/)
-	- MacOS
-		- `brew install vips`
 	- Linux
 		- `apt install libvips`
+	- MacOS
+		- `brew install vips`
 	- Windows
 		- Install tarball from [here](https://github.com/libvips/build-win64)
 
-2. [For magnification utility] Install [openslide](https://openslide.org/)
-	- MacOS
-		- `brew install openslide`
-	- Linux
-		- `apt install libvips  # automatically instaled with libvips`
-	- Windows
-		- Download the precompiled binary from [here](https://openslide.org/download/#windows-binaries)
-
-3. Install wsiprocess
+2. Install wsiprocess
 	- `pip install wsiprocess`
 
 # Example
@@ -63,6 +55,12 @@ annotation = wp.Annotation("xxx.xml")
 inclusion = wp.Inclusion("xxx.txt")
 annotation.make_masks(slide, inclusion)
 annotation.export_thumb_masks("xxx/masks")
+```
+
+### From shell
+
+```shell
+python wsiprocess.py xxx.tiff xxx.xml xxx.txt
 ```
 
 # Test
