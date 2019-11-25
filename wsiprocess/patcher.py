@@ -3,6 +3,7 @@ from itertools import product
 import json
 from joblib import Parallel, delayed
 import numpy as np
+import cv2
 
 from .verify import Verify
 
@@ -89,11 +90,11 @@ class Patcher:
                 for mask in self.find_masks(x, y):
                     masks.append({"coords": mask["coords"],
                                   "class": mask["class"]})
-            self.result["result"] = {"x": x,
-                                     "y": y,
-                                     "w": self.p_width,
-                                     "h": self.p_height,
-                                     "masks": masks}
+            self.result["result"].append({"x": x,
+                                          "y": y,
+                                          "w": self.p_width,
+                                          "h": self.p_height,
+                                          "masks": masks})
 
         else:
             raise NotImplementedError
@@ -153,7 +154,16 @@ class Patcher:
             return bbs
 
     def find_masks(self, x, y, cls):
-        pass
+        if not self.patch_on_annotation(cls, x, y):
+            return []
+        else:
+            # Find mask coords
+            patch_mask = self.masks[cls][y:y+self.p_height, x:x+self.p_width]
+            contours, _ = cv2.findContours(patch_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+            masks = []
+            mask = {"coords": contours, "class": cls}
+            masks.append(mask)
+            return masks
 
     def save_results(self):
         self.result["slide"] = self.filepath
