@@ -10,6 +10,7 @@ class Annotation:
         self.path = path
         self.read_annotation()
         self.masks = {}
+        self.contours = {}
         self.mask_coords = {}
 
     def read_annotation(self):
@@ -30,19 +31,21 @@ class Annotation:
     def base_masks(self, wsi_height, wsi_width):
         for cls in self.classes:
             self.masks[cls] = np.zeros((wsi_height, wsi_width), dtype=np.uint8)
+            self.mask_coords[cls] = []
 
     def main_masks(self):
-        self.mask_coords = []
         for annotation in self.annotations:
             cls = annotation.attrib["PartOfGroup"]
             contour = []
             for coord in annotation.xpath("Coordinates/Coordinate"):
                 x = np.float(coord.attrib["X"])
                 y = np.float(coord.attrib["Y"])
-                contour.append([[x, y]])
-            contours = np.concatenate(contour).astype(np.int32)
-            self.masks[cls] = cv2.drawContours(self.masks[cls], contours, 0, True, thickness=cv2.FILLED)
-            self.mask_coords[cls] = contours
+                contour.append([x, y])
+            self.mask_coords[cls].append(contour)
+        for cls in self.classes:
+            contours = np.array(self.mask_coords[cls])
+            for contour in contours:
+                self.masks[cls] = cv2.drawContours(self.masks[cls], [np.int32(contour)], 0, True, thickness=cv2.FILLED)
 
     def exclude_masks(self, inclusion):
         self.masks_exclude = self.masks.copy()
