@@ -30,7 +30,7 @@ slide = wp.Slide("xxx.tiff")
 annotation = wp.Annotation("xxx.xml")
 inclusion = wp.Inclusion("xxx.txt")
 
-annotation.make_masks(slide, inclusion)
+annotation.make_masks(slide, inclusion, foreground=True)
 
 patcher = wp.Patcher(slide, "classification", annotation)
 patcher.get_patch_parallel("benign")
@@ -63,11 +63,98 @@ annotation.export_thumb_masks("xxx/masks")
 python wsiprocess.py xxx.tiff xxx.xml xxx.txt
 ```
 
+# Available WSIs
+
+- From below we tested wsi data.
+- The WSIs shown only its file name with green color worked well.
+- The WSIs with some descriptions did not work well and colored in red.
+
+### Classification
+
+- Aperio
+    - CMU-1-JP2K-33005.svs
+    - <div style="color: green">CMU-1-Small-Region.svs</div>
+    - <div style="color: green">CMU-1.svs</div>
+    - CMU-2.svs
+    - CMU-3.svs
+    - JP2K-33003-1.svs
+    - JP2K-33003-2.svs
+
+- Generic-TIFF
+    - <div style="color: red">CMU-1.tiff</div>
+    	- Can NOT set magnification.
+
+- Hamamatsu-vms
+    - <div style="color: green">CMU-1.zip</div>
+    - CMU-2.zip
+    - CMU-3.zip
+    	+ Could NOT DOWNLOAD from http://openslide.cs.cmu.edu/download/openslide-testdata/Hamamatsu-vms/
+
+- Hamamatsu
+    - <div style="color: green">CMU-1.ndpi</div>
+    - CMU-2.ndpi
+    - CMU-3.ndpi
+    - OS-1.ndpi
+    - OS-2.ndpi
+    - OS-3.ndpi
+
+- Leica
+    - <div style="color: green">Leica-1.scn</div>
+    - Leica-2.scn
+    - Leica-3.scn
+    - Leica-Fluorescence-1.scn
+
+- Mirax
+    - CMU-1-Exported.zip
+    - CMU-1-Saved-1_16.zip
+    - CMU-1-Saved-1_2.zip
+    - <div style="color: green">CMU-1.zip</div>
+    	- Can NOT make the foreground mask.
+    - CMU-2.zip
+    - CMU-3.zip
+    - Mirax2-Fluorescence-1.zip
+    - Mirax2-Fluorescence-2.zip
+    - Mirax2.2-1.zip
+    - Mirax2.2-2.zip
+    - Mirax2.2-3.zip
+    - Mirax2.2-4-BMP.zip
+    - Mirax2.2-4-PNG.zip
+
+- Olympus
+    - OS-1.zip
+    - OS-2.zip
+    - OS-3.zip
+
+- Trestle
+    - <div style="color: red">CMU-1.zip</div>
+    	- ASAP can NOT show the image properly, and cannot annotate.
+    - CMU-2.zip
+    - CMU-3.zip
+
+- Ventana
+    - OS-1.bif
+    - OS-2.bif
+
+- <div style="color: red">Zeiss</div>
+    - <div style="color: red">Zeiss-1-Merged.zvi</div>
+    	- Can NOT load slide
+    - <div style="color: red">Zeiss-1-Stacked.zvi</div>
+    	- Can NOT load slide
+    - <div style="color: red">Zeiss-2-Merged.zvi</div>
+    	- Can NOT load slide
+    - <div style="color: red">Zeiss-2-Stacked.zvi</div>
+    	- Can NOT load slide
+    - <div style="color: red">Zeiss-3-Mosaic.zvi</div>
+    	- Can NOT load slide
+    - <div style="color: red">Zeiss-4-Mosaic.zvi</div>
+    	- Can NOT load slide
+
+
 # Test
 
 1. Download sample WSI
 ```
-curl -O -C - http://openslide.cs.cmu.edu/download/openslide-testdata/Hamamatsu/CMU-1.ndpi
+curl -O -C - http://openslide.cs.cmu.edu/download/openslide-testdata/CMU-1.ndpi
 ```
 
 2. Make random annotation
