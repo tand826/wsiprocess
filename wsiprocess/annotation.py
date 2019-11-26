@@ -57,12 +57,13 @@ class Annotation:
         self.masks = self.masks_exclude
 
     def make_foreground_mask(self, slide, size=2000):
-        thumb = slide.slide.thumbnail_image(size, height=size)
-        thumb = np.ndarray(buffer=thumb.write_to_memory(), dtype=np.uint8, shape=[thumb.height, thumb.width, thumb.bands])
-        thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
-        _, th = cv2.threshold(thumb_gray, 0, 1, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
-        self.masks["foreground"] = cv2.resize(th, (slide.width, slide.height))
-        self.classes.append("foreground")
+        if "foreground" not in self.classes:
+            thumb = slide.slide.thumbnail_image(size, height=size)
+            thumb = np.ndarray(buffer=thumb.write_to_memory(), dtype=np.uint8, shape=[thumb.height, thumb.width, thumb.bands])
+            thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
+            _, th = cv2.threshold(thumb_gray, 0, 1, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
+            self.masks["foreground"] = cv2.resize(th, (slide.width, slide.height))
+            self.classes.append("foreground")
 
     def export_thumb_masks(self, save_to=".", size=512):
         for cls in self.masks.keys():

@@ -4,6 +4,7 @@ import json
 from joblib import Parallel, delayed
 import numpy as np
 import cv2
+from pathlib import Path
 
 from .verify import Verify
 
@@ -87,7 +88,8 @@ class Patcher:
         elif self.method == "segmentation":
             masks = []
             for cls in self.classes:
-                for mask in self.find_masks(x, y):
+                # self.verify.verify_dir("{}/{}/masks/{}".format(self.save_to, self.filestem, cls))
+                for mask in self.find_masks(x, y, cls):
                     masks.append({"coords": mask["coords"],
                                   "class": mask["class"]})
             self.result["result"].append({"x": x,
@@ -147,10 +149,18 @@ class Patcher:
             bbs_raw = coords[list(idx_of_bb_on_patch)]
             bbs = []
             for bb_raw in bbs_raw:
-                bb = {"x": max(int(bb_raw[:, 0].min() - x), 0),
-                      "y": max(int(bb_raw[:, 1].min() - y), 0),
-                      "w": max(int(bb_raw[:, 0].max() - bb_raw[:, 0].min()), 0),
-                      "h": max(int(bb_raw[:, 1].max() - bb_raw[:, 1].min()), 0),
+                x1 = bb_raw[:, 0].min()
+                y1 = bb_raw[:, 1].min()
+                x2 = bb_raw[:, 0].max()
+                y2 = bb_raw[:, 1].max()
+                bbx1 = int(max(x1 - x, 0))
+                bby1 = int(max(y1 - y, 0))
+                bbx2 = int(min(x2 - x1 + bbx1, self.p_width)) - bbx1
+                bby2 = int(min(y2 - y1 + bby1, self.p_height)) - bby1
+                bb = {"x": bbx1,
+                      "y": bby1,
+                      "w": bbx2,
+                      "h": bby2,
                       "class": cls}
                 bbs.append(bb)
             return bbs
@@ -161,9 +171,11 @@ class Patcher:
         else:
             # Find mask coords
             patch_mask = self.masks[cls][y:y+self.p_height, x:x+self.p_width]
-            contours, _ = cv2.findContours(patch_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+            mask_png_path = "{}/{}/masks/{}/{:06}_{:06}.png".format(self.save_to, self.filestem, cls, x, y)
+            cv2.imwrite(mask_png_path, patch_mask, (cv2.IMWRITE_PXM_BINARY, 1))
+            # contours, _ = cv2.findContours(patch_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
             masks = []
-            mask = {"coords": contours, "class": cls}
+            mask = {"coords": mask_png_path, "class": cls}
             masks.append(mask)
             return masks
 
@@ -181,6 +193,8 @@ class Patcher:
         self.result["extract_patches"] = self.extract_patches
         self.result["on_foreground"] = self.on_foreground
         self.result["on_annotation"] = self.on_annotation
+        self.result["save_to"] = str(Path(self.save_to).absolute())
+        self.result["classes"] = self.classes
 
         with open("{}/{}/results.json".format(self.save_to, self.filestem), "w") as f:
             json.dump(self.result, f, indent=4)
@@ -200,6 +214,8 @@ class Patcher:
     def get_patch_parallel(self, cls=False, cores=-1):
         if self.extract_patches:
             self.verify.verify_dir("{}/{}/patches/{}".format(self.save_to, self.filestem, cls))
+        if self.method == "segmentation":
+            self.verify.verify_dir("{}/{}/masks/{}".format(self.save_to, self.filestem, cls))
 
         if self.start_sample:
             self.get_random_sample("start", 3)
