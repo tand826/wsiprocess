@@ -82,14 +82,14 @@ def test_detection(wsi, annotation, inclusion):
     print("detection with annotation")
     annotation = wp.Annotation(annotation)
     annotation.make_masks(slide, foreground=True)
-    patcher = wp.Patcher(slide, "detection", annotation, start_sample=False, finished_sample=False, on_foreground=1., on_annotation=1.)
+    patcher = wp.Patcher(slide, "detection", annotation, start_sample=False, finished_sample=False, on_foreground=0.7, on_annotation=0.01)
     patcher.get_patch_parallel(annotation.classes[0])
 
     # with annotation file and inclusion file
     print("detection with annotation and inclusion")
     inclusion = wp.Inclusion(inclusion)
     annotation.make_masks(slide, inclusion, foreground=True)
-    patcher = wp.Patcher(slide, "detection", annotation, start_sample=False, finished_sample=False, on_foreground=1., on_annotation=1.)
+    patcher = wp.Patcher(slide, "detection", annotation, start_sample=False, finished_sample=False, on_foreground=0.7, on_annotation=0.01)
     patcher.get_patch_parallel(annotation.classes[0])
 
 
@@ -126,5 +126,5 @@ if __name__ == '__main__':
     #test_classification(args.wsi, args.annotation, args.inclusion)
     print("detection")
     test_detection(args.wsi, args.annotation, args.inclusion)
-    print("segmentation")
-    test_segmentation(args.wsi, args.annotation, args.inclusion)
+    #print("segmentation")
+    #test_segmentation(args.wsi, args.annotation, args.inclusion)

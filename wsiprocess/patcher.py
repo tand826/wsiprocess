@@ -75,8 +75,8 @@ class Patcher:
                 for bb in self.find_bbs(x, y, cls):
                     bbs.append({"x": bb["x"],
                                 "y": bb["y"],
-                                "w": bb["width"],
-                                "h": bb["height"],
+                                "w": bb["w"],
+                                "h": bb["h"],
                                 "class": bb["class"]})
             self.result["result"].append({"x": x,
                                           "y": y,
@@ -104,6 +104,8 @@ class Patcher:
             return []
         else:
             # Find bounding boxes which are on the patch
+            if cls == "foreground":
+                return []
             coords = self.annotation.mask_coords[cls]
             coords = np.array(coords)
             bblefts = np.min(coords, axis=1)[:, 0]
@@ -128,7 +130,7 @@ class Patcher:
             bbtop_below_patch_top = set(np.where(bbtops >= patch_top)[0])
             bbtop_above_patch_bottom = set(np.where(bbtops <= patch_bottom)[0])
             bbbottom_below_patch_top = set(np.where(bbbottoms >= patch_top)[0])
-            bbbottom_above_patch_bottom = set(np.where(bbbottoms <= patch_bottom))
+            bbbottom_above_patch_bottom = set(np.where(bbbottoms <= patch_bottom)[0])
 
             bbleft_on_patch = bbleft_right_of_patch_left & bbleft_left_of_patch_right
             bbright_on_patch = bbright_right_of_patch_left & bbright_left_of_patch_right
@@ -142,13 +144,13 @@ class Patcher:
 
             idx_of_bb_on_patch = bb_lefttop_on_patch | bb_leftbottom_on_patch | bb_righttop_on_patch | bb_rightbottom_on_patch
 
-            bbs_raw = coords[idx_of_bb_on_patch]
+            bbs_raw = coords[list(idx_of_bb_on_patch)]
             bbs = []
             for bb_raw in bbs_raw:
-                bb = {"x": bb_raw[:, 0].min(),
-                      "y": bb_raw[:, 1].min(),
-                      "w": bb_raw[:, 0].max() - bb_raw[:, 0].min(),
-                      "h": bb_raw[:, 1].max() - bb_raw[:, 1].min(),
+                bb = {"x": max(int(bb_raw[:, 0].min() - x), 0),
+                      "y": max(int(bb_raw[:, 1].min() - y), 0),
+                      "w": max(int(bb_raw[:, 0].max() - bb_raw[:, 0].min()), 0),
+                      "h": max(int(bb_raw[:, 1].max() - bb_raw[:, 1].min()), 0),
                       "class": cls}
                 bbs.append(bb)
             return bbs
