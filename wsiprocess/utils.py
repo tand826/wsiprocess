@@ -16,7 +16,6 @@ def show_bounding_box(patch_path, result_path, save_as):
                 x2 = bbs["x"] + bbs["w"]
                 y2 = bbs["y"] + bbs["h"]
                 color = (255, 255, 0)
-                print(x1, y1, x2, y2)
                 cv2.rectangle(img, (x1, y1), (x2, y2), color)
     cv2.imwrite(save_as, img)
 
