@@ -8,6 +8,10 @@ Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 	- Object Detection: Patch + CSV
 	- Segmentation: Patch + Mask
 
+# Memo
+- pip install -e .
+	- -> install also as a command line tool
+
 # Installation
 1. Install [libvips](https://libvips.github.io/libvips/)
 	- Linux

@@ -8,7 +8,7 @@ setuptools.setup(
     version="0.0.1",
     author="Takumi Ando",
     author_email="takumi.ando826@gmail.com",
-    description="Open Source Whole Slide Image(WSI) Processing Library",
+    description="Whole Slide Image (WSI) Processing Library",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/tand826/wsiprocess",
@@ -18,6 +18,11 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    scripts=["bin/wsiprocess.py"],
-    python_requires='>=3.6',
+    scripts=["bin/wsiprocess"],
+    entry_points={
+        "console_scripts": [
+            "wsiprocess = wsiprocess.wsiprocess:main"
+        ]
+    },
+    python_requires='>=3.4',
 )
