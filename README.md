@@ -2,18 +2,14 @@
 
 Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 
-# What can wsiprocess do?
-<div style="text-align: center"><img src="images/description3.png" style="max-width: 100%; margin: 0 auto;"></div>
+# Convert Helper for Deep Learning with WSI
+<div style="text-align: center"><img src="images/description.png" style="max-width: 80%; margin: 0 auto;"></div>
 
-1. Just make tiles from WSIs without the annotation data.
-2. Extract patches from WSIs within the annotated area.
-	- Classification: Patch + CSV
-	- Object Detection: Patch + CSV
-	- Segmentation: Patch + Mask
+1. Scan some WSIs.
+2. Make some annotations with WSI annotation tools
+3. Then wsiprocess helps converting WSI + Annotation data into patches and easy-to-use annotation data.
 
-# Memo
-- pip install -e .
-	- -> install also as a command line tool
+[Command Helper](#) will recommend commands to run.
 
 # Installation
 1. Install [libvips](https://libvips.github.io/libvips/)
@@ -29,7 +25,9 @@ Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 
 # Example
 
-### Basic Usage
+### As a python module
+
+#### Basic Usage
 
 ```python
 import wsiprocess as wp
@@ -43,7 +41,7 @@ patcher = wp.Patcher(slide, "classification", annotation)
 patcher.get_patch_parallel("benign")
 ```
 
-### Export annotaton xml of one class as mask image
+#### Export annotaton xml of one class as mask image
 
 ```python
 import wsiprocess as wp
@@ -53,7 +51,7 @@ annotation.make_masks(slide)
 annotation.export_mask("xxx/masks", "benign")
 ```
 
-### Export annotation xml with inclusion definition as mask images, and save their thumbs
+#### Export annotation xml with inclusion definition as mask images, and save their thumbs
 
 ```python
 import wsiprocess as wp
@@ -64,11 +62,12 @@ annotation.make_masks(slide, inclusion)
 annotation.export_thumb_masks("xxx/masks")
 ```
 
-### From shell
+### As a command line tool
 
 ```shell
 python wsiprocess.py xxx.tiff xxx.xml xxx.txt
 ```
+- Need recommendation for choice of arguments? -> [Command Helper](#)
 
 # Available WSIs
 
