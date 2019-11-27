@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+import wsiprocess as wp
 
 
 class Args:
@@ -44,3 +45,31 @@ class Args:
         args = parser.parse_args()
         for arg in vars(args):
             setattr(self, arg, getattr(args, arg))
+
+
+def main():
+    print("impoterd")
+    args = Args()
+    slide = wp.Slide(args.wsi)
+    print("loaded")
+    if args.inclusion:
+        inclusion = wp.Inclusion(args.inclusion)
+    else:
+        inclusion = False
+    if args.annotation:
+        annotation = wp.Annotation(args.annotation)
+        annotation.make_masks(slide, inclusion, foreground=True)
+    else:
+        annotation = False
+    patcher = wp.Patcher(slide, args.method, annotation=annotation,
+                         save_to=args.save_to, patch_width=args.patch_width,
+                         patch_height=args.patch_height,
+                         overlap_width=args.overlap_width,
+                         overlap_height=args.overlap_height,
+                         on_foreground=args.on_foreground,
+                         on_annotation=args.on_annotation,
+                         start_sample=args.start_sample,
+                         finished_sample=args.finished_sample,
+                         extract_patches=args.extract_patches)
+    for cls in annotation.classes:
+        patcher.get_patch_parallel(cls)

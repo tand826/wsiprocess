@@ -18,10 +18,9 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    scripts=["bin/wsiprocess"],
     entry_points={
         "console_scripts": [
-            "wsiprocess = wsiprocess.wsiprocess:main"
+            "wsiprocess = wsiprocess:main"
         ]
     },
     python_requires='>=3.4',
