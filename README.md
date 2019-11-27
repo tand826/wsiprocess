@@ -1,7 +1,10 @@
-# wsiprocess
+<img src="images/logo.png" style="max-height: 40px">
+
 Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 
 # What can wsiprocess do?
+<div style="text-align: center"><img src="images/description.png" style="max-width: 50%; margin: 0 auto;"></div>
+
 1. Just make tiles from WSIs without the annotation data.
 2. Extract patches from WSIs within the annotated area.
 	- Classification: Patch + CSV
