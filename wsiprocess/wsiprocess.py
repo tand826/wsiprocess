@@ -48,10 +48,8 @@ class Args:
 
 
 def main():
-    print("impoterd")
     args = Args()
     slide = wp.Slide(args.wsi)
-    print("loaded")
     if args.inclusion:
         inclusion = wp.Inclusion(args.inclusion)
     else:
