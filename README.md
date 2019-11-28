@@ -115,7 +115,7 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
     - CMU-1-Exported.zip
     - CMU-1-Saved-1_16.zip
     - CMU-1-Saved-1_2.zip
-    - :smile:CMU-1.zip
+    - :umbrella:CMU-1.zip
     	- Can not make the foreground mask.
     - CMU-2.zip
     - CMU-3.zip
@@ -142,19 +142,13 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
     - OS-1.bif
     - OS-2.bif
 
-- :umbrella:Zeiss
+- :umbrella:Zeiss : Can not load slide
     - :umbrella:Zeiss-1-Merged.zvi
-    	- Can not load slide
     - :umbrella:Zeiss-1-Stacked.zvi
-    	- Can not load slide
     - :umbrella:Zeiss-2-Merged.zvi
-    	- Can not load slide
     - :umbrella:Zeiss-2-Stacked.zvi
-    	- Can not load slide
     - :umbrella:Zeiss-3-Mosaic.zvi
-    	- Can not load slide
     - :umbrella:Zeiss-4-Mosaic.zvi
-    	- Can not load slide
 
 
 # Test
