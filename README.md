@@ -1,4 +1,4 @@
-<img src="images/logo.png" style="max-height: 40px">
+<img src="images/logo.png" style="height: 40px">
 
 Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 
