@@ -2,7 +2,7 @@
 
 Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 
-# Convert Helper for Deep Learning with WSI
+# Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 <div style="text-align: center"><img src="images/description.png" style="max-width: 80%; margin: 0 auto;"></div>
 
 1. Scan some WSIs.
