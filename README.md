@@ -65,7 +65,7 @@ annotation.export_thumb_masks("xxx/masks")
 ### As a command line tool
 
 ```bash
-python wsiprocess.py xxx.tiff xxx.xml xxx.txt
+wsiprocess xxx.tiff method --annotation xxx.xml
 ```
 - Need recommendation for choice of arguments? -> [Command Helper](#)
 
