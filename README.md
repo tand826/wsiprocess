@@ -72,15 +72,16 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
 # Available WSIs
 
 - From below we tested wsi data.
-- The WSIs with checked box worked well.
-- The WSIs without check box did not work well.
+    - :smile: : worked well.
+    - :umbrella: : did not work well.
+    - otherwise : did not check
 
 ### Classification
 
 - Aperio
     - CMU-1-JP2K-33005.svs
-    - [x] CMU-1-Small-Region.svs
-    - [x] CMU-1.svs
+    - :smile: CMU-1-Small-Region.svs
+    - :smile: CMU-1.svs
     - CMU-2.svs
     - CMU-3.svs
     - JP2K-33003-1.svs
@@ -88,16 +89,16 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
 
 - Generic-TIFF
     - :umbrella:CMU-1.tiff
-    	- Can NOT set magnification.
+    	- Can not set magnification.
 
 - Hamamatsu-vms
-    - [x]CMU-1.zip
+    - :smile:CMU-1.zip
     - CMU-2.zip
     - CMU-3.zip
-    	+ Could NOT DOWNLOAD from http://openslide.cs.cmu.edu/download/openslide-testdata/Hamamatsu-vms/
+    	+ Could not DOWNLOAD from http://openslide.cs.cmu.edu/download/openslide-testdata/Hamamatsu-vms/
 
 - Hamamatsu
-    - [x]CMU-1.ndpi
+    - :smile:CMU-1.ndpi
     - CMU-2.ndpi
     - CMU-3.ndpi
     - OS-1.ndpi
@@ -105,7 +106,7 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
     - OS-3.ndpi
 
 - Leica
-    - [x]Leica-1.scn
+    - :smile:Leica-1.scn
     - Leica-2.scn
     - Leica-3.scn
     - Leica-Fluorescence-1.scn
@@ -114,8 +115,8 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
     - CMU-1-Exported.zip
     - CMU-1-Saved-1_16.zip
     - CMU-1-Saved-1_2.zip
-    - [x]CMU-1.zip
-    	- Can NOT make the foreground mask.
+    - :smile:CMU-1.zip
+    	- Can not make the foreground mask.
     - CMU-2.zip
     - CMU-3.zip
     - Mirax2-Fluorescence-1.zip
@@ -133,7 +134,7 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
 
 - Trestle
     - :umbrella:CMU-1.zip
-    	- ASAP can NOT show the image properly, and cannot annotate.
+    	- ASAP can not show the image properly, and it's hard to annotate.
     - CMU-2.zip
     - CMU-3.zip
 
@@ -143,17 +144,17 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
 
 - :umbrella:Zeiss
     - :umbrella:Zeiss-1-Merged.zvi
-    	- Can NOT load slide
+    	- Can not load slide
     - :umbrella:Zeiss-1-Stacked.zvi
-    	- Can NOT load slide
+    	- Can not load slide
     - :umbrella:Zeiss-2-Merged.zvi
-    	- Can NOT load slide
+    	- Can not load slide
     - :umbrella:Zeiss-2-Stacked.zvi
-    	- Can NOT load slide
+    	- Can not load slide
     - :umbrella:Zeiss-3-Mosaic.zvi
-    	- Can NOT load slide
+    	- Can not load slide
     - :umbrella:Zeiss-4-Mosaic.zvi
-    	- Can NOT load slide
+    	- Can not load slide
 
 
 # Test
