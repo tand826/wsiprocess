@@ -72,22 +72,22 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
 # Available WSIs
 
 - From below we tested wsi data.
-- The WSIs shown only its file name worked well.
-- The WSIs with some descriptions did not work well.
+- The WSIs with checked box worked well.
+- The WSIs without check box did not work well.
 
 ### Classification
 
 - Aperio
-    - [ ]CMU-1-JP2K-33005.svs
+    - CMU-1-JP2K-33005.svs
     - [x] CMU-1-Small-Region.svs
     - [x] CMU-1.svs
-    - [ ]CMU-2.svs
-    - [ ]CMU-3.svs
-    - [ ]JP2K-33003-1.svs
-    - [ ]JP2K-33003-2.svs
+    - CMU-2.svs
+    - CMU-3.svs
+    - JP2K-33003-1.svs
+    - JP2K-33003-2.svs
 
 - Generic-TIFF
-    - <div style="color: red">CMU-1.tiff</div>
+    - :umbrella:CMU-1.tiff
     	- Can NOT set magnification.
 
 - Hamamatsu-vms
@@ -132,7 +132,7 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
     - OS-3.zip
 
 - Trestle
-    - <div style="color: red">CMU-1.zip</div>
+    - :umbrella:CMU-1.zip
     	- ASAP can NOT show the image properly, and cannot annotate.
     - CMU-2.zip
     - CMU-3.zip
@@ -141,18 +141,18 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
     - OS-1.bif
     - OS-2.bif
 
-- <div style="color: red">Zeiss</div>
-    - <div style="color: red">Zeiss-1-Merged.zvi</div>
+- :umbrella:Zeiss
+    - :umbrella:Zeiss-1-Merged.zvi
     	- Can NOT load slide
-    - <div style="color: red">Zeiss-1-Stacked.zvi</div>
+    - :umbrella:Zeiss-1-Stacked.zvi
     	- Can NOT load slide
-    - <div style="color: red">Zeiss-2-Merged.zvi</div>
+    - :umbrella:Zeiss-2-Merged.zvi
     	- Can NOT load slide
-    - <div style="color: red">Zeiss-2-Stacked.zvi</div>
+    - :umbrella:Zeiss-2-Stacked.zvi
     	- Can NOT load slide
-    - <div style="color: red">Zeiss-3-Mosaic.zvi</div>
+    - :umbrella:Zeiss-3-Mosaic.zvi
     	- Can NOT load slide
-    - <div style="color: red">Zeiss-4-Mosaic.zvi</div>
+    - :umbrella:Zeiss-4-Mosaic.zvi
     	- Can NOT load slide
 
 
