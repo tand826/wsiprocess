@@ -69,6 +69,17 @@ wsiprocess xxx.tiff method --annotation xxx.xml
 ```
 - Need recommendation for choice of arguments? -> [Command Helper](#)
 
+### With dockerfile
+
+```bash
+# build the image
+docker build . -t wsiprocess_image
+
+# run the container
+docker run --name wsiprocess_container -v [your files directory]:/data -it -d wsiprocess_image wsiprocess /data/[file path] etc.
+
+```
+
 # Available WSIs
 
 - From below we tested wsi data.
