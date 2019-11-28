@@ -49,17 +49,17 @@ class Args:
 
 def main():
     args = Args()
-    slide = wp.Slide(args.wsi)
+    slide = wp.slide(args.wsi)
     if args.inclusion:
-        inclusion = wp.Inclusion(args.inclusion)
+        inclusion = wp.inclusion(args.inclusion)
     else:
         inclusion = False
     if args.annotation:
-        annotation = wp.Annotation(args.annotation)
+        annotation = wp.annotation(args.annotation)
         annotation.make_masks(slide, inclusion, foreground=True)
     else:
         annotation = False
-    patcher = wp.Patcher(slide, args.method, annotation=annotation,
+    patcher = wp.patcher(slide, args.method, annotation=annotation,
                          save_to=args.save_to, patch_width=args.patch_width,
                          patch_height=args.patch_height,
                          overlap_width=args.overlap_width,

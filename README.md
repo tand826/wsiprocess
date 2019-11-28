@@ -31,13 +31,13 @@ Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 
 ```python
 import wsiprocess as wp
-slide = wp.Slide("xxx.tiff")
-annotation = wp.Annotation("xxx.xml")
-inclusion = wp.Inclusion("xxx.txt")
+slide = wp.slide("xxx.tiff")
+annotation = wp.annotation("xxx.xml")
+inclusion = wp.inclusion("xxx.txt")
 
 annotation.make_masks(slide, inclusion, foreground=True)
 
-patcher = wp.Patcher(slide, "classification", annotation)
+patcher = wp.patcher(slide, "classification", annotation)
 patcher.get_patch_parallel("benign")
 ```
 
@@ -45,8 +45,8 @@ patcher.get_patch_parallel("benign")
 
 ```python
 import wsiprocess as wp
-slide = wp.Slide("xxx.tiff")
-annotation = wp.Annotation("xxx.xml")
+slide = wp.slide("xxx.tiff")
+annotation = wp.annotation("xxx.xml")
 annotation.make_masks(slide)
 annotation.export_mask("xxx/masks", "benign")
 ```
@@ -55,9 +55,9 @@ annotation.export_mask("xxx/masks", "benign")
 
 ```python
 import wsiprocess as wp
-slide = wp.Slide("xxx.tiff")
-annotation = wp.Annotation("xxx.xml")
-inclusion = wp.Inclusion("xxx.txt")
+slide = wp.slide("xxx.tiff")
+annotation = wp.annotation("xxx.xml")
+inclusion = wp.inclusion("xxx.txt")
 annotation.make_masks(slide, inclusion)
 annotation.export_thumb_masks("xxx/masks")
 ```
@@ -72,32 +72,32 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
 # Available WSIs
 
 - From below we tested wsi data.
-- The WSIs shown only its file name with green color worked well.
-- The WSIs with some descriptions did not work well and colored in red.
+- The WSIs shown only its file name worked well.
+- The WSIs with some descriptions did not work well.
 
 ### Classification
 
 - Aperio
-    - CMU-1-JP2K-33005.svs
-    - <div style="color: green">CMU-1-Small-Region.svs</div>
-    - <div style="color: green">CMU-1.svs</div>
-    - CMU-2.svs
-    - CMU-3.svs
-    - JP2K-33003-1.svs
-    - JP2K-33003-2.svs
+    - [ ]CMU-1-JP2K-33005.svs
+    - [x] CMU-1-Small-Region.svs
+    - [x] CMU-1.svs
+    - [ ]CMU-2.svs
+    - [ ]CMU-3.svs
+    - [ ]JP2K-33003-1.svs
+    - [ ]JP2K-33003-2.svs
 
 - Generic-TIFF
     - <div style="color: red">CMU-1.tiff</div>
     	- Can NOT set magnification.
 
 - Hamamatsu-vms
-    - <div style="color: green">CMU-1.zip</div>
+    - [x]CMU-1.zip
     - CMU-2.zip
     - CMU-3.zip
     	+ Could NOT DOWNLOAD from http://openslide.cs.cmu.edu/download/openslide-testdata/Hamamatsu-vms/
 
 - Hamamatsu
-    - <div style="color: green">CMU-1.ndpi</div>
+    - [x]CMU-1.ndpi
     - CMU-2.ndpi
     - CMU-3.ndpi
     - OS-1.ndpi
@@ -105,7 +105,7 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
     - OS-3.ndpi
 
 - Leica
-    - <div style="color: green">Leica-1.scn</div>
+    - [x]Leica-1.scn
     - Leica-2.scn
     - Leica-3.scn
     - Leica-Fluorescence-1.scn
@@ -114,7 +114,7 @@ python wsiprocess.py xxx.tiff xxx.xml xxx.txt
     - CMU-1-Exported.zip
     - CMU-1-Saved-1_16.zip
     - CMU-1-Saved-1_2.zip
-    - <div style="color: green">CMU-1.zip</div>
+    - [x]CMU-1.zip
     	- Can NOT make the foreground mask.
     - CMU-2.zip
     - CMU-3.zip
