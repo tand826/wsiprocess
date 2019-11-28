@@ -20,7 +20,7 @@ setuptools.setup(
     ],
     entry_points={
         "console_scripts": [
-            "wsiprocess = wsiprocess:main"
+            "wsiprocess = cli:main"
         ]
     },
     python_requires='>=3.4',

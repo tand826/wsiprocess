@@ -9,14 +9,14 @@ class Args:
 
     def get_args(self):
         parser = argparse.ArgumentParser()
-        parser.add_argument("wsi", type=Path,
+        parser.add_argument("wsi", type=str,
                             help="Path to the target wsi.")
         parser.add_argument("method", type=str,
                             choices={"none", "classification", "detection", "segmentation"},
                             help="Method to use.")
-        parser.add_argument("-st", "--save_to", type=Path,
+        parser.add_argument("-st", "--save_to", type=Path, default=".",
                             help="Where to save the data.")
-        parser.add_argument("-an", "--annotation", type=Path,
+        parser.add_argument("-an", "--annotation", type=str, default=False,
                             help="Path to the annotation xml file.")
         parser.add_argument("-of", "--on_foreground", type=float, default=1.,
                             help="The ratio of overlapped area of a patch and the foreground area.")
@@ -59,8 +59,10 @@ def main():
         annotation.make_masks(slide, inclusion, foreground=True)
     else:
         annotation = False
-    patcher = wp.patcher(slide, args.method, annotation=annotation,
-                         save_to=args.save_to, patch_width=args.patch_width,
+    patcher = wp.patcher(slide, args.method,
+                         annotation=annotation,
+                         save_to=args.save_to,
+                         patch_width=args.patch_width,
                          patch_height=args.patch_height,
                          overlap_width=args.overlap_width,
                          overlap_height=args.overlap_height,

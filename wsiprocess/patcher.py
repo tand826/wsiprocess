@@ -51,7 +51,7 @@ class Patcher:
         self.save_to = save_to
 
         self.result = {"result": []}
-
+        print(save_to, self.filestem, method)
         self.verify = Verify(save_to, self.filestem, method,
                              start_sample, finished_sample, extract_patches)
         self.verify.verify_dirs()

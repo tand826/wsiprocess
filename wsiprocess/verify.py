@@ -12,6 +12,7 @@ class Verify:
         self.extract_patches = extract_patches
 
     def verify_dirs(self):
+        print(self.save_to, self.filestem)
         base_dir = Path(self.save_to)/self.filestem
         self.verify_dir(base_dir)
         if self.method == "segmentation":
