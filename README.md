@@ -23,6 +23,8 @@ Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 2. Install wsiprocess
 	- `pip install wsiprocess`
 
+3. 
+
 # Example
 
 ### As a python module
@@ -76,9 +78,10 @@ wsiprocess xxx.tiff method --annotation xxx.xml
 docker build . -t wsiprocess_image
 
 # run the container
-docker run --name wsiprocess_container -v [your files directory]:/data -it -d wsiprocess_image wsiprocess /data/[file path] etc.
-
+docker run --name wsiprocess_container -v [your files directory]:/data -it -d wsiprocess_image [commands] etc.
 ```
+
+see Command Helper for commands
 
 # Available WSIs
 
