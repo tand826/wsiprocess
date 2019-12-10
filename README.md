@@ -21,7 +21,10 @@ Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 		- Install tarball from [here](https://github.com/libvips/build-win64)
 
 2. Install wsiprocess
-	- `pip install wsiprocess`
+	```
+	pip install -r requirements.txt
+	pip install wsiprocess
+	```
 
 
 # Example
@@ -185,7 +188,6 @@ python test.py
 
 # TODO
 - Command Helper
-- Dockerfile
 - other annotation tools
 	- Cytomine : hard to install
 	- ImageJ with SlideJ
