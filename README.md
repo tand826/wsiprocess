@@ -23,7 +23,6 @@ Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 2. Install wsiprocess
 	- `pip install wsiprocess`
 
-3. 
 
 # Example
 
@@ -196,3 +195,4 @@ python test.py
 	- PMA.start : cannot make annotation
 	- QuPath : annotation data is saved as binary file.
 	- caMicroscope
+OUTPUT SIZE alart

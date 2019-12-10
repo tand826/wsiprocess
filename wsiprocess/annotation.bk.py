@@ -1,3 +1,4 @@
+from lxml import etree
 import cv2
 import numpy as np
 from pathlib import Path
@@ -13,17 +14,11 @@ class Annotation:
         self.contours = {}
         self.mask_coords = {}
 
-    def read_annotation(self, annotation_type=False):
-        annotation_type = ""
-        if annotation_type == "ASAP":
-            parser = ASAP_parser
-            parser(self.path)
-        elif annotation_type is False:
-            pass  # run type detector.
-        self.annotations = parser.annotations
-        self.annotation_groups = parser.annotation_groups
-        self.classes = parser.classes
-        self.mask_coords = parser.mask_coords
+    def read_annotation(self):
+        tree = etree.parse(self.path)
+        self.annotations = tree.xpath("/ASAP_Annotations/Annotations/Annotation")
+        self.annotation_groups = tree.xpath("/ASAP_Annotations/AnnotationGroups/Group")
+        self.classes = [group.attrib["Name"] for group in self.annotation_groups]
         assert len(self.annotations) > 0, "No annotations found."
 
     def make_masks(self, slide, inclusion=False, foreground=False, size=2000):
@@ -36,11 +31,8 @@ class Annotation:
 
     def base_masks(self, wsi_height, wsi_width):
         for cls in self.classes:
-            self.base_mask(cls, wsi_height, wsi_width)
-
-    def base_mask(self, cls, wsi_height, wsi_width):
-        self.masks[cls] = np.zeros((wsi_height, wsi_width), dtype=np.uint8)
-        self.mask_coords[cls] = []
+            self.masks[cls] = np.zeros((wsi_height, wsi_width), dtype=np.uint8)
+            self.mask_coords[cls] = []
 
     def main_masks(self):
         for annotation in self.annotations:
@@ -55,16 +47,6 @@ class Annotation:
             contours = np.array(self.mask_coords[cls])
             for contour in contours:
                 self.masks[cls] = cv2.drawContours(self.masks[cls], [np.int32(contour)], 0, True, thickness=cv2.FILLED)
-
-    def main_mask(self, cls):
-        for annotation in self.annotations:
-            if annotation.attrib["PartOfGroup"] == cls:
-                contour = []
-                for coord in annotation.xpath("Coordinates/Coordinate"):
-                    x = np.float(coord.attrib["X"])
-                    y = np.float(coord.attrib["Y"])
-                    contour.append([round(float(x)), round(float(y))])
-                self.mask_coords[cls].append(contour)
 
     def exclude_masks(self, inclusion):
         self.masks_exclude = self.masks.copy()
