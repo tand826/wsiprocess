@@ -39,7 +39,7 @@ class Args:
         parser.add_argument("-ma", "--magnification", choices={40, 20, 10},
                             default=40, type=int,
                             help="Magnification to process.")
-        parser.add_argument("-ie", "--inclusion", type=Path,
+        parser.add_argument("-in", "--inclusion", type=Path,
                             help="File to define the inclusion relationship.")
 
         args = parser.parse_args()
