@@ -192,11 +192,11 @@ python test.py
 # TODO
 - other annotation tools
 	- Cytomine : hard to install
-	- ImageJ with SlideJ
+	- ImageJ with SlideJ -> only to view one patch???
 	- JVSView
 	- OMERO
 	- Orbit
-	- PMA.start : cannot make annotation
+	- PMA.start : still cannot properly view the image
 	- QuPath : run script to save polygon or rectangles
 	- caMicroscope OUTPUT SIZE alart
 - add badges
