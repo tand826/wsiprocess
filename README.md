@@ -9,7 +9,7 @@ Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
 2. Make some annotations with WSI annotation tools
 3. Then wsiprocess helps converting WSI + Annotation data into patches and easy-to-use annotation data.
 
-[Command Helper](#) will recommend commands to run.
+[Command Helper](https://tand826.github.io/wsiprocess_command_line_helper) will recommend commands to run.
 
 # Installation
 1. Install [libvips](https://libvips.github.io/libvips/)
@@ -71,7 +71,7 @@ annotation.export_thumb_masks("xxx/masks")
 ```bash
 wsiprocess xxx.tiff method --annotation xxx.xml
 ```
-- Need recommendation for choice of arguments? -> [Command Helper](#)
+- Need recommendation for choice of arguments? -> [Command Helper](https://tand826.github.io/wsiprocess_command_line_helper)
 
 ### With dockerfile
 
