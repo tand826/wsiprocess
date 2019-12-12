@@ -197,6 +197,6 @@ python test.py
 	- OMERO
 	- Orbit
 	- PMA.start : cannot make annotation
-	- QuPath : annotation data is saved as binary file.
+	- QuPath : run script to save polygon or rectangles
 	- caMicroscope OUTPUT SIZE alart
 - add badges
