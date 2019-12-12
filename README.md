@@ -1,8 +1,8 @@
-<img src="images/logo.png" style="height: 40px">
+<img src="images/logo.png" style="width: 50%">
 
-Open Source Whole Slide Image(WSI) Processing Library for Deep Learning
+Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 
-# Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
+# Main Flow
 <div style="text-align: center"><img src="images/description.png" style="max-width: 80%; margin: 0 auto;"></div>
 
 1. Scan some WSIs.
@@ -73,7 +73,7 @@ wsiprocess xxx.tiff method --annotation xxx.xml
 ```
 - Need recommendation for choice of arguments? -> [Command Helper](https://tand826.github.io/wsiprocess_command_line_helper)
 
-### With dockerfile
+### As a docker command line tool
 
 ```bash
 # build the image
