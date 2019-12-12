@@ -86,7 +86,9 @@ docker run --name wsiprocess_container -v [your files directory]:/data -it -d ws
 see Command Helper for commands
 
 # Available WSIs
-
+<details>
+    <summary>Test ongoing</summary>
+    <div>
 - From below we tested wsi data.
     - :smile: : worked well.
     - :umbrella: : did not work well.
@@ -165,7 +167,8 @@ see Command Helper for commands
     - :umbrella:Zeiss-2-Stacked.zvi
     - :umbrella:Zeiss-3-Mosaic.zvi
     - :umbrella:Zeiss-4-Mosaic.zvi
-
+    </div>
+</details>
 
 # Test
 
@@ -187,7 +190,6 @@ python test.py
 
 
 # TODO
-- Command Helper
 - other annotation tools
 	- Cytomine : hard to install
 	- ImageJ with SlideJ
@@ -196,5 +198,5 @@ python test.py
 	- Orbit
 	- PMA.start : cannot make annotation
 	- QuPath : annotation data is saved as binary file.
-	- caMicroscope
-OUTPUT SIZE alart
+	- caMicroscope OUTPUT SIZE alart
+- add badges
