@@ -190,6 +190,7 @@ python test.py
 
 
 # TODO
+- annotation object: separate parser
 - other annotation tools
 	- Cytomine : hard to install
 	- ImageJ with SlideJ -> only to view one patch???
