@@ -1,6 +1,6 @@
 # test wsi
-test/CMU-1.ndpi
-sample/CMU-1.ndpi
+test/*.ndpi
+sample/*.ndpi
 CMU-1/
 ./test.py
 
