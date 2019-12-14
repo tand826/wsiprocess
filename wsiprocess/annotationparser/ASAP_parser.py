@@ -15,7 +15,8 @@ class AnnotationParser:
         self.read_mask_coords()
 
     def read_mask_coords(self):
-        pass
+        for cls in self.classes:
+            self.read_mask_coord(cls)
 
     def read_mask_coord(self, cls):
         for annotation in self.annotations:

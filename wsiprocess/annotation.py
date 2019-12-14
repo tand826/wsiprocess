@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
 from pathlib import Path
-from annotationparser import ASAP_parser
+from .annotationparser import ASAP_parser
+from .annotationparser.parser_utils import detect_type
 
 
 class Annotation:
@@ -14,12 +15,12 @@ class Annotation:
         self.mask_coords = {}
 
     def read_annotation(self, annotation_type=False):
-        annotation_type = ""
+        annotation_type = detect_type(self.path)
         if annotation_type == "ASAP":
-            parser = ASAP_parser
+            parser = ASAP_parser()
             parser(self.path)
-        elif annotation_type is False:
-            pass  # run type detector.
+        elif annotation_type == "Unknown":
+            pass
         self.annotations = parser.annotations
         self.annotation_groups = parser.annotation_groups
         self.classes = parser.classes
@@ -43,28 +44,10 @@ class Annotation:
         self.mask_coords[cls] = []
 
     def main_masks(self):
-        for annotation in self.annotations:
-            cls = annotation.attrib["PartOfGroup"]
-            contour = []
-            for coord in annotation.xpath("Coordinates/Coordinate"):
-                x = np.float(coord.attrib["X"])
-                y = np.float(coord.attrib["Y"])
-                contour.append([round(float(x)), round(float(y))])
-            self.mask_coords[cls].append(contour)
         for cls in self.classes:
             contours = np.array(self.mask_coords[cls])
             for contour in contours:
                 self.masks[cls] = cv2.drawContours(self.masks[cls], [np.int32(contour)], 0, True, thickness=cv2.FILLED)
-
-    def main_mask(self, cls):
-        for annotation in self.annotations:
-            if annotation.attrib["PartOfGroup"] == cls:
-                contour = []
-                for coord in annotation.xpath("Coordinates/Coordinate"):
-                    x = np.float(coord.attrib["X"])
-                    y = np.float(coord.attrib["Y"])
-                    contour.append([round(float(x)), round(float(y))])
-                self.mask_coords[cls].append(contour)
 
     def exclude_masks(self, inclusion):
         self.masks_exclude = self.masks.copy()
