@@ -1,5 +1,10 @@
 <img src="images/logo.png" style="width: 50%">
 
+![PyPI - Downloads](https://img.shields.io/pypi/dm/wsiprocess?style=plastic)
+![PyPI](https://img.shields.io/pypi/v/wsiprocess)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/wsiprocess)
+![GitHub](https://img.shields.io/github/license/tand826/wsiprocess)
+
 Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 
 # Main Flow
@@ -188,9 +193,18 @@ curl -O -C - http://openslide.cs.cmu.edu/download/openslide-testdata/CMU-1.ndpi
 python test.py
 ```
 
+# Citation
+```
+@article{wsiprocess,
+    Author = {Takumi Ando},
+    Title = {WSIPROCESS - Whole Slide Image (WSI) Processing Library for Histopathological / Cytopathological Machine Learning Tasks},
+    Journal = {github.com/tand826/wsiprocess},
+    Year = {2019}
+}
+```
+
 
 # TODO
-- annotation object: separate parser
 - other annotation tools
 	- Cytomine : hard to install
 	- ImageJ with SlideJ -> only to view one patch???
@@ -201,3 +215,4 @@ python test.py
 	- QuPath : run script to save polygon or rectangles
 	- caMicroscope OUTPUT SIZE alart
 - add badges
+- add to conda
