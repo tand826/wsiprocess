@@ -14,8 +14,6 @@ class AnnotationParser:
         for cls in self.classes:
             self.mask_coords[cls] = []
         self.read_mask_coords()
-        print(len(self.mask_coords["benign"]))
-        print(len(self.mask_coords["malignant"]))
 
     def read_mask_coords(self):
         for cls in self.classes:
