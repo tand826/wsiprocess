@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from pathlib import Path
-from .annotationparser import ASAP_parser
+from .annotationparser.ASAP_parser import AnnotationParser
 from .annotationparser.parser_utils import detect_type
 
 
@@ -12,19 +12,17 @@ class Annotation:
         self.read_annotation()
         self.masks = {}
         self.contours = {}
-        self.mask_coords = {}
 
     def read_annotation(self, annotation_type=False):
         annotation_type = detect_type(self.path)
         if annotation_type == "ASAP":
-            parser = ASAP_parser()
-            parser(self.path)
+            parsed = AnnotationParser(self.path)
         elif annotation_type == "Unknown":
             pass
-        self.annotations = parser.annotations
-        self.annotation_groups = parser.annotation_groups
-        self.classes = parser.classes
-        self.mask_coords = parser.mask_coords
+        self.annotations = parsed.annotations
+        self.annotation_groups = parsed.annotation_groups
+        self.classes = parsed.classes
+        self.mask_coords = parsed.mask_coords
         assert len(self.annotations) > 0, "No annotations found."
 
     def make_masks(self, slide, inclusion=False, foreground=False, size=2000):
@@ -41,7 +39,6 @@ class Annotation:
 
     def base_mask(self, cls, wsi_height, wsi_width):
         self.masks[cls] = np.zeros((wsi_height, wsi_width), dtype=np.uint8)
-        self.mask_coords[cls] = []
 
     def main_masks(self):
         for cls in self.classes:
