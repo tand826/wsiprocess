@@ -216,3 +216,4 @@ python test.py
 	- caMicroscope OUTPUT SIZE alart
 - add badges
 - add to conda
+- paste annotations on wsis or patches
