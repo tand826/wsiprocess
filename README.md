@@ -217,3 +217,4 @@ python test.py
 - add badges
 - add to conda
 - slow free server on heroku
+- paste annotations on wsis or patches
