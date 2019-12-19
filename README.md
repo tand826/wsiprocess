@@ -216,3 +216,4 @@ python test.py
 	- caMicroscope OUTPUT SIZE alart
 - add badges
 - add to conda
+- slow free server on heroku
