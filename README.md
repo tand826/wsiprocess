@@ -197,7 +197,7 @@ python test.py
 ```
 @article{wsiprocess,
     Author = {Takumi Ando},
-    Title = {WSIPROCESS - Whole Slide Image (WSI) Processing Library for Histopathological / Cytopathological Machine Learning Tasks},
+    Title = {WSIPROCESS - Whole Slide Image Processing Library for Histopathological / Cytopathological Machine Learning Tasks},
     Journal = {github.com/tand826/wsiprocess},
     Year = {2019}
 }
@@ -214,7 +214,6 @@ python test.py
 	- PMA.start : still cannot properly view the image
 	- QuPath : run script to save polygon or rectangles
 	- caMicroscope OUTPUT SIZE alart
-- add badges
 - add to conda
 - slow free server on heroku
 - paste annotations on wsis or patches
