@@ -108,7 +108,11 @@ class Patcher:
             if cls == "foreground":
                 return []
             coords = self.annotation.mask_coords[cls]
+            for idx, coord in enumerate(coords):
+                if len(coord) != 4:
+                    coords[idx] = self.to_bb(coord)
             coords = np.array(coords)
+
             bblefts = np.min(coords, axis=1)[:, 0]
             bbtops = np.min(coords, axis=1)[:, 1]
             bbrights = np.max(coords, axis=1)[:, 0]
@@ -163,6 +167,16 @@ class Patcher:
                       "class": cls}
                 bbs.append(bb)
             return bbs
+
+    def to_bb(self, coord):
+        coord = np.array(coord)
+        xmin, ymin = np.min(coord, axis=0)
+        xmax, ymax = np.max(coord, axis=0)
+        outer_coord = [[xmin, ymin],
+                       [xmin, ymax],
+                       [xmax, ymax],
+                       [xmax, ymin]]
+        return outer_coord
 
     def find_masks(self, x, y, cls):
         if not self.patch_on_annotation(cls, x, y):
