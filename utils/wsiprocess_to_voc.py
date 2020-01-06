@@ -29,12 +29,19 @@ def main():
     Path(f"{args.save_to}/VOC2012/ImageSets/Main/trainval.txt").touch()
 
     results_json = read_json(args.root)
+    classes = results_json["classes"]
+    patch_width = results_json["patch_width"]
+    patch_height = results_json["patch_height"]
     with open(f"{args.save_to}/VOC2007/ImageSets/Main/trainval.txt", "a")as f:
         for result in results_json["result"]:
-            tree = Tree(args.root, args.save_to/"VOC2007", result)
+            tree = Tree(args.root, args.save_to/"VOC2007", result, patch_width, patch_height)
             tree.to_xml()
-            to_jpg(f"{args.root}/patches/mitosis_figure/{result['x']:06}_{result['y']:06}.png",
-                   args.save_to/"VOC2007"/"JPEGImages")
+            for cls in classes:
+                try:
+                    to_jpg(f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.png",
+                           args.save_to/"VOC2007"/"JPEGImages")
+                except:
+                    pass
             f.write(f"{args.root.stem}_{result['x']:06}_{result['y']:06}\n")
 
 
@@ -58,7 +65,7 @@ def to_jpg(src, dst):
 
 class Tree:
 
-    def __init__(self, root, save_to, result):
+    def __init__(self, root, save_to, result, patch_width, patch_height):
         self.root = root
         self.save_to = save_to
 
@@ -67,6 +74,8 @@ class Tree:
         self.w = result["w"]
         self.h = result["h"]
         self.bbs = result["bbs"]
+        self.patch_width = patch_width
+        self.patch_height = patch_height
         self.imgname = f"{self.x:06}_{self.y:06}.png"
         self.out_name = f"{root.stem}_{self.x:06}_{self.y:06}.xml"
 
@@ -96,22 +105,22 @@ class Tree:
                 etree.SubElement(main_branch, branch)
 
     def add_base_text(self):
-        self.add_text("folder", "mitosis")
+        self.add_text("folder", "wsiprocess")
         self.add_text("filename", self.imgname)
         self.add_text("source/database", "original")
-        self.add_text("/annotation/source/annotation", "PASCAL")
+        self.add_text("/annotation/source/annotation", "PASCAL_style")
 
     def add_text(self, branch, text):
         target = self.tree.xpath(branch)[0]
         target.text = str(text)
 
     def set_size(self):
-        img_path = self.root/"patches"/"mitosis_figure"/self.imgname
-        img = Image.open(str(img_path))
-        w, h = img.size
+        # img_path = self.root/"patches"/"mitosis_figure"/self.imgname
+        # img = Image.open(str(img_path))
+        # w, h = img.size
         depth = 3  # len(img.getbands())
-        self.add_text("/annotation/size/width", w)
-        self.add_text("/annotation/size/height", h)
+        self.add_text("/annotation/size/width", self.patch_width)
+        self.add_text("/annotation/size/height", self.patch_height)
         self.add_text("/annotation/size/depth", depth)
 
     def add_objects(self):

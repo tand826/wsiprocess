@@ -7,13 +7,17 @@ import json
 def main():
     parser = argparse.ArgumentParser(
         description="Show Bounding Boxes on Extracted Image")
-    parser.add_argument("root",
-                        help="Root directory of processed result",
-                        type=Path)
+    parser.add_argument("root", type=Path,
+                        help="Root directory of processed result")
+    parser.add_argument("-st", "--save_to", type=Path, default="./",
+                        help="Directory to save images.")
     args = parser.parse_args()
 
     color = {"malignant": (255, 0, 0),
              "benign": (0, 128, 0)}
+
+    if not args.save_to.exists():
+        args.save_to.mkdir(parents=True, exist_ok=True)
 
     imgs = (args.root/"patches").glob("*/*.png")
     annot_path = args.root/"results.json"
@@ -33,7 +37,7 @@ def main():
             draw.rectangle((bb["x"], bb["y"], x2, y2),
                            width=2,
                            outline=outline)
-        img.save(f"{stem}_with_bb.png")
+        img.save(f"{args.save_to}/{stem}_with_bb.png")
 
 
 def find_patch(annotation, x, y):
