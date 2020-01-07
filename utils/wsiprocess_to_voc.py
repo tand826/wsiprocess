@@ -30,7 +30,6 @@ def main():
     Path(f"{args.save_to}/VOC2012/ImageSets/Main/trainval.txt").touch()
 
     results_json = read_json(args.root)
-    classes = results_json["classes"]
     patch_width = results_json["patch_width"]
     patch_height = results_json["patch_height"]
     with open(f"{args.save_to}/VOC2007/ImageSets/Main/trainval.txt", "a")as f:
@@ -41,7 +40,7 @@ def main():
             # for cls in classes:
             # to_jpg(f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg", args.save_to/"VOC2007"/"JPEGImages")
             src = f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg"
-            dst = f"{args.save_to}/VOC2007/JPEGImages"
+            dst = f"{args.save_to}/VOC2007/JPEGImages/{args.root.stem}_{result['x']:06}_{result['y']:06}.jpg"
             shutil.copy(src, dst)
             f.write(f"{args.root.stem}_{result['x']:06}_{result['y']:06}\n")
 

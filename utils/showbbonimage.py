@@ -13,8 +13,8 @@ def main():
                         help="Directory to save images.")
     args = parser.parse_args()
 
-    color = {"malignant": (255, 0, 0),
-             "benign": (0, 128, 0)}
+    color = {"positive": (255, 0, 0),
+             "negative": (0, 128, 0)}
 
     if not args.save_to.exists():
         args.save_to.mkdir(parents=True, exist_ok=True)
@@ -30,6 +30,9 @@ def main():
         x, y = stem.split("_")
         patch = find_patch(annotation, x, y)
         for bb in patch["bbs"]:
+            show_bb(img, bb["x"], bb["y"], bb["w"], bb["h"], bb["class"],
+                    (255, 255, 255), color[bb["class"]])
+            """
             draw = ImageDraw.Draw(img)
             x2 = bb["x"]+bb["w"]
             y2 = bb["y"]+bb["h"]
@@ -37,7 +40,16 @@ def main():
             draw.rectangle((bb["x"], bb["y"], x2, y2),
                            width=2,
                            outline=outline)
+            """
         img.save(f"{args.save_to}/{stem}_with_bb.png")
+
+
+def show_bb(img, x, y, w, h, text, textcolor, bbcolor):
+    draw = ImageDraw.Draw(img)
+    textwidth, textheight = draw.textsize(text)
+    draw.rectangle((x, y, x+w, y+h), outline=bbcolor, width=2)
+    draw.rectangle((x, y-textheight, x+textwidth, y), outline=bbcolor, fill=bbcolor)
+    draw.text((x, y-textheight), text, fill=textcolor)
 
 
 def find_patch(annotation, x, y):
