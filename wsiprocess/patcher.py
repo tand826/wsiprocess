@@ -12,7 +12,7 @@ from .verify import Verify
 class Patcher:
 
     def __init__(self, slide, method, annotation=False, save_to=".", patch_width=256, patch_height=256,
-                 overlap_width=1, overlap_height=1, on_foreground=0.8, on_annotation=1.,
+                 overlap_width=1, overlap_height=1, on_foreground=0.5, on_annotation=1.,
                  start_sample=True, finished_sample=True, extract_patches=True):
         self.slide = slide
         self.filepath = slide.filename
@@ -27,7 +27,7 @@ class Patcher:
         self.o_height = overlap_height
         self.x_lefttop = [i for i in range(0, self.wsi_width, patch_width - overlap_width)][:-1]
         self.y_lefttop = [i for i in range(0, self.wsi_height, patch_height - overlap_height)][:-1]
-        self.iterator = product(self.x_lefttop, self.y_lefttop)
+        self.iterator = list(product(self.x_lefttop, self.y_lefttop))
         self.last_x = self.slide.width - patch_width
         self.last_y = self.slide.height - patch_height
 
@@ -78,11 +78,12 @@ class Patcher:
                                 "w": bb["w"],
                                 "h": bb["h"],
                                 "class": bb["class"]})
-            self.result["result"].append({"x": x,
-                                          "y": y,
-                                          "w": self.p_width,
-                                          "h": self.p_height,
-                                          "bbs": bbs})
+            if bbs:
+                self.result["result"].append({"x": x,
+                                              "y": y,
+                                              "w": self.p_width,
+                                              "h": self.p_height,
+                                              "bbs": bbs})
 
         elif self.method == "segmentation":
             masks = []
@@ -212,36 +213,40 @@ class Patcher:
         with open("{}/{}/results.json".format(self.save_to, self.filestem), "w") as f:
             json.dump(self.result, f, indent=4)
 
-    def get_patch(self, x, y, cls=False):
+    def get_patch(self, x, y, classes=False):
         if self.on_foreground:
             if not self.patch_on_foreground(x, y):
                 return
         if self.on_annotation:
-            if not self.patch_on_annotation(cls, x, y):
-                return
+            on_annotation_classes = []
+            for cls in classes:
+                if self.patch_on_annotation(cls, x, y):
+                    on_annotation_classes.append(cls)
         if self.extract_patches:
             patch = self.slide.slide.crop(x, y, self.p_width, self.p_height)
-            patch.pngsave("{}/{}/patches/{}/{:06}_{:06}.png".format(self.save_to, self.filestem, cls, x, y))
-        self.save_patch_result(x, y, cls)
+            for cls in on_annotation_classes:
+                patch.jpegsave("{}/{}/patches/{}/{:06}_{:06}.jpg".format(self.save_to, self.filestem, cls, x, y))
+                self.save_patch_result(x, y, cls)
 
-    def get_patch_parallel(self, cls=False, cores=-1):
-        if self.extract_patches:
-            self.verify.verify_dir("{}/{}/patches/{}".format(self.save_to, self.filestem, cls))
-        if self.method == "segmentation":
-            self.verify.verify_dir("{}/{}/masks/{}".format(self.save_to, self.filestem, cls))
+    def get_patch_parallel(self, classes=False, cores=-1):
+        for cls in classes:
+            if self.extract_patches:
+                self.verify.verify_dir("{}/{}/patches/{}".format(self.save_to, self.filestem, cls))
+            if self.method == "segmentation":
+                self.verify.verify_dir("{}/{}/masks/{}".format(self.save_to, self.filestem, cls))
 
         if self.start_sample:
             self.get_random_sample("start", 3)
 
-        parallel = Parallel(n_jobs=cores, backend="threading", verbose=1)
+        parallel = Parallel(n_jobs=cores, backend="threading", verbose=0)
         # from the left top to just before the right bottom.
-        parallel([delayed(self.get_patch)(x, y, cls) for x, y in self.iterator])
+        parallel([delayed(self.get_patch)(x, y, classes) for x, y in self.iterator])
         # the bottom edge.
-        parallel([delayed(self.get_patch)(x, self.last_y, cls) for x in self.x_lefttop])
+        parallel([delayed(self.get_patch)(x, self.last_y, classes) for x in self.x_lefttop])
         # the right edge
-        parallel([delayed(self.get_patch)(self.last_x, y, cls) for y in self.y_lefttop])
+        parallel([delayed(self.get_patch)(self.last_x, y, classes) for y in self.y_lefttop])
         # right bottom patch
-        self.get_patch(self.last_x, self.last_y, cls)
+        self.get_patch(self.last_x, self.last_y, classes)
 
         # save results
         self.save_results()

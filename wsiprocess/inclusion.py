@@ -1,6 +1,7 @@
 class Inclusion:
 
     def __init__(self, path):
+        self.classes = []
         with open(path, "r") as f:
             self.inclusion_file = f.readlines()
         self.read_inclusion()
@@ -14,3 +15,4 @@ class Inclusion:
             line_ = [i.strip() for i in line.split(" ")]
             base, exclude = line_[0], line_[1:]
             setattr(self, base, exclude)
+            self.classes.append(base)

@@ -71,6 +71,5 @@ def main():
                          start_sample=args.start_sample,
                          finished_sample=args.finished_sample,
                          extract_patches=args.extract_patches)
-    for cls in annotation.classes:
-        if not cls == "foreground":
-            patcher.get_patch_parallel(cls)
+    annotation.classes.remove("foreground")
+    patcher.get_patch_parallel(annotation.classes)

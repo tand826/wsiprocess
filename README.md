@@ -216,4 +216,5 @@ python test.py
 	- caMicroscope OUTPUT SIZE alart
 - add to conda
 - slow free server on heroku
-- paste annotations on wsis or patches
+- paste results on the thumbnails
+- if method == detection, like segmentation flow, use mask to check on_annotation.

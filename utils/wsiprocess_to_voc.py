@@ -3,6 +3,7 @@ from lxml import etree
 from pathlib import Path
 from PIL import Image
 import json
+import shutil
 
 """
 'root' should be like below
@@ -36,12 +37,12 @@ def main():
         for result in results_json["result"]:
             tree = Tree(args.root, args.save_to/"VOC2007", result, patch_width, patch_height)
             tree.to_xml()
-            for cls in classes:
-                try:
-                    to_jpg(f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.png",
-                           args.save_to/"VOC2007"/"JPEGImages")
-                except:
-                    pass
+            cls = result["bbs"][0]["class"]
+            # for cls in classes:
+            # to_jpg(f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg", args.save_to/"VOC2007"/"JPEGImages")
+            src = f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg"
+            dst = f"{args.save_to}/VOC2007/JPEGImages"
+            shutil.copy(src, dst)
             f.write(f"{args.root.stem}_{result['x']:06}_{result['y']:06}\n")
 
 
