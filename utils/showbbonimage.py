@@ -13,8 +13,9 @@ def main():
                         help="Directory to save images.")
     args = parser.parse_args()
 
-    color = {"positive": (255, 0, 0),
-             "negative": (0, 128, 0)}
+    # color = {"positive": (255, 0, 0),
+    #         "negative": (0, 128, 0)}
+    color = {"mitosis_figure": (255, 0, 0)}
 
     if not args.save_to.exists():
         args.save_to.mkdir(parents=True, exist_ok=True)
