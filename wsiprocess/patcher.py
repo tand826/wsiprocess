@@ -4,6 +4,7 @@ import json
 from joblib import Parallel, delayed
 import numpy as np
 import cv2
+from tqdm import tqdm
 from pathlib import Path
 
 from .verify import Verify
@@ -240,7 +241,7 @@ class Patcher:
 
         parallel = Parallel(n_jobs=cores, backend="threading", verbose=0)
         # from the left top to just before the right bottom.
-        parallel([delayed(self.get_patch)(x, y, classes) for x, y in self.iterator])
+        parallel([delayed(self.get_patch)(x, y, classes) for x, y in tqdm(self.iterator)])
         # the bottom edge.
         parallel([delayed(self.get_patch)(x, self.last_y, classes) for x in self.x_lefttop])
         # the right edge
