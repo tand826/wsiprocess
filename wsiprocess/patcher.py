@@ -157,14 +157,14 @@ class Patcher:
                 y1 = bb_raw[:, 1].min()
                 x2 = bb_raw[:, 0].max()
                 y2 = bb_raw[:, 1].max()
-                bbx1 = int(max(x1 - x, 0))
-                bby1 = int(max(y1 - y, 0))
-                bbx2 = int(min(x2 - x1 + bbx1, self.p_width)) - bbx1
-                bby2 = int(min(y2 - y1 + bby1, self.p_height)) - bby1
-                bb = {"x": bbx1,
-                      "y": bby1,
-                      "w": bbx2,
-                      "h": bby2,
+                bbx = int(max(x1 - x, 0))
+                bby = int(max(y1 - y, 0))
+                bbw = int(min(x2 - x1 + bbx, self.p_width)) - bbx
+                bbh = int(min(y2 - y1 + bby, self.p_height)) - bby
+                bb = {"x": bbx,
+                      "y": bby,
+                      "w": bbw,
+                      "h": bbh,
                       "class": cls}
                 bbs.append(bb)
             return bbs
