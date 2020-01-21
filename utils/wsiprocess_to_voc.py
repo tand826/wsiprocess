@@ -42,9 +42,9 @@ def main():
         # for cls in classes:
         # to_jpg(f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg", args.save_to/"VOC2007"/"JPEGImages")
         src = f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg"
-        dst = f"{args.save_to}/VOC2007/JPEGImages/{args.root.stem}_{result['x']:06}_{result['y']:06}.jpg"
+        dst = f"{args.save_to}/VOC2007/JPEGImages/{args.root.name}_{result['x']:06}_{result['y']:06}.jpg"
         shutil.copy(src, dst)
-        results.append(f"{args.root.stem}_{result['x']:06}_{result['y']:06}\n")
+        results.append(f"{args.root.name}_{result['x']:06}_{result['y']:06}\n")
 
     move_to_test(args.save_to, results, 0.8)
 
@@ -63,7 +63,7 @@ def read_json(root):
 
 def to_jpg(src, dst):
     img = Image.open(src).convert("RGB")
-    imgname = f"{Path(src).parent.parent.parent.stem}_{Path(src).stem}"
+    imgname = f"{Path(src).parent.parent.parent.name}_{Path(src).stem}"
     img.save(f"{dst}/{imgname}.jpg", quality=95)
 
 
@@ -94,7 +94,7 @@ class Tree:
         self.patch_width = patch_width
         self.patch_height = patch_height
         self.imgname = f"{self.x:06}_{self.y:06}.png"
-        self.out_name = f"{root.stem}_{self.x:06}_{self.y:06}.xml"
+        self.out_name = f"{root.name}_{self.x:06}_{self.y:06}.xml"
 
         self.tree = etree.Element("annotation")
         self.main_branches = ["folder", "filename", "source", "owner", "size", "segmented"]
