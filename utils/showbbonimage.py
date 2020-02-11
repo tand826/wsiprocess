@@ -13,35 +13,32 @@ def main():
                         help="Directory to save images.")
     args = parser.parse_args()
 
-    color = {"positive": (255, 0, 0),
-             "negative": (0, 128, 0)}
+    # color = {"positive": (255, 0, 0),
+    #         "negative": (0, 128, 0)}
+    color = {"mitosis_figure": (255, 0, 0)}
 
     if not args.save_to.exists():
         args.save_to.mkdir(parents=True, exist_ok=True)
 
-    imgs = (args.root/"patches").glob("*/*.png")
-    annot_path = args.root/"results.json"
-    with open(annot_path, "r") as f:
+    with open(args.root/"results.json", "r") as f:
         annotation = json.load(f)
 
-    for path in imgs:
-        img = Image.open(path)
-        stem = path.stem
-        x, y = stem.split("_")
-        patch = find_patch(annotation, x, y)
-        for bb in patch["bbs"]:
-            show_bb(img, bb["x"], bb["y"], bb["w"], bb["h"], bb["class"],
+    for patch in annotation["result"]:
+        x = patch["x"]
+        y = patch["y"]
+        bbs = patch["bbs"]
+        for bb in bbs:
+            w = bb["w"]
+            h = bb["h"]
+            cls = bb["class"]
+            if Path(f"{args.save_to}/{x:06}_{y:06}_with_bb.jpg").exists():
+                img_path = f"{args.save_to}/{x:06}_{y:06}_with_bb.jpg"
+            else:
+                img_path = f"{args.root/'patches'}/{cls}/{x:06}_{y:06}.jpg"
+            img = Image.open(img_path)
+            show_bb(img, bb["x"], bb["y"], w, h, cls,
                     (255, 255, 255), color[bb["class"]])
-            """
-            draw = ImageDraw.Draw(img)
-            x2 = bb["x"]+bb["w"]
-            y2 = bb["y"]+bb["h"]
-            outline = color[bb["class"]]
-            draw.rectangle((bb["x"], bb["y"], x2, y2),
-                           width=2,
-                           outline=outline)
-            """
-        img.save(f"{args.save_to}/{stem}_with_bb.png")
+            img.save(f"{args.save_to}/{x:06}_{y:06}_with_bb.jpg")
 
 
 def show_bb(img, x, y, w, h, text, textcolor, bbcolor):

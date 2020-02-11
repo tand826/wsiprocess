@@ -1,5 +1,4 @@
 import argparse
-import random
 from lxml import etree
 from pathlib import Path
 from PIL import Image
@@ -7,7 +6,7 @@ import json
 import shutil
 
 """
-'root' should be like below
+'root' should be the root directory made by wsiprocess like below
 
 ./root
 ├── patches
@@ -21,7 +20,7 @@ import shutil
 
 
 def main():
-    parser = argparse.ArgumentParser(description="wsiprocess_to_voc")
+    parser = argparse.ArgumentParser(description="wsiprocess_to_COCO")
     parser.add_argument("root", type=Path)
     parser.add_argument("-st", "--save_to", default="./data", type=Path)
     args = parser.parse_args()
@@ -33,20 +32,17 @@ def main():
     results_json = read_json(args.root)
     patch_width = results_json["patch_width"]
     patch_height = results_json["patch_height"]
-
-    results = []
-    for result in results_json["result"]:
-        tree = Tree(args.root, args.save_to/"VOC2007", result, patch_width, patch_height)
-        tree.to_xml()
-        cls = result["bbs"][0]["class"]
-        # for cls in classes:
-        # to_jpg(f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg", args.save_to/"VOC2007"/"JPEGImages")
-        src = f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg"
-        dst = f"{args.save_to}/VOC2007/JPEGImages/{args.root.name}_{result['x']:06}_{result['y']:06}.jpg"
-        shutil.copy(src, dst)
-        results.append(f"{args.root.name}_{result['x']:06}_{result['y']:06}\n")
-
-    move_to_test(args.save_to, results, 0.8)
+    with open(f"{args.save_to}/VOC2007/ImageSets/Main/trainval.txt", "a")as f:
+        for result in results_json["result"]:
+            tree = Tree(args.root, args.save_to/"VOC2007", result, patch_width, patch_height)
+            tree.to_xml()
+            cls = result["bbs"][0]["class"]
+            # for cls in classes:
+            # to_jpg(f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg", args.save_to/"VOC2007"/"JPEGImages")
+            src = f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg"
+            dst = f"{args.save_to}/VOC2007/JPEGImages/{args.root.stem}_{result['x']:06}_{result['y']:06}.jpg"
+            shutil.copy(src, dst)
+            f.write(f"{args.root.stem}_{result['x']:06}_{result['y']:06}\n")
 
 
 def mkdirs(save_to):
@@ -63,21 +59,8 @@ def read_json(root):
 
 def to_jpg(src, dst):
     img = Image.open(src).convert("RGB")
-    imgname = f"{Path(src).parent.parent.parent.name}_{Path(src).stem}"
+    imgname = f"{Path(src).parent.parent.parent.stem}_{Path(src).stem}"
     img.save(f"{dst}/{imgname}.jpg", quality=95)
-
-
-def move_to_test(save_to, results, trainval_rate):
-    trainval_path = f"{save_to}/VOC2007/ImageSets/Main/trainval.txt"
-    test_path = f"{save_to}/VOC2007/ImageSets/Main/test.txt"
-
-    random.shuffle(results)
-    trainval_count = int(len(results) * trainval_rate)
-
-    with open(trainval_path, "a") as f:
-        f.writelines(results[:trainval_count])
-    with open(test_path, "a") as f:
-        f.writelines(results[trainval_count:])
 
 
 class Tree:
@@ -94,7 +77,7 @@ class Tree:
         self.patch_width = patch_width
         self.patch_height = patch_height
         self.imgname = f"{self.x:06}_{self.y:06}.png"
-        self.out_name = f"{root.name}_{self.x:06}_{self.y:06}.xml"
+        self.out_name = f"{root.stem}_{self.x:06}_{self.y:06}.xml"
 
         self.tree = etree.Element("annotation")
         self.main_branches = ["folder", "filename", "source", "owner", "size", "segmented"]
