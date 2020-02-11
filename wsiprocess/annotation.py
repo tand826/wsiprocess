@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 from pathlib import Path
-from .annotationparser.ASAP_parser import AnnotationParser
 from .annotationparser.parser_utils import detect_type
 
 
@@ -16,11 +15,14 @@ class Annotation:
     def read_annotation(self, annotation_type=False):
         annotation_type = detect_type(self.path)
         if annotation_type == "ASAP":
+            from .annotationparser.ASAP_parser import AnnotationParser
+            parsed = AnnotationParser(self.path)
+        elif annotation_type == "pathology_viewer":
+            from .annotationparser.pathology_viewer_parser import AnnotationParser
             parsed = AnnotationParser(self.path)
         elif annotation_type == "Unknown":
             pass
         self.annotations = parsed.annotations
-        self.annotation_groups = parsed.annotation_groups
         self.classes = parsed.classes
         self.mask_coords = parsed.mask_coords
         assert len(self.annotations) > 0, "No annotations found."
