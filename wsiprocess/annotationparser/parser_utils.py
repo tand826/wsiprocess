@@ -11,6 +11,6 @@ def detect_type(path):
     except:
         with open(path, "r") as f:
             data = json.load(f)
-        key = data.keys()[0]
+        key = list(data.keys())[0]
         if data[key]["source"]["annotation"] == "pathology_viewer":
             return "pathology_viewer"
