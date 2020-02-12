@@ -20,7 +20,6 @@ class AnnotationParser:
             cls = box["name"]
             coords = box["bndbox"]
             contour = []
-            print(coords)
             if isinstance(coords, dict):
                 xmin = round(float(coords["xmin"]))
                 ymin = round(float(coords["ymin"]))
