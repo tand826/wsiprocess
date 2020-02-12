@@ -14,5 +14,3 @@ def detect_type(path):
         key = data.keys()[0]
         if data[key]["source"]["annotation"] == "pathology_viewer":
             return "pathology_viewer"
-    except:
-        return "Unknown"
