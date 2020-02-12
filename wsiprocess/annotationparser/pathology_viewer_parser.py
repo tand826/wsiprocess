@@ -1,13 +1,13 @@
 import json
 
 
-class PathologyViewerParser:
+class AnnotationParser:
 
     def __init__(self, path):
         self.path = path
         with open(self.path, "r") as f:
             self.annotation = json.load(f)
-        self.filename = self.annotation.keys()[0]
+        self.filename = list(self.annotation.keys())[0]
         self.classes = self.annotation[self.filename]["classes"]
         self.mask_coords = {}
         for cls in self.classes:
@@ -20,7 +20,8 @@ class PathologyViewerParser:
             cls = box["name"]
             coords = box["bndbox"]
             contour = []
-            if "xmin" in coords.keys():
+            print(coords)
+            if isinstance(coords, dict):
                 xmin = round(float(coords["xmin"]))
                 ymin = round(float(coords["ymin"]))
                 xmax = round(float(coords["xmax"]))
@@ -29,7 +30,7 @@ class PathologyViewerParser:
                 contour.append([xmin, ymax])
                 contour.append([xmax, ymax])
                 contour.append([xmax, ymin])
-            elif "x" in coords.keys():
+            elif isinstance(coords, list):
                 for coord in coords:
                     x = round(float(coord["x"]))
                     y = round(float(coord["y"]))

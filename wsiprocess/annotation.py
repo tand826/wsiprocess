@@ -22,10 +22,8 @@ class Annotation:
             parsed = AnnotationParser(self.path)
         elif annotation_type == "Unknown":
             pass
-        self.annotations = parsed.annotations
         self.classes = parsed.classes
         self.mask_coords = parsed.mask_coords
-        assert len(self.annotations) > 0, "No annotations found."
 
     def make_masks(self, slide, inclusion=False, foreground=False, size=2000):
         self.base_masks(slide.wsi_height, slide.wsi_width)
