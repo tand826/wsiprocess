@@ -52,8 +52,9 @@ class Annotation:
         for cls in self.classes:
             if hasattr(inclusion, cls):
                 for exclude in getattr(inclusion, cls):
-                    overlap_area = cv2.bitwise_and(self.masks[cls], self.masks[exclude])
-                    self.masks_exclude[cls] = cv2.bitwise_xor(self.masks[cls], overlap_area)
+                    if exclude in self.masks:
+                        overlap_area = cv2.bitwise_and(self.masks[cls], self.masks[exclude])
+                        self.masks_exclude[cls] = cv2.bitwise_xor(self.masks[cls], overlap_area)
         self.masks = self.masks_exclude
 
     def make_foreground_mask(self, slide, size=2000):
