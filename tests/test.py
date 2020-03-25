@@ -1,12 +1,61 @@
+import unittest
+from pathlib import Path
+import pyvips
 import argparse
 import wsiprocess as wp
 
 
+class WsiprocessTest(unittest.TestCase):
+
+    def setUp(self):
+        self.test_slide_folder = Path("./sample")
+        self.slide_exts = ["svs", "tiff", "ndpi", "scn", "bif", "zvi"]
+        self.annotation_exts = ["xml", "json"]
+        self.annotation_file_folder = Path("./sample")
+        self.inclusion_file = "./sample/inclusion.txt"
+
+    def tearDown(self):
+        pass
+
+    def test_slide(self):
+        slide_paths = []
+        for ext in self.slide_exts:
+            slide_paths += list(self.test_slide_folder.glob("*/" + ext))
+        for slide_path in slide_paths:
+            slide = wp.slide(str(slide_path))
+            self.assertTrue(type(slide) == pyvips.vimage.Image)
+
+    def test_slide_thumbnail(self):
+        slide_paths = []
+        for ext in self.slide_exts:
+            paths = list(self.test_slide_folder.glob("*/" + ext))
+            if len(paths) > 0:
+                slide_paths += paths[0]
+        for slide_path in slide_paths:
+            slide = wp.slide(str(slide_path))
+            self.assertTrue(type(slide.get_thumbnail()) == pyvips.vimage.Image)
+
+    def test_annotation(self):
+        annotation_paths = []
+        for ext in self.annotation_exts:
+            annotation_paths += list(self.annotation_file_folder.glob(ext))
+        for annotation_file in annotation_paths:
+            annotation = wp.annotation(annotation_file)
+            self.assertTrue(
+                len(annotation.classes) > 0,
+                "{} has no classes".format(annotation_file))
+            sample_class = annotation.classes[0]
+            self.assertTrue(type(annotation.mask_coords[sample_class]) == list)
+            self.assertTrue(type(annotation.mask_coords[sample_class][0]) == list)
+            self.assertTrue(type(annotation.mask_coords[sample_class][0][0]) == list)
+            self.assertTrue(type(annotation.mask_coords[sample_class][0][0][0]) == int)
+
+
 def args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("wsi")
-    parser.add_argument("annotation")
-    parser.add_argument("inclusion")
+    parser.add_argument("test_slide_folder")
+    parser.add_argument("annotation_file_folder")
+    parser.add_argument("-i", "--inclusion")
     return parser.parse_args()
 
 
@@ -114,7 +163,7 @@ def test_segmentation(wsi, annotation, inclusion):
 
 
 if __name__ == '__main__':
-    args = args()
+    #args = args()
     # print("slide")
     # test_slide(args.wsi)
     # print("annotation")
@@ -125,7 +174,9 @@ if __name__ == '__main__':
     # test_none(args.wsi, args.annotation, args.inclusion)
     # print("classification")
     # test_classification(args.wsi, args.annotation, args.inclusion)
-    print("detection")
-    test_detection(args.wsi, args.annotation, args.inclusion)
+    #print("detection")
+    #test_detection(args.wsi, args.annotation, args.inclusion)
     # print("segmentation")
     # test_segmentation(args.wsi, args.annotation, args.inclusion)
+
+    unittest.main()
