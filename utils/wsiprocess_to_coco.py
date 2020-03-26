@@ -1,174 +1,196 @@
+import sys
 import argparse
-from lxml import etree
+import random
+from datetime import datetime
 from pathlib import Path
-from PIL import Image
+from tqdm import tqdm
 import json
-import shutil
-
-"""
-'root' should be the root directory made by wsiprocess like below
-
-./root
-├── patches
-│   └── class_a
-│       ├── 001.png
-│       ├── 002.png
-
-│       └── 100.png
-└── results.json
-"""
 
 
 def main():
-    parser = argparse.ArgumentParser(description="wsiprocess_to_COCO")
-    parser.add_argument("root", type=Path)
-    parser.add_argument("-st", "--save_to", default="./data", type=Path)
-    args = parser.parse_args()
-
-    mkdirs(args.save_to/"VOC2007")
-    mkdirs(args.save_to/"VOC2012")
-    Path(f"{args.save_to}/VOC2012/ImageSets/Main/trainval.txt").touch()
-
-    results_json = read_json(args.root)
-    patch_width = results_json["patch_width"]
-    patch_height = results_json["patch_height"]
-    with open(f"{args.save_to}/VOC2007/ImageSets/Main/trainval.txt", "a")as f:
-        for result in results_json["result"]:
-            tree = Tree(args.root, args.save_to/"VOC2007", result, patch_width, patch_height)
-            tree.to_xml()
-            cls = result["bbs"][0]["class"]
-            # for cls in classes:
-            # to_jpg(f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg", args.save_to/"VOC2007"/"JPEGImages")
-            src = f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg"
-            dst = f"{args.save_to}/VOC2007/JPEGImages/{args.root.stem}_{result['x']:06}_{result['y']:06}.jpg"
-            shutil.copy(src, dst)
-            f.write(f"{args.root.stem}_{result['x']:06}_{result['y']:06}\n")
+    args = getargs()
+    make_dirs(args.save_to)
+    ratio = get_ratio(args.ratio)
+    train_paths, val_paths = make_link_to_images(args.root, args.save_to, ratio)
+    train2014, val2014 = get_save_as(args.save_to)
+    annotation = annotations_to_json(args.root)
+    train2014, val2014 = make_output(args.save_to, annotation, train_paths, val_paths, train2014, val2014)
+    save_data(args.save_to, train2014, val2014)
 
 
-def mkdirs(save_to):
-    (save_to/"Annotations").mkdir(exist_ok=True, parents=True)
-    (save_to/"JPEGImages").mkdir(exist_ok=True, parents=True)
-    (save_to/"ImageSets/Main").mkdir(exist_ok=True, parents=True)
+def getargs():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("root",
+                        type=Path,
+                        help="Parent of results.json located")
+    parser.add_argument("save_to", type=Path)
+    parser.add_argument("ratio", help="Ratio of train and val. ie. 8:2")
+    return parser.parse_args()
 
 
-def read_json(root):
+def make_dirs(save_to):
+    if not save_to.exists():
+        save_to.mkdir(parents=True)
+
+    if not (save_to/"annotations").exists():
+        (save_to/"annotations").mkdir()
+
+    if not (save_to/"train2014").exists():
+        (save_to/"train2014").mkdir()
+
+    if not (save_to/"val2014").exists():
+        (save_to/"val2014").mkdir()
+
+
+def get_ratio(ratio):
+    train, val = map(int, ratio.split(":"))
+    print({"train": train/(train+val), "val": val/(train+val)})
+    return {"train": train/(train+val), "val": val/(train+val)}
+
+
+def make_link_to_images(root, save_to, ratio):
+    classes = [i.stem for i in (root/"patches").glob("*")]
+    for cls in classes:
+        image_paths = list((root/"patches").glob("{}/*".format(cls)))
+        random.shuffle(image_paths)
+
+        train_paths = image_paths[:int(len(image_paths)*ratio["train"])]
+        val_paths = image_paths[int(len(image_paths)*ratio["train"]):]
+
+        with tqdm(train_paths, desc="Train imgs [{}]".format(cls)) as t:
+            for image_path in t:
+                if not (save_to/"train2014"/image_path.name).exists():
+                    (save_to/"train2014"/image_path.name).symlink_to(image_path)
+
+        with tqdm(val_paths, desc="Validation imgs [{}]".format(cls)) as t:
+            for image_path in t:
+                if not (save_to/"val2014"/image_path.name).exists():
+                    (save_to/"val2014"/image_path.name).symlink_to(image_path)
+
+    return train_paths, val_paths
+
+
+def get_save_as(save_to):
+    if not (save_to/"instances_train2014.json").exists():
+        train2014 = {
+            "info": {
+                "description": "wsiprocess",
+                "url": "",
+                "version": "1.0",
+                "year": "2014",
+                "contributor": "",
+                "date_created": datetime.now().strftime('%Y/%m/%d_%H:%M:%S')
+            },
+            "licenses": [],
+            "categories": [],
+            "images": [],
+            "annotations": []
+        }
+
+    else:
+        with open(save_to/"instances_train2014.json", "r") as f:
+            train2014 = json.load(f)
+
+    if not (save_to/"instances_val2014.json").exists():
+        val2014 = {
+            "info": {
+                "description": "wsiprocess",
+                "url": "",
+                "version": "1.0",
+                "year": "2014",
+                "contributor": "",
+                "date_created": datetime.now().strftime('%Y/%m/%d_%H:%M:%S')
+            },
+            "licenses": [],
+            "categories": [],
+            "images": [],
+            "annotations": []
+        }
+    else:
+        with open(save_to/"instances_val2014.json", "r") as f:
+            val2014 = json.load(f)
+
+    return train2014, val2014
+
+
+def annotations_to_json(root):
     with open(root/"results.json", "r") as f:
-        result = json.load(f)
-    return result
+        annotation = json.load(f)
+    return annotation
 
 
-def to_jpg(src, dst):
-    img = Image.open(src).convert("RGB")
-    imgname = f"{Path(src).parent.parent.parent.stem}_{Path(src).stem}"
-    img.save(f"{dst}/{imgname}.jpg", quality=95)
+def make_output(save_to, annotation, train_paths, val_paths, train2014, val2014):
+    classes = annotation["classes"]
+    slidestem = Path(annotation["slide"]).stem
+    patch_width = annotation["patch_width"]
+    patch_height = annotation["patch_height"]
+
+    for idx, cls in enumerate(classes, 1):
+        train2014["categories"].append({"supercategory": "", "id": idx, "name": cls})
+        val2014["categories"].append({"supercategory": "", "id": idx, "name": cls})
+
+    now = int(datetime.now().strftime('%Y%m%d%H%M%S'))
+    with tqdm(train_paths, desc="Making annotation for train") as t:
+        for idx, train_path in enumerate(t):
+            image_id = now+idx
+            x, y = map(int, train_path.stem.split("_")[-2:])
+            train2014["images"].append(get_image_params(train_path, slidestem, x, y, patch_width, patch_height, image_id))
+            train2014["annotations"].extend(get_annotation_params(annotation, classes, train_path, slidestem, x, y, patch_width, patch_width, image_id))
+
+    now += len(train_paths)
+    with tqdm(val_paths, desc="Making annotation for validation") as t:
+        for idx, val_path in enumerate(t):
+            image_id = now + idx
+            x, y = map(int, val_path.stem.split("_")[-2:])
+            val2014["images"].append(get_image_params(val_path, slidestem, x, y, patch_width, patch_height, image_id))
+            val2014["annotations"].extend(get_annotation_params(annotation, classes, val_path, slidestem, x, y, patch_width, patch_width, image_id))
+
+    return train2014, val2014
 
 
-class Tree:
+def get_image_params(file_name, slidestem, x, y, width, height, image_id):
+    return {
+        "license": "",
+        "file_name": str(file_name),
+        "coco_url": "",
+        "width": width,
+        "height": height,
+        "date_captured": "",
+        "flickr_url": "",
+        "id": image_id
+    }
 
-    def __init__(self, root, save_to, result, patch_width, patch_height):
-        self.root = root
-        self.save_to = save_to
 
-        self.x = result["x"]
-        self.y = result["y"]
-        self.w = result["w"]
-        self.h = result["h"]
-        self.bbs = result["bbs"]
-        self.patch_width = patch_width
-        self.patch_height = patch_height
-        self.imgname = f"{self.x:06}_{self.y:06}.png"
-        self.out_name = f"{root.stem}_{self.x:06}_{self.y:06}.xml"
+def get_annotation_params(annotation, classes, file_name, slidestem, x, y, width, height, image_id):
+    annotations = []
+    for box in annotation["result"]:
+        if box["x"] == x and box["y"] == y:
+            if box.get("bbs"):
+                for bb in box["bbs"]:
+                    bb["x"] %= width
+                    bb["y"] %= height
+                    data = {
+                        "segmentation": [],
+                        "area": 0,
+                        "iscrowd": 0,
+                        "image_id": image_id,
+                        "bbox": [bb["x"], bb["y"], bb["w"], bb["h"]],
+                        "category_id": classes.index(bb["class"]) + 1,
+                        "id": "{}_{}_{}".format(slidestem, x, y)
+                    }
+                    annotations.append(data)
+            else:
+                print("COCO dataset does not support classification annotations.")
+                sys.exit()
+    return annotations
 
-        self.tree = etree.Element("annotation")
-        self.main_branches = ["folder", "filename", "source", "owner", "size", "segmented"]
-        self.sub_branches = {"source": ["database", "annotation", "image", "flickrid"],
-                             "owner": ["flickrid", "name"],
-                             "size": ["width", "height", "depth"]}
 
-        self.make_template()
-        self.set_size()
-        self.add_objects()
+def save_data(save_to, train2014, val2014):
+    with open(save_to/"annotations"/"instances_train2014.json", "w") as f:
+        json.dump(train2014, f, indent=4)
 
-    def make_template(self):
-        self.add_main_branches()
-        self.add_sub_branches()
-        self.add_base_text()
-
-    def add_main_branches(self):
-        for branch in self.main_branches:
-            etree.SubElement(self.tree, branch)
-
-    def add_sub_branches(self):
-        for main, sub_branches in self.sub_branches.items():
-            main_branch = self.tree.find(main)
-            for branch in sub_branches:
-                etree.SubElement(main_branch, branch)
-
-    def add_base_text(self):
-        self.add_text("folder", "wsiprocess")
-        self.add_text("filename", self.imgname)
-        self.add_text("source/database", "original")
-        self.add_text("/annotation/source/annotation", "PASCAL_style")
-
-    def add_text(self, branch, text):
-        target = self.tree.xpath(branch)[0]
-        target.text = str(text)
-
-    def set_size(self):
-        # img_path = self.root/"patches"/"mitosis_figure"/self.imgname
-        # img = Image.open(str(img_path))
-        # w, h = img.size
-        depth = 3  # len(img.getbands())
-        self.add_text("/annotation/size/width", self.patch_width)
-        self.add_text("/annotation/size/height", self.patch_height)
-        self.add_text("/annotation/size/depth", depth)
-
-    def add_objects(self):
-        for bb in self.bbs:
-            obj = etree.Element("object")
-            name = etree.SubElement(obj, "name")
-            name.text = bb["class"]
-            etree.SubElement(obj, "pose")
-            etree.SubElement(obj, "truncated")
-            difficult = etree.SubElement(obj, "difficult")
-            difficult.text = str(0)
-
-            bndbox = etree.SubElement(obj, "bndbox")
-            etree.SubElement(bndbox, "xmin")
-            etree.SubElement(bndbox, "ymin")
-            etree.SubElement(bndbox, "xmax")
-            etree.SubElement(bndbox, "ymax")
-
-            xmin = bb["x"]
-            ymin = bb["y"]
-            xmax = int(bb["x"] + int(bb["w"]))
-            ymax = int(bb["y"] + int(bb["h"]))
-
-            if xmin == xmax:
-                if xmin == 0:
-                    xmax += 1
-                else:
-                    xmin -= 1
-            if ymin == ymax:
-                if ymin == 0:
-                    ymax += 1
-                else:
-                    ymin -= 1
-
-            obj.xpath("/object/bndbox/xmin")[0].text = str(xmin)
-            obj.xpath("/object/bndbox/ymin")[0].text = str(ymin)
-            obj.xpath("/object/bndbox/xmax")[0].text = str(xmax)
-            obj.xpath("/object/bndbox/ymax")[0].text = str(ymax)
-
-            self.tree.insert(-1, obj)
-
-    def to_xml(self):
-        with open(f"{self.save_to}/Annotations/{self.out_name}", "wb") as f:
-            out_tree = etree.ElementTree(self.tree)
-            out_tree.write(f,
-                           pretty_print=True,
-                           xml_declaration=True,
-                           encoding="UTF-8")
+    with open(save_to/"annotations"/"instances_val2014.json", "w") as f:
+        json.dump(val2014, f, indent=4)
 
 
 if __name__ == '__main__':
