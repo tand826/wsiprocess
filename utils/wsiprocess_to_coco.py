@@ -44,7 +44,6 @@ def make_dirs(save_to):
 
 def get_ratio(ratio):
     train, val = map(int, ratio.split(":"))
-    print({"train": train/(train+val), "val": val/(train+val)})
     return {"train": train/(train+val), "val": val/(train+val)}
 
 
@@ -129,7 +128,7 @@ def make_output(save_to, annotation, train_paths, val_paths, train2014, val2014)
         train2014["categories"].append({"supercategory": "", "id": idx, "name": cls})
         val2014["categories"].append({"supercategory": "", "id": idx, "name": cls})
 
-    now = int(datetime.now().strftime('%Y%m%d%H%M%S'))
+    now = int(datetime.now().strftime('%Y%m%d%H%M%S000000'))
     with tqdm(train_paths, desc="Making annotation for train") as t:
         for idx, train_path in enumerate(t):
             image_id = now+idx
