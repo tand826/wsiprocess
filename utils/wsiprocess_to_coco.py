@@ -70,7 +70,7 @@ def make_link_to_images(root, save_to, ratio):
 
 
 def get_save_as(save_to):
-    if not (save_to/"instances_train2014.json").exists():
+    if not (save_to/"annotations"/"instances_train2014.json").exists():
         train2014 = {
             "info": {
                 "description": "wsiprocess",
@@ -87,10 +87,10 @@ def get_save_as(save_to):
         }
 
     else:
-        with open(save_to/"instances_train2014.json", "r") as f:
+        with open(save_to/"annotations"/"instances_train2014.json", "r") as f:
             train2014 = json.load(f)
 
-    if not (save_to/"instances_val2014.json").exists():
+    if not (save_to/"annotations"/"instances_val2014.json").exists():
         val2014 = {
             "info": {
                 "description": "wsiprocess",
@@ -106,7 +106,7 @@ def get_save_as(save_to):
             "annotations": []
         }
     else:
-        with open(save_to/"instances_val2014.json", "r") as f:
+        with open(save_to/"annotations"/"instances_val2014.json", "r") as f:
             val2014 = json.load(f)
 
     return train2014, val2014
@@ -124,9 +124,9 @@ def make_output(save_to, annotation, train_paths, val_paths, train2014, val2014)
     patch_width = annotation["patch_width"]
     patch_height = annotation["patch_height"]
 
-    for idx, cls in enumerate(classes, 1):
-        train2014["categories"].append({"supercategory": "", "id": idx, "name": cls})
-        val2014["categories"].append({"supercategory": "", "id": idx, "name": cls})
+    for cls in classes:
+        train2014 = add_categories(train2014, cls)
+        val2014 = add_categories(val2014, cls)
 
     now = int(datetime.now().strftime('%Y%m%d%H%M%S000000'))
     with tqdm(train_paths, desc="Making annotation for train") as t:
@@ -145,6 +145,18 @@ def make_output(save_to, annotation, train_paths, val_paths, train2014, val2014)
             val2014["annotations"].extend(get_annotation_params(annotation, classes, val_path, slidestem, x, y, patch_width, patch_width, image_id))
 
     return train2014, val2014
+
+
+def add_categories(annotation, cls):
+    categories = annotation["categories"]
+    classes = [cat["name"] for cat in categories]
+    if cls not in classes:
+        categories.append({
+            "supercategory": "",
+            "idx": len(classes)+1,
+            "name": cls}
+        )
+    return annotation
 
 
 def get_image_params(file_name, slidestem, x, y, width, height, image_id):
