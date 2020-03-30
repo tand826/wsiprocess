@@ -153,7 +153,7 @@ def add_categories(annotation, cls):
     if cls not in classes:
         categories.append({
             "supercategory": "",
-            "idx": len(classes)+1,
+            "id": len(classes)+1,
             "name": cls}
         )
     return annotation
