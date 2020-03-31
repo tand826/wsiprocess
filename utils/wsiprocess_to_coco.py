@@ -10,6 +10,8 @@ import json
 def main():
     args = getargs()
     make_dirs(args.save_to)
+    print("")
+    print("-----{}-----".format(args.root.name))
     ratio = get_ratio(args.ratio)
     train_paths, val_paths = make_link_to_images(args.root, args.save_to, ratio)
     train2014, val2014 = get_save_as(args.save_to)
@@ -49,12 +51,16 @@ def get_ratio(ratio):
 
 def make_link_to_images(root, save_to, ratio):
     classes = [i.stem for i in (root/"patches").glob("*")]
+    train_paths_allclasses = []
+    val_paths_allclasses = []
     for cls in classes:
         image_paths = list((root/"patches").glob("{}/*".format(cls)))
         random.shuffle(image_paths)
 
         train_paths = image_paths[:int(len(image_paths)*ratio["train"])]
         val_paths = image_paths[int(len(image_paths)*ratio["train"]):]
+        train_paths_allclasses += train_paths
+        val_paths_allclasses += val_paths
 
         with tqdm(train_paths, desc="Train imgs [{}]".format(cls)) as t:
             for image_path in t:
@@ -66,7 +72,7 @@ def make_link_to_images(root, save_to, ratio):
                 if not (save_to/"val2014"/image_path.name).exists():
                     (save_to/"val2014"/image_path.name).symlink_to(image_path)
 
-    return train_paths, val_paths
+    return train_paths_allclasses, val_paths_allclasses
 
 
 def get_save_as(save_to):
