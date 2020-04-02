@@ -13,10 +13,12 @@ def main():
     print("")
     print("-----{}-----".format(args.root.name))
     ratio = get_ratio(args.ratio)
-    train_paths, val_paths = make_link_to_images(args.root, args.save_to, ratio)
+    train_paths, val_paths = make_link_to_images(
+        args.root, args.save_to, ratio)
     train2014, val2014 = get_save_as(args.save_to)
     annotation = annotations_to_json(args.root)
-    train2014, val2014 = make_output(args.save_to, annotation, train_paths, val_paths, train2014, val2014)
+    train2014, val2014 = make_output(
+        args.save_to, annotation, train_paths, val_paths, train2014, val2014)
     save_data(args.save_to, train2014, val2014)
 
 
@@ -121,6 +123,7 @@ def get_save_as(save_to):
 def annotations_to_json(root):
     with open(root/"results.json", "r") as f:
         annotation = json.load(f)
+    annotation["classes"] = ["positive", "negative"]
     return annotation
 
 
@@ -139,22 +142,28 @@ def make_output(save_to, annotation, train_paths, val_paths, train2014, val2014)
         for idx, train_path in enumerate(t):
             image_id = now+idx
             x, y = map(int, train_path.stem.split("_")[-2:])
-            train2014["images"].append(get_image_params(train_path, slidestem, x, y, patch_width, patch_height, image_id))
-            train2014["annotations"].extend(get_annotation_params(annotation, classes, train_path, slidestem, x, y, patch_width, patch_width, image_id))
+            train2014["images"].append(get_image_params(
+                train_path, slidestem, x, y, patch_width, patch_height, image_id))
+            train2014["annotations"].extend(get_annotation_params(
+                annotation, classes, train_path, slidestem, x, y, patch_width, patch_width, image_id))
 
     now += len(train_paths)
     with tqdm(val_paths, desc="Making annotation for validation") as t:
         for idx, val_path in enumerate(t):
             image_id = now + idx
             x, y = map(int, val_path.stem.split("_")[-2:])
-            val2014["images"].append(get_image_params(val_path, slidestem, x, y, patch_width, patch_height, image_id))
-            val2014["annotations"].extend(get_annotation_params(annotation, classes, val_path, slidestem, x, y, patch_width, patch_width, image_id))
+            val2014["images"].append(get_image_params(
+                val_path, slidestem, x, y, patch_width, patch_height, image_id))
+            val2014["annotations"].extend(get_annotation_params(
+                annotation, classes, val_path, slidestem, x, y, patch_width, patch_width, image_id))
 
     return train2014, val2014
 
 
 def add_categories(annotation, cls):
     categories = annotation["categories"]
+    if cls == "half-positive":
+        cls = "positive"
     classes = [cat["name"] for cat in categories]
     if cls not in classes:
         categories.append({
@@ -186,9 +195,11 @@ def get_annotation_params(annotation, classes, file_name, slidestem, x, y, width
                 for bb in box["bbs"]:
                     bb["x"] %= width
                     bb["y"] %= height
+                    if bb["class"] == "half-positive":
+                        bb["class"] = "positive"
                     data = {
                         "segmentation": [],
-                        "area": 0,
+                        "area": -1,
                         "iscrowd": 0,
                         "image_id": image_id,
                         "bbox": [bb["x"], bb["y"], bb["w"], bb["h"]],
