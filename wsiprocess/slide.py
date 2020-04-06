@@ -5,6 +5,7 @@ from pathlib import Path
 class Slide:
 
     def __init__(self, path):
+        self.path = path
         self.slide = pyvips.Image.new_from_file(path)
         self.filestem = Path(path).stem
         self.wsi_width = self.slide.width
@@ -16,7 +17,7 @@ class Slide:
         thumb.pngsave("{}/thumb.png".format(save_to))
 
     def get_thumbnail(self, size=500):
-        return self.slide.thumbnail_image(size, height=size)
+        return pyvips.Image.thumbnail(self.path, height=size)
 
     def set_properties(self):
         for field in self.slide.get_fields():
