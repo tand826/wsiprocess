@@ -9,13 +9,9 @@ class Slide:
         self.filestem = Path(path).stem
         self.wsi_width = self.slide.width
         self.wsi_height = self.slide.height
-        try:
-            self.magnification = self.slide.get("openslide.objective-power")
-        except:
-            self.magnification = None
         self.set_properties()
 
-    def export_thumbnail(self, save_to, size=500):
+    def export_thumbnail(self, save_to=".", size=500):
         thumb = self.get_thumbnail(size)
         thumb.pngsave("{}/thumb.png".format(save_to))
 
@@ -25,3 +21,7 @@ class Slide:
     def set_properties(self):
         for field in self.slide.get_fields():
             setattr(self, field, self.slide.get(field))
+        if "openslide.objective-power" in self.slide.get_fields():
+            self.magnification = self.slide.get("openslide.objective-power")
+        else:
+            self.magnification = None
