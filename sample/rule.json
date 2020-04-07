@@ -1,0 +1,10 @@
+{
+  "benign": {
+    "includes": ["stroma"],
+    "excludes": ["malignant", "uncertain"]
+  },
+  "malignant": {
+    "includes": [],
+    "excludes": ["benign"]
+  }
+}

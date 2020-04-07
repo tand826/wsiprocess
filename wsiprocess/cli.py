@@ -54,8 +54,8 @@ class Args:
             type=int,
             help="Magnification to process.")
         parser.add_argument(
-            "-in", "--inclusion", type=Path,
-            help="File to define the inclusion relationship.")
+            "-ru", "--rule", type=Path,
+            help="File to define the inclusion / exclusion relationship.")
 
         args = parser.parse_args()
         for arg in vars(args):
@@ -65,13 +65,13 @@ class Args:
 def main():
     args = Args()
     slide = wp.slide(args.wsi)
-    if args.inclusion:
-        inclusion = wp.inclusion(args.inclusion)
+    if args.rule:
+        rule = wp.rule(args.rule)
     else:
-        inclusion = False
+        rule = False
     if args.annotation:
         annotation = wp.annotation(args.annotation)
-        annotation.make_masks(slide, inclusion, foreground=True)
+        annotation.make_masks(slide, rule, foreground=True)
     else:
         annotation = False
     patcher = wp.patcher(

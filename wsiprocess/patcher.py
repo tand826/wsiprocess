@@ -4,7 +4,6 @@ import json
 from joblib import Parallel, delayed
 import numpy as np
 import cv2
-from tqdm import tqdm
 from pathlib import Path
 
 from .verify import Verify
@@ -12,9 +11,11 @@ from .verify import Verify
 
 class Patcher:
 
-    def __init__(self, slide, method, annotation=False, save_to=".", patch_width=256, patch_height=256,
-                 overlap_width=1, overlap_height=1, on_foreground=0.5, on_annotation=1.,
-                 start_sample=True, finished_sample=True, extract_patches=True):
+    def __init__(
+            self, slide, method, annotation=False, save_to=".",
+            patch_width=256, patch_height=256, overlap_width=1,
+            overlap_height=1, on_foreground=0.5, on_annotation=1.,
+            start_sample=True, finished_sample=True, extract_patches=True):
         self.slide = slide
         self.filepath = slide.filename
         self.filestem = slide.filestem
@@ -26,8 +27,10 @@ class Patcher:
         self.p_area = patch_width * patch_height
         self.o_width = overlap_width
         self.o_height = overlap_height
-        self.x_lefttop = [i for i in range(0, self.wsi_width, patch_width - overlap_width)][:-1]
-        self.y_lefttop = [i for i in range(0, self.wsi_height, patch_height - overlap_height)][:-1]
+        self.x_lefttop = [i for i in range(
+            0, self.wsi_width, patch_width - overlap_width)][:-1]
+        self.y_lefttop = [i for i in range(
+            0, self.wsi_height, patch_height - overlap_height)][:-1]
         self.iterator = list(product(self.x_lefttop, self.y_lefttop))
         self.last_x = self.slide.width - patch_width
         self.last_y = self.slide.height - patch_height
@@ -36,17 +39,16 @@ class Patcher:
         self.finished_sample = finished_sample
         self.extract_patches = extract_patches
 
+        self.on_foreground = on_foreground
         if annotation:
             self.annotation = annotation
             self.masks = annotation.masks
             self.classes = annotation.classes
-            self.on_foreground = on_foreground
             self.on_annotation = on_annotation
         else:
             self.annotation = False
             self.masks = False
-            self.classes = False
-            self.on_foreground = False
+            self.classes = ["none"]
             self.on_annotation = False
 
         self.save_to = save_to
@@ -89,7 +91,6 @@ class Patcher:
         elif self.method == "segmentation":
             masks = []
             for cls in self.classes:
-                # self.verify.verify_dir("{}/{}/masks/{}".format(self.save_to, self.filestem, cls))
                 for mask in self.find_masks(x, y, cls):
                     masks.append({"coords": mask["coords"],
                                   "class": mask["class"]})
@@ -130,14 +131,19 @@ class Patcher:
             patch_top = y
             patch_bottom = y + self.p_height
 
-            bbleft_right_of_patch_left = set(np.where(bblefts >= patch_left)[0])
-            bbleft_left_of_patch_right = set(np.where(bblefts <= patch_right)[0])
-            bbright_right_of_patch_left = set(np.where(bbrights >= patch_left)[0])
-            bbright_left_of_patch_right = set(np.where(bbrights <= patch_right)[0])
+            bbleft_right_of_patch_left = set(
+                np.where(bblefts >= patch_left)[0])
+            bbleft_left_of_patch_right = set(
+                np.where(bblefts <= patch_right)[0])
+            bbright_right_of_patch_left = set(
+                np.where(bbrights >= patch_left)[0])
+            bbright_left_of_patch_right = set(
+                np.where(bbrights <= patch_right)[0])
             bbtop_below_patch_top = set(np.where(bbtops >= patch_top)[0])
             bbtop_above_patch_bottom = set(np.where(bbtops <= patch_bottom)[0])
             bbbottom_below_patch_top = set(np.where(bbbottoms >= patch_top)[0])
-            bbbottom_above_patch_bottom = set(np.where(bbbottoms <= patch_bottom)[0])
+            bbbottom_above_patch_bottom = set(
+                np.where(bbbottoms <= patch_bottom)[0])
 
             bbleft_on_patch = bbleft_right_of_patch_left & bbleft_left_of_patch_right
             bbright_on_patch = bbright_right_of_patch_left & bbright_left_of_patch_right
@@ -186,7 +192,8 @@ class Patcher:
         else:
             # Find mask coords
             patch_mask = self.masks[cls][y:y+self.p_height, x:x+self.p_width]
-            mask_png_path = "{}/{}/masks/{}/{:06}_{:06}.png".format(self.save_to, self.filestem, cls, x, y)
+            mask_png_path = "{}/{}/masks/{}/{:06}_{:06}.png".format(
+                self.save_to, self.filestem, cls, x, y)
             cv2.imwrite(mask_png_path, patch_mask, (cv2.IMWRITE_PXM_BINARY, 1))
             # contours, _ = cv2.findContours(patch_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
             masks = []
@@ -223,29 +230,37 @@ class Patcher:
             for cls in classes:
                 if self.patch_on_annotation(cls, x, y):
                     on_annotation_classes.append(cls)
+        else:
+            on_annotation_classes = ["none"]
         if self.extract_patches:
             patch = self.slide.slide.crop(x, y, self.p_width, self.p_height)
             for cls in on_annotation_classes:
-                patch.jpegsave("{}/{}/patches/{}/{:06}_{:06}.jpg".format(self.save_to, self.filestem, cls, x, y))
+                patch.jpegsave(
+                    "{}/{}/patches/{}/{:06}_{:06}.jpg".format(self.save_to, self.filestem, cls, x, y))
                 self.save_patch_result(x, y, cls)
 
     def get_patch_parallel(self, classes=False, cores=-1):
         for cls in classes:
             if self.extract_patches:
-                self.verify.verify_dir("{}/{}/patches/{}".format(self.save_to, self.filestem, cls))
+                self.verify.verify_dir(
+                    "{}/{}/patches/{}".format(self.save_to, self.filestem, cls))
             if self.method == "segmentation":
-                self.verify.verify_dir("{}/{}/masks/{}".format(self.save_to, self.filestem, cls))
+                self.verify.verify_dir(
+                    "{}/{}/masks/{}".format(self.save_to, self.filestem, cls))
 
         if self.start_sample:
             self.get_random_sample("start", 3)
 
         parallel = Parallel(n_jobs=cores, backend="threading", verbose=0)
         # from the left top to just before the right bottom.
-        parallel([delayed(self.get_patch)(x, y, classes) for x, y in tqdm(self.iterator)])
+        parallel([delayed(self.get_patch)(x, y, classes)
+                  for x, y in self.iterator])
         # the bottom edge.
-        parallel([delayed(self.get_patch)(x, self.last_y, classes) for x in self.x_lefttop])
+        parallel([delayed(self.get_patch)(x, self.last_y, classes)
+                  for x in self.x_lefttop])
         # the right edge
-        parallel([delayed(self.get_patch)(self.last_x, y, classes) for y in self.y_lefttop])
+        parallel([delayed(self.get_patch)(self.last_x, y, classes)
+                  for y in self.y_lefttop])
         # right bottom patch
         self.get_patch(self.last_x, self.last_y, classes)
 
@@ -256,7 +271,8 @@ class Patcher:
             self.get_random_sample("finished", 3)
 
     def patch_on_foreground(self, x, y):
-        patch_mask = self.masks["foreground"][y:y+self.p_height, x:x+self.p_width]
+        patch_mask = self.masks["foreground"][y:y +
+                                              self.p_height, x:x+self.p_width]
         return (patch_mask.sum() / self.p_area) >= self.on_foreground
 
     def patch_on_annotation(self, cls, x, y):
@@ -268,4 +284,5 @@ class Patcher:
             x = random.choice(self.x_lefttop)
             y = random.choice(self.y_lefttop)
             patch = self.slide.slide.crop(x, y, self.p_width, self.p_height)
-            patch.pngsave("{}/{}/{}_sample/{:06}_{:06}.png".format(self.save_to, self.filestem, phase, x, y))
+            patch.pngsave(
+                "{}/{}/{}_sample/{:06}_{:06}.png".format(self.save_to, self.filestem, phase, x, y))
