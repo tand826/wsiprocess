@@ -74,17 +74,18 @@ def main():
         annotation.make_masks(slide, inclusion, foreground=True)
     else:
         annotation = False
-    patcher = wp.patcher(slide, args.method,
-                         annotation=annotation,
-                         save_to=args.save_to,
-                         patch_width=args.patch_width,
-                         patch_height=args.patch_height,
-                         overlap_width=args.overlap_width,
-                         overlap_height=args.overlap_height,
-                         on_foreground=args.on_foreground,
-                         on_annotation=args.on_annotation,
-                         start_sample=args.start_sample,
-                         finished_sample=args.finished_sample,
-                         extract_patches=args.extract_patches)
+    patcher = wp.patcher(
+        slide, args.method,
+        annotation=annotation,
+        save_to=args.save_to,
+        patch_width=args.patch_width,
+        patch_height=args.patch_height,
+        overlap_width=args.overlap_width,
+        overlap_height=args.overlap_height,
+        on_foreground=args.on_foreground,
+        on_annotation=args.on_annotation,
+        start_sample=args.start_sample,
+        finished_sample=args.finished_sample,
+        extract_patches=args.extract_patches)
     annotation.classes.remove("foreground")
     patcher.get_patch_parallel(annotation.classes)
