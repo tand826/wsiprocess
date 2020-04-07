@@ -17,7 +17,7 @@ class Slide:
         thumb.pngsave("{}/thumb.png".format(save_to))
 
     def get_thumbnail(self, size=500):
-        return pyvips.Image.thumbnail(self.path, height=size)
+        return pyvips.Image.thumbnail(self.path, size)
 
     def set_properties(self):
         for field in self.slide.get_fields():
