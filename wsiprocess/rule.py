@@ -37,6 +37,6 @@ class Rule:
 
     def read_rule(self):
         self.rule = {}
-        for base, incl_excl in self.rule_file:
+        for base, incl_excl in self.rule_file.items():
             setattr(self, base, incl_excl)
             self.classes.append(base)

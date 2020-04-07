@@ -46,7 +46,7 @@ class Patcher:
             self.classes = annotation.classes
             self.on_annotation = on_annotation
         else:
-            self.annotation = False
+            self.annotation = annotation
             self.masks = False
             self.classes = ["none"]
             self.on_annotation = False
@@ -231,7 +231,7 @@ class Patcher:
                 if self.patch_on_annotation(cls, x, y):
                     on_annotation_classes.append(cls)
         else:
-            on_annotation_classes = ["none"]
+            on_annotation_classes = ["foreground"]
         if self.extract_patches:
             patch = self.slide.slide.crop(x, y, self.p_width, self.p_height)
             for cls in on_annotation_classes:

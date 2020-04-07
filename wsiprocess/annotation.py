@@ -56,7 +56,8 @@ class Annotation:
         self.masks_include = self.masks.copy()
         for cls in self.classes:
             if hasattr(rule, cls):
-                for include in getattr(rule, cls)["include"]:
+                print(rule)
+                for include in getattr(rule, cls)["includes"]:
                     if include in self.masks:
                         self.masks_include[cls] = cv2.bitwise_or(
                             self.masks[cls], self.masks[include])
@@ -66,7 +67,7 @@ class Annotation:
         self.masks_exclude = self.masks.copy()
         for cls in self.classes:
             if hasattr(rule, cls):
-                for exclude in getattr(rule, cls)["exclude"]:
+                for exclude in getattr(rule, cls)["excludes"]:
                     if exclude in self.masks:
                         overlap_area = cv2.bitwise_and(
                             self.masks[cls], self.masks[exclude])

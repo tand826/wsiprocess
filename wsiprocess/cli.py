@@ -72,8 +72,11 @@ def main():
     if args.annotation:
         annotation = wp.annotation(args.annotation)
         annotation.make_masks(slide, rule, foreground=True)
+        annotation.classes.remove("foreground")
     else:
-        annotation = False
+        annotation = wp.annotation("")
+        if args.on_annotation:
+            annotation.make_masks(slide, foreground=True)
     patcher = wp.patcher(
         slide, args.method,
         annotation=annotation,
@@ -87,5 +90,4 @@ def main():
         start_sample=args.start_sample,
         finished_sample=args.finished_sample,
         extract_patches=args.extract_patches)
-    annotation.classes.remove("foreground")
     patcher.get_patch_parallel(annotation.classes)
