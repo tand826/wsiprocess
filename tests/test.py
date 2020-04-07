@@ -12,7 +12,7 @@ class WsiprocessTest(unittest.TestCase):
         self.slide_exts = ["svs", "tiff", "ndpi", "scn", "bif", "zvi"]
         self.annotation_exts = ["xml", "json"]
         self.annotation_file_folder = Path("./sample")
-        self.inclusion_file = "./sample/inclusion.txt"
+        self.inclusion_file = "./sample/rule.json"
 
     def tearDown(self):
         pass
@@ -46,9 +46,12 @@ class WsiprocessTest(unittest.TestCase):
                 "{} has no classes".format(annotation_file))
             sample_class = annotation.classes[0]
             self.assertTrue(type(annotation.mask_coords[sample_class]) == list)
-            self.assertTrue(type(annotation.mask_coords[sample_class][0]) == list)
-            self.assertTrue(type(annotation.mask_coords[sample_class][0][0]) == list)
-            self.assertTrue(type(annotation.mask_coords[sample_class][0][0][0]) == int)
+            self.assertTrue(
+                type(annotation.mask_coords[sample_class][0]) == list)
+            self.assertTrue(
+                type(annotation.mask_coords[sample_class][0][0]) == list)
+            self.assertTrue(
+                type(annotation.mask_coords[sample_class][0][0][0]) == int)
 
 
 def args():
@@ -87,22 +90,25 @@ def test_none(wsi, annotation, inclusion):
 
     # no annotation file
     print("none without annotation")
-    patcher = wp.Patcher(slide, "none", start_sample=False, finished_sample=False, on_foreground=False, on_annotation=False)
-    #patcher.get_patch_parallel()
+    patcher = wp.Patcher(slide, "none", start_sample=False,
+                         finished_sample=False, on_foreground=False, on_annotation=False)
+    # patcher.get_patch_parallel()
 
     # with annotation file
     print("none with annotation")
     annotation = wp.Annotation(annotation)
     annotation.make_masks(slide, foreground=True)
     annotation.export_thumb_masks()
-    patcher = wp.Patcher(slide, "none", annotation, start_sample=False, finished_sample=False, on_foreground=1., on_annotation=1.)
+    patcher = wp.Patcher(slide, "none", annotation, start_sample=False,
+                         finished_sample=False, on_foreground=1., on_annotation=1.)
     patcher.get_patch_parallel(annotation.classes[0])
 
     # with annotation file and inclusion file
     print("none with anntation and inclusion")
     inclusion = wp.Inclusion(inclusion)
     annotation.make_masks(slide, inclusion, foreground=True)
-    patcher = wp.Patcher(slide, "none", annotation, start_sample=False, finished_sample=False, on_foreground=1., on_annotation=1.)
+    patcher = wp.Patcher(slide, "none", annotation, start_sample=False,
+                         finished_sample=False, on_foreground=1., on_annotation=1.)
     patcher.get_patch_parallel(annotation.classes[0])
 
 
@@ -113,14 +119,16 @@ def test_classification(wsi, annotation, inclusion):
     print("classification with annotation")
     annotation = wp.Annotation(annotation)
     annotation.make_masks(slide, foreground=True)
-    patcher = wp.Patcher(slide, "classification", annotation, start_sample=False, finished_sample=False, on_foreground=1., on_annotation=1.)
+    patcher = wp.Patcher(slide, "classification", annotation, start_sample=False,
+                         finished_sample=False, on_foreground=1., on_annotation=1.)
     patcher.get_patch_parallel(annotation.classes[0])
 
     # with annotation file and inclusion file
     print("classification with annotation and inclusion")
     inclusion = wp.Inclusion(inclusion)
     annotation.make_masks(slide, inclusion, foreground=True)
-    patcher = wp.Patcher(slide, "classification", annotation, start_sample=False, finished_sample=False, on_foreground=1., on_annotation=1.)
+    patcher = wp.Patcher(slide, "classification", annotation, start_sample=False,
+                         finished_sample=False, on_foreground=1., on_annotation=1.)
     patcher.get_patch_parallel(annotation.classes[0])
 
 
@@ -132,7 +140,8 @@ def test_detection(wsi, annotation, inclusion):
     annotation = wp.Annotation(annotation)
     annotation.make_masks(slide, foreground=True)
     annotation.export_thumb_masks()
-    patcher = wp.Patcher(slide, "detection", annotation, start_sample=False, finished_sample=False, on_foreground=0.5, on_annotation=0.01)
+    patcher = wp.Patcher(slide, "detection", annotation, start_sample=False,
+                         finished_sample=False, on_foreground=0.5, on_annotation=0.01)
     patcher.get_patch_parallel("malignant")
     patcher.get_patch_parallel("benign")
 
@@ -141,7 +150,7 @@ def test_detection(wsi, annotation, inclusion):
     #inclusion = wp.Inclusion(inclusion)
     #annotation.make_masks(slide, inclusion, foreground=True)
     #patcher = wp.Patcher(slide, "detection", annotation, start_sample=False, finished_sample=False, on_foreground=0.5, on_annotation=0.01)
-    #patcher.get_patch_parallel(annotation.classes[0])
+    # patcher.get_patch_parallel(annotation.classes[0])
 
 
 def test_segmentation(wsi, annotation, inclusion):
@@ -151,14 +160,16 @@ def test_segmentation(wsi, annotation, inclusion):
     print("segmentation with annotation")
     annotation = wp.Annotation(annotation)
     annotation.make_masks(slide, foreground=True)
-    patcher = wp.Patcher(slide, "segmentation", annotation, start_sample=False, finished_sample=False, on_foreground=0.5, on_annotation=0.3)
+    patcher = wp.Patcher(slide, "segmentation", annotation, start_sample=False,
+                         finished_sample=False, on_foreground=0.5, on_annotation=0.3)
     patcher.get_patch_parallel(annotation.classes[0])
 
     # with annotation file and inclusion file
     print("segmentation with annotation and inclusion")
     inclusion = wp.Inclusion(inclusion)
     annotation.make_masks(slide, inclusion)
-    patcher = wp.Patcher(slide, "segmentation", annotation, start_sample=False, finished_sample=False, on_foreground=0.5, on_annotation=0.3)
+    patcher = wp.Patcher(slide, "segmentation", annotation, start_sample=False,
+                         finished_sample=False, on_foreground=0.5, on_annotation=0.3)
     # patcher.get_patch_parallel(annotation.classes[0])
 
 
@@ -174,7 +185,7 @@ if __name__ == '__main__':
     # test_none(args.wsi, args.annotation, args.inclusion)
     # print("classification")
     # test_classification(args.wsi, args.annotation, args.inclusion)
-    #print("detection")
+    # print("detection")
     #test_detection(args.wsi, args.annotation, args.inclusion)
     # print("segmentation")
     # test_segmentation(args.wsi, args.annotation, args.inclusion)
