@@ -16,15 +16,20 @@ class Annotation:
         annotation_type = detect_type(self.path)
         if annotation_type == "ASAP":
             from .annotationparser.ASAP_parser import AnnotationParser
-            parsed = AnnotationParser(self.path)
         elif annotation_type == "pathology_viewer":
             from .annotationparser.pathology_viewer_parser import AnnotationParser
-            parsed = AnnotationParser(self.path)
-        elif annotation_type == "None":
-            class Parsed:
+        elif annotation_type == "Empty":
+            class AnnotationParser:
                 classes = []
                 mask_coords = {}
-            parsed = Parsed()
+
+                def __init__(self, path):
+                    print("Annotation File is Empty")
+        try:
+            parsed = AnnotationParser(self.path)
+        except Exception as e:
+            raise NotImplementedError(
+                "[{e}] Could not parse {}".format(e, self.path))
         self.classes = parsed.classes
         self.mask_coords = parsed.mask_coords
 
@@ -79,8 +84,10 @@ class Annotation:
         if "foreground" in self.classes:
             return
         thumb = slide.get_thumbnail(size)
-        thumb = np.ndarray(buffer=thumb.write_to_memory(), dtype=np.uint8, shape=[
-                           thumb.height, thumb.width, thumb.bands])
+        thumb = np.ndarray(
+            buffer=thumb.write_to_memory(),
+            dtype=np.uint8,
+            shape=[thumb.height, thumb.width, thumb.bands])
         thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
         _, th = cv2.threshold(
             thumb_gray, 0, 1, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)

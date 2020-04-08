@@ -16,17 +16,20 @@ class Patcher:
             patch_width=256, patch_height=256, overlap_width=1,
             overlap_height=1, on_foreground=0.5, on_annotation=1.,
             start_sample=True, finished_sample=True, extract_patches=True):
+        Verify.verify_sizes(
+            slide.wsi_width, slide.wsi_height, patch_width, patch_height,
+            overlap_width, overlap_height)
         self.slide = slide
         self.filepath = slide.filename
         self.filestem = slide.filestem
-        self.method = method
+        self.method = method.lower()
         self.wsi_width = slide.wsi_width
         self.wsi_height = slide.wsi_height
-        self.p_width = patch_width
-        self.p_height = patch_height
+        self.p_width = int(patch_width)
+        self.p_height = int(patch_height)
         self.p_area = patch_width * patch_height
-        self.o_width = overlap_width
-        self.o_height = overlap_height
+        self.o_width = int(overlap_width)
+        self.o_height = int(overlap_height)
         self.x_lefttop = [i for i in range(
             0, self.wsi_width, patch_width - overlap_width)][:-1]
         self.y_lefttop = [i for i in range(

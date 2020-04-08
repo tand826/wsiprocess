@@ -14,5 +14,5 @@ def detect_type(path):
         key = list(data.keys())[0]
         if data[key]["source"]["annotation"] == "pathology_viewer":
             return "pathology_viewer"
-    except OSError:
-        return "None"
+    except etree.XMLSyntaxError:
+        return "Empty"

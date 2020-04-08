@@ -1,12 +1,16 @@
 import pyvips
 from pathlib import Path
+from .error import SlideLoadError
 
 
 class Slide:
 
     def __init__(self, path):
         self.path = path
+        if not Path(path).exists():
+            raise SlideLoadError("Slide File {} Not Found".format(path))
         self.slide = pyvips.Image.new_from_file(path)
+
         self.filestem = Path(path).stem
         self.wsi_width = self.slide.width
         self.wsi_height = self.slide.height
