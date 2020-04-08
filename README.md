@@ -64,8 +64,8 @@ annotation.export_mask("xxx/masks", "benign")
 import wsiprocess as wp
 slide = wp.slide("xxx.tiff")
 annotation = wp.annotation("xxx.xml")
-inclusion = wp.inclusion("xxx.txt")
-annotation.make_masks(slide, inclusion)
+rule = wp.rule("xxx.txt")
+annotation.make_masks(slide, rule)
 annotation.export_thumb_masks("xxx/masks")
 ```
 
