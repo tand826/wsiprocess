@@ -84,7 +84,7 @@ def get_save_as(save_to):
                 "description": "wsiprocess",
                 "url": "",
                 "version": "1.0",
-                "year": "2014",
+                "year": 2014,
                 "contributor": "",
                 "date_created": datetime.now().strftime('%Y/%m/%d_%H:%M:%S')
             },
@@ -198,7 +198,12 @@ def get_annotation_params(annotation, classes, file_name, slidestem, x, y, width
                     if bb["class"] == "half-positive":
                         bb["class"] = "positive"
                     data = {
-                        "segmentation": [],
+                        "segmentation": [
+                            bb["x"], bb["y"],
+                            bb["x"] + bb["w"], bb["y"],
+                            bb["x"] + bb["w"], bb["y"] + bb["h"],
+                            bb["x"], bb["y"] + bb["h"]
+                        ],
                         "area": -1,
                         "iscrowd": 0,
                         "image_id": image_id,
