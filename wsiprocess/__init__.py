@@ -1,7 +1,7 @@
 from .slide import Slide
 from .patcher import Patcher
 from .annotation import Annotation
-from .inclusion import Inclusion
+from .rule import Rule
 
 
 def slide(path):
@@ -12,8 +12,8 @@ def annotation(path):
     return Annotation(path)
 
 
-def inclusion(path):
-    return Inclusion(path)
+def rule(path):
+    return Rule(path)
 
 
 def patcher(slide, method, annotation=False, save_to=".", patch_width=256,

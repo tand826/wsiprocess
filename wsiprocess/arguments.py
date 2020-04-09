@@ -11,7 +11,8 @@ class Args:
         parser.add_argument("wsi", type=Path,
                             help="Path to the target wsi.")
         parser.add_argument("method", type=str,
-                            choices={"none", "classification", "detection", "segmentation"},
+                            choices={"none", "classification",
+                                     "detection", "segmentation"},
                             help="Method to use.")
         parser.add_argument("-st", "--save_to", type=Path,
                             help="Where to save the data.")
