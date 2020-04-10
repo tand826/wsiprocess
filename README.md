@@ -15,6 +15,7 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 2. Make some annotations with WSI annotation tools
 3. Then wsiprocess helps converting WSI + Annotation data into patches and easy-to-use annotation data.
 
+[WSIPatcher](https://github.com/tand826/WSIPatcher) will give you GUI.
 [Command Helper](https://tand826.github.io/wsiprocess_command_line_helper) will recommend commands to run.
 
 # Installation
