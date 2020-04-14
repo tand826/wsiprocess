@@ -23,5 +23,14 @@ setuptools.setup(
             "wsiprocess = cli:main"
         ]
     },
+    install_requires=[
+        "joblib",
+        "lxml",
+        "numpy",
+        "opencv-python",
+        "pathlib",
+        "pyvips",
+        "tqdm",
+    ]
     python_requires='>=3.4',
 )

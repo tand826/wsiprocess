@@ -10,4 +10,4 @@ dependencies:
   - opencv=4.2.0
   - pyvips=2.1.8
   - pip:
-      - wsiprocess
+      - wsiprocess=0.0.1
