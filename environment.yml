@@ -1,4 +1,6 @@
 name: wsiprocess
+channels:
+  - conda-forge
 dependencies:
   - python=3.7.0
   - joblib=0.14.1
