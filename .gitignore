@@ -1,3 +1,6 @@
+# vscode
+.vscode/
+
 # test wsi
 test/*.ndpi
 sample/*.ndpi

@@ -1,3 +1,25 @@
+.. hoge documentation master file, created by
+   sphinx-quickstart on Sun Sep  2 18:45:37 2018.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to hoge's documentation!
+================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   wsiprocess
+   wsiprocess.annotationparser
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
 |PyPI - Downloads| |PyPI| |PyPI - Python Version| |GitHub|
 
 Convert Helper for Histopathological / Cytopathological Machine Learning
@@ -5,11 +27,6 @@ Tasks
 
 Main Flow
 =========
-
-.. image:: description.png
-   :width: 80%
-   :align: center
-
 
 1. Scan some WSIs.
 2. Make some annotations with WSI annotation tools
