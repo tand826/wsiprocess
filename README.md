@@ -41,9 +41,9 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 import wsiprocess as wp
 slide = wp.slide("xxx.tiff")
 annotation = wp.annotation("xxx.xml")
-inclusion = wp.inclusion("xxx.txt")
+rule = wp.rule("xxx.json")
 
-annotation.make_masks(slide, inclusion, foreground=True)
+annotation.make_masks(slide, rule, foreground=True)
 
 patcher = wp.patcher(slide, "classification", annotation)
 patcher.get_patch_parallel("benign")
@@ -65,7 +65,7 @@ annotation.export_mask("xxx/masks", "benign")
 import wsiprocess as wp
 slide = wp.slide("xxx.tiff")
 annotation = wp.annotation("xxx.xml")
-rule = wp.rule("xxx.txt")
+rule = wp.rule("xxx.json")
 annotation.make_masks(slide, rule)
 annotation.export_thumb_masks("xxx/masks")
 ```
