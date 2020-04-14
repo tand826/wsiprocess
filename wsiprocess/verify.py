@@ -1,8 +1,28 @@
+# -*- coding: utf-8 -*-
+"""Verification script runs before the patcher works.
+Verify class works for verification of the output directory, annotation files,
+rule files, etc. Mainly runs for cli.
+
+Todo:
+    * combination error
+"""
+
 from pathlib import Path
 from .error import SizeError
 
 
 class Verify:
+    """Verification class.
+    Attributes:
+        save_to (str): The root of the output directory.
+        filestem (str): The name of the output directory.
+        method (str): Method name to run. One of {"none", "classification",
+            "detection", "segmentation}
+        start_sample (bool): Whether to save sample patches on Patcher start.
+        finished_sample (bool): Whether to save sample patches on Patcher
+            finish.
+        extract_patches (bool): Whether to save patches when Patcher runs.
+    """
 
     def __init__(
             self, save_to, filestem, method, start_sample,
