@@ -1,3 +1,19 @@
+# -*- coding: utf-8 -*-
+"""Annotation object.
+
+Annotation object is optional metadata for slide.
+This object can handle ASAP or WSIViewer style annotation.
+By adding annotationparser, you can process annotation data from other types of
+annotation tools.
+
+
+Example:
+    Loading annotation data:: python
+
+        import wsiprocess as wp
+        annotation = wp.annotation("path_to_annotation_file.xml")
+"""
+
 import cv2
 import numpy as np
 from pathlib import Path
@@ -13,7 +29,16 @@ class Annotation:
         self.contours = {}
 
     def read_annotation(self, annotation_type=False):
-        annotation_type = detect_type(self.path)
+        """Parse the annotation data.
+
+        WSIViewer is going to be added as a annotation type.
+        Currently, ASAP is available.
+
+        Args:
+            annotation_type (str): If provided, pass the auto type detection.
+        """
+        if not annotation_type:
+            annotation_type = detect_type(self.path)
         if annotation_type == "ASAP":
             from .annotationparser.ASAP_parser import AnnotationParser
         elif annotation_type == "pathology_viewer":
@@ -34,6 +59,18 @@ class Annotation:
         self.mask_coords = parsed.mask_coords
 
     def make_masks(self, slide, rule=False, foreground=False, size=2000):
+        """Make masks from the slide and rule.
+
+        Make masks for each class and foreground area.
+
+        Args:
+            slide (wsiprocess.slide.Slide): Slide object
+            rule (:obj:`wsiprocess.rule.Rule`, optional): Rule object
+            foreground (bool, optional): Whether to crop only from the
+                foreground area.
+            size (int, optional): Size of foreground mask on calculating with
+                the Otsu Thresholding.
+        """
         self.base_masks(slide.wsi_height, slide.wsi_width)
         self.main_masks()
         if rule:
@@ -44,13 +81,34 @@ class Annotation:
             self.make_foreground_mask(slide, size)
 
     def base_masks(self, wsi_height, wsi_width):
+        """Make base masks.
+
+        Make base mask.
+
+        Args:
+            wsi_height (int): The height of base masks.
+            wsi_width (int): The width of base masks.
+        """
         for cls in self.classes:
             self.base_mask(cls, wsi_height, wsi_width)
 
     def base_mask(self, cls, wsi_height, wsi_width):
+        """ Masks have same size of as the slide.
+
+        Make base masks. Just make black canvases.
+
+        Args:
+            cls (str): Class name for each mask.
+            wsi_height (int): The height of base masks.
+            wsi_width (int): The width of base masks.
+        """
         self.masks[cls] = np.zeros((wsi_height, wsi_width), dtype=np.uint8)
 
     def main_masks(self):
+        """Main masks
+
+        Write border lines following the rule and fill inside with 255.
+        """
         for cls in self.classes:
             contours = np.array(self.mask_coords[cls])
             for contour in contours:
@@ -58,6 +116,13 @@ class Annotation:
                     self.masks[cls], [np.int32(contour)], 0, True, thickness=cv2.FILLED)
 
     def include_masks(self, rule):
+        """Draw include mask.
+
+        Merge masks following the rule.
+
+        Args:
+            rule (wsiprocess.rule.Rule): Rule object.
+        """
         self.masks_include = self.masks.copy()
         for cls in self.classes:
             if hasattr(rule, cls):
@@ -69,6 +134,13 @@ class Annotation:
         self.masks = self.masks_include
 
     def exclude_masks(self, rule):
+        """Draw exclude mask.
+
+        Exclude area from base mask with following the rule.
+
+        Args:
+            rule (wsiprocess.rule.Rule): Rule object.
+        """
         self.masks_exclude = self.masks.copy()
         for cls in self.classes:
             if hasattr(rule, cls):
@@ -81,6 +153,15 @@ class Annotation:
         self.masks = self.masks_exclude
 
     def make_foreground_mask(self, slide, size=2000):
+        """Make foreground mask.
+
+        With otsu thresholding, make simple foreground mask.
+
+        Args:
+            slide (wsiprocess.slide.Slide): Slide object.
+            size (int, optional): Size of foreground mask on calculating with
+                the Otsu Thresholding.
+        """
         if "foreground" in self.classes:
             return
         thumb = slide.get_thumbnail(size)
@@ -95,10 +176,27 @@ class Annotation:
         self.classes.append("foreground")
 
     def export_thumb_masks(self, save_to=".", size=512):
+        """Export thumbnail of masks.
+
+        For prior check, export thumbnails of masks.
+
+        Args:
+            save_to (str): Parent directory to save the thumbnails.
+            size (int): Length of the long side of thumbnail.
+        """
         for cls in self.masks.keys():
             self.export_thumb_mask(cls, save_to, size)
 
     def export_thumb_mask(self, cls, save_to=".", size=512):
+        """Export a thumbnail of one of the masks.
+
+        For prior check, export one thumbnail of one of the masks.
+
+        Args:
+            cls (str): Class name for each mask.
+            save_to (str, optional): Parent directory to save the thumbnails.
+            size (int, optional): Length of the long side of thumbnail.
+        """
         mask = self.masks[cls]
         height, width = mask.shape
         scale = max(size / height, size / width)
@@ -107,9 +205,25 @@ class Annotation:
         cv2.imwrite(str(Path(save_to)/"{}_thumb.png".format(cls)), mask_scaled)
 
     def export_masks(self, save_to):
+        """Export binary mask images.
+
+        For later computing such as segmentation, export the mask images.
+        Exported masks have 0 or 1 binary data.
+
+        Args:
+            save_to (str): Parent directory to save the thumbnails.
+        """
         for cls in self.masks.keys():
             self.export_mask(save_to, cls)
 
     def export_mask(self, save_to, cls):
+        """Export one binary mask image.
+
+        Export mask image with 0 or 1 binaries.
+
+        Args:
+            save_to (str): Parent directory to save the thumbnails.
+            cls (str): Class name for each mask.
+        """
         cv2.imwrite(str(Path(save_to)/"{}.png".format(cls)),
                     self.masks[cls], (cv2.IMWRITE_PXM_BINARY, 1))
