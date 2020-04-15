@@ -31,6 +31,13 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
    pip install wsiprocess
    ```
 
+### Anaconda User
+
+```
+# Only for python 3.6 or higher
+conda install -c tand826 wsiprocess
+```
+
 # Example
 
 ### As a python module
