@@ -33,6 +33,7 @@ release = '0.0.1'
 extensions = ['sphinx.ext.napoleon', 'sphinx.ext.todo', 'sphinx.ext.autodoc']
 with open("../requirements.txt", "r") as f:
     autodoc_mock_imports = [i.strip() for i in f.readlines()]
+autodoc_mock_imports.append("cv2")
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
