@@ -35,6 +35,8 @@ class Verify:
         self.extract_patches = extract_patches
 
     def verify_dirs(self):
+        """Ensure the output directories exists for each tasks.
+        """
         base_dir = Path(self.save_to)/self.filestem
         self.verify_dir(base_dir)
         if self.method == "none":
@@ -54,6 +56,12 @@ class Verify:
             Path(path).mkdir(parents=True)
 
     def verify_magnification(self, slide, magnification):
+        """Check if the slide has data for the magnification the user specified.
+        Args:
+            slide (wp.slide.Slide): Slide object to check.
+            magnification (int): Target magnification value which has to be
+                smaller than the magnification of the slide.
+        """
         basemsg = "Magnification for this slide has to be smaller than"
         msg = "{} {}".format(basemsg, slide.slide.magnification)
         assert slide.slide.magnification < magnification, msg
@@ -62,6 +70,19 @@ class Verify:
     def verify_sizes(
             wsi_width, wsi_height, patch_width, patch_height,
             overlap_width, overlap_height):
+        """Verify the sizes of the slide, the patch and the overlap area.
+
+        Args:
+            wsi_width (int): The width of the slide.
+            wsi_height (int): The height of the slide.
+            patch_width (int): The width of the output patches.
+            patch_height (int): The height of the output patches.
+            overlap_width (int): The width of the overlap areas of patches.
+            overlap_height (int): The height of the overlap areas of patches.
+
+        Raises:
+            wp.error.SizeError: If the sizes are invalid.
+        """
         if not (wsi_width > patch_width or wsi_height > patch_height):
             raise SizeError("WSI have to be larger than the patches.")
         if not (patch_width > overlap_width or patch_height > overlap_height):
