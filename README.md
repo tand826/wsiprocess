@@ -38,6 +38,10 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 conda install -c tand826 wsiprocess
 ```
 
+# Documentation
+
+- [Documentation](wsiprocess.rtfd.io)
+
 # Example
 
 ### As a python module
@@ -218,11 +222,3 @@ pytest tests.py
     Year = {2019}
 }
 ```
-
-# TODO
-
-- pathology_viewer to be public
-- add link to WSIPatcher
-- add to conda
-- slow free server on heroku
-- paste results on the thumbnails
