@@ -31,7 +31,7 @@ release = '0.0.1'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.napoleon', 'sphinx.ext.todo', 'sphinx.ext.autodoc']
-with open("../requirements.txt", "r") as f:
+with open("requirements.txt", "r") as f:
     autodoc_mock_imports = f.readlines()
 
 # Add any paths that contain templates here, relative to this directory.
