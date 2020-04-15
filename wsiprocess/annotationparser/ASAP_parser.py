@@ -1,8 +1,22 @@
+# -*- coding: utf-8 -*-
+
 from lxml import etree
 import numpy as np
 
 
 class AnnotationParser:
+    """Annotation Parser for ASAP.
+
+    Args:
+        path (str): Path to the annotation file.
+
+    Attributes:
+        path (str): Path to the annotation file.
+        annotations (list): List of etree Elements.
+        annotation_groups (list): List of etree Elements.
+        classes (list): List of classes defined with ASAP.
+        mask_coords (dict): Coordinates of the masks.
+    """
 
     def __init__(self, path):
         self.path = path
@@ -16,10 +30,17 @@ class AnnotationParser:
         self.read_mask_coords()
 
     def read_mask_coords(self):
+        """Parse coordinates of of the masks of all classes.
+        """
         for cls in self.classes:
             self.read_mask_coord(cls)
 
     def read_mask_coord(self, cls):
+        """Parse the coordinates of the mask.
+
+        Args:
+            cls (str): Target annotation class name.
+        """
         for annotation in self.annotations:
             if annotation.attrib["PartOfGroup"] == cls:
                 contour = []

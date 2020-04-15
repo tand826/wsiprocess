@@ -1,8 +1,14 @@
+# -*- coding: utf-8 -*-
 from lxml import etree
 import json
 
 
 def detect_type(path):
+    """Detect the type of input file.
+
+    Returns:
+        (str): One of {"ASAP", "pathology_viewe, "Empty"}
+    """
     try:
         tree = etree.parse(path)
         root = tree.getroot()

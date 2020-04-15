@@ -29,14 +29,16 @@ class Patcher:
             patches.
         overlap_height (int, optional): The height of the overlap areas of
             patches.
-        on_foreground (float): Ratio of overlap area between patches and
-            foreground area.
-        on_annotation (float): Ratio of overlap area between patches and
-            annotation.
-        start_sample (bool): Whether to save sample patches on Patcher start.
-        finished_sample (bool): Whether to save sample patches on Patcher
-            finish.
-        extract_patches (bool): Whether to save patches when Patcher runs.
+        on_foreground (float, optional): Ratio of overlap area between patches
+            and foreground area.
+        on_annotation (float, optional): Ratio of overlap area between patches
+            and annotation.
+        start_sample (bool, optional): Whether to save sample patches on
+            Patcher starting.
+        finished_sample (bool, optional): Whether to save sample patches on
+            Patcher finished its work.
+        extract_patches (bool, optional): Whether to save patches when Patcher
+            runs.
 
     Attributes:
         slide (wsiprocess.slide.Slide): Slide object.

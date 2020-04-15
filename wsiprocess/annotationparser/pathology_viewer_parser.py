@@ -1,7 +1,21 @@
+# -*- coding: utf-8 -*-
+
 import json
 
 
 class AnnotationParser:
+    """Annotation parser for pathology_viewer
+
+    Args:
+        path (str): Path to the annotation file.
+
+    Attributes:
+        path (str): Path to the annotation file.
+        annotation (dict): Annotation data loaded as json file.
+        filename (str): Name of the targeted whole slide image file.
+        classes (list): List of the names of the classes.
+        mask_coords (dict): Coordinates of the masks.
+    """
 
     def __init__(self, path):
         self.path = path
@@ -15,6 +29,9 @@ class AnnotationParser:
         self.read_mask_coords()
 
     def read_mask_coords(self):
+        """Parse the coordinates of masks.
+
+        """
         boxes = self.annotation[self.filename]["object"]
         for box in boxes:
             cls = box["name"]
