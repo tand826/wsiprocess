@@ -30,7 +30,8 @@ release = '0.0.1'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.napoleon', 'sphinx.ext.todo', 'sphinx.ext.autodoc']
+extensions = ['sphinx.ext.napoleon', 'sphinx.ext.todo', 'sphinx.ext.autodoc',
+              'sphinxemoji.sphinxemoji']
 with open("../requirements.txt", "r") as f:
     autodoc_mock_imports = [i.strip() for i in f.readlines()]
 autodoc_mock_imports.append("cv2")
