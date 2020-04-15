@@ -1,4 +1,4 @@
-<img src="images/logo.png" style="width: 50%">
+<img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/logo.png" style="width: 50%">
 
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/wsiprocess?style=plastic)
 ![PyPI](https://img.shields.io/pypi/v/wsiprocess)
@@ -9,7 +9,7 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 
 # Main Flow
 
-<div style="text-align: center"><img src="images/description.png" style="max-width: 80%; margin: 0 auto;"></div>
+<div style="text-align: center"><img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/description.png" style="max-width: 80%; margin: 0 auto;"></div>
 
 1. Scan some WSIs.
 2. Make some annotations with WSI annotation tools
@@ -27,6 +27,7 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
    - Windows - Install tarball from [here](https://github.com/libvips/build-win64)
 
 2. Install wsiprocess
+
    ```
    pip install wsiprocess
    ```

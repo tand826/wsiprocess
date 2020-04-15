@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="wsiprocess",
-    version="0.0.1",
+    version="0.1",
     author="Takumi Ando",
     author_email="takumi.ando826@gmail.com",
     description="Whole Slide Image (WSI) Processing Library",
@@ -31,5 +31,5 @@ setuptools.setup(
         "opencv-python",
         "pyvips",
     ],
-    python_requires='>=3.4',
+    python_requires='>=3.6',
 )
