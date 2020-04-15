@@ -2,9 +2,6 @@
 """Verification script runs before the patcher works.
 Verify class works for verification of the output directory, annotation files,
 rule files, etc. Mainly runs for cli.
-
-Todo:
-    * combination error
 """
 
 from pathlib import Path
@@ -13,6 +10,17 @@ from .error import SizeError
 
 class Verify:
     """Verification class.
+
+    Args:
+        save_to (str): The root of the output directory.
+        filestem (str): The name of the output directory.
+        method (str): Method name to run. One of {"none", "classification",
+            "detection", "segmentation}
+        start_sample (bool): Whether to save sample patches on Patcher start.
+        finished_sample (bool): Whether to save sample patches on Patcher
+            finish.
+        extract_patches (bool): Whether to save patches when Patcher runs.
+
     Attributes:
         save_to (str): The root of the output directory.
         filestem (str): The name of the output directory.
@@ -52,11 +60,14 @@ class Verify:
 
     @staticmethod
     def verify_dir(path):
+        """Make output directory.
+        """
         if not Path(path).exists():
             Path(path).mkdir(parents=True)
 
     def verify_magnification(self, slide, magnification):
         """Check if the slide has data for the magnification the user specified.
+
         Args:
             slide (wp.slide.Slide): Slide object to check.
             magnification (int): Target magnification value which has to be
@@ -81,7 +92,7 @@ class Verify:
             overlap_height (int): The height of the overlap areas of patches.
 
         Raises:
-            wp.error.SizeError: If the sizes are invalid.
+            wsiprocess.error.SizeError: If the sizes are invalid.
         """
         if not (wsi_width > patch_width or wsi_height > patch_height):
             raise SizeError("WSI have to be larger than the patches.")

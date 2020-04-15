@@ -1,94 +1,57 @@
 wsiprocess package
 ==================
 
-Subpackages
------------
-
 .. toctree::
    :maxdepth: 4
 
    wsiprocess.annotationparser
 
-Submodules
-----------
 
-wsiprocess.annotation module
-----------------------------
+wsiprocess.annotation
+---------------------
 
 .. automodule:: wsiprocess.annotation
    :members:
    :undoc-members:
-   :show-inheritance:
 
-wsiprocess.arguments module
----------------------------
-
-.. automodule:: wsiprocess.arguments
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-wsiprocess.cli module
----------------------
-
-.. automodule:: wsiprocess.cli
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-wsiprocess.error module
------------------------
+wsiprocess.error
+----------------
 
 .. automodule:: wsiprocess.error
    :members:
    :undoc-members:
-   :show-inheritance:
 
-wsiprocess.patcher module
--------------------------
+wsiprocess.patcher
+------------------
 
 .. automodule:: wsiprocess.patcher
    :members:
    :undoc-members:
-   :show-inheritance:
 
-wsiprocess.rule module
-----------------------
+wsiprocess.rule
+---------------
 
 .. automodule:: wsiprocess.rule
    :members:
    :undoc-members:
-   :show-inheritance:
 
-wsiprocess.slide module
------------------------
+wsiprocess.slide
+----------------
 
 .. automodule:: wsiprocess.slide
    :members:
    :undoc-members:
-   :show-inheritance:
 
-wsiprocess.utils module
------------------------
+wsiprocess.utils
+----------------
 
 .. automodule:: wsiprocess.utils
    :members:
    :undoc-members:
-   :show-inheritance:
 
-wsiprocess.verify module
-------------------------
+wsiprocess.verify
+-----------------
 
 .. automodule:: wsiprocess.verify
    :members:
    :undoc-members:
-   :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: wsiprocess
-   :members:
-   :undoc-members:
-   :show-inheritance:

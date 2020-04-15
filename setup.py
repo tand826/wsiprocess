@@ -14,8 +14,9 @@ setuptools.setup(
     url="https://github.com/tand826/wsiprocess",
     packages=setuptools.find_packages(),
     classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "License :: OSI Approved :: Apache-2.0",
         "Operating System :: OS Independent",
     ],
     entry_points={
@@ -28,9 +29,7 @@ setuptools.setup(
         "lxml",
         "numpy",
         "opencv-python",
-        "pathlib",
         "pyvips",
-        "tqdm",
-    ]
+    ],
     python_requires='>=3.4',
 )

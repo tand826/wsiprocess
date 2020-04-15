@@ -93,7 +93,7 @@ class Annotation:
     def base_mask(self, cls, wsi_height, wsi_width):
         """ Masks have same size of as the slide.
 
-        Masks are canvases of 0.
+        Masks are canvases of 0s.
 
         Args:
             cls (str): Class name for each mask.

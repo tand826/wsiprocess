@@ -1,38 +1,24 @@
-wsiprocess.annotationparser package
+wsiprocess.annotationparser
 ===================================
 
-Submodules
-----------
 
-wsiprocess.annotationparser.ASAP\_parser module
+wsiprocess.annotationparser.ASAP\_parser
 -----------------------------------------------
 
 .. automodule:: wsiprocess.annotationparser.ASAP_parser
    :members:
    :undoc-members:
-   :show-inheritance:
 
-wsiprocess.annotationparser.parser\_utils module
+wsiprocess.annotationparser.parser\_utils
 ------------------------------------------------
 
 .. automodule:: wsiprocess.annotationparser.parser_utils
    :members:
    :undoc-members:
-   :show-inheritance:
 
-wsiprocess.annotationparser.pathology\_viewer\_parser module
+wsiprocess.annotationparser.pathology\_viewer\_parser
 ------------------------------------------------------------
 
 .. automodule:: wsiprocess.annotationparser.pathology_viewer_parser
    :members:
    :undoc-members:
-   :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: wsiprocess.annotationparser
-   :members:
-   :undoc-members:
-   :show-inheritance:
