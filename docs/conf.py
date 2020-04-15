@@ -14,6 +14,15 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('../'))
 
+# pyvips workaround
+
+import sys
+import mock
+
+MOCK_MODULES = ["pyvips"]
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = mock.Mock()
+
 
 # -- Project information -----------------------------------------------------
 
