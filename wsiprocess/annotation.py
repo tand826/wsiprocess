@@ -61,7 +61,7 @@ class Annotation:
     def make_masks(self, slide, rule=False, foreground=False, size=2000):
         """Make masks from the slide and rule.
 
-        Make masks for each class and foreground area.
+        Masks are for each class and foreground area.
 
         Args:
             slide (wsiprocess.slide.Slide): Slide object
@@ -83,8 +83,6 @@ class Annotation:
     def base_masks(self, wsi_height, wsi_width):
         """Make base masks.
 
-        Make base mask.
-
         Args:
             wsi_height (int): The height of base masks.
             wsi_width (int): The width of base masks.
@@ -95,7 +93,7 @@ class Annotation:
     def base_mask(self, cls, wsi_height, wsi_width):
         """ Masks have same size of as the slide.
 
-        Make base masks. Just make black canvases.
+        Masks are canvases of 0.
 
         Args:
             cls (str): Class name for each mask.
@@ -116,9 +114,7 @@ class Annotation:
                     self.masks[cls], [np.int32(contour)], 0, True, thickness=cv2.FILLED)
 
     def include_masks(self, rule):
-        """Draw include mask.
-
-        Merge masks following the rule.
+        """Merge masks following the rule.
 
         Args:
             rule (wsiprocess.rule.Rule): Rule object.
@@ -134,9 +130,7 @@ class Annotation:
         self.masks = self.masks_include
 
     def exclude_masks(self, rule):
-        """Draw exclude mask.
-
-        Exclude area from base mask with following the rule.
+        """Exclude area from base mask with following the rule.
 
         Args:
             rule (wsiprocess.rule.Rule): Rule object.
