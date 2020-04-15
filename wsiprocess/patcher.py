@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+"""Patcher object to extract patches from whole slide images.
+"""
+
 import random
 from itertools import product
 import json
@@ -10,6 +14,67 @@ from .verify import Verify
 
 
 class Patcher:
+    """Patcher object.
+
+    Args:
+        slide (wsiprocess.slide.Slide): Slide object.
+        method (str): Method name to run. One of {"none", "classification",
+            "detection", "segmentation}. Characters are converted to lowercase.
+        annotation (wsiprocess.annotation.Annotation, optional):
+            Annotation object.
+        save_to (str, optional): The root of the output directory.
+        patch_width (int, optional): The width of the output patches.
+        patch_height (int, optional): The height of the output patches.
+        overlap_width (int, optional): The width of the overlap areas of
+            patches.
+        overlap_height (int, optional): The height of the overlap areas of
+            patches.
+        on_foreground (float): Ratio of overlap area between patches and
+            foreground area.
+        on_annotation (float): Ratio of overlap area between patches and
+            annotation.
+        start_sample (bool): Whether to save sample patches on Patcher start.
+        finished_sample (bool): Whether to save sample patches on Patcher
+            finish.
+        extract_patches (bool): Whether to save patches when Patcher runs.
+
+    Attributes:
+        slide (wsiprocess.slide.Slide): Slide object.
+        wsi_width (int): Width of the slide.
+        wsi_height (int): Height of the slide.
+        filepath (str): Path to the whole slide image.
+        filestem (str): Stem of the file name.
+        method (str): Method name to run. One of {"none", "classification",
+            "detection", "segmentation}
+        annotation (wsiprocess.annotation.Annotation):
+            Annotation object.
+        masks (dict): Masks to show the location of classes.
+        classes (list): Classes to extract.
+        save_to (str): The root of the output directory.
+        p_width (int): The width of the output patches.
+        p_height (int): The height of the output patches.
+        p_area (int): The area of single patch.
+        o_width (int): The width of the overlap areas of patches.
+        o_height (int): The height of the overlap areas of patches.
+        on_foreground (float): Ratio of overlap area between patches and
+            foreground area.
+        on_annotation (float): Ratio of overlap area between patches and
+            annotation.
+        start_sample (bool): Whether to save sample patches on Patcher start.
+        finished_sample (bool): Whether to save sample patches on Patcher
+            finish.
+        extract_patches (bool): Whether to save patches when Patcher runs.
+
+        x_lefttop (list): Offsets of patches to the x-axis direction except for
+            the right edge.
+        y_lefttop (list): Offsets of patches to the y-axis direction except for
+            the bottom edge.
+        iterator (list):  Offset coordinates of patches.
+        last_x (int): X-axis offset of the right edge patch.
+        last_y (int): Y-axis offset of the right edge patch.
+
+        result (dict): Temporary storage for the computed result of patches.
+    """
 
     def __init__(
             self, slide, method, annotation=False, save_to=".",
@@ -62,6 +127,14 @@ class Patcher:
         self.verify.verify_dirs()
 
     def save_patch_result(self, x, y, cls):
+        """Save the extracted patch data to result
+
+        Args:
+            x (int): X-axis offset of patch.
+            y (int): Y-axis offset of patch.
+            cls (str): Class of the patch or the bounding box or the segmented
+                area.
+        """
         if self.method == "none":
             self.result["result"].append({"x": x,
                                           "y": y,
@@ -180,6 +253,23 @@ class Patcher:
             return bbs
 
     def to_bb(self, coord):
+        """Convert coordinates to voc coordinates.
+
+        Args:
+            coord (list): List of coordinates stored as below::
+
+                [[xOfOneCorner, yOfOneCorner],
+                 [xOfApex,      yOfApex]]
+
+        Returns:
+            outer_coord (list): List of coordinates stored as below::
+
+                [[xmin, ymin],
+                 [xmin, ymax],
+                 [xmax, ymax],
+                 [xmax, ymin]]
+
+        """
         coord = np.array(coord)
         xmin, ymin = np.min(coord, axis=0)
         xmax, ymax = np.max(coord, axis=0)
@@ -190,6 +280,18 @@ class Patcher:
         return outer_coord
 
     def find_masks(self, x, y, cls):
+        """Get the masked area corresponding to the given patch area.
+
+        Args:
+            x (int): X-axis offset of a patch.
+            y (int): Y-axis offset of a patch.
+            cls (str): Class of the patch or the bounding box or the segmented
+                area.
+
+        Returns:
+            masks (list): List containing a dict of coords and its class. This
+                coords is a path to the png image.
+        """
         if not self.patch_on_annotation(cls, x, y):
             return []
         else:
@@ -205,6 +307,11 @@ class Patcher:
             return masks
 
     def save_results(self):
+        """Save the extraction results.
+
+        Saves some metadata with the patches results.
+
+        """
         self.result["slide"] = self.filepath
         self.result["method"] = self.method
         self.result["wsi_width"] = self.wsi_width
@@ -225,6 +332,16 @@ class Patcher:
             json.dump(self.result, f, indent=4)
 
     def get_patch(self, x, y, classes=False):
+        """Extract a single patch.
+
+        Args:
+            x (int): X-axis offset of a patch.
+            y (int): Y-axis offset of a patch.
+            classes (list): For the case of method is classification, extract
+                the patch for multiple times if the patch is on the border of
+                two or more classes. To prevent patcher to extract a single
+                patch for multiple classes, `on_annotation=1.0` should work.
+        """
         if self.on_foreground:
             if not self.patch_on_foreground(x, y):
                 return
@@ -243,6 +360,12 @@ class Patcher:
                 self.save_patch_result(x, y, cls)
 
     def get_patch_parallel(self, classes=False, cores=-1):
+        """Run get_patch() in parallel.
+
+        Args:
+            classes (list): Classes to extract.
+            cores (int): Threads to run. -1 means same as the number of cores.
+        """
         for cls in classes:
             if self.extract_patches:
                 self.verify.verify_dir(
@@ -274,15 +397,41 @@ class Patcher:
             self.get_random_sample("finished", 3)
 
     def patch_on_foreground(self, x, y):
+        """Check if the patch is on the foreground area.
+
+        Args:
+            x (int): X-axis offset of a patch.
+            y (int): Y-axis offset of a patch.
+
+        Returns:
+            (bool): Whether the patch is on the foreground area.
+        """
         patch_mask = self.masks["foreground"][y:y +
                                               self.p_height, x:x+self.p_width]
         return (patch_mask.sum() / self.p_area) >= self.on_foreground
 
     def patch_on_annotation(self, cls, x, y):
+        """Check if the patch is on the annotation area of a class.
+
+        Args:
+            cls (str): Class of the patch or the bounding box or the segmented
+                area.
+            x (int): X-axis offset of a patch.
+            y (int): Y-axis offset of a patch.
+
+        Returns:
+            (bool): Whether the patch is on the anntation.
+        """
         patch_mask = self.masks[cls][y:y+self.p_height, x:x+self.p_width]
         return (patch_mask.sum() / self.p_area) >= self.on_annotation
 
     def get_random_sample(self, phase, sample_count=1):
+        """Get random patch to check if the patcher can work properly.
+
+        Args:
+            phase (str): When to check. One of {start, finish}
+            sample_count (int): Number of patches to extract.
+        """
         for i in range(sample_count):
             x = random.choice(self.x_lefttop)
             y = random.choice(self.y_lefttop)
