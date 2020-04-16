@@ -128,6 +128,9 @@ def annotations_to_json(root):
 
 
 def make_output(save_to, annotation, train_paths, val_paths, train2014, val2014):
+    image_id = 0
+    annotation_id = 0
+
     classes = annotation["classes"]
     slidestem = Path(annotation["slide"]).stem
     patch_width = annotation["patch_width"]
@@ -137,25 +140,33 @@ def make_output(save_to, annotation, train_paths, val_paths, train2014, val2014)
         train2014 = add_categories(train2014, cls)
         val2014 = add_categories(val2014, cls)
 
-    now = int(datetime.now().strftime('%Y%m%d%H%M%S000000'))
     with tqdm(train_paths, desc="Making annotation for train") as t:
         for idx, train_path in enumerate(t):
-            image_id = now+idx
             x, y = map(int, train_path.stem.split("_")[-2:])
-            train2014["images"].append(get_image_params(
-                train_path, slidestem, x, y, patch_width, patch_height, image_id))
-            train2014["annotations"].extend(get_annotation_params(
-                annotation, classes, train_path, slidestem, x, y, patch_width, patch_width, image_id))
+            image_params, current_image_id = get_image_params(
+                train_path, slidestem, x, y, patch_width, patch_height, image_id)
+            train2014["images"].append(image_params)
 
-    now += len(train_paths)
+            annotation_params, current_annotation_id = get_annotation_params(
+                annotation, classes, train_path, slidestem, x, y, patch_width, patch_width, image_id, annotation_id)
+            train2014["annotations"].extend(annotation_params)
+
+            image_id = current_image_id + 1
+            annotation_id = current_annotation_id
+
     with tqdm(val_paths, desc="Making annotation for validation") as t:
         for idx, val_path in enumerate(t):
-            image_id = now + idx
             x, y = map(int, val_path.stem.split("_")[-2:])
-            val2014["images"].append(get_image_params(
-                val_path, slidestem, x, y, patch_width, patch_height, image_id))
-            val2014["annotations"].extend(get_annotation_params(
-                annotation, classes, val_path, slidestem, x, y, patch_width, patch_width, image_id))
+            image_params, current_image_id = get_image_params(
+                train_path, slidestem, x, y, patch_width, patch_height, image_id)
+            val2014["images"].append(image_params)
+
+            annotation_params, current_annotation_id = get_annotation_params(
+                annotation, classes, train_path, slidestem, x, y, patch_width, patch_width, image_id, annotation_id)
+            val2014["annotations"].extend(annotation_params)
+
+            image_id = current_image_id + 1
+            annotation_id = current_annotation_id
 
     return train2014, val2014
 
@@ -184,10 +195,10 @@ def get_image_params(file_name, slidestem, x, y, width, height, image_id):
         "date_captured": "",
         "flickr_url": "",
         "id": image_id
-    }
+    }, image_id
 
 
-def get_annotation_params(annotation, classes, file_name, slidestem, x, y, width, height, image_id):
+def get_annotation_params(annotation, classes, file_name, slidestem, x, y, width, height, image_id, annotation_id):
     annotations = []
     for box in annotation["result"]:
         if box["x"] == x and box["y"] == y:
@@ -209,13 +220,14 @@ def get_annotation_params(annotation, classes, file_name, slidestem, x, y, width
                         "image_id": image_id,
                         "bbox": [bb["x"], bb["y"], bb["w"], bb["h"]],
                         "category_id": classes.index(bb["class"]) + 1,
-                        "id": "{}_{}_{}".format(slidestem, x, y)
+                        "id": annotation_id
                     }
+                    annotation_id += 1
                     annotations.append(data)
             else:
                 print("COCO dataset does not support classification annotations.")
                 sys.exit()
-    return annotations
+    return annotations, annotation_id
 
 
 def save_data(save_to, train2014, val2014):
