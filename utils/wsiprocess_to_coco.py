@@ -128,8 +128,9 @@ def annotations_to_json(root):
 
 
 def make_output(save_to, annotation, train_paths, val_paths, train2014, val2014):
-    image_id = 0
-    annotation_id = 0
+    last_image_id, last_annotation_id = read_last_data(save_to)
+    image_id = last_image_id + 1
+    annotation_id = last_annotation_id + 1
 
     classes = annotation["classes"]
     slidestem = Path(annotation["slide"]).stem
@@ -143,32 +144,42 @@ def make_output(save_to, annotation, train_paths, val_paths, train2014, val2014)
     with tqdm(train_paths, desc="Making annotation for train") as t:
         for idx, train_path in enumerate(t):
             x, y = map(int, train_path.stem.split("_")[-2:])
-            image_params, current_image_id = get_image_params(
+            image_params, image_id = get_image_params(
                 train_path, slidestem, x, y, patch_width, patch_height, image_id)
             train2014["images"].append(image_params)
 
-            annotation_params, current_annotation_id = get_annotation_params(
+            annotation_params, annotation_id = get_annotation_params(
                 annotation, classes, train_path, slidestem, x, y, patch_width, patch_width, image_id, annotation_id)
             train2014["annotations"].extend(annotation_params)
 
-            image_id = current_image_id + 1
-            annotation_id = current_annotation_id
+            image_id = image_id + 1
 
     with tqdm(val_paths, desc="Making annotation for validation") as t:
         for idx, val_path in enumerate(t):
             x, y = map(int, val_path.stem.split("_")[-2:])
-            image_params, current_image_id = get_image_params(
+            image_params, image_id = get_image_params(
                 train_path, slidestem, x, y, patch_width, patch_height, image_id)
             val2014["images"].append(image_params)
 
-            annotation_params, current_annotation_id = get_annotation_params(
+            annotation_params, annotation_id = get_annotation_params(
                 annotation, classes, train_path, slidestem, x, y, patch_width, patch_width, image_id, annotation_id)
             val2014["annotations"].extend(annotation_params)
 
-            image_id = current_image_id + 1
-            annotation_id = current_annotation_id
+            image_id = image_id + 1
 
     return train2014, val2014
+
+
+def read_last_data(save_to):
+    if (save_to/"annotations"/"instances_val2014.json").exists():
+        with open(save_to/"annotations"/"instances_val2014.json", "r") as f:
+            data = json.load(f)
+            last_image_id = data["images"][-1]["id"]
+            last_annotation_id = data["annotations"][-1]["id"]
+    else:
+        last_image_id, last_annotation_id = 0, 0
+
+    return last_image_id, last_annotation_id
 
 
 def add_categories(annotation, cls):
