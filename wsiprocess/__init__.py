@@ -3,4 +3,4 @@ from .patcher import Patcher as patcher
 from .annotation import Annotation as annotation
 from .rule import Rule as rule
 
-__version__ =
+__version__ = 0.1

@@ -43,7 +43,7 @@ conda install -c tand826 wsiprocess
 
 # Documentation
 
-- [Documentation](wsiprocess.rtfd.io)
+- [Documentation](https://wsiprocess.readthedocs.io)
 
 # Example
 
