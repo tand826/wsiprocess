@@ -4,8 +4,7 @@
 ![PyPI](https://img.shields.io/pypi/v/wsiprocess)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/wsiprocess)
 ![GitHub](https://img.shields.io/github/license/tand826/wsiprocess)
-
-![Conda - platform](https://img.shields.io/conda/pn/tand826/wsiprocess)
+![Documentation](https://readthedocs.org/projects/wsiprocess/badge/?version=latest)
 ![Conda - Version](https://img.shields.io/conda/v/tand826/wsiprocess)
 
 Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
