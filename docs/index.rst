@@ -134,18 +134,15 @@ Test ongoing
 
    -  From below we tested wsi data.
 
-      -  :smile: => worked well.
-      -  :umbrella: => did not work well.
+      -  |:smile:| => worked well.
+      -  |:umbrella:| => did not work well.
       -  otherwise => did not check
-
-   .. rubric:: Classification
-      :name: classification
 
    -  Aperio
 
       -  CMU-1-JP2K-33005.svs
-      -  :smile: CMU-1-Small-Region.svs
-      -  :smile: CMU-1.svs
+      -  |:smile:| CMU-1-Small-Region.svs
+      -  |:smile:| CMU-1.svs
       -  CMU-2.svs
       -  CMU-3.svs
       -  JP2K-33003-1.svs
@@ -153,13 +150,13 @@ Test ongoing
 
    -  Generic-TIFF
 
-      -  :umbrella:CMU-1.tiff
+      -  |:umbrella:| CMU-1.tiff
 
          -  Can not set magnification.
 
    -  Hamamatsu-vms
 
-      -  :smile:CMU-1.zip
+      -  |:smile:| CMU-1.zip
       -  CMU-2.zip
       -  CMU-3.zip
 
@@ -168,7 +165,7 @@ Test ongoing
 
    -  Hamamatsu
 
-      -  :smile:CMU-1.ndpi
+      -  |:smile:|CMU-1.ndpi
       -  CMU-2.ndpi
       -  CMU-3.ndpi
       -  OS-1.ndpi
@@ -177,7 +174,7 @@ Test ongoing
 
    -  Leica
 
-      -  :smile:Leica-1.scn
+      -  |:smile:| Leica-1.scn
       -  Leica-2.scn
       -  Leica-3.scn
       -  Leica-Fluorescence-1.scn
@@ -187,7 +184,7 @@ Test ongoing
       -  CMU-1-Exported.zip
       -  CMU-1-Saved-1_16.zip
       -  CMU-1-Saved-1_2.zip
-      -  :umbrella:CMU-1.zip
+      -  |:umbrella:| CMU-1.zip
 
          -  Can not make the foreground mask.
 
@@ -209,7 +206,7 @@ Test ongoing
 
    -  Trestle
 
-      -  :umbrella:CMU-1.zip
+      -  |:umbrella:| CMU-1.zip
 
          -  ASAP can not show the image properly, and it’s hard to
             annotate.
@@ -222,10 +219,10 @@ Test ongoing
       -  OS-1.bif
       -  OS-2.bif
 
-   -  :umbrella:Zeiss : Can not load slide -
-      :umbrella:Zeiss-1-Merged.zvi - :umbrella:Zeiss-1-Stacked.zvi -
-      :umbrella:Zeiss-2-Merged.zvi - :umbrella:Zeiss-2-Stacked.zvi -
-      :umbrella:Zeiss-3-Mosaic.zvi - :umbrella:Zeiss-4-Mosaic.zvi
+   -  |:umbrella:| Zeiss : Can not load slide -
+      |:umbrella:| Zeiss-1-Merged.zvi - |:umbrella:| Zeiss-1-Stacked.zvi -
+      |:umbrella:| Zeiss-2-Merged.zvi - |:umbrella:| Zeiss-2-Stacked.zvi -
+      |:umbrella:| Zeiss-3-Mosaic.zvi - |:umbrella:| Zeiss-4-Mosaic.zvi
 
 .. raw:: html
 
