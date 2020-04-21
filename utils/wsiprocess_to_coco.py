@@ -226,7 +226,7 @@ def get_annotation_params(annotation, classes, file_name, slidestem, x, y, width
                             bb["x"] + bb["w"], bb["y"] + bb["h"],
                             bb["x"], bb["y"] + bb["h"]
                         ],
-                        "area": -1,
+                        "area": bb["w"]*bb["h"],
                         "iscrowd": 0,
                         "image_id": image_id,
                         "bbox": [bb["x"], bb["y"], bb["w"], bb["h"]],
