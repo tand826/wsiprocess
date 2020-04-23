@@ -1,6 +1,6 @@
 <img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/logo.png" style="width: 50%">
 
-![Downloads](https://pepy.tech/badge/wsiprocess)(https://pepy.tech/project/wsiprocess)
+![Downloads](https://pepy.tech/badge/wsiprocess)
 ![PyPI](https://img.shields.io/pypi/v/wsiprocess)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/wsiprocess)
 ![GitHub](https://img.shields.io/github/license/tand826/wsiprocess)
