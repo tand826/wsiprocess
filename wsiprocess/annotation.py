@@ -122,7 +122,6 @@ class Annotation:
         self.masks_include = self.masks.copy()
         for cls in self.classes:
             if hasattr(rule, cls):
-                print(rule)
                 for include in getattr(rule, cls)["includes"]:
                     if include in self.masks:
                         self.masks_include[cls] = cv2.bitwise_or(
