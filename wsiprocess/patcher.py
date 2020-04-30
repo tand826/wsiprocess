@@ -128,6 +128,9 @@ class Patcher:
                              start_sample, finished_sample, extract_patches)
         self.verify.verify_dirs()
 
+    def __str__(self):
+        return "wsiprocess.patcher.Patcher {}".format(self.slide.filename)
+
     def save_patch_result(self, x, y, cls):
         """Save the extracted patch data to result
 

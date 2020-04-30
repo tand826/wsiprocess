@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/logo.png" style="width: 50%">
+<img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/wsiprocess.svg" style="width: 50%">
 
 ![Downloads](https://pepy.tech/badge/wsiprocess)
 ![PyPI](https://img.shields.io/pypi/v/wsiprocess)

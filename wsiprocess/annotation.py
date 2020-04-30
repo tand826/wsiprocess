@@ -28,6 +28,9 @@ class Annotation:
         self.masks = {}
         self.contours = {}
 
+    def __str__(self):
+        return "wsiprocess.annotation.Annotation {}".format(self.path)
+
     def read_annotation(self, annotation_type=False):
         """Parse the annotation data.
 
