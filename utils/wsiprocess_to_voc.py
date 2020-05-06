@@ -20,67 +20,96 @@ import shutil
 """
 
 
-def main():
-    parser = argparse.ArgumentParser(description="wsiprocess_to_voc")
-    parser.add_argument("root", type=Path)
-    parser.add_argument("-st", "--save_to", default="./data", type=Path)
-    args = parser.parse_args()
+class ToVOCConevrter:
 
-    mkdirs(args.save_to/"VOC2007")
-    mkdirs(args.save_to/"VOC2012")
-    Path(f"{args.save_to}/VOC2012/ImageSets/Main/trainval.txt").touch()
+    def __init__(self):
+        self.getargs()
+        self.mkdirs()
 
-    results_json = read_json(args.root)
-    patch_width = results_json["patch_width"]
-    patch_height = results_json["patch_height"]
+    def convert(self):
+        self.read_result_file()
+        self.make_tree()
+        self.move_to_test()
 
-    results = []
-    for result in results_json["result"]:
-        tree = Tree(args.root, args.save_to/"VOC2007", result, patch_width, patch_height)
-        tree.to_xml()
-        cls = result["bbs"][0]["class"]
-        # for cls in classes:
-        # to_jpg(f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg", args.save_to/"VOC2007"/"JPEGImages")
-        src = f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg"
-        dst = f"{args.save_to}/VOC2007/JPEGImages/{args.root.name}_{result['x']:06}_{result['y']:06}.jpg"
-        shutil.copy(src, dst)
-        results.append(f"{args.root.name}_{result['x']:06}_{result['y']:06}\n")
+    def getargs(self):
+        parser = argparse.ArgumentParser(description="wsiprocess_to_voc")
+        parser.add_argument("root", type=Path)
+        parser.add_argument("-s", "--save_to", default="./data", type=Path)
+        parser.add_argument("-r", "--ratio", default="8:1:1")
+        args = parser.parse_args()
+        self.root = args.root
+        self.save_to = args.save_to
+        self.ratio = args.ratio
 
-    move_to_test(args.save_to, results, 0.8)
+    def makedirs(self):
+        self.mkdirs("VOC2007")
+        self.mkdirs("VOC2012")
+        Path(f"{self.save_to}/VOC2012/ImageSets/Main/trainval.txt").touch()
+
+    def mkdirs(self, subdirectory):
+        parent_dir = self.save_to/subdirectory
+        (parent_dir/"Annotations").mkdir(exist_ok=True, parents=True)
+        (parent_dir/"JPEGImages").mkdir(exist_ok=True, parents=True)
+        (parent_dir/"ImageSets/Main").mkdir(exist_ok=True, parents=True)
+
+    def read_result_file(self):
+        with open(self.root/"results.json", "r") as f:
+            self.result_wp = json.load(f)
+
+    def make_tree(self):
+        self.results = []
+        for result in self.result_wp["result"]:
+            tree = VOCTree(self.root, self.save_to/"VOC2007", result, self.result_wp["patch_width"], self.result_wp["patch_height"])
+            tree.to_xml()
+            cls = result["bbs"][0]["class"]
+            # for cls in classes:
+            # to_jpg(f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg", args.save_to/"VOC2007"/"JPEGImages")
+            src = f"{self.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg"
+            dst = f"{self.save_to}/VOC2007/JPEGImages/{self.root.name}_{result['x']:06}_{result['y']:06}.jpg"
+            shutil.copy(src, dst)
+            self.results.append(f"{self.root.name}_{result['x']:06}_{result['y']:06}\n")
+
+    def to_jpg(self, src, dst):
+        img = Image.open(src).convert("RGB")
+        imgname = f"{Path(src).parent.parent.parent.name}_{Path(src).stem}"
+        img.save(f"{dst}/{imgname}.jpg", quality=95)
+
+    def move_to_test(self):
+        """
+        If ratio has only two parameters like "8:2", trainval.txt and test.txt would be generated.
+        If ratio has 3 params like "8:1:1", trainval.txt, val.txt and text.txt would be generated.
+        """
+        trainval_path = f"{self.save_to}/VOC2007/ImageSets/Main/trainval.txt"
+        test_path = f"{self.save_to}/VOC2007/ImageSets/Main/test.txt"
+        random.shuffle(self.results)
+
+        test_is_available = len(self.ratio.split(":")) == 3
+        if test_is_available:
+            train, val, test = map(int, self.ratio.split(":"))
+            ratio = {"train": train/(train+val+test), "val": val/(train+val+test), "test": test/(train+val+test)}
+            train_count = int(len(self.results) * ratio["train"])
+            val_count = int(len(self.results) * ratio["val"])
+            val_path = f"{self.save_to}/VOC2007/ImageSets/Main/val.txt"
+
+            with open(trainval_path, "a") as f:
+                f.writelines(self.results[:train_count])
+            with open(val_path, "a") as f:
+                f.writelines(self.results[train_count:train_count+val_count])
+            with open(test_path, "a") as f:
+                f.writelines(self.results[train_count+val_count:])
+
+        else:
+            train, val = map(int, ratio.split(":"))
+            ratio = {"train": train/(train+val), "val": val/(train+val)}
+            train_count = int(len(self.results) * ratio["train"])
+
+            with open(trainval_path, "a") as f:
+                f.writelines(self.results[:train_count])
+            with open(test_path, "a") as f:
+                f.writelines(self.results[train_count:])
 
 
-def mkdirs(save_to):
-    (save_to/"Annotations").mkdir(exist_ok=True, parents=True)
-    (save_to/"JPEGImages").mkdir(exist_ok=True, parents=True)
-    (save_to/"ImageSets/Main").mkdir(exist_ok=True, parents=True)
-
-
-def read_json(root):
-    with open(root/"results.json", "r") as f:
-        result = json.load(f)
-    return result
-
-
-def to_jpg(src, dst):
-    img = Image.open(src).convert("RGB")
-    imgname = f"{Path(src).parent.parent.parent.name}_{Path(src).stem}"
-    img.save(f"{dst}/{imgname}.jpg", quality=95)
-
-
-def move_to_test(save_to, results, trainval_rate):
-    trainval_path = f"{save_to}/VOC2007/ImageSets/Main/trainval.txt"
-    test_path = f"{save_to}/VOC2007/ImageSets/Main/test.txt"
-
-    random.shuffle(results)
-    trainval_count = int(len(results) * trainval_rate)
-
-    with open(trainval_path, "a") as f:
-        f.writelines(results[:trainval_count])
-    with open(test_path, "a") as f:
-        f.writelines(results[trainval_count:])
-
-
-class Tree:
+class VOCTree:
 
     def __init__(self, root, save_to, result, patch_width, patch_height):
         self.root = root
@@ -189,4 +218,5 @@ class Tree:
 
 
 if __name__ == '__main__':
-    main()
+    converter = ToVOCConevrter()
+    converter.convert()

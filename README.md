@@ -104,6 +104,18 @@ docker run --name wsiprocess_container -v [your files directory]:/data -it -d ws
 
 see Command Helper for commands
 
+### Convert to VOC / COCO style format (experimental)
+
+
+```bash
+# to COCO format
+python utils/wsiprocess_to_coco.py [root of wsiprocess] -s [directory to save to] -r [ratio of train, val and test]
+
+# to VOC foramt
+python utils/wsiprocess_to_voc.py [root of wsiprocess] -s [directory to save to] -r [ratio of train, val and test]
+```
+
+
 # Available WSIs
 
 <details>

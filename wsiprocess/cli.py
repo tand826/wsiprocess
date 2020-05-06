@@ -56,6 +56,14 @@ class Args:
         parser.add_argument(
             "-ru", "--rule", type=Path,
             help="File to define the inclusion / exclusion relationship.")
+        parser.add_argument(
+            "-vo", "--voc_style", action="store_true",
+            help="Output as VOC style."
+        )
+        parser.add_argument(
+            "-co", "--coco_style", action="store_true",
+            help="Output as COCO style"
+        )
 
         args = parser.parse_args()
         for arg in vars(args):
