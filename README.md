@@ -108,11 +108,18 @@ see Command Helper for commands
 
 
 ```bash
+# If already extracted patches...
 # to COCO format
-python utils/wsiprocess_to_coco.py [root of wsiprocess] -s [directory to save to] -r [ratio of train, val and test]
+python wsiprocess/converters/wsiprocess_to_coco.py [root of wsiprocess] -s [directory to save to] -r [ratio of train, val and test]
 
 # to VOC foramt
-python utils/wsiprocess_to_voc.py [root of wsiprocess] -s [directory to save to] -r [ratio of train, val and test]
+python wsiprocess/converters/wsiprocess_to_voc.py [root of wsiprocess] -s [directory to save to] -r [ratio of train, val and test]
+```
+
+```bash
+# If not extracted patches yet...
+# convert to both VOC and COCO
+wsiprocess xxx.tiff method --annotation xxx.xml -vo -co
 ```
 
 
