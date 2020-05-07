@@ -14,6 +14,13 @@ wsiprocess.annotation
    :members:
    :undoc-members:
 
+wsiprocess.converter
+--------------------
+
+.. automodule:: wsiprocess.converter
+   :members:
+   :undoc-members:
+
 wsiprocess.error
 ----------------
 
