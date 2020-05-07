@@ -1,10 +1,10 @@
 import sys
 import argparse
 import random
+import json
 from datetime import datetime
 from pathlib import Path
 from tqdm import tqdm
-import json
 
 
 class ToCOCOConverter:
