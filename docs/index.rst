@@ -275,7 +275,7 @@ TODO
 -  slow free server on heroku
 -  paste results on the thumbnails
 
-.. |PyPI - Downloads| image:: https://img.shields.io/pypi/dm/wsiprocess?style=plastic
+.. |PyPI - Downloads| image:: https://pepy.tech/badge/wsiprocess
 .. |PyPI| image:: https://img.shields.io/pypi/v/wsiprocess
 .. |PyPI - Python Version| image:: https://img.shields.io/pypi/pyversions/wsiprocess
 .. |GitHub| image:: https://img.shields.io/github/license/tand826/wsiprocess
