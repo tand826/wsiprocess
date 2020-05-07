@@ -24,7 +24,7 @@ class ToVOCConevrter:
 
     def __init__(self):
         self.getargs()
-        self.mkdirs()
+        self.makedirs()
 
     def convert(self):
         self.read_result_file()
@@ -34,7 +34,7 @@ class ToVOCConevrter:
     def getargs(self):
         parser = argparse.ArgumentParser(description="wsiprocess_to_voc")
         parser.add_argument("root", type=Path)
-        parser.add_argument("-s", "--save_to", default="./data", type=Path)
+        parser.add_argument("-s", "--save_to", default="./wp", type=Path)
         parser.add_argument("-r", "--ratio", default="8:1:1")
         args = parser.parse_args()
         self.root = args.root
