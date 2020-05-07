@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Convert wsiprocess style annotation data to COCO or VOC style.
 """
-from .verify import Verify
+from converter import wsiprocess_to_voc, wsiprocess_to_coco
+
 
 class Converter:
     """Converter Class
@@ -11,14 +12,13 @@ class Converter:
 
 
     """
-    def __init__(self, ratio):
-        pass
-
-    def make_dirs(self, save_to, style):
-        pass
+    def __init__(self, root, save_to, ratio_arg):
+        self.params = {"root": root, "save_to": save_to, "ratio_arg": ratio_arg}
 
     def to_coco(self):
-        pass
+        converter = wsiprocess_to_coco.ToCOCOConverter(self.params)
+        converter.convert()
 
     def to_voc(self):
-        pass
+        converter = wsiprocess_to_voc.ToVOCConverter(self.params)
+        converter.convert()

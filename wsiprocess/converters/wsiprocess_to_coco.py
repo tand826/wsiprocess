@@ -9,8 +9,13 @@ from tqdm import tqdm
 
 class ToCOCOConverter:
 
-    def __init__(self):
-        self.getargs()
+    def __init__(self, params=False):
+        if params:
+            self.root = params["root"]
+            self.save_to = params["save_to"]
+            self.ratio_arg = params["ratio_arg"]
+        else:
+            self.getargs()
         self.get_ratio()
         self.make_dirs()
 

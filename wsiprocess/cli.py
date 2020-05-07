@@ -64,6 +64,9 @@ class Args:
             "-co", "--coco_style", action="store_true",
             help="Output as COCO style"
         )
+        parser.add_argument(
+            "-ra", "--ratio", default="8:1:1",
+            help="Ratio of the dataset size of train/validation/test phase.")
 
         args = parser.parse_args()
         for arg in vars(args):
@@ -99,3 +102,9 @@ def main():
         finished_sample=args.finished_sample,
         extract_patches=args.extract_patches)
     patcher.get_patch_parallel(annotation.classes)
+    if args.voc_style or args.coco_style:
+        converter = wp.converter(args.save_to, args.save_to, args.ratio)
+        if args.voc_style:
+            converter.to_voc()
+        if args.coco_style:
+            converter.to_coco()
