@@ -26,7 +26,7 @@ class ToVOCConverter:
         if params:
             self.root = params["root"]
             self.save_to = params["save_to"]
-            self.ratio_arg = params["ratio_arg"]
+            self.ratio = params["ratio_arg"]
         else:
             self.getargs()
         self.makedirs()
