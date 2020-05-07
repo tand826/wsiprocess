@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Convert wsiprocess style annotation data to COCO or VOC style.
 """
-from converter import wsiprocess_to_voc, wsiprocess_to_coco
+from .converters import wsiprocess_to_voc, wsiprocess_to_coco
 
 
 class Converter:
