@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from pathlib import Path
 from lxml import etree
 import numpy as np
 
@@ -20,6 +20,8 @@ class AnnotationParser:
 
     def __init__(self, path):
         self.path = path
+        assert Path(self.path).exists(), "This annotation file does not exist."
+
         tree = etree.parse(self.path)
         self.annotations = tree.xpath("/ASAP_Annotations/Annotations/Annotation")
         self.annotation_groups = tree.xpath("/ASAP_Annotations/AnnotationGroups/Group")
