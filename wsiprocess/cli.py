@@ -4,10 +4,10 @@ import wsiprocess as wp
 
 
 class Args:
-    def __init__(self):
-        self.get_args()
+    def __init__(self, command):
+        self.get_args(command)
 
-    def get_args(self):
+    def get_args(self, command):
         parser = argparse.ArgumentParser()
         parser.add_argument(
             "wsi", type=str,
@@ -68,13 +68,13 @@ class Args:
             "-ra", "--ratio", default="8:1:1",
             help="Ratio of the dataset size of train/validation/test phase.")
 
-        args = parser.parse_args()
+        args = parser.parse_args(command)
         for arg in vars(args):
             setattr(self, arg, getattr(args, arg))
 
 
-def main():
-    args = Args()
+def main(command=None):
+    args = Args(command)
     slide = wp.slide(args.wsi)
     if args.rule:
         rule = wp.rule(args.rule)
