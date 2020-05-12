@@ -37,15 +37,15 @@ class Slide:
     def __str__(self):
         return "wsiprocess.slide.Slide {} {}x{}".format(self.path, self.wsi_width, self.wsi_height)
 
-    def export_thumbnail(self, save_to=".", size=500):
+    def export_thumbnail(self, save_as="./thumb.png", size=500):
         """Export thumbnail image.
 
         Args:
-            save_to (str): Parent directory to save the thumbnail image.
+            save_as (str): Path to save as the thumbnail image.
             size (int, optional): Size of the exported thumbnail.
         """
         thumb = self.get_thumbnail(size)
-        thumb.pngsave("{}/thumb.png".format(save_to))
+        thumb.pngsave(save_as)
 
     def get_thumbnail(self, size=500):
         """Get thumbnail image.
