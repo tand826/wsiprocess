@@ -31,7 +31,7 @@ class ToCOCOConverter:
         parser.add_argument("root",
                             type=Path,
                             help="Parent of results.json located")
-        parser.add_argument("-s", "--save_to", default="./wp", type=Path)
+        parser.add_argument("-s", "--save_to", default="./wp/coco", type=Path)
         parser.add_argument("-r", "--ratio", default="8:1:1", help="Ratio of train and val and test ie. 8:1:1")
         args = parser.parse_args()
         self.root = args.root

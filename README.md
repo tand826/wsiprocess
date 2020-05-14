@@ -22,6 +22,8 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 
 # Installation
 
+### pip User
+
 1. Install [libvips](https://libvips.github.io/libvips/)
 
    - Linux - `apt install libvips`
