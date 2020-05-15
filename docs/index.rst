@@ -12,6 +12,7 @@ Welcome to wsiprocess's documentation!
 
    wsiprocess
    wsiprocess.annotationparser
+   wsiprocess.converters
 
 Indices and tables
 ==================

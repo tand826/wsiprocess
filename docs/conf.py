@@ -22,7 +22,7 @@ copyright = '2020, Takumi Ando'
 author = 'Takumi Ando'
 
 # The full version, including alpha/beta/rc tags
-release = '0.11'
+release = '0.2'
 
 
 # -- General configuration ---------------------------------------------------

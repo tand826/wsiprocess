@@ -5,6 +5,7 @@ wsiprocess package
    :maxdepth: 4
 
    wsiprocess.annotationparser
+   wsiprocess.converters
 
 
 wsiprocess.annotation
