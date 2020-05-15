@@ -13,8 +13,8 @@ ANNOTATIONS = (
     "CMU-1_segmentation.xml",
     "test_emptyfile.txt")
 SAVE_TOS = (".", "/", "")
-ONFOREGROUNDS = (1.0, 0, 0.50000000001)
-ONANNOTATIONS = (1.0, 0, 0.50000000001)
+ONFOREGROUNDS = (0, 1.0, 0.50000000001)
+ONANNOTATIONS = (0, 1.0, 0.50000000001)
 RULES = (
     "rule.json",
     "test_emptyfile.txt")
@@ -65,6 +65,14 @@ def cli(params):
         on_annotation=params.on_annotation,
         extract_patches=params.extract_patches)
     patcher.get_patch_parallel(annotation.classes)
+    if params.voc_style or params.coco_style or params.yolo_style:
+        converter = wp.converter(params.save_to/slide.filestem, params.save_to, params.ratio)
+        if params.voc_style:
+            converter.to_voc()
+        if params.coco_style:
+            converter.to_coco()
+        if params.yolo_style:
+            converter.to_yolo()
 
 
 def test_cli_pass():
