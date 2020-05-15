@@ -24,16 +24,15 @@ class ToYOLOConverter:
         if params:
             self.root = params["root"]
             self.save_to = params["save_to"]
-            self.ratio = params["ratio_arg"]
+            self.ratio_arg = params["ratio_arg"]
         else:
             self.getargs()
-        self.makedirs()
         self.parse_ratio()
         self.image_paths = {}
+        self.read_result_file()
+        self.makedirs()
 
     def convert(self):
-        self.read_result_file()
-        self.get_classes()
         self.get_image_paths()
         self.make_images()
         self.make_labels()
@@ -49,31 +48,31 @@ class ToYOLOConverter:
         self.save_to = args.save_to
         self.ratio_arg = args.ratio
 
+    def read_result_file(self):
+        with open(self.root/"results.json", "r") as f:
+            self.result_wp = json.load(f)
+        self.classes = self.result_wp["classes"]
+        self.filestem = Path(self.result_wp['slide']).stem
+        self.save_to = self.save_to/self.filestem
+
     def makedirs(self):
         if not self.save_to.exists():
             self.save_to.mkdir(parent=True)
         if not (self.save_to/"images").exists():
-            (self.save_to/"images").mkdir(parent=True)
+            (self.save_to/"images").mkdir(parents=True)
         if not (self.save_to/"labels").exists():
-            (self.save_to/"labels").mkdir(parent=True)
+            (self.save_to/"labels").mkdir(parents=True)
         if not (self.save_to/"paths").exists():
-            (self.save_to/"paths").mkdir(parent=True)
+            (self.save_to/"paths").mkdir(parents=True)
 
     def parse_ratio(self):
         self.test_is_available = len(self.ratio_arg.split(":")) == 3
         if self.test_is_available:
-            train, val, test = map(int, self.ratio.split(":"))
+            train, val, test = map(int, self.ratio_arg.split(":"))
             self.ratio = {"train": train/(train+val+test), "val": val/(train+val+test), "test": test/(train+val+test)}
         else:
-            train, val = map(int, ratio.split(":"))
+            train, val = map(int, self.ratio_arg.split(":"))
             self.ratio = {"train": train/(train+val), "val": val/(train+val)}
-
-    def read_result_file(self):
-        with open(self.root/"results.json", "r") as f:
-            self.result_wp = json.load(f)
-
-    def get_classes(self):
-        self.classes = self.result_wp.classes
 
     def get_image_paths(self):
         for cls in self.classes:
@@ -81,20 +80,27 @@ class ToYOLOConverter:
             random.shuffle(self.image_paths[cls])
 
     def make_images(self):
-        for path in self.image_paths:
-            shutil.copy(path, self.save_to/"images")
+        for cls in self.classes:
+            for path in self.image_paths[cls]:
+                filename = f"{self.filestem}_{Path(path).name}"
+                shutil.copy(path, self.save_to/"images"/filename)
 
     def make_labels(self):
-        """
-        for result in self.result_wp["result"]:
-            cls = result["bbs"][0]["class"]
-            # for cls in classes:
-            # to_jpg(f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg", args.save_to/"VOC2007"/"JPEGImages")
-            src = f"{self.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg"
-            dst = f"{self.save_to}/VOC2007/JPEGImages/{self.root.name}_{result['x']:06}_{result['y']:06}.jpg"
-            shutil.copy(src, dst)
-            self.results.append(f"{self.root.name}_{result['x']:06}_{result['y']:06}\n")
-        """
+        patch_width = self.result_wp["patch_width"]
+        patch_height = self.result_wp["patch_height"]
+        for patch in self.result_wp["result"]:
+            bbs = []
+            for bb in patch["bbs"]:
+                label = self.classes.index(bb["class"])
+                xcenter = (bb["x"] + bb["w"]/2) / patch_width
+                ycenter = (bb["y"] + bb["h"]/2) / patch_height
+                width = bb["w"] / patch_width
+                height = bb["h"] / patch_height
+                bbs.append(f"{label} {xcenter} {ycenter} {width} {height}\n")
+            with open(self.save_to/"labels"/f"{self.filestem}_{patch['x']:06}_{patch['y']:06}.txt", "w") as f:
+                f.writelines(bbs)
+        with open(self.save_to/"yolo.names", "w") as f:
+            f.writelines(self.classes)
 
     def make_paths(self):
         """
@@ -112,21 +118,32 @@ class ToYOLOConverter:
                 val_count = int(len(self.image_paths[cls]) * self.ratio["val"])
 
                 with open(train_path, "a") as f:
-                    f.writelines(self.image_paths[cls][:train_count])
+                    paths = self.image_paths[cls][:train_count]
+                    renamed = [self.rename_path(path) for path in paths]
+                    f.writelines(renamed)
                 with open(val_path, "a") as f:
-                    f.writelines(self.image_paths[cls][train_count:train_count+val_count])
+                    paths = self.image_paths[cls][train_count:train_count+val_count]
+                    renamed = [self.rename_path(path) for path in paths]
+                    f.writelines(renamed)
                 with open(test_path, "a") as f:
-                    f.writelines(self.image_paths[cls][train_count+val_count:])
+                    paths = self.image_paths[cls][train_count+val_count:]
+                    renamed = [self.rename_path(path) for path in paths]
+                    f.writelines(renamed)
 
             else:
                 train_count = int(len(self.image_paths[cls]) * self.ratio["train"])
 
                 with open(train_path, "a") as f:
-                    f.writelines(self.image_paths[cls][:train_count])
+                    paths = self.image_paths[cls][:train_count]
+                    renamed = [self.rename_path(path) for path in paths]
+                    f.writelines(renamed)
                 with open(test_path, "a") as f:
-                    f.writelines(self.image_paths[cls][train_count:])
+                    paths = self.image_paths[cls][train_count:]
+                    renamed = [self.rename_path(path) for path in paths]
+                    f.writelines(renamed)
 
-
+    def rename_path(self, path):
+        return str(self.save_to/"images"/f"{self.filestem}_{Path(path).name}\n")
 
 
 if __name__ == '__main__':

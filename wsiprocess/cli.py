@@ -62,7 +62,11 @@ class Args:
         )
         parser.add_argument(
             "-co", "--coco_style", action="store_true",
-            help="Output as COCO style"
+            help="Output as COCO style."
+        )
+        parser.add_argument(
+            "-yo", "--yolo_style", action="store_true",
+            help="Output as YOLO style."
         )
         parser.add_argument(
             "-ra", "--ratio", default="8:1:1",
@@ -102,9 +106,11 @@ def main(command=None):
         finished_sample=args.finished_sample,
         extract_patches=args.extract_patches)
     patcher.get_patch_parallel(annotation.classes)
-    if args.voc_style or args.coco_style:
+    if args.voc_style or args.coco_style or args.yolo_style:
         converter = wp.converter(args.save_to/slide.filestem, args.save_to, args.ratio)
         if args.voc_style:
             converter.to_voc()
         if args.coco_style:
             converter.to_coco()
+        if args.yolo_style:
+            converter.to_yolo()
