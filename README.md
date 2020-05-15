@@ -62,7 +62,7 @@ rule = wp.rule("xxx.json")
 annotation.make_masks(slide, rule, foreground=True)
 
 patcher = wp.patcher(slide, "classification", annotation)
-patcher.get_patch_parallel("benign")
+patcher.get_patch_parallel(["benign", "malignant"])
 ```
 
 #### Export annotaton xml of one class as mask image
