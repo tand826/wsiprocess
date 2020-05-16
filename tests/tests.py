@@ -20,7 +20,12 @@ RULES = (
     "test_emptyfile.txt")
 PATCH_SIZES = (256, 0, 1, 0.1, 1048576)
 OVERLAP_SIZES = (1, 4096, 0, 0.1, 256)
+OFFSET_X = (0, 1000, 1e10)
+OFFSET_Y = (0, 1000, 1e10)
 MAGNIFICATIONS = (10, 1, 80, 40, 20)
+VOC_STYLE = (False, True)
+COCO_STYLE = (False, True)
+VOLO_STYLE = (False, True)
 
 
 class Params:
@@ -35,8 +40,13 @@ class Params:
     patch_height = PATCH_SIZES[0]
     overlap_width = OVERLAP_SIZES[0]
     overlap_height = OVERLAP_SIZES[0]
+    offset_x = OFFSET_X[0]
+    offset_y = OFFSET_Y[0]
     magnification = MAGNIFICATIONS[0]
     extract_patches = True
+    voc_style = VOC_STYLE[0]
+    coco_style = COCO_STYLE[0]
+    yolo_style = YOLO_STYLE[0]
 
 
 def cli(params):
@@ -61,6 +71,8 @@ def cli(params):
         patch_height=params.patch_height,
         overlap_width=params.overlap_width,
         overlap_height=params.overlap_height,
+        offset_x=params.offset_x,
+        offset_y=params.offset_y,
         on_foreground=params.on_foreground,
         on_annotation=params.on_annotation,
         extract_patches=params.extract_patches)
@@ -210,6 +222,21 @@ def test_cli_patch_overlap_size():
     cli(params)
 
     # Add too PatchSizeTooSmallError
+
+
+def test_offsets():
+    # OFFSET_X = (0, 1000, 1e10)
+    # OFFSET_Y = (0, 1000, 1e10)
+
+    params = Params()
+    params.offset_x = OFFSET_X[1]
+    params.offset_y = OFFSET_Y[1]
+    cli(params)
+
+    # Runs with no patches because the offsets are too large.
+    params.offset_x = OFFSET_X[2]
+    params.offset_y = OFFSET_Y[2]
+    cli(params)
 
 
 def test_cli_on_annotation():

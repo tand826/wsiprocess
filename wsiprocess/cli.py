@@ -35,11 +35,19 @@ class Args:
             "-ph", "--patch_height", type=int, default=256,
             help="Height of patches.")
         parser.add_argument(
-            "-ow", "--overlap_width", type=int, default=1,
+            "-ow", "--overlap_width", type=int, default=0,
             help="Width of the overlapped area of patches.")
         parser.add_argument(
-            "-oh", "--overlap_height", type=int, default=1,
+            "-oh", "--overlap_height", type=int, default=0,
             help="Height of the overlapped area of patches")
+        parser.add_argument(
+            "-ox", "--offset_x", type=int, default=0,
+            help="The offset pixel along the x-axis."
+        )
+        parser.add_argument(
+            "-oy", "--offset_y", type=int, default=0,
+            help="The offset pixel along the y-axis."
+        )
         parser.add_argument(
             "-ss", "--start_sample", action="store_true",
             help="Generate samples at the start of the process.")
@@ -102,6 +110,8 @@ def main(command=None):
         overlap_height=args.overlap_height,
         on_foreground=args.on_foreground,
         on_annotation=args.on_annotation,
+        offset_x=args.offset_x,
+        offset_y=args.offset_y,
         start_sample=args.start_sample,
         finished_sample=args.finished_sample,
         extract_patches=args.extract_patches)

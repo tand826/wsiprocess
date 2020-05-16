@@ -85,7 +85,7 @@ class Patcher:
     def __init__(
             self, slide, method, annotation=False, save_to=".",
             patch_width=256, patch_height=256, overlap_width=0,
-            overlap_height=0, offset_x=0, offset_y=, on_foreground=0.5,
+            overlap_height=0, offset_x=0, offset_y=0, on_foreground=0.5,
             on_annotation=1., start_sample=True, finished_sample=True,
             extract_patches=True):
         Verify.verify_sizes(
