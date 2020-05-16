@@ -106,7 +106,7 @@ docker run --name wsiprocess_container -v [your files directory]:/data -it -d ws
 
 see Command Helper for commands
 
-### Convert to VOC / COCO style format (experimental)
+### Convert to VOC / COCO / YOLO style format (experimental)
 
 
 ```bash
@@ -116,12 +116,16 @@ python wsiprocess/converters/wsiprocess_to_coco.py [root of wsiprocess] -s [dire
 
 # to VOC foramt
 python wsiprocess/converters/wsiprocess_to_voc.py [root of wsiprocess] -s [directory to save to] -r [ratio of train, val and test]
+
+# to YOLO format
+python wsiprocess/converters/wsiprocess_to_yolo.py [root of wsiprocess] -s [directory to save to] -r [ratio of train, val and test]
+
 ```
 
 ```bash
 # If not extracted patches yet...
-# convert to both VOC and COCO
-wsiprocess xxx.tiff method --annotation xxx.xml -vo -co
+# convert to VOC and COCO and YOLO
+wsiprocess xxx.tiff method --annotation xxx.xml -vo -co -yo
 ```
 
 

@@ -29,6 +29,8 @@ class Patcher:
             patches.
         overlap_height (int, optional): The height of the overlap areas of
             patches.
+        offset_x (int, optional): The offset pixels along the x-axis.
+        offset_y (int, optional): The offset pixels along the y-axis.
         on_foreground (float, optional): Ratio of overlap area between patches
             and foreground area.
         on_annotation (float, optional): Ratio of overlap area between patches
@@ -58,6 +60,8 @@ class Patcher:
         p_area (int): The area of single patch.
         o_width (int): The width of the overlap areas of patches.
         o_height (int): The height of the overlap areas of patches.
+        offset_x (int): The The offset pixels along the x-axis.
+        offset_y (int): The The offset pixels along the y-axis.
         on_foreground (float): Ratio of overlap area between patches and
             foreground area.
         on_annotation (float): Ratio of overlap area between patches and
@@ -80,9 +84,10 @@ class Patcher:
 
     def __init__(
             self, slide, method, annotation=False, save_to=".",
-            patch_width=256, patch_height=256, overlap_width=1,
-            overlap_height=1, on_foreground=0.5, on_annotation=1.,
-            start_sample=True, finished_sample=True, extract_patches=True):
+            patch_width=256, patch_height=256, overlap_width=0,
+            overlap_height=0, offset_x=0, offset_y=, on_foreground=0.5,
+            on_annotation=1., start_sample=True, finished_sample=True,
+            extract_patches=True):
         Verify.verify_sizes(
             slide.wsi_width, slide.wsi_height, patch_width, patch_height,
             overlap_width, overlap_height)
@@ -97,10 +102,12 @@ class Patcher:
         self.p_area = patch_width * patch_height
         self.o_width = int(overlap_width)
         self.o_height = int(overlap_height)
+        self.offset_x = int(offset_x)
+        self.offset_y = int(offset_y)
         self.x_lefttop = [i for i in range(
-            0, self.wsi_width, patch_width - overlap_width)][:-1]
+            self.offset_x, self.wsi_width, patch_width - overlap_width)][:-1]
         self.y_lefttop = [i for i in range(
-            0, self.wsi_height, patch_height - overlap_height)][:-1]
+            self.offset_y, self.wsi_height, patch_height - overlap_height)][:-1]
         self.iterator = list(product(self.x_lefttop, self.y_lefttop))
         self.last_x = self.slide.width - patch_width
         self.last_y = self.slide.height - patch_height
@@ -110,13 +117,12 @@ class Patcher:
         self.extract_patches = extract_patches
 
         self.on_foreground = on_foreground
+        self.annotation = annotation
         if annotation:
-            self.annotation = annotation
             self.masks = annotation.masks
             self.classes = annotation.classes
             self.on_annotation = on_annotation
         else:
-            self.annotation = annotation
             self.masks = False
             self.classes = ["none"]
             self.on_annotation = False
@@ -325,6 +331,8 @@ class Patcher:
         self.result["patch_height"] = self.p_height
         self.result["overlap_width"] = self.o_width
         self.result["overlap_hegiht"] = self.o_height
+        self.result["offset_x"] = self.offset_x
+        self.result["offset_y"] = self.offset_y
         self.result["start_sample"] = self.start_sample
         self.result["finished_sample"] = self.finished_sample
         self.result["extract_patches"] = self.extract_patches
