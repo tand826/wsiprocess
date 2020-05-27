@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from pathlib import Path
 from lxml import etree
 import json
 
@@ -9,16 +10,14 @@ def detect_type(path):
     Returns:
         (str): One of {"ASAP", "pathology_viewe, "Empty"}
     """
-    try:
+    if Path(path).suffix == ".xml":
         tree = etree.parse(path)
         root = tree.getroot()
         if root.tag == "ASAP_Annotations":
             return "ASAP"
-    except json.decoder.JSONDecodeError:
+    elif Path(path).suffix == ".json":
         with open(path, "r") as f:
             data = json.load(f)
-        key = list(data.keys())[0]
-        if data[key]["source"]["annotation"] == "pathology_viewer":
-            return "pathology_viewer"
-    except etree.XMLSyntaxError:
-        return "Empty"
+        if data["annotationTool"] == "WSIDissector":
+            return "WSIDissector"
+    return "Unknown"

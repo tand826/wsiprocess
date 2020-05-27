@@ -44,8 +44,8 @@ class Annotation:
             annotation_type = detect_type(self.path)
         if annotation_type == "ASAP":
             from .annotationparser.ASAP_parser import AnnotationParser
-        elif annotation_type == "pathology_viewer":
-            from .annotationparser.pathology_viewer_parser import AnnotationParser
+        elif annotation_type == "WSIDissector":
+            from .annotationparser.wsidissector_parser import AnnotationParser
         elif annotation_type == "Empty":
             class AnnotationParser:
                 classes = []
