@@ -35,15 +35,15 @@ class AnnotationParser:
         annotations = self.annotation["result"]
         for annotation in annotations:
             cls = annotation["class"]
-            x = round(annotation["x"])
-            y = round(annotation["y"])
-            w = round(annotation["w"])
-            h = round(annotation["h"])
             contour = []
             if "points" in annotation:
                 for point in annotation["points"]:
                     contour.append([point["x"], point["y"]])
             else:
+                x = round(annotation["x"])
+                y = round(annotation["y"])
+                w = round(annotation["w"])
+                h = round(annotation["h"])
                 contour.append([x, y])
                 contour.append([x+w, y])
                 contour.append([x+w, y+h])

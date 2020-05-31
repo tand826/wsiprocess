@@ -12,6 +12,11 @@ Example:
 
         import wsiprocess as wp
         annotation = wp.annotation("path_to_annotation_file.xml")
+
+    Loading annotation data from image:: python
+
+        import wsiprocess as wp
+        annotation = wp.annotation("")
 """
 
 import cv2
@@ -22,9 +27,20 @@ from .annotationparser.parser_utils import detect_type
 
 class Annotation:
 
-    def __init__(self, path):
+    def __init__(self, path, is_image=False):
+        """Initialize the anntation object.
+
+        Args:
+            path(str): Path to the anntation data.
+                Text data made with "WSIDissector" or "ASAP", and Image data
+                (non-pyramidical) are available.
+            is_image(bool): Whether the image is image.
+        """
         self.path = path
-        self.read_annotation()
+        self.is_image = is_image
+        self.classes = []
+        if not self.is_image:
+            self.read_annotation()
         self.masks = {}
         self.contours = {}
 
@@ -60,6 +76,22 @@ class Annotation:
                 "[{e}] Could not parse {}".format(e, self.path))
         self.classes = parsed.classes
         self.mask_coords = parsed.mask_coords
+
+    def add_class(self, classes):
+        for cls in classes:
+            self.classes.append(cls)
+
+    def from_image(self, mask, cls):
+        """Load mask data from an image.
+
+        Args:
+            mask(numpy.ndarray): 2D mask image with background as 0, and
+                foreground as 255.
+            cls(str): Name of the class of the mask image.
+        """
+        assert len(mask.shape) == 2, "Mask image is not 2D."
+        assert self.classes, "Classes are not set yet."
+        self.masks[cls] = mask
 
     def make_masks(self, slide, rule=False, foreground=False, size=2000):
         """Make masks from the slide and rule.

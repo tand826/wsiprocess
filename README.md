@@ -14,7 +14,7 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 <div style="text-align: center"><img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/description.png" style="max-width: 80%; margin: 0 auto;"></div>
 
 1. Scan some WSIs.
-2. Make some annotations with WSI annotation tools
+2. Make some annotations with WSI annotation tools. (Recommended: [WSIDissector](https://github.com/tand826/WSIDissector)(coming soon))
 3. Then wsiprocess helps converting WSI + Annotation data into patches and easy-to-use annotation data.
 
 [WSIPatcher](https://github.com/tand826/WSIPatcher) will give you GUI.
@@ -86,6 +86,25 @@ annotation.make_masks(slide, rule)
 annotation.export_thumb_masks("xxx/masks")
 ```
 
+### Load mask data from image, and extract patches.
+
+```python
+import wsiprocess as wp
+import cv2
+slide = wp.slide("xxx.tiff")
+annotation = wp.annotation("yyy.tiff", is_image=True)
+target_classes = ["benign", "malignant"]
+annotation.add_class(target_classes)
+benign_mask = cv2.imread("benign_mask.png", 0)
+malignant_mask = cv2.imread("malignant_mask.png", 0)
+# Make sure your mask data includes only 0 as background or 255 as foreground
+annotation.from_image(benign_mask, "benign")
+annotation.from_image(malignant_mask, "malignant")
+rule = wp.rule("xxx.json")
+patcher = wp.patcher(slide, "classification", foreground=True)
+patcher.get_patch_parallel(target_classes)
+```
+
 ### As a command line tool
 
 ```bash
@@ -94,7 +113,7 @@ wsiprocess xxx.tiff method --annotation xxx.xml
 
 - Need recommendation for choice of arguments? -> [Command Helper](https://tand826.github.io/wsiprocess_command_line_helper)
 
-### As a docker command line tool
+### As a docker command line tool (not working on)
 
 ```bash
 # build the image
@@ -106,7 +125,7 @@ docker run --name wsiprocess_container -v [your files directory]:/data -it -d ws
 
 see Command Helper for commands
 
-### Convert to VOC / COCO / YOLO style format (experimental)
+### Convert to VOC / COCO / YOLO style format
 
 
 ```bash
