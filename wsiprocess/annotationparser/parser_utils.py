@@ -20,4 +20,4 @@ def detect_type(path):
             data = json.load(f)
         if data["annotationTool"] == "WSIDissector":
             return "WSIDissector"
-    return "Unknown"
+    return "Empty"
