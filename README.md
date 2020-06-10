@@ -1,5 +1,6 @@
 <img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/wsiprocess.svg" style="width: 50%">
 
+![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.3887428.svg)
 ![Downloads](https://pepy.tech/badge/wsiprocess)
 ![PyPI](https://img.shields.io/pypi/v/wsiprocess)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/wsiprocess)
@@ -86,7 +87,7 @@ annotation.make_masks(slide, rule)
 annotation.export_thumb_masks("xxx/masks")
 ```
 
-### Load mask data from image, and extract patches.
+#### Load mask data from image, and extract patches.
 
 ```python
 import wsiprocess as wp
