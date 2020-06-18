@@ -100,7 +100,7 @@ class ToYOLOConverter:
             with open(self.save_to/"labels"/f"{self.filestem}_{patch['x']:06}_{patch['y']:06}.txt", "w") as f:
                 f.writelines(bbs)
         with open(self.save_to/"yolo.names", "w") as f:
-            f.writelines(self.classes)
+            f.write("\n".join(self.classes))
 
     def make_paths(self):
         """
