@@ -57,7 +57,7 @@ class ToYOLOConverter:
 
     def makedirs(self):
         if not self.save_to.exists():
-            self.save_to.mkdir(parent=True)
+            self.save_to.mkdir(parents=True)
         if not (self.save_to/"images").exists():
             (self.save_to/"images").mkdir(parents=True)
         if not (self.save_to/"labels").exists():
