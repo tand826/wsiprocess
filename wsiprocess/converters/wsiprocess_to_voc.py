@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""Converter to VOC style.
+
+wsiprocess_to_voc is convert helper which convert the wsiprocess output for
+VOC object detection format.
+Only available for "detection" method, but works when extracting patches and
+after extraction.
+
+"""
 import argparse
 import random
 from lxml import etree
@@ -6,23 +15,27 @@ from PIL import Image
 import json
 import shutil
 
-"""
-'root' should be like below
-
-./root
-├── patches
-│   └── class_a
-│       ├── 001.png
-│       ├── 002.png
-
-│       └── 100.png
-└── results.json
-"""
-
 
 class ToVOCConverter:
+    """Converter class."""
 
     def __init__(self, params=False):
+        """
+
+        Args:
+            params(dict): Dict contains root, save_to, ratio_arg
+
+        'root' should be like below
+
+        ./root
+        ├── patches
+        │   └── class_a
+        │       ├── 001.png
+        │       ├── 002.png
+
+        │       └── 100.png
+        └── results.json
+        """
         if params:
             self.root = params["root"]
             self.save_to = params["save_to"]

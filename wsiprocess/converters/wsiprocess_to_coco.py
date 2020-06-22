@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""Converter to COCO style.
+
+wsiprocess_to_coco is convert helper which convert the wsiprocess output for
+COCO object detection format.
+Only available for "detection" method, but works when extracting patches and
+after extraction.
+
+"""
 import sys
 import argparse
 import random
@@ -8,6 +17,8 @@ from tqdm import tqdm
 
 
 class ToCOCOConverter:
+    """Converter class.
+    """
 
     def __init__(self, params=False):
         if params:

@@ -166,7 +166,7 @@ Test ongoing
 
    -  Hamamatsu
 
-      -  |:smile:|CMU-1.ndpi
+      -  |:smile:| CMU-1.ndpi
       -  CMU-2.ndpi
       -  CMU-3.ndpi
       -  OS-1.ndpi
@@ -263,7 +263,7 @@ Citation
    @article{wsiprocess,
        Author = {Takumi Ando},
        Title = {WSIPROCESS - Whole Slide Image Processing Library for Histopathological / Cytopathological Machine Learning Tasks},
-       Journal = {github.com/tand826/wsiprocess},
+       Url = {https://github.com/tand826/wsiprocess},
        Year = {2019}
    }
 

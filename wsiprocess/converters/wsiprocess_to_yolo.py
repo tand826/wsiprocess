@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""Converter to YOLO style.
+
+wsiprocess_to_yolo is convert helper which convert the wsiprocess output for
+YOLO object detection format.
+Only available for "detection" method, but works when extracting patches and
+after extraction.
+
+"""
 import argparse
 import random
 from pathlib import Path

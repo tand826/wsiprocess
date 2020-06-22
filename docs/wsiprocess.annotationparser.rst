@@ -16,9 +16,9 @@ wsiprocess.annotationparser.parser\_utils
    :members:
    :undoc-members:
 
-wsiprocess.annotationparser.pathology\_viewer\_parser
+wsiprocess.annotationparser.wsidissector\_parser
 ------------------------------------------------------------
 
-.. automodule:: wsiprocess.annotationparser.pathology_viewer_parser
+.. automodule:: wsiprocess.annotationparser.wsidissector_parser
    :members:
    :undoc-members:
