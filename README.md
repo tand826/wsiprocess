@@ -266,7 +266,7 @@ pytest tests.py
 @article{wsiprocess,
     Author = {Takumi Ando},
     Title = {WSIPROCESS - Whole Slide Image Processing Library for Histopathological / Cytopathological Machine Learning Tasks},
-    Journal = {github.com/tand826/wsiprocess},
+    Url = {https://github.com/tand826/wsiprocess},
     Year = {2019}
 }
 ```
