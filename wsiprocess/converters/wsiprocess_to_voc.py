@@ -38,7 +38,7 @@ class ToVOCConverter:
         """
         if params:
             self.root = params["root"]
-            self.save_to = params["save_to"]
+            self.save_to = params["save_to"]/"voc"
             self.ratio = params["ratio_arg"]
         else:
             self.getargs()

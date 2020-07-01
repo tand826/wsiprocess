@@ -117,7 +117,7 @@ def main(command=None):
         extract_patches=args.extract_patches)
     patcher.get_patch_parallel(annotation.classes)
     if args.voc_style or args.coco_style or args.yolo_style:
-        converter = wp.converter(args.save_to/slide.filestem, args.save_to, args.ratio)
+        converter = wp.converter(args.save_to/slide.filestem, args.save_to/slide.filestem, args.ratio)
         if args.voc_style:
             converter.to_voc()
         if args.coco_style:

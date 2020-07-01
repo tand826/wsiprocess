@@ -32,7 +32,7 @@ class ToYOLOConverter:
     def __init__(self, params=False):
         if params:
             self.root = params["root"]
-            self.save_to = params["save_to"]
+            self.save_to = params["save_to"]/"yolo"
             self.ratio_arg = params["ratio_arg"]
         else:
             self.getargs()
@@ -62,7 +62,6 @@ class ToYOLOConverter:
             self.result_wp = json.load(f)
         self.classes = self.result_wp["classes"]
         self.filestem = Path(self.result_wp['slide']).stem
-        self.save_to = self.save_to/self.filestem
 
     def makedirs(self):
         if not self.save_to.exists():

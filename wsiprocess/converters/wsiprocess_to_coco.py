@@ -9,6 +9,7 @@ after extraction.
 """
 import sys
 import argparse
+import shutil
 import random
 import json
 from datetime import datetime
@@ -23,7 +24,7 @@ class ToCOCOConverter:
     def __init__(self, params=False):
         if params:
             self.root = params["root"]
-            self.save_to = params["save_to"]
+            self.save_to = params["save_to"]/"coco"
             self.ratio_arg = params["ratio_arg"]
         else:
             self.getargs()
@@ -109,7 +110,8 @@ class ToCOCOConverter:
         with tqdm(paths, desc="{} imgs [{}]".format(phase, cls)) as t:
             for image_path in t:
                 if not (self.save_to/"{}2014".format(phase)/image_path.name).exists():
-                    (self.save_to/"{}2014".format(phase)/image_path.name).symlink_to(image_path)
+                    shutil.copy(image_path, self.save_to/"{}2014".format(phase))
+                    # (self.save_to/"{}2014".format(phase)/image_path.name).symlink_to(image_path)
 
     def get_save_as(self):
         if not (self.save_to/"annotations"/"instances_train2014.json").exists():
