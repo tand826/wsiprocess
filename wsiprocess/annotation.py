@@ -143,7 +143,7 @@ class Annotation:
         Write border lines following the rule and fill inside with 255.
         """
         for cls in self.classes:
-            contours = np.array(self.mask_coords[cls])
+            contours = np.array(self.mask_coords[cls], dtype=object)
             for contour in contours:
                 self.masks[cls] = cv2.drawContours(
                     self.masks[cls], [np.int32(contour)], 0, True, thickness=cv2.FILLED)
