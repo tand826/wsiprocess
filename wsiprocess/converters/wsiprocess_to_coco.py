@@ -94,21 +94,22 @@ class ToCOCOConverter:
             else:
                 self.val_paths += image_paths[train_count:]
 
-            with tqdm(self.train_paths, desc="Train imgs [{}]".format(cls)) as t:
-                for image_path in t:
-                    if not (self.save_to/"train2014"/image_path.name).exists():
-                        (self.save_to/"train2014"/image_path.name).symlink_to(image_path)
-
-            with tqdm(self.val_paths, desc="Validation imgs [{}]".format(cls)) as t:
-                for image_path in t:
-                    if not (self.save_to/"val2014"/image_path.name).exists():
-                        (self.save_to/"val2014"/image_path.name).symlink_to(image_path)
-
+            self._make_link_to_images_per_phase("train", cls)
+            self._make_link_to_images_per_phase("val", cls)
             if self.test_is_available:
-                with tqdm(self.test_paths, desc="Test imgs [{}]".format(cls)) as t:
-                    for image_path in t:
-                        if not (self.save_to/"test2014"/image_path.name).exists():
-                            (self.save_to/"test2014"/image_path.name).symlink_to(image_path)
+                self._make_link_to_images_per_phase("test", cls)
+
+    def _make_link_to_images_per_phase(self, phase, cls):
+        if phase == "train":
+            paths = self.train_paths
+        elif phase == "val":
+            paths = self.val_paths
+        elif phase == "test":
+            paths = self.test_paths
+        with tqdm(paths, desc="{} imgs [{}]".format(phase, cls)) as t:
+            for image_path in t:
+                if not (self.save_to/"{}2014".format(phase)/image_path.name).exists():
+                    (self.save_to/"{}2014".format(phase)/image_path.name).symlink_to(image_path)
 
     def get_save_as(self):
         if not (self.save_to/"annotations"/"instances_train2014.json").exists():
@@ -172,7 +173,6 @@ class ToCOCOConverter:
     def annotations_to_json(self):
         with open(self.root/"results.json", "r") as f:
             self.annotation = json.load(f)
-        # self.annotation["classes"] = ["positive", "negative"]
 
     def make_output(self):
         last_image_id, last_annotation_id = self.read_last_data()
@@ -205,11 +205,11 @@ class ToCOCOConverter:
             for idx, val_path in enumerate(t):
                 x, y = map(int, val_path.stem.split("_")[-2:])
                 image_params, image_id = self.get_image_params(
-                    train_path, slidestem, x, y, patch_width, patch_height, image_id)
+                    val_path, slidestem, x, y, patch_width, patch_height, image_id)
                 self.val2014["images"].append(image_params)
 
                 annotation_params, annotation_id = self.get_annotation_params(
-                    self.annotation, classes, train_path, slidestem, x, y, patch_width, patch_width, image_id, annotation_id)
+                    self.annotation, classes, val_path, slidestem, x, y, patch_width, patch_width, image_id, annotation_id)
                 self.val2014["annotations"].extend(annotation_params)
 
                 image_id += 1
@@ -219,11 +219,11 @@ class ToCOCOConverter:
                 for idx, test_path in enumerate(t):
                     x, y = map(int, test_path.stem.split("_")[-2:])
                     image_params, image_id = self.get_image_params(
-                        train_path, slidestem, x, y, patch_width, patch_height, image_id)
+                        test_path, slidestem, x, y, patch_width, patch_height, image_id)
                     self.test2014["images"].append(image_params)
 
                     annotation_params, annotation_id = self.get_annotation_params(
-                        self.annotation, classes, train_path, slidestem, x, y, patch_width, patch_width, image_id, annotation_id)
+                        self.annotation, classes, test_path, slidestem, x, y, patch_width, patch_width, image_id, annotation_id)
                     self.test2014["annotations"].extend(annotation_params)
 
                     image_id += 1
@@ -245,8 +245,6 @@ class ToCOCOConverter:
 
     def add_categories(self, annotation, cls):
         categories = annotation["categories"]
-        # if cls == "half-positive":
-        #     cls = "positive"
         classes = [cat["name"] for cat in categories]
         if cls not in classes:
             categories.append({
@@ -276,15 +274,13 @@ class ToCOCOConverter:
                     for bb in box["bbs"]:
                         bb["x"] %= width
                         bb["y"] %= height
-                        if bb["class"] == "half-positive":
-                            bb["class"] = "positive"
                         data = {
-                            "segmentation": [
+                            "segmentation": [[
                                 bb["x"], bb["y"],
                                 bb["x"] + bb["w"], bb["y"],
                                 bb["x"] + bb["w"], bb["y"] + bb["h"],
                                 bb["x"], bb["y"] + bb["h"]
-                            ],
+                            ]],
                             "area": bb["w"]*bb["h"],
                             "iscrowd": 0,
                             "image_id": image_id,
