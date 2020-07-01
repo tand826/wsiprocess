@@ -189,6 +189,8 @@ class ToCOCOConverter:
         for cls in classes:
             self.train2014 = self.add_categories(self.train2014, cls)
             self.val2014 = self.add_categories(self.val2014, cls)
+            if self.test_is_available:
+                self.test2014 = self.add_categories(self.test2014, cls)
 
         with tqdm(self.train_paths, desc="Making annotation for train") as t:
             for idx, train_path in enumerate(t):
