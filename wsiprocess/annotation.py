@@ -180,7 +180,8 @@ class Annotation:
                             self.masks[cls], overlap_area)
         self.masks = self.masks_exclude
 
-    def make_foreground_mask(self, slide, size=2000):
+    def make_foreground_mask(
+            self, slide, size=2000, method="otsu", min_=30, max_=190):
         """Make foreground mask.
 
         With otsu thresholding, make simple foreground mask.
@@ -189,6 +190,14 @@ class Annotation:
             slide (wsiprocess.slide.Slide): Slide object.
             size (int, optional): Size of foreground mask on calculating with
                 the Otsu Thresholding.
+            method (str, optional): Binarization method. As default, calculates
+                with Otsu Thresholding.
+            min (int, optional): Used if method is "minmax". Annotation object
+                defines foreground as the pixels with the value between "min"
+                and "max".
+            max (int, optional): Used if method is "minmax". Annotation object
+                defines foreground as the pixels with the value between "min"
+                and "max".
         """
         if "foreground" in self.classes:
             return
@@ -198,10 +207,46 @@ class Annotation:
             dtype=np.uint8,
             shape=[thumb.height, thumb.width, thumb.bands])
         thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
-        _, th = cv2.threshold(
-            thumb_gray, 0, 1, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
-        self.masks["foreground"] = cv2.resize(th, (slide.width, slide.height))
+        if method == "otsu":
+            mask = self._otsu_method_mask(thumb_gray)
+        elif method == "minmax":
+            mask = self._get_foreground_from_minmax(thumb_gray, min_, max_)
+        self.masks["foreground"] = cv2.resize(mask, (slide.width,
+                                                     slide.height))
         self.classes.append("foreground")
+
+    def _otsu_method_mask(self, thumb_gray):
+        """Make mask of foreground with Otsu's method.
+
+        Foreground as 1, background as 0.
+
+        Args:
+            thumb_gray (numpy.ndarray): Mask image from 0 to 255.
+
+        Returns:
+            mask (numpy.ndarray): Binary mask image.
+        """
+        _, mask = cv2.threshold(
+            thumb_gray, 0, 1, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
+        return mask
+
+    def _minmax_mask(self, thumb_gray, min_, max_):
+        """Make mask of foreground from min and max value.
+
+        Pixels with value between min_ and max_ is converted to 1 as
+        foreground, and value less than min_ and more than max_ is converted to
+        0 as background.
+
+        Args:
+            thumb_gray (numpy.ndarray): Mask image from 0 to 255.
+            min_ (int): Minimum value of thumb_gray to convert to 1.
+            max_ (int): Maximum value of thumb_gray to convert to 1.
+
+        Returns:
+            mask (numpy.ndarray): Binary mask image.
+        """
+        mask = thumb_gray[(min_ <= thumb_gray) & (thumb_gray <= max_)]
+        return mask
 
     def export_thumb_masks(self, save_to=".", size=512):
         """Export thumbnail of masks.
