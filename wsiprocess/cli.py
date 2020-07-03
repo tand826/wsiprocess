@@ -23,6 +23,9 @@ class Args:
             "-an", "--annotation", type=str, default=False,
             help="Path to the annotation xml file.")
         parser.add_argument(
+            "-mm", "--minmax", type=str, default=False,
+            help="Get foreground mask as pixels from min to max. ie. 30-190")
+        parser.add_argument(
             "-of", "--on_foreground", type=float, default=1.,
             help="The ratio of overlapped area of a patch and the foreground.")
         parser.add_argument(
@@ -94,12 +97,23 @@ def main(command=None):
         rule = False
     if args.annotation:
         annotation = wp.annotation(args.annotation)
-        annotation.make_masks(slide, rule, foreground=True)
+        if args.minmax:
+            min_, max_ = map(int, args.minmax.split("-"))
+            annotation.make_masks(
+                slide, rule, foreground="minmax", min_=min_, max_=max_)
+        else:
+            annotation.make_masks(slide, rule, foreground=True)
         annotation.classes.remove("foreground")
     else:
         annotation = wp.annotation("")
         if args.on_annotation:
-            annotation.make_masks(slide, foreground=True)
+            if args.minmax:
+                min_, max_ = map(int, args.minmax.split("-"))
+                annotation.make_masks(
+                    slide, foreground="minmax", min_=min_, max_=max_)
+            else:
+                annotation.make_masks(
+                    slide, foreground=True)
     patcher = wp.patcher(
         slide, args.method,
         annotation=annotation,

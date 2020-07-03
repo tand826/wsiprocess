@@ -93,7 +93,9 @@ class Annotation:
         assert self.classes, "Classes are not set yet."
         self.masks[cls] = mask
 
-    def make_masks(self, slide, rule=False, foreground=False, size=2000):
+    def make_masks(
+            self, slide, rule=False, foreground=False, size=2000,
+            min_=30, max_=190):
         """Make masks from the slide and rule.
 
         Masks are for each class and foreground area.
@@ -101,10 +103,18 @@ class Annotation:
         Args:
             slide (wsiprocess.slide.Slide): Slide object
             rule (:obj:`wsiprocess.rule.Rule`, optional): Rule object
-            foreground (bool, optional): Whether to crop only from the
-                foreground area.
+            foreground (str, optional): This can be {otsu, minmax}. If not set,
+                Annotation don't make foreground mask.
             size (int, optional): Size of foreground mask on calculating with
                 the Otsu Thresholding.
+            method (str, optional): Binarization method. As default, calculates
+                with Otsu Thresholding.
+            min (int, optional): Used if method is "minmax". Annotation object
+                defines foreground as the pixels with the value between "min"
+                and "max".
+            max (int, optional): Used if method is "minmax". Annotation object
+                defines foreground as the pixels with the value between "min"
+                and "max".
         """
         self.base_masks(slide.wsi_height, slide.wsi_width)
         self.main_masks()
@@ -113,7 +123,8 @@ class Annotation:
             self.include_masks(rule)
             self.exclude_masks(rule)
         if foreground:
-            self.make_foreground_mask(slide, size)
+            self.make_foreground_mask(
+                slide, size, method=foreground, min_=min_, max_=max_)
 
     def base_masks(self, wsi_height, wsi_width):
         """Make base masks.
