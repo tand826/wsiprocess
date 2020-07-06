@@ -1,12 +1,10 @@
-<img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/wsiprocess.svg" style="width: 50%">
+<img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/wsiprocess.svg" style="width: 50%;margin: auto 0">
 
 ![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.3887428.svg)
 ![Downloads](https://pepy.tech/badge/wsiprocess)
 ![PyPI](https://img.shields.io/pypi/v/wsiprocess)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/wsiprocess)
-![GitHub](https://img.shields.io/github/license/tand826/wsiprocess)
-![Documentation](https://readthedocs.org/projects/wsiprocess/badge/?version=latest)
 ![Conda - Version](https://img.shields.io/conda/v/tand826/wsiprocess)
+![Documentation](https://readthedocs.org/projects/wsiprocess/badge/?version=latest)
 
 Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 
@@ -106,13 +104,22 @@ patcher = wp.patcher(slide, "classification", annotation=annotation)
 patcher.get_patch_parallel(target_classes)
 ```
 
+
 ### As a command line tool
+
+#### basic flow
 
 ```bash
 wsiprocess xxx.tiff method --annotation xxx.xml
 ```
 
-- Need recommendation for choice of arguments? -> [Command Helper](https://tand826.github.io/wsiprocess_command_line_helper)
+#### Extract patches with mask of foreground area. The mask has pixels with 1 as foreground which are originally from 10 to 230 in the scale of 0-255, and pixels with 0 as background which are originally from 0 to 10 and from 230 to 255.
+
+```bash
+wsiprocess xxx.tif none -oa 0.01 -mm 10-230 -of 0.01 -ep
+```
+
+- Need recommendation for choice of arguments? -> [Command Helper](https://tand826.github.io/wsiprocess_command_line_helper). This is for v0.1. Now wsiprocess has more options. Type `wsiprocess` to see options.
 
 ### As a docker command line tool (not working on)
 
