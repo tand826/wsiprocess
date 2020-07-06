@@ -17,7 +17,7 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 </div>
 
 1. Scan some WSIs.
-2. Make some annotations with WSI annotation tools. (Recommended: [WSIDissector](https://github.com/tand826/WSIDissector)(coming soon))
+2. Make some annotations with WSI annotation tools. (Recommended: [WSIDissector](https://github.com/tand826/WSIDissector)(coming soon), [ASAP](https://github.com/computationalpathologygroup/ASAP/releases) is now available.)
 3. Then wsiprocess helps converting WSI + Annotation data into patches and easy-to-use annotation data.
 
 [WSIPatcher](https://github.com/tand826/WSIPatcher) will give you GUI.
