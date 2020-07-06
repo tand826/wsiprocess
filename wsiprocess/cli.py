@@ -61,6 +61,10 @@ class Args:
             "-ep", "--extract_patches", action="store_true",
             help="Extract the patches and save them as images.")
         parser.add_argument(
+            "-et", "--export_thumbs", action="store_true",
+            help="Export thumbnails of masks."
+        )
+        parser.add_argument(
             "-ma", "--magnification", choices={40, 20, 10}, default=40,
             type=int,
             help="Magnification to process.")
@@ -114,6 +118,10 @@ def main(command=None):
             else:
                 annotation.make_masks(
                     slide, foreground=True)
+    if args.export_thumbs:
+        if not (args.save_to/slide.filestem/"thumbs").exists():
+            (args.save_to/slide.filestem/"thumbs").mkdir(parents=True)
+        annotation.export_thumb_masks(args.save_to/slide.filestem/"thumbs")
     patcher = wp.patcher(
         slide, args.method,
         annotation=annotation,
