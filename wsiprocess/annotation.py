@@ -221,7 +221,7 @@ class Annotation:
         if method == "otsu":
             mask = self._otsu_method_mask(thumb_gray)
         elif method == "minmax":
-            mask = self._get_foreground_from_minmax(thumb_gray, min_, max_)
+            mask = self._minmax_mask(thumb_gray, min_, max_)
         self.masks["foreground"] = cv2.resize(mask, (slide.width,
                                                      slide.height))
         self.classes.append("foreground")
@@ -256,7 +256,7 @@ class Annotation:
         Returns:
             mask (numpy.ndarray): Binary mask image.
         """
-        mask = thumb_gray[(min_ <= thumb_gray) & (thumb_gray <= max_)]
+        mask = ((min_ <= thumb_gray) & (thumb_gray <= max_)).astype(np.uint8)
         return mask
 
     def export_thumb_masks(self, save_to=".", size=512):
