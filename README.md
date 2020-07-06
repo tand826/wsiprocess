@@ -1,16 +1,20 @@
-<img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/wsiprocess.svg" style="width: 50%;margin: auto 0">
+<div align="center">
+<img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/wsiprocess.svg" style="width: 50%">
 
 ![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.3887428.svg)
 ![Downloads](https://pepy.tech/badge/wsiprocess)
 ![PyPI](https://img.shields.io/pypi/v/wsiprocess)
 ![Conda - Version](https://img.shields.io/conda/v/tand826/wsiprocess)
 ![Documentation](https://readthedocs.org/projects/wsiprocess/badge/?version=latest)
+</div>
 
 Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 
 # Main Flow
 
-<div style="text-align: center"><img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/description.png" style="max-width: 80%; margin: 0 auto;"></div>
+<div align="center">
+<img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/description.png" style="max-width: 80%">
+</div>
 
 1. Scan some WSIs.
 2. Make some annotations with WSI annotation tools. (Recommended: [WSIDissector](https://github.com/tand826/WSIDissector)(coming soon))
