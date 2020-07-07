@@ -94,7 +94,7 @@ class Annotation:
         self.masks[cls] = mask
 
     def make_masks(
-            self, slide, rule=False, foreground=False, size=2000,
+            self, slide, rule=False, foreground="otsu", size=2000,
             min_=30, max_=190):
         """Make masks from the slide and rule.
 
@@ -218,10 +218,10 @@ class Annotation:
             dtype=np.uint8,
             shape=[thumb.height, thumb.width, thumb.bands])
         thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
-        if method == "otsu":
-            mask = self._otsu_method_mask(thumb_gray)
-        elif method == "minmax":
+        if method == "minmax":
             mask = self._minmax_mask(thumb_gray, min_, max_)
+        else:
+            mask = self._otsu_method_mask(thumb_gray)
         self.masks["foreground"] = cv2.resize(mask, (slide.width,
                                                      slide.height))
         self.classes.append("foreground")

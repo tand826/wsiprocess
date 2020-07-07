@@ -15,6 +15,7 @@ ANNOTATIONS = (
 SAVE_TOS = (".", "/", "")
 ONFOREGROUNDS = (0, 1.0, 0.50000000001)
 ONANNOTATIONS = (0, 1.0, 0.50000000001)
+MINMAXS = ("0-255", "100-200", "100-99")
 RULES = (
     "rule.json",
     "test_emptyfile.txt")
@@ -25,7 +26,7 @@ OFFSET_Y = (0, 1000, 1e10)
 MAGNIFICATIONS = (10, 1, 80, 40, 20)
 VOC_STYLE = (False, True)
 COCO_STYLE = (False, True)
-VOLO_STYLE = (False, True)
+YOLO_STYLE = (False, True)
 
 
 class Params:
@@ -36,6 +37,7 @@ class Params:
     save_to = SAVE_TOS[0]
     on_annotation = ONANNOTATIONS[0]
     on_foreground = ONFOREGROUNDS[0]
+    minmax = MINMAXS[0]
     patch_width = PATCH_SIZES[0]
     patch_height = PATCH_SIZES[0]
     overlap_width = OVERLAP_SIZES[0]
@@ -236,7 +238,8 @@ def test_offsets():
     # Runs with no patches because the offsets are too large.
     params.offset_x = OFFSET_X[2]
     params.offset_y = OFFSET_Y[2]
-    cli(params)
+    with pytest.raises(IndexError):
+        cli(params)
 
 
 def test_cli_on_annotation():
