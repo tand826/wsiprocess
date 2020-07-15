@@ -159,7 +159,7 @@ def process_annotation(args, slide, rule):
 
     else:
         annotation = wp.annotation(args.annotation)
-        if hasattr(args, "minmax"):
+        if hasattr(args, "minmax") and args.minmax:
             min_, max_ = map(int, args.minmax.split("-"))
             annotation.make_masks(
                 slide, rule, foreground="minmax", min_=min_, max_=max_)
