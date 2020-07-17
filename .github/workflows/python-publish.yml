@@ -29,3 +29,20 @@ jobs:
       run: |
         python setup.py sdist bdist_wheel
         twine upload dist/*
+    - name: Build and publish to anaconda cloud
+      env:
+        ANACONDA_CLOUD_USERNAME: ${{ secrets.ANACONDA_CLOUD_USERNAME }}
+        ANACONDA_CLOUD_PASSWORD: ${{ secrets.ANACONDA_CLOUD_PASSWORD }}
+      run: |
+        anaconda login --username $ANACONDA_CLOUD_USERNAME --password $ANACONDA_CLOUD_PASSWORD
+        conda skeleton pypi wsiprocess --output-dir ./conda_tmp
+        for ver in 6 7 8
+        do
+            conda-build --python 3.${ver} . --output-folder ./conda_tmp
+            conda convert --platform all ./conda_tmp/osx-64/wsiprocess-0.4-py3${ver}_0.tar.bz2 -o conda_tmp
+            for platform in linux-32 linux-64 linux-aarch64 linux-armv6l linux-armv7l linux-ppc64le osx-64 win-32 win-64
+            do
+                anaconda upload ./conda_tmp/${platform}/wsiprocess-0.4-py3${ver}_0.tar.bz2
+            done
+        done
+        rm -rf ./conda_tmp
