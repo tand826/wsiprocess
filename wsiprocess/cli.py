@@ -10,6 +10,8 @@ class Args:
     def set_base_parser(self):
         self.base_parser = argparse.ArgumentParser(
             description="wsiprocess command line tool")
+
+    def set_wsi_arg(self):
         self.base_parser.add_argument(
             "wsi", type=str,
             help="Path to the target wsi.")
@@ -137,6 +139,7 @@ class Args:
         """ Base Parser """
         self.set_base_parser()
 
+        self.set_wsi_arg()
         self.set_method_args()
         self.set_none_args()
         self.set_classification_args()

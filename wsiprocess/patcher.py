@@ -339,7 +339,7 @@ class Patcher:
         self.result["on_foreground"] = self.on_foreground
         self.result["on_annotation"] = self.on_annotation
         self.result["save_to"] = str(Path(self.save_to).absolute())
-        self.result["classes"] = self.classes
+        self.result["classes"] = sorted(self.classes)
 
         with open("{}/{}/results.json".format(self.save_to, self.filestem), "w") as f:
             json.dump(self.result, f, indent=4)
