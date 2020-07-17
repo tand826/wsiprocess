@@ -39,8 +39,10 @@ class Patcher:
             Patcher starting.
         finished_sample (bool, optional): Whether to save sample patches on
             Patcher finished its work.
-        extract_patches (bool, optional): Whether to save patches when Patcher
-            runs.
+        extract_patches (bool, optional): This is deprecated because unless
+            "no_patches" is set, Patcher extracts patches.
+        no_patches (bool, optional): If set, Patcher runs without extracting
+            patches and saves them to disk.
 
     Attributes:
         slide (wsiprocess.slide.Slide): Slide object.
@@ -70,6 +72,7 @@ class Patcher:
         finished_sample (bool): Whether to save sample patches on Patcher
             finish.
         extract_patches (bool): Whether to save patches when Patcher runs.
+        no_patches (bool): Whether to save patches when Patcher runs.
 
         x_lefttop (list): Offsets of patches to the x-axis direction except for
             the right edge.
@@ -87,7 +90,7 @@ class Patcher:
             patch_width=256, patch_height=256, overlap_width=0,
             overlap_height=0, offset_x=0, offset_y=0, on_foreground=0.5,
             on_annotation=1., start_sample=True, finished_sample=True,
-            extract_patches=True):
+            no_patches=False):
         Verify.verify_sizes(
             slide.wsi_width, slide.wsi_height, patch_width, patch_height,
             overlap_width, overlap_height)
@@ -114,7 +117,7 @@ class Patcher:
 
         self.start_sample = start_sample
         self.finished_sample = finished_sample
-        self.extract_patches = extract_patches
+        self.no_patches = no_patches
 
         self.on_foreground = on_foreground
         self.annotation = annotation
@@ -131,7 +134,7 @@ class Patcher:
 
         self.result = {"result": []}
         self.verify = Verify(save_to, self.filestem, method,
-                             start_sample, finished_sample, extract_patches)
+                             start_sample, finished_sample, no_patches)
         self.verify.verify_dirs()
 
     def __str__(self):
@@ -335,7 +338,7 @@ class Patcher:
         self.result["offset_y"] = self.offset_y
         self.result["start_sample"] = self.start_sample
         self.result["finished_sample"] = self.finished_sample
-        self.result["extract_patches"] = self.extract_patches
+        self.result["no_patches"] = self.no_patches
         self.result["on_foreground"] = self.on_foreground
         self.result["on_annotation"] = self.on_annotation
         self.result["save_to"] = str(Path(self.save_to).absolute())
@@ -365,12 +368,13 @@ class Patcher:
                     on_annotation_classes.append(cls)
         else:
             on_annotation_classes = ["foreground"]
-        if self.extract_patches:
-            patch = self.slide.slide.crop(x, y, self.p_width, self.p_height)
-            for cls in on_annotation_classes:
+        patch = self.slide.slide.crop(x, y, self.p_width, self.p_height)
+        for cls in on_annotation_classes:
+            if not self.no_patches:
                 patch.jpegsave(
-                    "{}/{}/patches/{}/{:06}_{:06}.jpg".format(self.save_to, self.filestem, cls, x, y))
-                self.save_patch_result(x, y, cls)
+                    "{}/{}/patches/{}/{:06}_{:06}.jpg".format(
+                        self.save_to, self.filestem, cls, x, y))
+            self.save_patch_result(x, y, cls)
 
     def get_patch_parallel(self, classes=False, cores=-1):
         """Run get_patch() in parallel.
@@ -380,7 +384,7 @@ class Patcher:
             cores (int): Threads to run. -1 means same as the number of cores.
         """
         for cls in classes:
-            if self.extract_patches:
+            if not self.no_patches:
                 self.verify.verify_dir(
                     "{}/{}/patches/{}".format(self.save_to, self.filestem, cls))
             if self.method == "segmentation":

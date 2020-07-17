@@ -4,4 +4,4 @@ from .annotation import Annotation as annotation
 from .rule import Rule as rule
 from .converter import Converter as converter
 
-__version__ = "0.3.1"
+__version__ = "0.4"

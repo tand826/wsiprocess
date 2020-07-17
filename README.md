@@ -21,7 +21,6 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 3. Then wsiprocess helps converting WSI + Annotation data into patches and easy-to-use annotation data.
 
 [WSIPatcher](https://github.com/tand826/WSIPatcher) will give you GUI.
-[Command Helper](https://tand826.github.io/wsiprocess_command_line_helper) will recommend commands to run.
 
 # Installation
 
@@ -109,21 +108,21 @@ patcher.get_patch_parallel(target_classes)
 ```
 
 
-### As a command line tool
+### As a command line tool (recommended)
 
 #### basic flow
 
 ```bash
-wsiprocess xxx.tiff method --annotation xxx.xml
+wsiprocess [your method] xxx.tiff --annotation xxx.xml
 ```
 
 #### Extract patches with mask of foreground area. The mask has pixels with 1 as foreground which are originally from 10 to 230 in the scale of 0-255, and pixels with 0 as background which are originally from 0 to 10 and from 230 to 255.
 
 ```bash
-wsiprocess xxx.tif none -oa 0.01 -mm 10-230 -of 0.01 -ep
+wsiprocess none xxx.tif -oa 0.01 -mm 10-230 -of 0.01 -ep
 ```
 
-- Need recommendation for choice of arguments? -> [Command Helper](https://tand826.github.io/wsiprocess_command_line_helper). This is for v0.1. Now wsiprocess has more options. Type `wsiprocess` to see options.
+- Need recommendation for choice of arguments? Type `wsiprocess -h` or `wsiprocess [your method] -h` to see options.
 
 ### As a docker command line tool (not working on)
 
@@ -274,10 +273,13 @@ pytest tests.py
 # Citation
 
 ```
-@article{wsiprocess,
-    Author = {Takumi Ando},
-    Title = {WSIPROCESS - Whole Slide Image Processing Library for Histopathological / Cytopathological Machine Learning Tasks},
-    Url = {https://github.com/tand826/wsiprocess},
-    Year = {2019}
+@misc{https://doi.org/10.5281/zenodo.3887428,
+  doi = {10.5281/ZENODO.3887428},
+  url = {https://zenodo.org/record/3887428},
+  author = {{Takumi Ando}},
+  title = {tand826/wsiprocess: version 0.4},
+  publisher = {Zenodo},
+  year = {2020},
+  copyright = {Open Access}
 }
 ```

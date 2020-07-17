@@ -19,7 +19,9 @@ class Verify:
         start_sample (bool): Whether to save sample patches on Patcher start.
         finished_sample (bool): Whether to save sample patches on Patcher
             finish.
-        extract_patches (bool): Whether to save patches when Patcher runs.
+        extract_patches (bool): [Deleted]Whether to save patches when Patcher
+            runs.
+        no_patches (bool): Whether to save patches when Patcher runs.
 
     Attributes:
         save_to (str): The root of the output directory.
@@ -29,25 +31,27 @@ class Verify:
         start_sample (bool): Whether to save sample patches on Patcher start.
         finished_sample (bool): Whether to save sample patches on Patcher
             finish.
-        extract_patches (bool): Whether to save patches when Patcher runs.
+        extract_patches (bool): [Deleted]Whether to save patches when Patcher
+            runs.
+        no_patches (bool): Whether to save patches when Patcher runs.
     """
 
     def __init__(
             self, save_to, filestem, method, start_sample,
-            finished_sample, extract_patches):
+            finished_sample, no_patches):
         self.save_to = save_to
         self.filestem = filestem
         self.method = method
         self.start_sample = start_sample
         self.finished_sample = finished_sample
-        self.extract_patches = extract_patches
+        self.no_patches = no_patches
 
     def verify_dirs(self):
         """Ensure the output directories exists for each tasks.
         """
         base_dir = Path(self.save_to)/self.filestem
         self.verify_dir(base_dir)
-        if self.method == "none":
+        if self.method == "none" and not self.no_patches:
             self.verify_dir(base_dir/"patches"/"foreground")
         if self.method == "segmentation":
             self.verify_dir(base_dir/"masks")
@@ -55,8 +59,6 @@ class Verify:
             self.verify_dir(base_dir/"start_sample")
         if self.finished_sample:
             self.verify_dir(base_dir/"finished_sample")
-        if self.extract_patches:
-            self.verify_dir(base_dir/"patches")
 
     @staticmethod
     def verify_dir(path):

@@ -11,11 +11,6 @@ class Args:
         self.base_parser = argparse.ArgumentParser(
             description="wsiprocess command line tool")
 
-    def set_wsi_arg(self):
-        self.base_parser.add_argument(
-            "wsi", type=str,
-            help="Path to the target wsi.")
-
     def set_common_args(self, parser):
         """ Common Arguments """
         parser.add_argument(
@@ -46,8 +41,16 @@ class Args:
             "-fs", "--finished_sample", action="store_true",
             help="Generate samples at the end of the process.")
         parser.add_argument(
+            "-np", "--no_patches", action="store_true",
+            help="Patcher run without extracting patches.")
+        parser.add_argument(
             "-ep", "--extract_patches", action="store_true",
-            help="Extract the patches and save them as images.")
+            help="[Not Available]Extract the patches and save them as images.")
+
+    def set_wsi_arg(self, parser):
+        parser.add_argument(
+            "wsi", type=str,
+            help="Path to the target wsi.")
 
     def add_annotation_args(self, parser, slide_is_sparse=False):
         parser.add_argument(
@@ -94,6 +97,7 @@ class Args:
         parser_none = self.method_args.add_parser(
             "none",
             help="Arguments for not specific method.")
+        self.set_wsi_arg(parser_none)
         self.add_on_foreground(parser_none)
         self.add_binarization_method(parser_none)
         self.set_common_args(parser_none)
@@ -103,6 +107,7 @@ class Args:
         parser_cls = self.method_args.add_parser(
             "classification",
             help="Arguments for classification tasks.")
+        self.set_wsi_arg(parser_cls)
         self.add_annotation_args(parser_cls)
         self.set_common_args(parser_cls)
 
@@ -111,6 +116,8 @@ class Args:
         parser_det = self.method_args.add_parser(
             "detection",
             help="Arguments for detection tasks.")
+        self.set_wsi_arg(parser_det)
+
         parser_det.add_argument(
             "-vo", "--voc_style", action="store_true",
             help="Output as VOC style.")
@@ -132,6 +139,7 @@ class Args:
             "segmentation",
             help="Arguments for segmentation tasksk."
         )
+        self.set_wsi_arg(parser_seg)
         self.add_annotation_args(parser_seg)
         self.set_common_args(parser_seg)
 
@@ -139,7 +147,6 @@ class Args:
         """ Base Parser """
         self.set_base_parser()
 
-        self.set_wsi_arg()
         self.set_method_args()
         self.set_none_args()
         self.set_classification_args()
@@ -179,7 +186,7 @@ def main(command=None):
     rule = wp.rule(args.rule) if hasattr(args, "rule") else False
     annotation = process_annotation(args, slide, rule)
 
-    if hasattr(args, "export_thumbs"):
+    if hasattr(args, "export_thumbs") and args.export_thumbs:
         thumbs_dir = args.save_to/slide.filestem/"thumbs"
         if not thumbs_dir.exists():
             thumbs_dir.mkdir(parents=True)
@@ -201,7 +208,7 @@ def main(command=None):
         offset_y=args.offset_y,
         start_sample=args.start_sample,
         finished_sample=args.finished_sample,
-        extract_patches=args.extract_patches)
+        no_patches=args.no_patches)
     patcher.get_patch_parallel(annotation.classes)
 
     if args.method == "detection":

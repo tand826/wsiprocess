@@ -45,7 +45,7 @@ class Params:
     offset_x = OFFSET_X[0]
     offset_y = OFFSET_Y[0]
     magnification = MAGNIFICATIONS[0]
-    extract_patches = True
+    no_patches = False
     voc_style = VOC_STYLE[0]
     coco_style = COCO_STYLE[0]
     yolo_style = YOLO_STYLE[0]
@@ -77,7 +77,7 @@ def cli(params):
         offset_y=params.offset_y,
         on_foreground=params.on_foreground,
         on_annotation=params.on_annotation,
-        extract_patches=params.extract_patches)
+        no_patches=params.no_patches)
     patcher.get_patch_parallel(annotation.classes)
     if params.voc_style or params.coco_style or params.yolo_style:
         converter = wp.converter(params.save_to/slide.filestem, params.save_to, params.ratio)
