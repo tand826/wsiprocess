@@ -273,9 +273,9 @@ pytest tests.py
 # Citation
 
 ```
-@misc{https://doi.org/10.5281/zenodo.3887428,
-  doi = {10.5281/ZENODO.3887428},
-  url = {https://zenodo.org/record/3887428},
+@misc{https://doi.org/10.5281/zenodo.3949409,
+  doi = {10.5281/ZENODO.3949409},
+  url = {https://zenodo.org/record/3949409},
   author = {{Takumi Ando}},
   title = {tand826/wsiprocess: version 0.4},
   publisher = {Zenodo},
