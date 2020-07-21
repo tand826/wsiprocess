@@ -13,6 +13,9 @@ from pathlib import Path
 from .verify import Verify
 
 
+difpatches = {'2019-11-27 09.33.45_036864_038912', '2019-11-27 09.33.45_034304_037376', '2019-11-27 09.33.45_056832_044544', '2019-11-27 09.33.45_063488_010752', '2019-11-27 09.33.45_035328_037376', '2019-11-27 09.33.45_044032_039936', '2019-11-27 09.33.45_037888_039424', '2019-11-27 09.33.45_062976_009728', '2019-11-27 09.33.45_033280_019968', '2019-11-27 09.33.45_038400_037888', '2019-11-27 09.33.45_052224_020480', '2019-11-27 09.33.45_017408_039424', '2019-11-27 09.33.45_034304_036864', '2019-11-27 09.33.45_044544_039936', '2019-11-27 09.33.45_047616_015872', '2019-11-27 09.33.45_066048_011776', '2019-11-27 09.33.45_054784_041984', '2019-11-27 09.33.45_016896_039936', '2019-11-27 09.33.45_042496_038400', '2019-11-27 09.33.45_021504_025088', '2019-11-27 09.33.45_046592_038912', '2019-11-27 09.33.45_041472_040448', '2019-11-27 09.33.45_048128_015872', '2019-11-27 09.33.45_015872_039936', '2019-11-27 09.33.45_048128_016384', '2019-11-27 09.33.45_044032_016896', '2019-11-27 09.33.45_035840_036864', '2019-11-27 09.33.45_054272_042496', '2019-11-27 09.33.45_035328_040960', '2019-11-27 09.33.45_027136_036864', '2019-11-27 09.33.45_035328_038912', '2019-11-27 09.33.45_033792_037376', '2019-11-27 09.33.45_016384_039936', '2019-11-27 09.33.45_034816_037376', '2019-11-27 09.33.45_036864_039424', '2019-11-27 09.33.45_037888_038400', '2019-11-27 09.33.45_049664_038912', '2019-11-27 09.33.45_036864_040448', '2019-11-27 09.33.45_036352_039424', '2019-11-27 09.33.45_013312_040960', '2019-11-27 09.33.45_050688_039936', '2019-11-27 09.33.45_028672_037888', '2019-11-27 09.33.45_044032_016384', '2019-11-27 09.33.45_033792_036864', '2019-11-27 09.33.45_036864_039936', '2019-11-27 09.33.45_013312_041472', '2019-11-27 09.33.45_064512_010752', '2019-11-27 09.33.45_052224_022016', '2019-11-27 09.33.45_035328_039424', '2019-11-27 09.33.45_038400_038912', '2019-11-27 09.33.45_063488_010240', '2019-11-27 09.33.45_015360_040960', '2019-11-27 09.33.45_032768_037888', '2019-11-27 09.33.45_041472_039424', '2019-11-27 09.33.45_014336_040960', '2019-11-27 09.33.45_027136_024576', '2019-11-27 09.33.45_035840_037376', '2019-11-27 09.33.45_032256_037376', '2019-11-27 09.33.45_030720_014336', '2019-11-27 09.33.45_015360_039936', '2019-11-27 09.33.45_061952_008704', '2019-11-27 09.33.45_037376_040960', '2019-11-27 09.33.45_037376_038400', '2019-11-27 09.33.45_037888_037376', '2019-11-27 09.33.45_043520_016896', '2019-11-27 09.33.45_060928_008192', '2019-11-27 09.33.45_019968_038912', '2019-11-27 09.33.45_037376_036864', '2019-11-27 09.33.45_048640_016896', '2019-11-27 09.33.45_033280_019456', '2019-11-27 09.33.45_021504_025600', '2019-11-27 09.33.45_063488_011264', '2019-11-27 09.33.45_064512_010240', '2019-11-27 09.33.45_043520_013312', '2019-11-27 09.33.45_036864_038400', '2019-11-27 09.33.45_045056_014336', '2019-11-27 09.33.45_036352_036864', '2019-11-27 09.33.45_057344_045056', '2019-11-27 09.33.45_007168_018944', '2019-11-27 09.33.45_045568_009216', '2019-11-27 09.33.45_036352_037376', '2019-11-27 09.33.45_054272_041984', '2019-11-27 09.33.45_020480_038912', '2019-11-27 09.33.45_041984_039424', '2019-11-27 09.33.45_007168_018432', '2019-11-27 09.33.45_049664_039936', '2019-11-27 09.33.45_035840_039936', '2019-11-27 09.33.45_014336_041472', '2019-11-27 09.33.45_026112_024064', '2019-11-27 09.33.45_034816_037888', '2019-11-27 09.33.45_057344_044032', '2019-11-27 09.33.45_037376_037888', '2019-11-27 09.33.45_030720_013824', '2019-11-27 09.33.45_043520_016384', '2019-11-27 09.33.45_038400_039424', '2019-11-27 09.33.45_045056_039936', '2019-11-27 09.33.45_037376_037376', '2019-11-27 09.33.45_021504_038912', '2019-11-27 09.33.45_049152_015872', '2019-11-27 09.33.45_038400_038400', '2019-11-27 09.33.45_035840_039424', '2019-11-27 09.33.45_005120_018432', '2019-11-27 09.33.45_018432_025088', '2019-11-27 09.33.45_026624_037376', '2019-11-27 09.33.45_029696_022016', '2019-11-27 09.33.45_040960_039424', '2019-11-27 09.33.45_037376_039936', '2019-11-27 09.33.45_023552_037376', '2019-11-27 09.33.45_036352_037888', '2019-11-27 09.33.45_036864_037376', '2019-11-27 09.33.45_025600_025088', '2019-11-27 09.33.45_046592_039424', '2019-11-27 09.33.45_039936_038912', '2019-11-27 09.33.45_035840_038912', '2019-11-27 09.33.45_025600_037888', '2019-11-27 09.33.45_030720_019968', '2019-11-27 09.33.45_049152_039424', '2019-11-27 09.33.45_060928_008704', '2019-11-27 09.33.45_033280_036864', '2019-11-27 09.33.45_037376_040448', '2019-11-27 09.33.45_023552_037888', '2019-11-27 09.33.45_048640_038912', '2019-11-27 09.33.45_050176_039936', '2019-11-27 09.33.45_053760_042496', '2019-11-27 09.33.45_053248_041472', '2019-11-27 09.33.45_065024_009216', '2019-11-27 09.33.45_049152_038912', '2019-11-27 09.33.45_036864_036864', '2019-11-27 09.33.45_035328_036864', '2019-11-27 09.33.45_031744_013312', '2019-11-27 09.33.45_029184_036864', '2019-11-27 09.33.45_036864_037888', '2019-11-27 09.33.45_025600_037376', '2019-11-27 09.33.45_024576_037376', '2019-11-27 09.33.45_042496_040448', '2019-11-27 09.33.45_037376_038912', '2019-11-27 09.33.45_033280_020480', '2019-11-27 09.33.45_032768_011264', '2019-11-27 09.33.45_037376_039424', '2019-11-27 09.33.45_036352_038400'}
+
+
 class Patcher:
     """Patcher object.
 
@@ -225,43 +228,13 @@ class Patcher:
                     coords[idx] = self.to_bb(coord)
             coords = np.array(coords)
 
-            bblefts = np.min(coords, axis=1)[:, 0]
-            bbtops = np.min(coords, axis=1)[:, 1]
-            bbrights = np.max(coords, axis=1)[:, 0]
-            bbbottoms = np.max(coords, axis=1)[:, 1]
+            idx_of_bb_on_patch = self.corner_on_patch(coords, x, y)
+            idx_of_bb_on_patch += self.side_on_patch(coords, x, y)
+            idx_of_bb_on_patch += self.annotation_cover_patch(coords, x, y)
 
-            patch_left = x
-            patch_right = x + self.p_width
-            patch_top = y
-            patch_bottom = y + self.p_height
+            idx_of_bb_on_patch = list(set(idx_of_bb_on_patch))
 
-            bbleft_right_of_patch_left = set(
-                np.where(bblefts >= patch_left)[0])
-            bbleft_left_of_patch_right = set(
-                np.where(bblefts <= patch_right)[0])
-            bbright_right_of_patch_left = set(
-                np.where(bbrights >= patch_left)[0])
-            bbright_left_of_patch_right = set(
-                np.where(bbrights <= patch_right)[0])
-            bbtop_below_patch_top = set(np.where(bbtops >= patch_top)[0])
-            bbtop_above_patch_bottom = set(np.where(bbtops <= patch_bottom)[0])
-            bbbottom_below_patch_top = set(np.where(bbbottoms >= patch_top)[0])
-            bbbottom_above_patch_bottom = set(
-                np.where(bbbottoms <= patch_bottom)[0])
-
-            bbleft_on_patch = bbleft_right_of_patch_left & bbleft_left_of_patch_right
-            bbright_on_patch = bbright_right_of_patch_left & bbright_left_of_patch_right
-            bbtop_on_patch = bbtop_above_patch_bottom & bbtop_below_patch_top
-            bbbottom_on_patch = bbbottom_above_patch_bottom & bbbottom_below_patch_top
-
-            bb_lefttop_on_patch = bbleft_on_patch & bbtop_on_patch
-            bb_leftbottom_on_patch = bbleft_on_patch & bbbottom_on_patch
-            bb_righttop_on_patch = bbright_on_patch & bbtop_on_patch
-            bb_rightbottom_on_patch = bbright_on_patch & bbbottom_on_patch
-
-            idx_of_bb_on_patch = bb_lefttop_on_patch | bb_leftbottom_on_patch | bb_righttop_on_patch | bb_rightbottom_on_patch
-
-            bbs_raw = coords[list(idx_of_bb_on_patch)]
+            bbs_raw = coords[idx_of_bb_on_patch]
             bbs = []
             for bb_raw in bbs_raw:
                 x1 = bb_raw[:, 0].min()
@@ -279,6 +252,140 @@ class Patcher:
                       "class": cls}
                 bbs.append(bb)
             return bbs
+
+    def corner_on_patch(self, coords, x, y):
+        """Check if at least one of the corners is on the patch.
+
+        Args:
+            coords (np.array) : Coordinations of annotations.
+            px (int) : X coordinate of left top corner of the patch.
+            py (int) : Y coordinate of left top corner of the patch.
+
+        Returns:
+            idx_of_bb_on_patch (list): List of np.int64s which are the indices
+                of bounding boxes on the patch.
+        """
+        bblefts = np.min(coords, axis=1)[:, 0]
+        bbtops = np.min(coords, axis=1)[:, 1]
+        bbrights = np.max(coords, axis=1)[:, 0]
+        bbbottoms = np.max(coords, axis=1)[:, 1]
+
+        patch_left = x
+        patch_right = x + self.p_width
+        patch_top = y
+        patch_bottom = y + self.p_height
+
+        # topleft corner is on patch
+        topleft_on_patch = (patch_left <= bblefts) &\
+                           (bblefts <= patch_right) &\
+                           (patch_top <= bbtops) &\
+                           (bbtops <= patch_bottom)
+        topright_on_patch = (patch_left <= bbrights) &\
+                            (bbrights <= patch_right) &\
+                            (patch_top <= bbtops)
+        bottomleft_on_patch = (patch_left <= bblefts) &\
+                              (bblefts <= patch_right) &\
+                              (patch_top <= bbbottoms) &\
+                              (bbbottoms <= patch_bottom)
+        bottomright_on_patch = (patch_left <= bbrights) &\
+                               (bbrights <= patch_right) &\
+                               (patch_top <= bbbottoms) &\
+                               (bbbottoms <= patch_bottom)
+
+        idx_of_bb_on_patch = topleft_on_patch | topright_on_patch | \
+            bottomleft_on_patch | bottomright_on_patch
+        idx_of_bb_on_patch = np.where(idx_of_bb_on_patch)[0]
+        return list(idx_of_bb_on_patch)
+
+    def side_on_patch(self, coords, x, y):
+        """Check if at least one of the side is on the patch.
+
+        Args:
+            coords (np.array) : Coordinations of annotations.
+            px (int) : X coordinate of left top corner of the patch.
+            py (int) : Y coordinate of left top corner of the patch.
+
+        Returns:
+            idx_of_bb_on_patch (list): List of np.int64s which are the indices
+                of bounding boxes on the patch.
+        """
+        bblefts = np.min(coords, axis=1)[:, 0]
+        bbtops = np.min(coords, axis=1)[:, 1]
+        bbrights = np.max(coords, axis=1)[:, 0]
+        bbbottoms = np.max(coords, axis=1)[:, 1]
+
+        patch_left = x
+        patch_right = x + self.p_width
+        patch_top = y
+        patch_bottom = y + self.p_height
+
+        # One side is on the patch
+        leftside_on_patch = (patch_left <= bblefts) &\
+                            (bblefts <= patch_right) &\
+                            (bbtops <= patch_top) &\
+                            (patch_bottom <= bbbottoms)
+        rightside_on_patch = (patch_left <= bbrights) &\
+                             (bbrights <= patch_right) &\
+                             (bbtops <= patch_top) &\
+                             (patch_bottom <= bbbottoms)
+        topside_on_patch = (bblefts <= patch_left) &\
+                           (patch_right <= bbrights) &\
+                           (patch_top <= bbtops) &\
+                           (bbtops <= patch_bottom)
+        bottomside_on_patch = (bblefts <= patch_left) &\
+                              (patch_right <= bbrights) &\
+                              (patch_top <= bbbottoms) &\
+                              (bbbottoms <= patch_bottom)
+
+        # Two side is on the patch
+        leftrightside_on_patch = (patch_left <= bblefts) &\
+                                 (bblefts <= patch_right) &\
+                                 (patch_left <= bbrights) &\
+                                 (bbrights <= patch_right) &\
+                                 (patch_top <= bbtops) &\
+                                 (bbbottoms <= patch_bottom)
+        topbottomside_on_patch = (bblefts <= patch_left) &\
+                                 (patch_right <= bbrights) &\
+                                 (patch_top <= bbtops) &\
+                                 (bbtops <= patch_bottom) &\
+                                 (patch_top <= bbbottoms) &\
+                                 (bbbottoms <= patch_bottom)
+
+        idx_of_bb_on_patch = leftside_on_patch | rightside_on_patch | \
+            topside_on_patch | bottomside_on_patch | \
+            leftrightside_on_patch | topbottomside_on_patch
+        idx_of_bb_on_patch = np.where(idx_of_bb_on_patch)[0]
+        idx_of_bb_on_patch = list(set(idx_of_bb_on_patch))
+        return list(idx_of_bb_on_patch)
+
+    def annotation_cover_patch(self, coords, x, y):
+        """Check if the annotation is covering the whole patch.
+
+        Args:
+            coords (np.array) : Coordinations of annotations.
+            px (int) : X coordinate of left top corner of the patch.
+            py (int) : Y coordinate of left top corner of the patch.
+
+        Returns:
+            idx_of_bb_on_patch (list): List of np.int64s which are the indices
+                of bounding boxes on the patch.
+        """
+        bblefts = np.min(coords, axis=1)[:, 0]
+        bbtops = np.min(coords, axis=1)[:, 1]
+        bbrights = np.max(coords, axis=1)[:, 0]
+        bbbottoms = np.max(coords, axis=1)[:, 1]
+
+        patch_left = x
+        patch_right = x + self.p_width
+        patch_top = y
+        patch_bottom = y + self.p_height
+
+        idx_of_bb_on_patch = (bblefts < patch_left) &\
+                             (bbrights > patch_right) &\
+                             (bbtops < patch_top) &\
+                             (bbbottoms > patch_bottom)
+        idx_of_bb_on_patch = np.where(idx_of_bb_on_patch)[0]
+        return list(idx_of_bb_on_patch)
 
     def to_bb(self, coord):
         """Convert coordinates to voc coordinates.
