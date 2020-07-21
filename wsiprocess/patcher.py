@@ -194,6 +194,25 @@ class Patcher:
             raise NotImplementedError
 
     def find_bbs(self, x, y, cls):
+        """Find bounding boxes which are on the patch.
+
+        Bounding boxes with one of its corners on the patch is on the patch.
+            ex : annotation.mask_coords["benign"][0]
+             = [small_x, small_y, large_x, large_y]
+             = [bbleft, bbtop, bbright, bbbottom]
+
+        TODO:
+            This function can not handle like the case that the annotation is
+            covering the whole area of the patch or the case that one of the
+            side of annotation is striding over the patch.
+
+        Args:
+            x (int): X-axis offset of patch.
+            y (int): Y-axis offset of patch.
+            cls (str): Class of the patch or the bounding box or the segmented
+                area.
+
+        """
         if not self.patch_on_annotation(cls, x, y):
             return []
         else:
@@ -210,11 +229,6 @@ class Patcher:
             bbtops = np.min(coords, axis=1)[:, 1]
             bbrights = np.max(coords, axis=1)[:, 0]
             bbbottoms = np.max(coords, axis=1)[:, 1]
-
-            # ex : annotation.mask_coords["benign"][0]
-            #  = [small_x, small_y, large_x, large_y]
-            #  = [bbleft, bbtop, bbright, bbbottom]
-            # Bounding boxes with one of its corners on the patch is on the patch.
 
             patch_left = x
             patch_right = x + self.p_width
@@ -320,6 +334,14 @@ class Patcher:
             masks.append(mask)
             return masks
 
+    def remove_dup_in_results(self):
+        """Remove duplicate results in self.result["results"]
+        """
+        results = set()
+        for result in self.result["result"]:
+            results.add(json.dumps(result))
+        self.result["result"] = [json.loads(res) for res in list(results)]
+
     def save_results(self):
         """Save the extraction results.
 
@@ -343,6 +365,8 @@ class Patcher:
         self.result["on_annotation"] = self.on_annotation
         self.result["save_to"] = str(Path(self.save_to).absolute())
         self.result["classes"] = sorted(self.classes)
+
+        self.remove_dup_in_results()
 
         with open("{}/{}/results.json".format(self.save_to, self.filestem), "w") as f:
             json.dump(self.result, f, indent=4)

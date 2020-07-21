@@ -62,6 +62,7 @@ class ToYOLOConverter:
             self.result_wp = json.load(f)
         self.classes = self.result_wp["classes"]
         self.filestem = Path(self.result_wp['slide']).stem
+        self.image_paths = {cls: list() for cls in self.classes}
 
     def makedirs(self):
         if not self.save_to.exists():
