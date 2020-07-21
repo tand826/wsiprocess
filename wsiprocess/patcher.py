@@ -275,14 +275,14 @@ class Patcher:
         patch_top = y
         patch_bottom = y + self.p_height
 
-        # topleft corner is on patch
         topleft_on_patch = (patch_left <= bblefts) &\
                            (bblefts <= patch_right) &\
                            (patch_top <= bbtops) &\
                            (bbtops <= patch_bottom)
         topright_on_patch = (patch_left <= bbrights) &\
                             (bbrights <= patch_right) &\
-                            (patch_top <= bbtops)
+                            (patch_top <= bbtops) &\
+                            (bbtops <= patch_top)
         bottomleft_on_patch = (patch_left <= bblefts) &\
                               (bblefts <= patch_right) &\
                               (patch_top <= bbbottoms) &\
@@ -342,8 +342,8 @@ class Patcher:
                                  (bblefts <= patch_right) &\
                                  (patch_left <= bbrights) &\
                                  (bbrights <= patch_right) &\
-                                 (patch_top <= bbtops) &\
-                                 (bbbottoms <= patch_bottom)
+                                 (bbtops <= patch_top) &\
+                                 (patch_bottom <= bbbottoms)
         topbottomside_on_patch = (bblefts <= patch_left) &\
                                  (patch_right <= bbrights) &\
                                  (patch_top <= bbtops) &\
@@ -380,10 +380,10 @@ class Patcher:
         patch_top = y
         patch_bottom = y + self.p_height
 
-        idx_of_bb_on_patch = (bblefts < patch_left) &\
-                             (bbrights > patch_right) &\
-                             (bbtops < patch_top) &\
-                             (bbbottoms > patch_bottom)
+        idx_of_bb_on_patch = (bblefts <= patch_left) &\
+                             (patch_right <= bbrights) &\
+                             (bbtops <= patch_top) &\
+                             (patch_bottom <= bbbottoms)
         idx_of_bb_on_patch = np.where(idx_of_bb_on_patch)[0]
         return list(idx_of_bb_on_patch)
 
