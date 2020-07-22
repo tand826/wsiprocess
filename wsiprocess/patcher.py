@@ -233,6 +233,7 @@ class Patcher:
             idx_of_bb_on_patch += self.annotation_cover_patch(coords, x, y)
 
             idx_of_bb_on_patch = list(set(idx_of_bb_on_patch))
+            assert idx_of_bb_on_patch, f"[x={x}, y={y}] This patch has annotated area."
 
             bbs_raw = coords[idx_of_bb_on_patch]
             bbs = []
@@ -275,24 +276,17 @@ class Patcher:
         patch_top = y
         patch_bottom = y + self.p_height
 
-        topleft_on_patch = (patch_left <= bblefts) &\
-                           (bblefts <= patch_right) &\
-                           (patch_top <= bbtops) &\
-                           (bbtops <= patch_bottom)
-        topright_on_patch = (patch_left <= bbrights) &\
-                            (bbrights <= patch_right) &\
-                            (patch_top <= bbtops) &\
-                            (bbtops <= patch_top)
-        bottomleft_on_patch = (patch_left <= bblefts) &\
-                              (bblefts <= patch_right) &\
-                              (patch_top <= bbbottoms) &\
-                              (bbbottoms <= patch_bottom)
-        bottomright_on_patch = (patch_left <= bbrights) &\
-                               (bbrights <= patch_right) &\
-                               (patch_top <= bbbottoms) &\
-                               (bbbottoms <= patch_bottom)
+        left_on_patch = (patch_left <= bblefts) & (bblefts <= patch_right)
+        right_on_patch = (patch_left <= bbrights) & (bbrights <= patch_right)
+        top_on_patch = (patch_top <= bbtops) & (bbtops <= patch_bottom)
+        bottom_on_patch = (patch_top <= bbbottoms) & (bbbottoms <= patch_bottom)
 
-        idx_of_bb_on_patch = topleft_on_patch | topright_on_patch | \
+        topleft_on_patch = left_on_patch & top_on_patch
+        topright_on_patch = right_on_patch & top_on_patch
+        bottomleft_on_patch = left_on_patch & bottom_on_patch
+        bottomright_on_patch = right_on_patch & bottom_on_patch
+
+        idx_of_bb_on_patch = topleft_on_patch | topright_on_patch |\
             bottomleft_on_patch | bottomright_on_patch
         idx_of_bb_on_patch = np.where(idx_of_bb_on_patch)[0]
         return list(idx_of_bb_on_patch)
@@ -319,37 +313,34 @@ class Patcher:
         patch_top = y
         patch_bottom = y + self.p_height
 
+        left_on_patch = (patch_left <= bblefts) & (bblefts <= patch_right)
+        right_on_patch = (patch_left <= bbrights) & (bbrights <= patch_right)
+        top_on_patch = (patch_top <= bbtops) & (bbtops <= patch_bottom)
+        bottom_on_patch = (patch_top <= bbbottoms) & (bbbottoms <= patch_bottom)
+
         # One side is on the patch
-        leftside_on_patch = (patch_left <= bblefts) &\
-                            (bblefts <= patch_right) &\
+        leftside_on_patch = (left_on_patch) &\
                             (bbtops <= patch_top) &\
                             (patch_bottom <= bbbottoms)
-        rightside_on_patch = (patch_left <= bbrights) &\
-                             (bbrights <= patch_right) &\
+        rightside_on_patch = (right_on_patch) &\
                              (bbtops <= patch_top) &\
                              (patch_bottom <= bbbottoms)
         topside_on_patch = (bblefts <= patch_left) &\
                            (patch_right <= bbrights) &\
-                           (patch_top <= bbtops) &\
-                           (bbtops <= patch_bottom)
+                           (top_on_patch)
         bottomside_on_patch = (bblefts <= patch_left) &\
                               (patch_right <= bbrights) &\
-                              (patch_top <= bbbottoms) &\
-                              (bbbottoms <= patch_bottom)
+                              (bottom_on_patch)
 
-        # Two side is on the patch
-        leftrightside_on_patch = (patch_left <= bblefts) &\
-                                 (bblefts <= patch_right) &\
-                                 (patch_left <= bbrights) &\
-                                 (bbrights <= patch_right) &\
+        # Two sides are on the patch
+        leftrightside_on_patch = (left_on_patch) &\
+                                 (right_on_patch) &\
                                  (bbtops <= patch_top) &\
                                  (patch_bottom <= bbbottoms)
         topbottomside_on_patch = (bblefts <= patch_left) &\
                                  (patch_right <= bbrights) &\
-                                 (patch_top <= bbtops) &\
-                                 (bbtops <= patch_bottom) &\
-                                 (patch_top <= bbbottoms) &\
-                                 (bbbottoms <= patch_bottom)
+                                 (top_on_patch) &\
+                                 (bottom_on_patch)
 
         idx_of_bb_on_patch = leftside_on_patch | rightside_on_patch | \
             topside_on_patch | bottomside_on_patch | \
