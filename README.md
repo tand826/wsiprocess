@@ -106,6 +106,27 @@ annotation.make_masks(slide, rule)
 annotation.export_thumb_masks("xxx/masks")
 ```
 
+#### Make foreground mask with custom function and extract only the patches of benign for classification task.
+
+```python
+import numpy as np
+def example_function(thumb_gray):
+    assert len(thumb_gray.shape) == 2
+    assert isinstance(thumb_gray, np.ndarray)
+    thresh = 100
+    thumb_gray[thumb_gray > thresh] = 1
+    thumb_gray[thumb_gray <= thresh] = 0
+    assert np.sum((thumb_gray == 0) | (thumb_gray == 1)) == len(thumb_gray)
+    return thumb_gray
+
+import wsiprocess as wp
+slide = wp.slide("xxx.tiff")
+annotation = wp.annotation("xxx.xml")
+annotation.make_masks(slide, foreground=example_function)
+patcher = wp.patcher(slide, "classification", annotation)
+patcher.get_patch_parallel(["benign"])
+```
+
 #### Load mask data from image, and extract patches.
 
 ```python
