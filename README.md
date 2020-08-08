@@ -28,7 +28,23 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 
 1. Install [libvips](https://libvips.github.io/libvips/)
 
-   - Linux - `apt install libvips`
+  - Linux
+
+    1. Install the following packages with apt.
+
+        ```
+        build-essential pkg-config libglib2.0-dev libexpat1-dev libtiff5-dev libjpeg-turbo8-dev libgsf-1-dev openslide-tools libpng-dev
+        ```
+    
+    2. Install libvips from git.
+    
+        ```
+        VERSION=8.9.2
+        wget https://github.com/libvips/libvips/releases/download/v${VERSION}/vips-vips-${VERSION}.tar.gz && tar xvfz vips-${VERSION}.tar.gz
+        cd vips-${VERSION}
+        ./configure && make && sudo make install && sudo ldconfig
+        ```
+
    - MacOS - `brew install vips`
    - Windows - Install tarball from [here](https://github.com/libvips/build-win64)
 
@@ -52,6 +68,8 @@ conda install -c tand826 wsiprocess
 # Example
 
 ### As a python module
+
+- see [wsiprocess/cli.py](https://github.com/tand826/wsiprocess/blob/master/wsiprocess/cli.py) to check the flow.
 
 #### Basic Usage
 
@@ -107,19 +125,48 @@ patcher = wp.patcher(slide, "classification", annotation=annotation)
 patcher.get_patch_parallel(target_classes)
 ```
 
-
 ### As a command line tool (recommended)
 
 #### basic flow
 
 ```bash
-wsiprocess [your method] xxx.tiff --annotation xxx.xml
+wsiprocess [your method] xxx.tiff xxx.xml
 ```
 
-#### Extract patches with mask of foreground area. The mask has pixels with 1 as foreground which are originally from 10 to 230 in the scale of 0-255, and pixels with 0 as background which are originally from 0 to 10 and from 230 to 255.
+#### Extract patches of width = height = 256pixels for classification with thumbnails of the annotation results.
 
 ```bash
-wsiprocess none xxx.tif -oa 0.01 -mm 10-230 -of 0.01 -ep
+wsiprocess classification xxx.tiff xxx.xml -et
+```
+
+#### Extract patches for classification task on condition that each patch has to be on the annotated area at least 50%, and on the foreground area at least 80%. (If the patch width = height = 256, 256*256*0.5=32768pixels of the patch are on the annotated area.)
+
+```bash
+wsiprocess classification xxx.tiff xxx.xml -et -oa 0.5 -of 0.8
+```
+
+#### Extract patches and coco/voc/yolo styled detection annotation data on condition that each patch has to be on the annotated area at least 1% and on the foreground area at least 1%.
+
+```bash
+wsiprocess detection xxx.tiff xxx.xml -oa 0.01 -of 0.01 -co -vo -yo
+```
+
+#### Extract patches and masks for segmentation task.
+
+```bash
+wsiprocess segmentation xxx.tiff xxx.xml
+```
+
+#### Extract patches with mask of foreground area for evaluation or inference of models. The mask has pixels with 1 as foreground which are originally from 10 to 230 in the scale of 0-255, and pixels with 0 as background which are originally from 0 to 10 and from 230 to 255.
+
+```bash
+wsiprocess none xxx.tif -oa 0.01 -mm 10-230 -of 0.01
+```
+
+#### Just to check the thumbnails to see where the annotations should be.
+
+```bash
+wsiprocess classification xxx.tif -np -et
 ```
 
 - Need recommendation for choice of arguments? Type `wsiprocess -h` or `wsiprocess [your method] -h` to see options.
@@ -134,21 +181,19 @@ docker build . -t wsiprocess_image
 docker run --name wsiprocess_container -v [your files directory]:/data -it -d wsiprocess_image [commands] etc.
 ```
 
-see Command Helper for commands
-
 ### Convert to VOC / COCO / YOLO style format
 
 
 ```bash
 # If already extracted patches...
 # to COCO format
-python wsiprocess/converters/wsiprocess_to_coco.py [root of wsiprocess] -s [directory to save to] -r [ratio of train, val and test]
+python wsiprocess/converters/wsiprocess_to_coco.py [directory containing results.json] -s [directory to save to] -r [ratio of train, val and test]
 
 # to VOC foramt
-python wsiprocess/converters/wsiprocess_to_voc.py [root of wsiprocess] -s [directory to save to] -r [ratio of train, val and test]
+python wsiprocess/converters/wsiprocess_to_voc.py [directory containing results.json] -s [directory to save to] -r [ratio of train, val and test]
 
 # to YOLO format
-python wsiprocess/converters/wsiprocess_to_yolo.py [root of wsiprocess] -s [directory to save to] -r [ratio of train, val and test]
+python wsiprocess/converters/wsiprocess_to_yolo.py [directory containing results.json] -s [directory to save to] -r [ratio of train, val and test]
 
 ```
 
@@ -255,7 +300,7 @@ wsiprocess xxx.tiff method --annotation xxx.xml -vo -co -yo
 ### Download sample WSI
 
 ```
-curl -O -C - http://openslide.cs.cmu.edu/download/openslide-testdata/CMU-1.ndpi
+curl -O -C - https://data.cytomine.coop/open/openslide/hamamatsu-ndpi/CMU-1.ndpi
 ```
 
 ### Make random annotation
