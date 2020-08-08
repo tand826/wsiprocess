@@ -248,6 +248,8 @@ class Annotation:
         thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
         if method == "minmax":
             mask = self._minmax_mask(thumb_gray, min_, max_)
+        elif not isinstance(method, str):
+            mask = method(thumb_gray)
         else:
             mask = self._otsu_method_mask(thumb_gray)
         self.masks["foreground"] = cv2.resize(mask, (slide.width,
