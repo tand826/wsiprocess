@@ -2,7 +2,6 @@ joblib
 lxml
 numpy
 opencv-python
-pathlib
 pillow
 pyvips
 tqdm
