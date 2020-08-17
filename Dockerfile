@@ -8,7 +8,7 @@ RUN wget https://github.com/libvips/libvips/releases/download/v${VIPSVERSION}/vi
 RUN cd vips-${VIPSVERSION} && ./configure && make && make install && ldconfig
 
 # library for opencv
-RUN apt install -y libsm6
+RUN apt install -y libsm6 libgl-dev
 
 # pip packages for wsiprocess
 ADD ./ $HOME
