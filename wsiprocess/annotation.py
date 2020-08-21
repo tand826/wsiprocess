@@ -227,8 +227,8 @@ class Annotation:
 
         Args:
             slide (wsiprocess.slide.Slide): Slide object.
-            size (int, optional): Size of foreground mask on calculating with
-                the Otsu Thresholding.
+            size (int, or function, optional): Size of foreground mask on
+                calculating with the Otsu Thresholding.
             method (str, optional): Binarization method. As default, calculates
                 with Otsu Thresholding.
             min (int, optional): Used if method is "minmax". Annotation object
@@ -237,7 +237,7 @@ class Annotation:
             max (int, optional): Used if method is "minmax". Annotation object
                 defines foreground as the pixels with the value between "min"
                 and "max".
-        
+
         TODO:
             Fix method arg.
         """
@@ -251,7 +251,7 @@ class Annotation:
         thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
         if method == "minmax":
             mask = self._minmax_mask(thumb_gray, min_, max_)
-        elif not isinstance(method, str):
+        elif callable(method):
             mask = method(thumb_gray)
         else:
             mask = self._otsu_method_mask(thumb_gray)
