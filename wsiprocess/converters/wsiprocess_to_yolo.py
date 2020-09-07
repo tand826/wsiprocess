@@ -12,6 +12,7 @@ import random
 from pathlib import Path
 import json
 import shutil
+from collections import defaultdict
 
 """
 'root' should be like below
@@ -37,7 +38,7 @@ class ToYOLOConverter:
         else:
             self.getargs()
         self.parse_ratio()
-        self.image_paths = {}
+        self.image_paths = defaultdict(list)
         self.read_result_file()
         self.makedirs()
 
@@ -78,14 +79,19 @@ class ToYOLOConverter:
         self.test_is_available = len(self.ratio_arg.split(":")) == 3
         if self.test_is_available:
             train, val, test = map(int, self.ratio_arg.split(":"))
-            self.ratio = {"train": train/(train+val+test), "val": val/(train+val+test), "test": test/(train+val+test)}
+            self.ratio = {
+                "train": train/(train+val+test),
+                "val": val/(train+val+test),
+                "test": test/(train+val+test)
+            }
         else:
             train, val = map(int, self.ratio_arg.split(":"))
             self.ratio = {"train": train/(train+val), "val": val/(train+val)}
 
     def get_image_paths(self):
         for cls in self.classes:
-            self.image_paths[cls] = [str(i.resolve()) for i in (self.root/"patches"/cls).glob("*.jpg")]
+            for path in (self.root/"patches"/cls).glob("*.jpg"):
+                self.image_paths[cls].append(path)
             random.shuffle(self.image_paths[cls])
 
     def make_images(self):
@@ -95,10 +101,13 @@ class ToYOLOConverter:
                 shutil.copy(path, self.save_to/"images"/filename)
 
     def make_labels(self):
+        label_dir = self.save_to/"labels"
         patch_width = self.result_wp["patch_width"]
         patch_height = self.result_wp["patch_height"]
         for patch in self.result_wp["result"]:
             bbs = []
+            x = patch['x']
+            y = patch['y']
             for bb in patch["bbs"]:
                 label = self.classes.index(bb["class"])
                 xcenter = (bb["x"] + bb["w"]/2) / patch_width
@@ -106,15 +115,17 @@ class ToYOLOConverter:
                 width = bb["w"] / patch_width
                 height = bb["h"] / patch_height
                 bbs.append(f"{label} {xcenter} {ycenter} {width} {height}\n")
-            with open(self.save_to/"labels"/f"{self.filestem}_{patch['x']:06}_{patch['y']:06}.txt", "w") as f:
+            label_filename = f"{self.filestem}_{x:06}_{y:06}.txt"
+            with open(label_dir/label_filename, "w") as f:
                 f.writelines(bbs)
         with open(self.save_to/"yolo.names", "w") as f:
             f.write("\n".join(self.classes))
 
     def make_paths(self):
         """
-        If ratio has only two parameters like "8:2", trainval.txt and test.txt would be generated.
-        If ratio has 3 params like "8:1:1", trainval.txt, val.txt and text.txt would be generated.
+        If ratio has only two parameters like "8:2", trainval.txt and test.txt
+        would be generated. If ratio has 3 params like "8:1:1", trainval.txt,
+        val.txt and text.txt would be generated.
         """
         train_path = f"{self.save_to}/paths/train.txt"
         test_path = f"{self.save_to}/paths/test.txt"
@@ -122,26 +133,25 @@ class ToYOLOConverter:
             val_path = f"{self.save_to}/paths/val.txt"
 
         for cls in self.classes:
+            train_count = int(len(self.image_paths[cls]) * self.ratio["train"])
             if self.test_is_available:
-                train_count = int(len(self.image_paths[cls]) * self.ratio["train"])
                 val_count = int(len(self.image_paths[cls]) * self.ratio["val"])
+                val_count_end = train_count+val_count
 
                 with open(train_path, "a") as f:
                     paths = self.image_paths[cls][:train_count]
                     renamed = [self.rename_path(path) for path in paths]
                     f.writelines(renamed)
                 with open(val_path, "a") as f:
-                    paths = self.image_paths[cls][train_count:train_count+val_count]
+                    paths = self.image_paths[cls][train_count:val_count_end]
                     renamed = [self.rename_path(path) for path in paths]
                     f.writelines(renamed)
                 with open(test_path, "a") as f:
-                    paths = self.image_paths[cls][train_count+val_count:]
+                    paths = self.image_paths[cls][val_count_end:]
                     renamed = [self.rename_path(path) for path in paths]
                     f.writelines(renamed)
 
             else:
-                train_count = int(len(self.image_paths[cls]) * self.ratio["train"])
-
                 with open(train_path, "a") as f:
                     paths = self.image_paths[cls][:train_count]
                     renamed = [self.rename_path(path) for path in paths]
@@ -152,7 +162,8 @@ class ToYOLOConverter:
                     f.writelines(renamed)
 
     def rename_path(self, path):
-        return str(self.save_to/"images"/f"{self.filestem}_{Path(path).name}\n")
+        images_dir = self.save_to/"images"
+        return str(images_dir/f"{self.filestem}_{Path(path).name}\n")
 
 
 if __name__ == '__main__':

@@ -14,7 +14,6 @@ import random
 import json
 from datetime import datetime
 from pathlib import Path
-from tqdm import tqdm
 
 
 class ToCOCOConverter:
@@ -40,11 +39,12 @@ class ToCOCOConverter:
 
     def getargs(self):
         parser = argparse.ArgumentParser()
-        parser.add_argument("root",
-                            type=Path,
-                            help="Parent of results.json located")
+        parser.add_argument(
+            "root", type=Path, help="Parent of results.json located")
         parser.add_argument("-s", "--save_to", default="./wp/coco", type=Path)
-        parser.add_argument("-r", "--ratio", default="8:1:1", help="Ratio of train and val and test ie. 8:1:1")
+        parser.add_argument(
+            "-r", "--ratio", default="8:1:1",
+            help="Ratio of train and val and test ie. 8:1:1")
         args = parser.parse_args()
         self.root = args.root
         self.save_to = args.save_to
@@ -71,7 +71,10 @@ class ToCOCOConverter:
         self.test_is_available = len(self.ratio_arg.split(":")) == 3
         if self.test_is_available:
             train, val, test = map(int, self.ratio_arg.split(":"))
-            self.ratio = {"train": train/(train+val+test), "val": val/(train+val+test), "test": test/(train+val+test)}
+            self.ratio = {
+                "train": train/(train+val+test),
+                "val": val/(train+val+test),
+                "test": test/(train+val+test)}
         else:
             train, val = map(int, self.ratio_arg.split(":"))
             self.ratio = {"train": train/(train+val), "val": val/(train+val)}
@@ -83,14 +86,15 @@ class ToCOCOConverter:
         if self.test_is_available:
             self.test_paths = []
         for cls in classes:
-            image_paths = list((self.root/"patches").glob("{}/*".format(cls)))
+            image_paths = list((self.root/"patches").glob(f"{cls}/*"))
             random.shuffle(image_paths)
 
             train_count = int(len(image_paths)*self.ratio["train"])
             self.train_paths += image_paths[:train_count]
             if self.test_is_available:
                 val_count = int(len(image_paths)*self.ratio["val"])
-                self.val_paths += image_paths[train_count:train_count+val_count]
+                val_count_end = train_count + val_count
+                self.val_paths += image_paths[train_count:val_count_end]
                 self.test_paths += image_paths[train_count+val_count:]
             else:
                 self.val_paths += image_paths[train_count:]
@@ -107,14 +111,15 @@ class ToCOCOConverter:
             paths = self.val_paths
         elif phase == "test":
             paths = self.test_paths
-        with tqdm(paths, desc="{} imgs [{}]".format(phase, cls)) as t:
-            for image_path in t:
-                if not (self.save_to/"{}2014".format(phase)/image_path.name).exists():
-                    shutil.copy(image_path, self.save_to/"{}2014".format(phase))
-                    # (self.save_to/"{}2014".format(phase)/image_path.name).symlink_to(image_path)
+        for image_path in paths:
+            img_name = image_path.name
+            if not (self.save_to/f"{phase}2014"/img_name).exists():
+                shutil.copy(image_path, self.save_to/f"{phase}2014")
 
     def get_save_as(self):
-        if not (self.save_to/"annotations"/"instances_train2014.json").exists():
+        now = datetime.now().strftime('%Y/%m/%d_%H:%M:%S')
+        train_path = self.save_to/"annotations"/"instances_train2014.json"
+        if not train_path.exists():
             self.train2014 = {
                 "info": {
                     "description": "wsiprocess",
@@ -122,7 +127,7 @@ class ToCOCOConverter:
                     "version": "1.0",
                     "year": 2014,
                     "contributor": "",
-                    "date_created": datetime.now().strftime('%Y/%m/%d_%H:%M:%S')
+                    "date_created": now
                 },
                 "licenses": [],
                 "categories": [],
@@ -131,10 +136,11 @@ class ToCOCOConverter:
             }
 
         else:
-            with open(self.save_to/"annotations"/"instances_train2014.json", "r") as f:
+            with open(train_path, "r") as f:
                 self.train2014 = json.load(f)
 
-        if not (self.save_to/"annotations"/"instances_val2014.json").exists():
+        val_path = self.save_to/"annotations"/"instances_val2014.json"
+        if not val_path.exists():
             self.val2014 = {
                 "info": {
                     "description": "wsiprocess",
@@ -142,7 +148,7 @@ class ToCOCOConverter:
                     "version": "1.0",
                     "year": "2014",
                     "contributor": "",
-                    "date_created": datetime.now().strftime('%Y/%m/%d_%H:%M:%S')
+                    "date_created": now
                 },
                 "licenses": [],
                 "categories": [],
@@ -150,10 +156,11 @@ class ToCOCOConverter:
                 "annotations": []
             }
         else:
-            with open(self.save_to/"annotations"/"instances_val2014.json", "r") as f:
+            with open(val_path, "r") as f:
                 self.val2014 = json.load(f)
 
-        if not (self.save_to/"annotations"/"instances_test2014.json").exists():
+        test_path = self.save_to/"annotations"/"instances_test2014.json"
+        if not test_path.exists():
             self.test2014 = {
                 "info": {
                     "description": "wsiprocess",
@@ -161,7 +168,7 @@ class ToCOCOConverter:
                     "version": "1.0",
                     "year": "2014",
                     "contributor": "",
-                    "date_created": datetime.now().strftime('%Y/%m/%d_%H:%M:%S')
+                    "date_created": now
                 },
                 "licenses": [],
                 "categories": [],
@@ -169,7 +176,7 @@ class ToCOCOConverter:
                 "annotations": []
             }
         else:
-            with open(self.save_to/"annotations"/"instances_test2014.json", "r") as f:
+            with open(test_path, "r") as f:
                 self.test2014 = json.load(f)
 
     def annotations_to_json(self):
@@ -192,45 +199,47 @@ class ToCOCOConverter:
             if self.test_is_available:
                 self.test2014 = self.add_categories(self.test2014, cls)
 
-        with tqdm(self.train_paths, desc="Making annotation for train") as t:
-            for idx, train_path in enumerate(t):
-                x, y = map(int, train_path.stem.split("_")[-2:])
-                image_params, image_id = self.get_image_params(
-                    train_path, slidestem, x, y, patch_width, patch_height, image_id)
-                self.train2014["images"].append(image_params)
+        for idx, train_path in enumerate(self.train_paths):
+            x, y = map(int, train_path.stem.split("_")[-2:])
+            image_params, image_id = self.get_image_params(
+                train_path, slidestem, x, y, patch_width, patch_height,
+                image_id)
+            self.train2014["images"].append(image_params)
 
-                annotation_params, annotation_id = self.get_annotation_params(
-                    self.annotation, classes, train_path, slidestem, x, y, patch_width, patch_width, image_id, annotation_id)
-                self.train2014["annotations"].extend(annotation_params)
+            annotation_params, annotation_id = self.get_annotation_params(
+                self.annotation, classes, train_path, slidestem, x, y,
+                patch_width, patch_width, image_id, annotation_id)
+            self.train2014["annotations"].extend(annotation_params)
 
-                image_id += 1
+            image_id += 1
 
-        with tqdm(self.val_paths, desc="Making annotation for validation") as t:
-            for idx, val_path in enumerate(t):
-                x, y = map(int, val_path.stem.split("_")[-2:])
-                image_params, image_id = self.get_image_params(
-                    val_path, slidestem, x, y, patch_width, patch_height, image_id)
-                self.val2014["images"].append(image_params)
+        for idx, val_path in enumerate(self.val_paths):
+            x, y = map(int, val_path.stem.split("_")[-2:])
+            image_params, image_id = self.get_image_params(
+                val_path, slidestem, x, y, patch_width, patch_height, image_id)
+            self.val2014["images"].append(image_params)
 
-                annotation_params, annotation_id = self.get_annotation_params(
-                    self.annotation, classes, val_path, slidestem, x, y, patch_width, patch_width, image_id, annotation_id)
-                self.val2014["annotations"].extend(annotation_params)
+            annotation_params, annotation_id = self.get_annotation_params(
+                self.annotation, classes, val_path, slidestem, x, y,
+                patch_width, patch_width, image_id, annotation_id)
+            self.val2014["annotations"].extend(annotation_params)
 
-                image_id += 1
+            image_id += 1
 
         if self.test_is_available:
-            with tqdm(self.test_paths, desc="Making annotation for test") as t:
-                for idx, test_path in enumerate(t):
-                    x, y = map(int, test_path.stem.split("_")[-2:])
-                    image_params, image_id = self.get_image_params(
-                        test_path, slidestem, x, y, patch_width, patch_height, image_id)
-                    self.test2014["images"].append(image_params)
+            for idx, test_path in enumerate(self.test_paths):
+                x, y = map(int, test_path.stem.split("_")[-2:])
+                image_params, image_id = self.get_image_params(
+                    test_path, slidestem, x, y, patch_width, patch_height,
+                    image_id)
+                self.test2014["images"].append(image_params)
 
-                    annotation_params, annotation_id = self.get_annotation_params(
-                        self.annotation, classes, test_path, slidestem, x, y, patch_width, patch_width, image_id, annotation_id)
-                    self.test2014["annotations"].extend(annotation_params)
+                annotation_params, annotation_id = self.get_annotation_params(
+                    self.annotation, classes, test_path, slidestem, x, y,
+                    patch_width, patch_width, image_id, annotation_id)
+                self.test2014["annotations"].extend(annotation_params)
 
-                    image_id += 1
+                image_id += 1
 
     def read_last_data(self):
         if self.test_is_available:
@@ -258,7 +267,8 @@ class ToCOCOConverter:
             )
         return annotation
 
-    def get_image_params(self, file_name, slidestem, x, y, width, height, image_id):
+    def get_image_params(
+            self, file_name, slidestem, x, y, width, height, image_id):
         return {
             "license": "",
             "file_name": str(file_name),
@@ -270,7 +280,9 @@ class ToCOCOConverter:
             "id": image_id
         }, image_id
 
-    def get_annotation_params(self, annotation, classes, file_name, slidestem, x, y, width, height, image_id, annotation_id):
+    def get_annotation_params(
+            self, annotation, classes, file_name, slidestem, x, y, width,
+            height, image_id, annotation_id):
         annotations = []
         for box in annotation["result"]:
             if box["x"] == x and box["y"] == y:
@@ -295,19 +307,21 @@ class ToCOCOConverter:
                         annotation_id += 1
                         annotations.append(data)
                 else:
-                    print("COCO dataset does not support classification annotations.")
+                    print(f"{file_name} have no bounding boxes.")
                     sys.exit()
         return annotations, annotation_id
 
     def save_data(self):
-        with open(self.save_to/"annotations"/"instances_train2014.json", "w") as f:
+        annotation_dir = self.save_to/"annotations"
+
+        with open(annotation_dir/"instances_train2014.json", "w") as f:
             json.dump(self.train2014, f, indent=4)
 
-        with open(self.save_to/"annotations"/"instances_val2014.json", "w") as f:
+        with open(annotation_dir/"instances_val2014.json", "w") as f:
             json.dump(self.val2014, f, indent=4)
 
         if self.test_is_available:
-            with open(self.save_to/"annotations"/"instances_test2014.json", "w") as f:
+            with open(annotation_dir/"instances_test2014.json", "w") as f:
                 json.dump(self.test2014, f, indent=4)
 
 

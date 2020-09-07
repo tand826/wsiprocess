@@ -77,15 +77,18 @@ class ToVOCConverter:
     def make_tree(self):
         self.results = []
         for result in self.result_wp["result"]:
-            tree = VOCTree(self.root, self.save_to/"VOC2007", result, self.result_wp["patch_width"], self.result_wp["patch_height"])
+            x = result['x']
+            y = result['y']
+            tree = VOCTree(
+                self.root, self.save_to/"VOC2007", result,
+                self.result_wp["patch_width"], self.result_wp["patch_height"])
             tree.to_xml()
             cls = result["bbs"][0]["class"]
-            # for cls in classes:
-            # to_jpg(f"{args.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg", args.save_to/"VOC2007"/"JPEGImages")
-            src = f"{self.root}/patches/{cls}/{result['x']:06}_{result['y']:06}.jpg"
-            dst = f"{self.save_to}/VOC2007/JPEGImages/{self.root.name}_{result['x']:06}_{result['y']:06}.jpg"
+            src = f"{self.root}/patches/{cls}/{x:06}_{y:06}.jpg"
+            dst_dir = f"{self.save_to}/VOC2007/JPEGImages"
+            dst = f"{dst_dir}/{self.root.name}_{x:06}_{y:06}.jpg"
             shutil.copy(src, dst)
-            self.results.append(f"{self.root.name}_{result['x']:06}_{result['y']:06}\n")
+            self.results.append(f"{self.root.name}_{x:06}_{y:06}\n")
 
     def to_jpg(self, src, dst):
         img = Image.open(src).convert("RGB")
@@ -94,8 +97,9 @@ class ToVOCConverter:
 
     def move_to_test(self):
         """
-        If ratio has only two parameters like "8:2", trainval.txt and test.txt would be generated.
-        If ratio has 3 params like "8:1:1", trainval.txt, val.txt and text.txt would be generated.
+        If ratio has only two parameters like "8:2", trainval.txt and test.txt
+        would be generated. If ratio has 3 params like "8:1:1", trainval.txt,
+        val.txt and text.txt would be generated.
         """
         trainval_path = f"{self.save_to}/VOC2007/ImageSets/Main/trainval.txt"
         test_path = f"{self.save_to}/VOC2007/ImageSets/Main/test.txt"
@@ -104,7 +108,11 @@ class ToVOCConverter:
         test_is_available = len(self.ratio.split(":")) == 3
         if test_is_available:
             train, val, test = map(int, self.ratio.split(":"))
-            ratio = {"train": train/(train+val+test), "val": val/(train+val+test), "test": test/(train+val+test)}
+            ratio = {
+                "train": train/(train+val+test),
+                "val": val/(train+val+test),
+                "test": test/(train+val+test)
+            }
             train_count = int(len(self.results) * ratio["train"])
             val_count = int(len(self.results) * ratio["val"])
             val_path = f"{self.save_to}/VOC2007/ImageSets/Main/val.txt"
@@ -144,10 +152,12 @@ class VOCTree:
         self.out_name = f"{root.name}_{self.x:06}_{self.y:06}.xml"
 
         self.tree = etree.Element("annotation")
-        self.main_branches = ["folder", "filename", "source", "owner", "size", "segmented"]
-        self.sub_branches = {"source": ["database", "annotation", "image", "flickrid"],
-                             "owner": ["flickrid", "name"],
-                             "size": ["width", "height", "depth"]}
+        self.main_branches = [
+            "folder", "filename", "source", "owner", "size", "segmented"]
+        self.sub_branches = {
+            "source": ["database", "annotation", "image", "flickrid"],
+            "owner": ["flickrid", "name"],
+            "size": ["width", "height", "depth"]}
 
         self.make_template()
         self.set_size()

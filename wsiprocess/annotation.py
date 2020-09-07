@@ -237,9 +237,6 @@ class Annotation:
             max (int, optional): Used if method is "minmax". Annotation object
                 defines foreground as the pixels with the value between "min"
                 and "max".
-
-        TODO:
-            Fix method arg.
         """
         if "foreground" in self.classes:
             return
