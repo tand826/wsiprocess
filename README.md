@@ -30,19 +30,18 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 
   - Linux
 
-    1. Install the following packages with apt.
+    1. Install the following packages with your package manager.
 
         ```
         build-essential pkg-config libglib2.0-dev libexpat1-dev libtiff5-dev libjpeg-turbo8-dev libgsf-1-dev openslide-tools libpng-dev
         ```
-    
-    2. Install libvips from git.
-    
+
+    2. Download libvips v8.10.1 from [here](https://github.com/libvips/libvips/releases).
+
+    3. Install libvips
         ```
-        VERSION=8.9.2
-        wget https://github.com/libvips/libvips/releases/download/v${VERSION}/vips-vips-${VERSION}.tar.gz && tar xvfz vips-${VERSION}.tar.gz
-        cd vips-${VERSION}
-        ./configure && make && sudo make install && sudo ldconfig
+        tar xvfz vips-8.10.1.tar.gz
+        cd vips-8.10.1 && ./configure && make -j && sudo make install
         ```
 
    - MacOS - `brew install vips`
