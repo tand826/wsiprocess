@@ -6,5 +6,9 @@
   "malignant": {
     "includes": [],
     "excludes": ["benign"]
+  },
+  "foreground": {
+  	"includes": [],
+  	"excludes": ["benign", "malignant"]
   }
 }

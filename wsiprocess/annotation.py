@@ -118,15 +118,15 @@ class Annotation:
         """
         self.base_masks(slide.wsi_height, slide.wsi_width)
         self.main_masks()
+        if foreground:
+            self.make_foreground_mask(
+                slide, size, method=foreground, min_=min_, max_=max_)
         if rule:
             self.classes = list(set(self.classes) & set(rule.classes))
             self.include_masks(rule)
             self.merge_include_coords(rule)
             self.exclude_masks(rule)
-            self.exclude_coords(rule)
-        if foreground:
-            self.make_foreground_mask(
-                slide, size, method=foreground, min_=min_, max_=max_)
+            # self.exclude_coords(rule)
 
     def base_masks(self, wsi_height, wsi_width):
         """Make base masks.
@@ -170,11 +170,13 @@ class Annotation:
         """
         self.masks_include = self.masks.copy()
         for cls in self.classes:
-            if hasattr(rule, cls):
-                for include in getattr(rule, cls)["includes"]:
-                    if include in self.masks:
-                        self.masks_include[cls] = cv2.bitwise_or(
-                            self.masks[cls], self.masks[include])
+            if not hasattr(rule, cls):
+                continue
+            for include in getattr(rule, cls)["includes"]:
+                if include not in self.masks:
+                    continue
+                self.masks_include[cls] = cv2.bitwise_or(
+                    self.masks[cls], self.masks[include])
         self.masks = self.masks_include
 
     def merge_include_coords(self, rule):
@@ -184,10 +186,12 @@ class Annotation:
             rule (wsiprocess.rule.Rule): Rule object.
         """
         for cls in self.classes:
-            if hasattr(rule, cls):
-                for include in getattr(rule, cls)["includes"]:
-                    if include in self.mask_coords.keys():
-                        self.mask_coords[cls].extend(self.mask_coords[include])
+            if not hasattr(rule, cls):
+                continue
+            for include in getattr(rule, cls)["includes"]:
+                if include not in self.mask_coords.keys():
+                    continue
+                self.mask_coords[cls].extend(self.mask_coords[include])
 
     def exclude_masks(self, rule):
         """Exclude area from base mask with following the rule.
@@ -197,13 +201,15 @@ class Annotation:
         """
         self.masks_exclude = self.masks.copy()
         for cls in self.classes:
-            if hasattr(rule, cls):
-                for exclude in getattr(rule, cls)["excludes"]:
-                    if exclude in self.masks:
-                        overlap_area = cv2.bitwise_and(
-                            self.masks[cls], self.masks[exclude])
-                        self.masks_exclude[cls] = cv2.bitwise_xor(
-                            self.masks[cls], overlap_area)
+            if not hasattr(rule, cls):
+                continue
+            for exclude in getattr(rule, cls)["excludes"]:
+                if exclude not in self.masks:
+                    continue
+                overlap_area = cv2.bitwise_and(
+                    self.masks[cls], self.masks[exclude])
+                self.masks_exclude[cls] = cv2.bitwise_xor(
+                    self.masks_exclude[cls], overlap_area)
         self.masks = self.masks_exclude
 
     def exclude_coords(self, rule):
@@ -213,12 +219,13 @@ class Annotation:
             rule (wsiprocess.rule.Rule): Rule object.
         """
         for cls in self.classes:
-            if hasattr(rule, cls):
-                base_set = [tuple(c) for c in self.mask_coords[cls]]
-                for exclude in getattr(rule, cls)["excludes"]:
-                    exclude_set = [tuple(c) for c in self.mask_coords[exclude]]
-                    base_set -= exclude_set
-                self.mask_coords[cls] = [list(c) for c in base_set]
+            if not hasattr(rule, cls):
+                continue
+            base_set = [tuple(c) for c in self.mask_coords[cls]]
+            for exclude in getattr(rule, cls)["excludes"]:
+                exclude_set = [tuple(c) for c in self.mask_coords[exclude]]
+                base_set -= exclude_set
+            self.mask_coords[cls] = [list(c) for c in base_set]
 
     def make_foreground_mask(
             self, slide, size=2000, method="otsu", min_=30, max_=190):

@@ -175,7 +175,7 @@ def process_annotation(args, slide, rule):
                 slide, rule, foreground="minmax", min_=min_, max_=max_)
         else:
             annotation.make_masks(slide, rule, foreground=True)
-        annotation.classes.remove("foreground")
+        # annotation.classes.remove("foreground")
 
     return annotation
 
