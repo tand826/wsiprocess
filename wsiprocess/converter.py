@@ -17,7 +17,11 @@ class Converter:
 
     """
     def __init__(self, root, save_to, ratio_arg):
-        self.params = {"root": root, "save_to": save_to, "ratio_arg": ratio_arg}
+        self.params = {
+            "root": root,
+            "save_to": save_to,
+            "ratio_arg": ratio_arg
+        }
 
     def to_coco(self):
         converter = wsiprocess_to_coco.ToCOCOConverter(self.params)
