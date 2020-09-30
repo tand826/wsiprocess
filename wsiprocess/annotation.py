@@ -159,7 +159,8 @@ class Annotation:
             contours = np.array(self.mask_coords[cls], dtype=object)
             for contour in contours:
                 self.masks[cls] = cv2.drawContours(
-                    self.masks[cls], [np.int32(contour)], 0, True, thickness=cv2.FILLED)
+                    self.masks[cls], [np.int32(contour)], 0, True,
+                    thickness=cv2.FILLED)
 
     def include_masks(self, rule):
         """Merge masks following the rule.
