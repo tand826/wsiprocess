@@ -73,7 +73,7 @@ class Annotation:
             parsed = AnnotationParser(self.path)
         except Exception as e:
             raise NotImplementedError(
-                "[{e}] Could not parse {}".format(e, self.path))
+                "[{}] Could not parse {}".format(e, self.path))
         self.classes = parsed.classes
         self.mask_coords = parsed.mask_coords
 
