@@ -201,11 +201,6 @@ class Patcher:
              = [small_x, small_y, large_x, large_y]
              = [bbleft, bbtop, bbright, bbbottom]
 
-        TODO:
-            This function can not handle like the case that the annotation is
-            covering the whole area of the patch or the case that one of the
-            side of annotation is striding over the patch.
-
         Args:
             x (int): X-axis offset of patch.
             y (int): Y-axis offset of patch.
