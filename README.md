@@ -1,11 +1,11 @@
 <div align="center">
 <img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/wsiprocess.svg" style="width: 50%">
 
-![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.3949409.svg)
+![Documentation](https://readthedocs.org/projects/wsiprocess/badge/?version=latest)
+![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.4065072.svg)
 ![Downloads](https://pepy.tech/badge/wsiprocess)
 ![PyPI](https://img.shields.io/pypi/v/wsiprocess)
-![Conda - Version](https://img.shields.io/conda/v/tand826/wsiprocess)
-![Documentation](https://readthedocs.org/projects/wsiprocess/badge/?version=latest)
+![conda](https://anaconda.org/tand826/wsiprocess/badges/version.svg)
 </div>
 
 Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
