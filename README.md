@@ -338,13 +338,14 @@ pytest tests.py
 # Citation
 
 ```
-@misc{https://doi.org/10.5281/zenodo.4065072,
-  doi = {10.5281/ZENODO.4065072},
-  url = {https://zenodo.org/record/4065072},
-  author = {{Takumi Ando}},
-  title = {tand826/wsiprocess: version 0.6},
-  publisher = {Zenodo},
-  year = {2020},
-  copyright = {Open Access}
+@software{takumi_ando_2020_4065072,
+  author       = {Takumi Ando},
+  title        = {tand826/wsiprocess: version 0.6},
+  month        = oct,
+  year         = 2020,
+  publisher    = {Zenodo},
+  version      = {v0.6},
+  doi          = {10.5281/zenodo.4065072},
+  url          = {https://doi.org/10.5281/zenodo.4065072}
 }
 ```
