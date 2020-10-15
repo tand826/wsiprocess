@@ -153,13 +153,13 @@ patcher.get_patch_parallel(target_classes)
 wsiprocess [your method] xxx.tiff xxx.xml
 ```
 
-#### Extract patches of width = height = 256pixels for classification with thumbnails of the annotation results.
+#### Extract patches of width = height = 256 pixels for classification with thumbnails of the annotation results.
 
 ```bash
 wsiprocess classification xxx.tiff xxx.xml -et
 ```
 
-#### Extract patches for classification task on condition that each patch has to be on the annotated area at least 50%, and on the foreground area at least 80%. (If the patch width = height = 256, 256*256*0.5=32768pixels of the patch are on the annotated area.)
+#### Extract patches for classification task on condition that each patch has to be on the annotated area at least 50%, and on the foreground area at least 80%. (If the patch width = height = 256, 256x256x0.5 = 32768 pixels of the patch are on the annotated area.)
 
 ```bash
 wsiprocess classification xxx.tiff xxx.xml -et -oa 0.5 -of 0.8
