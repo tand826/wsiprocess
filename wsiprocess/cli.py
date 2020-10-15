@@ -183,7 +183,7 @@ def process_annotation(args, slide, rule):
 def main(command=None):
     args = Args(command)
     slide = wp.slide(args.wsi)
-    rule = wp.rule(args.rule) if hasattr(args, "rule") else False
+    rule = wp.rule(args.rule) if args.rule else False
     annotation = process_annotation(args, slide, rule)
 
     if hasattr(args, "export_thumbs") and args.export_thumbs:
