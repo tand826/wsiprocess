@@ -77,7 +77,7 @@ class Annotation:
         self.classes = parsed.classes
         self.mask_coords = parsed.mask_coords
 
-    def dot_to_bbox(self, width, height=False):
+    def dot_to_bbox(self, width=30, height=False):
         """Translate dot annotations to bounding boxes.
 
         If the len(self.mask_coords[cls][idx]) is 1, the annotation is a dot.
