@@ -35,6 +35,14 @@ class Args:
             "-oy", "--offset_y", type=int, default=0,
             help="The offset pixel along the y-axis.")
         parser.add_argument(
+            "-dw", "--dot_bbox_width", type=int, default=30,
+            help="Width of bbox translated from dot annotation."
+        )
+        parser.add_argument(
+            "-dh", "--dot_bbox_height", type=int,
+            help="Height of bbox translated from dot annotation."
+        )
+        parser.add_argument(
             "-ss", "--start_sample", action="store_true",
             help="Generate samples at the start of the process.")
         parser.add_argument(
@@ -162,6 +170,7 @@ class Args:
 def process_annotation(args, slide, rule):
     if args.method == "none":
         annotation = wp.annotation("")
+        annotation.dot_to_bbox(args.dot_bbox_width, args.dot_bbox_height)
         if args.minmax:
             min_, max_ = map(int, args.minmax.split("-"))
             annotation.make_masks(
@@ -172,6 +181,7 @@ def process_annotation(args, slide, rule):
 
     else:
         annotation = wp.annotation(args.annotation)
+        annotation.dot_to_bbox(args.dot_bbox_width, args.dot_bbox_height)
         if hasattr(args, "minmax") and args.minmax:
             min_, max_ = map(int, args.minmax.split("-"))
             annotation.make_masks(

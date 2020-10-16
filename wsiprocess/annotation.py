@@ -91,9 +91,8 @@ class Annotation:
         self.dot_bbox_width = width
         self.dot_bbox_height = width if not height else height
 
-        for cls in self.classes:
-            coords = self.mask_coords[cls]
-            for coord in coords:
+        for cls, coords in self.mask_coords.items():
+            for idx, coord in enumerate(coords):
                 if len(coord) == 1:
                     center_x = coord[0][0]
                     center_y = coord[0][1]
@@ -113,7 +112,8 @@ class Annotation:
                         int(center_x + self.dot_bbox_width / 2),
                         int(center_y + self.dot_bbox_height / 2)
                     ]
-                    coord[0] = [lefttop, righttop, rightbottom, leftbottom]
+                    self.mask_coords[cls][idx] = [
+                        lefttop, righttop, rightbottom, leftbottom]
 
     def add_class(self, classes):
         for cls in classes:
