@@ -188,6 +188,11 @@
 				<Coordinate Order="22" X="9977.33691" Y="20032.0977" />
 			</Coordinates>
 		</Annotation>
+		<Annotation Name="Annotation 4" Type="Dot" PartOfGroup="benign" Color="#F4FA58">
+			<Coordinates>
+				<Coordinate Order="0" X="10535.4707" Y="21241.4414" />
+			</Coordinates>
+		</Annotation>
 	</Annotations>
 	<AnnotationGroups>
 		<Group Name="malignant" PartOfGroup="None" Color="#64FE2E">
