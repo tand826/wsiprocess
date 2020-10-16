@@ -63,6 +63,9 @@ class Args:
         parser.add_argument(
             "-ru", "--rule", type=Path,
             help="File to define the inclusion / exclusion relationship.")
+        parser.add_argument(
+            "-ef", "--extract_foreground", action="store_true",
+            help="If set, wp extracts patches from foreground.")
         self.add_binarization_method(parser)
         self.add_on_foreground(parser, slide_is_sparse)
         self.add_on_annotation(parser, slide_is_sparse)
@@ -175,7 +178,9 @@ def process_annotation(args, slide, rule):
                 slide, rule, foreground="minmax", min_=min_, max_=max_)
         else:
             annotation.make_masks(slide, rule, foreground=True)
-        # annotation.classes.remove("foreground")
+
+    if not args.extract_foreground:
+        annotation.classes.remove("foreground")
 
     return annotation
 
