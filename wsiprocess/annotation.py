@@ -77,6 +77,44 @@ class Annotation:
         self.classes = parsed.classes
         self.mask_coords = parsed.mask_coords
 
+    def dot_to_bbox(self, width, height=False):
+        """Translate dot annotations to bounding boxes.
+
+        If the len(self.mask_coords[cls][idx]) is 1, the annotation is a dot.
+        And, the dot is the midpoint of the bounding box.
+
+        Args:
+            width (int): Width of the translated bounding box.
+            height (int): Height of the translated bounding box. If not set,
+                height is equal to width.
+        """
+        self.dot_bbox_width = width
+        self.dot_bbox_height = width if not height else height
+
+        for cls in self.classes:
+            coords = self.mask_coords[cls]
+            for coord in coords:
+                if len(coord) == 1:
+                    center_x = coord[0][0]
+                    center_y = coord[0][1]
+                    lefttop = [
+                        int(center_x - self.dot_bbox_width / 2),
+                        int(center_y - self.dot_bbox_height / 2)
+                    ]
+                    righttop = [
+                        int(center_x + self.dot_bbox_width / 2),
+                        int(center_y - self.dot_bbox_height / 2)
+                    ]
+                    leftbottom = [
+                        int(center_x - self.dot_bbox_width / 2),
+                        int(center_y + self.dot_bbox_height / 2)
+                    ]
+                    rightbottom = [
+                        int(center_x + self.dot_bbox_width / 2),
+                        int(center_y + self.dot_bbox_height / 2)
+                    ]
+                    coord[0] = [lefttop, righttop, rightbottom, leftbottom]
+
     def add_class(self, classes):
         for cls in classes:
             self.classes.append(cls)
