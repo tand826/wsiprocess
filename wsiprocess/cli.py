@@ -141,6 +141,10 @@ class Args:
         parser_det.add_argument(
             "-ra", "--ratio", default="8:1:1",
             help="Ratio of the dataset size of train/validation/test phase.")
+        parser_det.add_argument(
+            "-cb", "--crop_bbox", default=False, action="store_true",
+            help="Crop bounding boxes after patch extraction."
+        )
         self.add_annotation_args(parser_det, slide_is_sparse=True)
         self.set_common_args(parser_det)
 
@@ -237,3 +241,6 @@ def main(command=None):
             converter.to_coco()
         if args.yolo_style:
             converter.to_yolo()
+
+        if args.crop_bbox:
+            patcher.get_mini_patch_parallel(annotation.classes)
