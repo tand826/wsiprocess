@@ -13,7 +13,7 @@ def detect_type(path):
     """
     path = Path(path)
     if path.suffix == ".xml":
-        tree = etree.parse(path)
+        tree = etree.parse(str(path))
         root = tree.getroot()
         if root.tag == "ASAP_Annotations":
             return "ASAP"

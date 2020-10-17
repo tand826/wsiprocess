@@ -185,7 +185,7 @@
 				<Coordinate Order="3" X="8580.30371" Y="19966.4043" />
 			</Coordinates>
 		</Annotation>
-		<Annotation Name="Annotation 23" Type="Rectangle" PartOfGroup="benign" Color="#F4FA58">
+		<Annotation Name="Annotation 24" Type="Dot" PartOfGroup="cell" Color="#F4FA58">
 			<Coordinates>
 				<Coordinate Order="0" X="8681.54004" Y="19897.0137" />
 				<Coordinate Order="1" X="8700.3125" Y="19897.0137" />
@@ -199,6 +199,9 @@
 			<Attributes />
 		</Group>
 		<Group Name="benign" PartOfGroup="None" Color="#64FE2E">
+			<Attributes />
+		</Group>
+		<Group Name="cell" PartOfGroup="None" Color="#64FE2E">
 			<Attributes />
 		</Group>
 	</AnnotationGroups>

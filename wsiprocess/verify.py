@@ -38,13 +38,14 @@ class Verify:
 
     def __init__(
             self, save_to, filestem, method, start_sample,
-            finished_sample, no_patches):
+            finished_sample, no_patches, crop_bbox):
         self.save_to = save_to
         self.filestem = filestem
         self.method = method
         self.start_sample = start_sample
         self.finished_sample = finished_sample
         self.no_patches = no_patches
+        self.crop_bbox = crop_bbox
 
     def verify_dirs(self):
         """Ensure the output directories exists for each tasks.
@@ -59,6 +60,8 @@ class Verify:
             self.verify_dir(base_dir/"start_sample")
         if self.finished_sample:
             self.verify_dir(base_dir/"finished_sample")
+        if self.crop_bbox:
+            self.verify_dir(base_dir/"mini_patches")
 
     @staticmethod
     def verify_dir(path):

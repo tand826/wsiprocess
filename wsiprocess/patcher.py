@@ -90,7 +90,7 @@ class Patcher:
             patch_width=256, patch_height=256, overlap_width=0,
             overlap_height=0, offset_x=0, offset_y=0, on_foreground=0.5,
             on_annotation=1., start_sample=True, finished_sample=True,
-            no_patches=False):
+            no_patches=False, crop_bbox=False):
         Verify.verify_sizes(
             slide.wsi_width, slide.wsi_height, patch_width, patch_height,
             overlap_width, overlap_height)
@@ -133,8 +133,9 @@ class Patcher:
         self.save_to = save_to
 
         self.result = {"result": []}
-        self.verify = Verify(save_to, self.filestem, method,
-                             start_sample, finished_sample, no_patches)
+        self.verify = Verify(
+            save_to, self.filestem, method, start_sample, finished_sample,
+            no_patches, crop_bbox)
         self.verify.verify_dirs()
 
     def __str__(self):
@@ -526,6 +527,25 @@ class Patcher:
 
         if self.finished_sample:
             self.get_random_sample("finished", 3)
+
+    def get_mini_patch_parallel(self, classes=False):
+        for cls in classes:
+            self.verify.verify_dir(
+                "{}/{}/mini_patches/{}".format(
+                    self.save_to, self.filestem, cls))
+
+        for patch in self.result["result"]:
+            for bb in patch["bbs"]:
+                if bb["class"] in classes:
+                    mini_patch = self.slide.slide.crop(
+                        patch["x"] + bb["x"],
+                        patch["y"] + bb["y"],
+                        bb["w"],
+                        bb["h"])
+                    mini_patch.jpegsave(
+                        "{}/{}/mini_patches/{}/{:06}_{:06}.jpg".format(
+                            self.save_to, self.filestem, bb["class"],
+                            patch["x"] + bb["x"], patch["y"] + bb["y"]))
 
     def patch_on_foreground(self, x, y):
         """Check if the patch is on the foreground area.

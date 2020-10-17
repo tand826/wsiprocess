@@ -227,7 +227,8 @@ def main(command=None):
         offset_y=args.offset_y,
         start_sample=args.start_sample,
         finished_sample=args.finished_sample,
-        no_patches=args.no_patches)
+        no_patches=args.no_patches,
+        crop_bbox=args.crop_bbox)
     patcher.get_patch_parallel(annotation.classes)
 
     if args.method == "detection":
