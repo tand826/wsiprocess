@@ -27,7 +27,7 @@ from .annotationparser.parser_utils import detect_type
 
 class Annotation:
 
-    def __init__(self, path, is_image=False):
+    def __init__(self, path, is_image=False, slidename=False):
         """Initialize the anntation object.
 
         Args:
@@ -37,6 +37,7 @@ class Annotation:
             is_image(bool): Whether the image is image.
         """
         self.path = path
+        self.slidename = slidename
         self.is_image = is_image
         self.classes = []
         if not self.is_image:
@@ -50,7 +51,7 @@ class Annotation:
     def read_annotation(self, annotation_type=False):
         """Parse the annotation data.
 
-        WSIViewer is going to be added as a annotation type.
+        WSIDissector is going to be added as an annotation type.
         Currently, ASAP is available.
 
         Args:
@@ -60,8 +61,13 @@ class Annotation:
             annotation_type = detect_type(self.path)
         if annotation_type == "ASAP":
             from .annotationparser.ASAP_parser import AnnotationParser
+            parsed = AnnotationParser(self.path)
         elif annotation_type == "WSIDissector":
             from .annotationparser.wsidissector_parser import AnnotationParser
+            parsed = AnnotationParser(self.path)
+        elif annotation_type == "SlideRunner":
+            from .annotationparser.SlideRunner_parser import AnnotationParser
+            parsed = AnnotationParser(self.path, self.slidename)
         elif annotation_type == "Empty":
             class AnnotationParser:
                 classes = []
@@ -69,11 +75,6 @@ class Annotation:
 
                 def __init__(self, path):
                     print("Annotation File is Empty")
-        try:
-            parsed = AnnotationParser(self.path)
-        except Exception as e:
-            raise NotImplementedError(
-                "[{}] Could not parse {}".format(e, self.path))
         self.classes = parsed.classes
         self.mask_coords = parsed.mask_coords
 

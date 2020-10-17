@@ -28,8 +28,8 @@ def detect_type(path):
             cursor = con.cursor()
             cursor.execute("select * from sqlite_sequence")
             assumed = set([
-                "Persons", "Classes", "Slides", "Anntoations",
-                "Annotations_coordinates", "Annotations_label"])
+                "Persons", "Classes", "Slides", "Annotations",
+                "Annotations_coordinates", "Annotations_label", "Log"])
             if assumed == set([x[0] for x in cursor.fetchall()]):
                 file_type = "SlideRunner"
         except Exception as e:
