@@ -23,9 +23,14 @@ class AnnotationParser:
         assert Path(self.path).exists(), "This annotation file does not exist."
 
         tree = etree.parse(self.path)
-        self.annotations = tree.xpath("/ASAP_Annotations/Annotations/Annotation")
-        self.annotation_groups = tree.xpath("/ASAP_Annotations/AnnotationGroups/Group")
-        self.classes = [group.attrib["Name"] for group in self.annotation_groups]
+        self.annotations = tree.xpath(
+            "/ASAP_Annotations/Annotations/Annotation")
+        self.annotation_groups = tree.xpath(
+            "/ASAP_Annotations/AnnotationGroups/Group")
+        self.classes = [
+            group.attrib["Name"]
+            for group in self.annotation_groups
+        ]
         self.mask_coords = {}
         for cls in self.classes:
             self.mask_coords[cls] = []

@@ -35,7 +35,8 @@ class Slide:
         self.set_properties()
 
     def __str__(self):
-        return "wsiprocess.slide.Slide {} {}x{}".format(self.path, self.wsi_width, self.wsi_height)
+        return "wsiprocess.slide.Slide {} {}x{}".format(
+            self.path, self.wsi_width, self.wsi_height)
 
     def export_thumbnail(self, save_as="./thumb.png", size=500):
         """Export thumbnail image.

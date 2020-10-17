@@ -38,6 +38,7 @@ class Annotation:
         """
         self.path = path
         self.slidename = slidename
+        self.dot_bbox_width = self.dot_bbox_height = 0
         self.is_image = is_image
         self.classes = []
         if not self.is_image:
@@ -97,22 +98,14 @@ class Annotation:
                 if len(coord) == 1:
                     center_x = coord[0][0]
                     center_y = coord[0][1]
-                    lefttop = [
-                        int(center_x - self.dot_bbox_width / 2),
-                        int(center_y - self.dot_bbox_height / 2)
-                    ]
-                    righttop = [
-                        int(center_x + self.dot_bbox_width / 2),
-                        int(center_y - self.dot_bbox_height / 2)
-                    ]
-                    leftbottom = [
-                        int(center_x - self.dot_bbox_width / 2),
-                        int(center_y + self.dot_bbox_height / 2)
-                    ]
-                    rightbottom = [
-                        int(center_x + self.dot_bbox_width / 2),
-                        int(center_y + self.dot_bbox_height / 2)
-                    ]
+                    left = int(center_x - self.dot_bbox_width / 2)
+                    top = int(center_y - self.dot_bbox_height / 2)
+                    right = int(center_x + self.dot_bbox_width / 2)
+                    bottom = int(center_y + self.dot_bbox_height / 2)
+                    lefttop = [left, top]
+                    righttop = [right, top]
+                    leftbottom = [left, bottom]
+                    rightbottom = [right, bottom]
                     self.mask_coords[cls][idx] = [
                         lefttop, righttop, rightbottom, leftbottom]
 
@@ -386,5 +379,6 @@ class Annotation:
             save_to (str): Parent directory to save the thumbnails.
             cls (str): Class name for each mask.
         """
-        cv2.imwrite(str(Path(save_to)/"{}.png".format(cls)),
-                    self.masks[cls], (cv2.IMWRITE_PXM_BINARY, 1))
+        cv2.imwrite(
+            str(Path(save_to)/"{}.png".format(cls)),
+            self.masks[cls], (cv2.IMWRITE_PXM_BINARY, 1))
