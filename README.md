@@ -17,10 +17,12 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 </div>
 
 1. Scan some WSIs.
-2. Make some annotations with WSI annotation tools. (Recommended: [WSIDissector](https://github.com/tand826/WSIDissector)(coming soon), [ASAP](https://github.com/computationalpathologygroup/ASAP/releases) is now available.)
+2. Make some annotations with WSI annotation tools. (Recommended: [WSIDissector](https://github.com/tand826/WSIDissector)(coming soon), [ASAP](https://github.com/computationalpathologygroup/ASAP/releases) and [SlideRunner v.1.31.0](https://github.com/DeepPathology/SlideRunner) are now available.)
 3. Then wsiprocess helps converting WSI + Annotation data into patches and easy-to-use annotation data.
 
 [WSIPatcher](https://github.com/tand826/WSIPatcher) will give you GUI.
+
+
 
 # Installation
 
@@ -156,19 +158,19 @@ wsiprocess [your method] xxx.tiff xxx.xml
 #### Extract patches of width = height = 256 pixels for classification with thumbnails of the annotation results.
 
 ```bash
-wsiprocess classification xxx.tiff xxx.xml -et
+wsiprocess classification xxx.tiff xxx.xml --export_thumbs
 ```
 
 #### Extract patches for classification task on condition that each patch has to be on the annotated area at least 50%, and on the foreground area at least 80%. (If the patch width = height = 256, 256x256x0.5 = 32768 pixels of the patch are on the annotated area.)
 
 ```bash
-wsiprocess classification xxx.tiff xxx.xml -et -oa 0.5 -of 0.8
+wsiprocess classification xxx.tiff xxx.xml --on_annotation 0.5 -on_foreground 0.8
 ```
 
 #### Extract patches and coco/voc/yolo styled detection annotation data on condition that each patch has to be on the annotated area at least 1% and on the foreground area at least 1%.
 
 ```bash
-wsiprocess detection xxx.tiff xxx.xml -oa 0.01 -of 0.01 -co -vo -yo
+wsiprocess detection xxx.tiff xxx.xml --on_annotation 0.01 -on_foreground 0.01 --coco_style --voc_style --yolo_style
 ```
 
 #### Extract patches and masks for segmentation task.
@@ -180,14 +182,27 @@ wsiprocess segmentation xxx.tiff xxx.xml
 #### Extract patches with mask of foreground area for evaluation or inference of models. The mask has pixels with 1 as foreground which are originally from 10 to 230 in the scale of 0-255, and pixels with 0 as background which are originally from 0 to 10 and from 230 to 255.
 
 ```bash
-wsiprocess none xxx.tif -oa 0.01 -mm 10-230 -of 0.01
+wsiprocess none xxx.tif --minmax 10-230
 ```
 
 #### Just to check the thumbnails to see where the annotations should be.
 
 ```bash
-wsiprocess classification xxx.tif -np -et
+wsiprocess classification xxx.tif --no_patches --export_thumbs
 ```
+
+#### Crop bounding boxes after extracting patches
+
+```
+wsiprocess detection xxx.tif xxx.xml --crop_bbox
+```
+
+#### Translate dot annotations to bounding boxes and set their width to 100 pixels
+
+```
+wsiprocess classification xxx.tif xxx.xml --dot_bbox_width 100
+```
+
 
 - Need recommendation for choice of arguments? Type `wsiprocess -h` or `wsiprocess [your method] -h` to see options.
 
@@ -220,9 +235,13 @@ python wsiprocess/converters/wsiprocess_to_yolo.py [directory containing results
 ```bash
 # If not extracted patches yet...
 # convert to VOC and COCO and YOLO
-wsiprocess xxx.tiff method --annotation xxx.xml -vo -co -yo
+wsiprocess xxx.tiff detection xxx.xml -vo -co -yo
 ```
 
+# Available annotations
+
+- [ASAP](https://github.com/computationalpathologygroup/ASAP/)
+- [SlideRunner version 1.31.0](https://github.com/DeepPathology/SlideRunner)
 
 # Available WSIs
 
@@ -235,8 +254,6 @@ wsiprocess xxx.tiff method --annotation xxx.xml -vo -co -yo
   - :smile: => worked well.
   - :umbrella: => did not work well.
   - otherwise => did not check
-
-### Classification
 
 - Aperio
 
