@@ -460,6 +460,8 @@ class Patcher:
         self.result["no_patches"] = self.no_patches
         self.result["on_foreground"] = self.on_foreground
         self.result["on_annotation"] = self.on_annotation
+        self.result["dot_bbox_width"] = self.dot_bbox_width
+        self.result["dot_bbox_height"] = self.dot_bbox_height
         self.result["save_to"] = str(Path(self.save_to).absolute())
         self.result["classes"] = sorted(self.classes)
 
