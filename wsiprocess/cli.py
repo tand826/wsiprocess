@@ -193,7 +193,7 @@ def process_annotation(args, slide, rule):
         else:
             annotation.make_masks(slide, rule, foreground=True)
 
-    if not args.extract_foreground:
+    if not args.extract_foreground and "foreground" in annotation.classes:
         annotation.classes.remove("foreground")
 
     return annotation
