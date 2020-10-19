@@ -107,8 +107,8 @@ class Patcher:
         self.o_height = int(overlap_height)
         self.offset_x = int(offset_x)
         self.offset_y = int(offset_y)
-        self.dot_bbox_width = self.annotation.dot_bbox_width
-        self.dot_bbox_height = self.annotation.dot_bbox_height
+        self.dot_bbox_width = annotation.dot_bbox_width
+        self.dot_bbox_height = annotation.dot_bbox_height
         self.x_lefttop = [i for i in range(
             self.offset_x,
             self.wsi_width,
