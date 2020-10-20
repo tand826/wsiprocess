@@ -2,6 +2,7 @@
 from collections import defaultdict
 import sqlite3
 from pathlib import Path
+from wsiprocess.error import AnnotationLabelError
 
 
 class AnnotationParser:
@@ -30,6 +31,7 @@ class AnnotationParser:
             self.read_annotations(slidename)
             self.read_labels()
             self.read_coordinates(slidename)
+            self.verify_annotations()
 
             self.parse_mask_coords()
 
@@ -77,22 +79,32 @@ class AnnotationParser:
         for x, y, annoId, order in self.cursor.fetchall():
             self.coordinates[annoId][order] = {"x": x, "y": y}
 
+    def verify_annotations(self):
+        annotation_counts = len(self.annotations)
+        if not len(self.labels) == len(self.coordinates) == annotation_counts:
+            raise AnnotationLabelError("Some annotations have no label.")
+
     def parse_mask_coords(self):
         """Parse the coordinates of the mask.
         """
         for annoId, value in self.coordinates.items():
             cls = self.uid2cls[self.labels[annoId]]
 
-            if self.annotations[annoId]["type"] == 1:
+            if self.annotations[annoId]["type"] in [1, 2, 3, 4]:
                 # type1 is dot annotation
-                coordinate = [[value[1]["x"], value[1]["y"]]]
-                self.mask_coords[cls].append(coordinate)
-
-            elif self.annotations[annoId]["type"] == 2:
-                # type2 is rectangle annotation
-                # with lefttop and rightbottom coordinates
+                # type2 is rectangle annotation with lefttop and rightbottom
+                # type3 is polygon annotation or magicwand annotation.
+                # type4 is important position annotation with a dot.
+                # type5 is circle anntoation.
                 coordinate = [
-                    [value[1]["x"], value[1]["y"]],
-                    [value[2]["x"], value[2]["y"]]
+                    [coord["x"], coord["y"]]
+                    for order, coord in value.items()
                 ]
                 self.mask_coords[cls].append(coordinate)
+
+            elif self.annotations[annoId]["type"] == 5:
+                # type5 is circle anntoation.
+                pass
+
+            else:
+                raise NotImplementedError("Unknown annotation type")

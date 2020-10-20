@@ -23,6 +23,16 @@ class SlideLoadError(WsiProcessError):
         super().__init__(message)
 
 
+class AnnotationLabelError(WsiProcessError):
+    """Error of annotations
+
+    Args:
+        message (str): Message to show in the stdout.
+    """
+    def __init__(self, message):
+        super().__init__(message)
+
+
 class MissCombinationError(WsiProcessError):
     """Error of the combination of the method and the anntoation file.
 

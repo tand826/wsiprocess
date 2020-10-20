@@ -212,6 +212,7 @@ def main(command=None):
         annotation.export_thumb_masks(thumbs_dir)
 
     on_annotation = False if args.method == "none" else args.on_annotation
+    crop_bbox = args.crop_bbox if hasattr(args, "crop_bbox") else False
 
     patcher = wp.patcher(
         slide, args.method,
@@ -228,7 +229,7 @@ def main(command=None):
         start_sample=args.start_sample,
         finished_sample=args.finished_sample,
         no_patches=args.no_patches,
-        crop_bbox=args.crop_bbox)
+        crop_bbox=crop_bbox)
     patcher.get_patch_parallel(annotation.classes)
 
     if args.method == "detection":
