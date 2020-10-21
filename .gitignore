@@ -5,8 +5,12 @@ conda_tmp/
 .vscode/
 
 # test wsi
-test/*.ndpi
+tests/*.ndpi
+tests/*.tiff
+tests/test/
 sample/*.ndpi
+sample/*.tiff
+sample/CMU-1
 CMU-1/
 ./test.py
 
