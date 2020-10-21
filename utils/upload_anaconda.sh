@@ -1,5 +1,9 @@
 VERSION=0.6
 
+cd ../tests
+pytest tests
+
+cd ../
 anaconda login
 conda skeleton pypi wsiprocess --output-dir ./conda_tmp
 for python_version in 3.6 3.7 3.8

@@ -1,3 +1,6 @@
+cd ../tests
+pytest tests
+
 cd ../
 rm -f -r wsiprocess.egg-info/* dist/*
 python setup.py sdist bdist_wheel
