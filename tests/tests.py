@@ -1,123 +1,111 @@
 import json
+from pathlib import Path
 import pytest
 import pyvips
 import wsiprocess as wp
+import wsiprocess.cli as cli
 
 SAMPLEDIR = "../sample"
 TESTDIR = "./"
-WSIS = ("CMU-1.ndpi", "", "corrupted.ndpi")
-METHODS = ("none", "Classification", "Detection", "Segmentation", "foo")
+
+METHODS = ("none", "classification", "detection", "segmentation", "foo")
+WSIS = (
+    f"{SAMPLEDIR}/test.tiff",
+    None,
+    f"{TESTDIR}/corrupted.ndpi")
 ANNOTATIONS = (
-    "CMU-1_classification.xml",
-    "CMU-1_detection.xml",
-    "CMU-1_segmentation.xml",
-    "test_emptyfile.txt")
-SAVE_TOS = (".", "/", "")
-ONFOREGROUNDS = (0, 1.0, 0.50000000001)
-ONANNOTATIONS = (0, 1.0, 0.50000000001)
-MINMAXS = ("0-255", "100-200", "100-99")
+    f"{SAMPLEDIR}/CMU-1_classification.xml",
+    f"{SAMPLEDIR}/CMU-1_detection.xml",
+    f"{SAMPLEDIR}/CMU-1_segmentation.xml",
+    f"{TESTDIR}/test_emptyfile.txt")
 RULES = (
-    "rule.json",
-    "test_emptyfile.txt")
-PATCH_SIZES = (256, 0, 1, 0.1, 1048576)
-OVERLAP_SIZES = (1, 4096, 0, 0.1, 256)
-OFFSET_X = (0, 1000, 1e10)
-OFFSET_Y = (0, 1000, 1e10)
-MAGNIFICATIONS = (10, 1, 80, 40, 20)
-VOC_STYLE = (False, True)
-COCO_STYLE = (False, True)
-YOLO_STYLE = (False, True)
+    f"{SAMPLEDIR}/rule.json",
+    f"{TESTDIR}/test_emptyfile.txt")
+SAVE_TOS = (".", "/", "")
+ONFOREGROUNDS = ("1.0", "0", "0.50000000001")
+ONANNOTATIONS = ("1.0", "0", "0.50000000001")
+MINMAXS = ("0-255", "100-200", "100-99")
+PATCH_SIZES = ("256", "0", "1", "0.1", "1048576")
+OVERLAP_SIZES = ("1", "4096", "0", "0.1", "256")
+OFFSET_X = ("0", "1000", "1048576")
+OFFSET_Y = ("0", "1000", "1048576")
+DOT_BBOX_WIDTH = ("10", "0", "1000")
+DOT_BBOX_HEIGHT = ("10", "0", "1000")
+MAGNIFICATIONS = ("10", "1", "80", "40", "20")
+VOC_STYLE = ("False", "True")
+COCO_STYLE = ("False", "True")
+YOLO_STYLE = ("False", "True")
 
 
-class Params:
-    wsi = f"{SAMPLEDIR}/{WSIS[0]}"
-    method = METHODS[0]
-    annotation = f"{SAMPLEDIR}/{ANNOTATIONS[0]}"
-    rule = f"{SAMPLEDIR}/{RULES[0]}"
-    save_to = SAVE_TOS[0]
-    on_annotation = ONANNOTATIONS[0]
-    on_foreground = ONFOREGROUNDS[0]
-    minmax = MINMAXS[0]
-    patch_width = PATCH_SIZES[0]
-    patch_height = PATCH_SIZES[0]
-    overlap_width = OVERLAP_SIZES[0]
-    overlap_height = OVERLAP_SIZES[0]
-    offset_x = OFFSET_X[0]
-    offset_y = OFFSET_Y[0]
-    magnification = MAGNIFICATIONS[0]
-    no_patches = False
-    voc_style = VOC_STYLE[0]
-    coco_style = COCO_STYLE[0]
-    yolo_style = YOLO_STYLE[0]
-
-
-def cli(params):
-    slide = wp.slide(params.wsi)
-    if params.rule:
-        rule = wp.rule(params.rule)
-    else:
-        rule = False
-    if params.annotation:
-        annotation = wp.annotation(params.annotation)
-        annotation.make_masks(slide, rule, foreground=True)
-        annotation.classes.remove("foreground")
-    else:
-        annotation = wp.annotation("")
-        if params.on_annotation:
-            annotation.make_masks(slide, foreground=True)
-    patcher = wp.patcher(
-        slide, params.method,
-        annotation=annotation,
-        save_to=params.save_to,
-        patch_width=params.patch_width,
-        patch_height=params.patch_height,
-        overlap_width=params.overlap_width,
-        overlap_height=params.overlap_height,
-        offset_x=params.offset_x,
-        offset_y=params.offset_y,
-        on_foreground=params.on_foreground,
-        on_annotation=params.on_annotation,
-        no_patches=params.no_patches)
-    patcher.get_patch_parallel(annotation.classes)
-    if params.voc_style or params.coco_style or params.yolo_style:
-        converter = wp.converter(params.save_to/slide.filestem, params.save_to, params.ratio)
-        if params.voc_style:
-            converter.to_voc()
-        if params.coco_style:
-            converter.to_coco()
-        if params.yolo_style:
-            converter.to_yolo()
+def test_make_small_pyramidal_tiff():
+    assert Path(f"{SAMPLEDIR}/CMU-1.ndpi").exists(), "download CMU-1.ndpi"
+    if not Path(f"{TESTDIR}/test.tiff").exists():
+        slide = pyvips.Image.new_from_file(f"{SAMPLEDIR}/CMU-1.ndpi")
+        slide_small = slide.crop(7000, 18000, 1280, 1280)
+        slide_small.tiffsave(
+            "test.tiff", compression="jpeg", pyramid=True, tile=True)
 
 
 def test_cli_pass():
     # should go without any errors
-    params = Params()
-    cli(params)
+    cli.main([
+        METHODS[0], WSIS[0],
+        "-of", ONFOREGROUNDS[0],
+        "-st", SAVE_TOS[0],
+        "-pw", PATCH_SIZES[0],
+        "-ph", PATCH_SIZES[0],
+        "-ow", OVERLAP_SIZES[0],
+        "-oh", OVERLAP_SIZES[0],
+        "-ox", OFFSET_X[0],
+        "-oy", OFFSET_Y[0],
+        "-dw", DOT_BBOX_WIDTH[0],
+        "-dh", DOT_BBOX_HEIGHT[0]
+    ])
 
 
-def test_cli_wsi():
-    # WSIS = ("CMU-1.ndpi", "", "corrupted.ndpi")
-    params = Params()
+def test_cli_wsi_blank():
+    wsi = WSIS[1]
+    with pytest.raises(wp.error.SlideLoadError):
+        cli.main([METHODS[0], wsi])
 
-    params.wsi = f"{SAMPLEDIR}/{WSIS[1]}"
-    # with pytest.raises(pyvips.error.Error):
-    #    cli(params)
 
-    params.wsi = f"{TESTDIR}/{WSIS[2]}"
+def test_cli_wsi_corrupted():
+    wsi = WSIS[2]
     with pytest.raises(pyvips.error.Error):
-        cli(params)
+        cli.main([METHODS[0], wsi])
 
 
-def test_cli_method():
+def test_cli_method_none():
+    method = METHODS[0]
+    cli.main([method, WSIS[0]])
+
+
+def test_cli_method_classification():
+    method = METHODS[1]
+    annotation = ANNOTATIONS[0]
+    cli.main([method, WSIS[0], annotation])
+
+
+def test_cli_method_detection():
+    method = METHODS[1]
+    annotation = ANNOTATIONS[1]
+    cli.main([method, WSIS[0], annotation])
+
+
+def test_cli_method_segmentation():
+    method = METHODS[2]
+    annotation = ANNOTATIONS[2]
+    cli.main([method, WSIS[0], annotation])
+
+
+def test_cli_method_notimplemented():
     # METHODS = ("none", "Classification", "Detection", "Segmentation", "foo")
-    params = Params()
-
-    params.method = METHODS[4]
-    with pytest.raises(NotImplementedError):
-        cli(params)
+    method = METHODS[3]
+    # argparse does not catch invalid choice as Errors.
+    cli.main([method, WSIS[0], ANNOTATIONS[0]])
 
 
-def test_cli_annotation():
+def test_cli_annotation_emptyfile():
     """
     ANNOTATIONS = (
         "CMU-1_classification.xml",
@@ -125,163 +113,125 @@ def test_cli_annotation():
         "CMU-1_segmentation.xml",
         "test_emptyfile.txt")
     """
-    params = Params()
-
-    params.annotation = f"{TESTDIR}/{ANNOTATIONS[3]}"
-    cli(params)
-
-
-def test_cli_method_annotation_combination():
-    """
-    METHODS = ("none", "Classification", "Detection", "Segmentation", "foo")
-    ANNOTATIONS = (
-        "CMU-1_classification.xml",
-        "CMU-1_detection.xml",
-        "CMU-1_segmentation.xml",
-        "test_emptyfile.txt")
-    """
-    params = Params()
-
-    # classification and segmentation can share annotation data
-    params.method = METHODS[1]
-    params.annotation = f"{SAMPLEDIR}/{ANNOTATIONS[2]}"
-    cli(params)
-
-    # detection can not share annotation data with other methods
-    # TODO : how to detect annotation type?
-    params.method = METHODS[2]
-    params.annotation = f"{SAMPLEDIR}/{ANNOTATIONS[0]}"
-    cli(params)
-
-    params.method = METHODS[2]
-    params.annotation = f"{SAMPLEDIR}/{ANNOTATIONS[2]}"
-    cli(params)
-
-    # segmentation can run with classification annotation
-    params.method = METHODS[3]
-    params.annotation = f"{SAMPLEDIR}/{ANNOTATIONS[0]}"
-    cli(params)
+    method = METHODS[1]
+    annotation = ANNOTATIONS[3]
+    cli.main([method, WSIS[0], annotation])
 
 
-def test_cli_rule():
-    """
-    RULES = (
-        "rule.json",
-        "test_emptyfile.txt")
-    """
-    params = Params()
+def test_cli_none_with_annotation():
+    method = METHODS[0]
+    annotation = ANNOTATIONS[0]
+    with pytest.raises(SystemExit):
+        cli.main([method, WSIS[0], annotation])
 
-    params.rule = RULES[1]
+
+def test_cli_classification_without_annotation():
+    method = METHODS[1]
+    with pytest.raises(SystemExit):
+        cli.main([method, WSIS[0]])
+
+
+def test_cli_detection_without_annotation():
+    method = METHODS[2]
+    with pytest.raises(SystemExit):
+        cli.main([method, WSIS[0]])
+
+
+def test_cli_segmentation_without_annotation():
+    method = METHODS[3]
+    with pytest.raises(SystemExit):
+        cli.main([method, WSIS[0]])
+
+
+def test_cli_rule_empty():
+    # RULES = ("rule.json", "test_emptyfile.txt")
+    rule = RULES[1]
     with pytest.raises(json.decoder.JSONDecodeError):
-        cli(params)
+        cli.main([
+            METHODS[1], WSIS[0], ANNOTATIONS[0],
+            "-ru", rule
+        ])
 
 
-def test_cli_save_to():
+def test_cli_save_to_root():
     # SAVE_TOS = (".", "/", "")
-    params = Params()
-
-    params.save_to = SAVE_TOS[1]
+    save_to = SAVE_TOS[1]
     with pytest.raises(PermissionError):
-        cli(params)
+        cli.main([
+            METHODS[0], WSIS[0],
+            "-st", save_to
+        ])
 
-    params.save_to = SAVE_TOS[2]
-    with pytest.raises(PermissionError):
-        cli(params)
 
-
-def test_cli_patch_overlap_size():
+def test_cli_patch_too_small():
     # PATCH_SIZES = (256, 0, 1, 0.1, 1048576)
-    # OVERLAP_SIZES = (1, 4096, 0, 0.1, 256)
-    params = Params()
-
-    # overlap_size > patch_size => error
-    params.patch_height = params.patch_width = PATCH_SIZES[1]
-    params.overlap_height = params.overlap_width = OVERLAP_SIZES[1]
+    patch_height = patch_width = PATCH_SIZES[1]
     with pytest.raises(wp.error.SizeError):
-        cli(params)
+        cli.main([
+            METHODS[0], WSIS[0],
+            "-pw", patch_width,
+            "-ph", patch_height
+        ])
 
-    # overlap_size = patch_size => error
-    params = Params()
-    params.overlap_height = params.overlap_width = OVERLAP_SIZES[4]
+
+def test_cli_patch_too_large():
+    patch_height = patch_width = PATCH_SIZES[4]
     with pytest.raises(wp.error.SizeError):
-        cli(params)
+        cli.main([
+            METHODS[0], WSIS[0],
+            "-pw", patch_width,
+            "-ph", patch_height
+        ])
 
-    # patch_size > wsi_size => error
-    params = Params()
-    params.patch_height = params.patch_width = PATCH_SIZES[4]
+
+def test_cli_overlap_too_large():
+    patch_height = patch_width = PATCH_SIZES[0]
+    overlap_height = overlap_width = OVERLAP_SIZES[4]
     with pytest.raises(wp.error.SizeError):
-        cli(params)
+        cli.main([
+            METHODS[0], WSIS[0],
+            "-pw", patch_width,
+            "-ph", patch_height,
+            "-ow", overlap_width,
+            "-oh", overlap_height
+        ])
 
-    # patch_size can not be zero
-    params = Params()
-    params.patch_height = params.patch_width = PATCH_SIZES[3]
+
+def test_cli_offset_too_large():
+    offset_x = OFFSET_X[2]
+    offset_y = OFFSET_Y[2]
     with pytest.raises(wp.error.SizeError):
-        cli(params)
-
-    # overlap_size can be zero
-    params = Params()
-    params.overlap_height = params.overlap_width = OVERLAP_SIZES[2]
-    cli(params)
-
-    # Add too PatchSizeTooSmallError
+        cli.main([
+            METHODS[0], WSIS[0],
+            "-ox", offset_x,
+            "-oy", offset_y
+        ])
 
 
-def test_offsets():
-    # OFFSET_X = (0, 1000, 1e10)
-    # OFFSET_Y = (0, 1000, 1e10)
-
-    params = Params()
-    params.offset_x = OFFSET_X[1]
-    params.offset_y = OFFSET_Y[1]
-    cli(params)
-
-    # Runs with no patches because the offsets are too large.
-    params.offset_x = OFFSET_X[2]
-    params.offset_y = OFFSET_Y[2]
-    with pytest.raises(IndexError):
-        cli(params)
-
-
-def test_cli_on_annotation():
-    # ONANNOTATIONS = (1.0, 0, 0.50000000001)
-    params = Params()
-
-    params.on_annotation = ONANNOTATIONS[1]
-    cli(params)
-
-    params.on_annotation = ONANNOTATIONS[2]
-    cli(params)
+def test_cli_on_annotation_too_small():
+    on_annotation = ONANNOTATIONS[1]
+    with pytest.raises(wp.error.OnParamError):
+        cli.main([
+            METHODS[1], WSIS[0], ANNOTATIONS[0],
+            "-oa", on_annotation
+        ])
 
 
 def test_cli_on_foreground():
     # ONFOREGROUNDS = (1.0, 0, 0.50000000001)
-    params = Params()
+    on_foreground = ONFOREGROUNDS[1]
+    with pytest.raises(wp.error.OnParamError):
+        cli.main([
+            METHODS[0], WSIS[0],
+            "-of", on_foreground
+        ])
 
-    params.on_foreground = ONFOREGROUNDS[1]
-    cli(params)
 
-    params.on_foreground = ONFOREGROUNDS[2]
-    cli(params)
-
-
-def test_cli_magnification():
-    # MAGNIFICATIONS = (10, 1, 80, 40, 20)
-    params = Params()
-
-    """ Not activated yet
-    params.magnification = MAGNIFICATIONS[1]
-    with pytest.raises(ValueError):
-        cli(params)
-
-    params.magnification = MAGNIFICATIONS[2]
-    with pytest.raises(ValueError):
-        cli(params)
-
-    params.magnification = MAGNIFICATIONS[3]
-    with pytest.raises(ValueError):
-        cli(params)
-
-    params.magnification = MAGNIFICATIONS[4]
-    with pytest.raises(ValueError):
-        cli(params)
-    """
+def test_cli_dot_to_bbox():
+    # DOT_BBOX_WIDTH = (10, 0, 1000)
+    dot_bbox_width = DOT_BBOX_WIDTH[1]
+    with pytest.raises(wp.error.SizeError):
+        cli.main([
+            METHODS[2], WSIS[0], ANNOTATIONS[1],
+            "-dw", dot_bbox_width
+        ])

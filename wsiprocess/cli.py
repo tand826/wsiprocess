@@ -193,8 +193,9 @@ def process_annotation(args, slide, rule):
         else:
             annotation.make_masks(slide, rule, foreground=True)
 
-    if not args.extract_foreground and "foreground" in annotation.classes:
-        annotation.classes.remove("foreground")
+    if hasattr(args, "extract_foreground"):
+        if not (args.extract_foreground and "foreground" in annotation.classes):
+            annotation.classes.remove("foreground")
 
     return annotation
 
@@ -202,7 +203,7 @@ def process_annotation(args, slide, rule):
 def main(command=None):
     args = Args(command)
     slide = wp.slide(args.wsi)
-    rule = wp.rule(args.rule) if args.rule else False
+    rule = wp.rule(args.rule) if hasattr(args, "rule") and args.rule else False
     annotation = process_annotation(args, slide, rule)
 
     if hasattr(args, "export_thumbs") and args.export_thumbs:

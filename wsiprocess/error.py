@@ -66,3 +66,15 @@ class SizeError(WsiProcessError):
     """
     def __init__(self, message):
         super().__init__(message)
+
+
+class OnParamError(WsiProcessError):
+    """Error of on_annotation.
+
+    on_annotation must be more than 0 and up to 1.
+
+    Args:
+        message (str): Message to show in the stdout.
+    """
+    def __init__(self, message):
+        super().__init__(message)

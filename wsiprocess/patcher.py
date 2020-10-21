@@ -91,9 +91,16 @@ class Patcher:
             overlap_height=0, offset_x=0, offset_y=0, on_foreground=0.5,
             on_annotation=0.5, start_sample=False, finished_sample=False,
             no_patches=False, crop_bbox=False):
-        Verify.verify_sizes(
-            slide.wsi_width, slide.wsi_height, patch_width, patch_height,
-            overlap_width, overlap_height)
+        self.verify = Verify(
+            save_to, slide.filestem, method, start_sample, finished_sample,
+            no_patches, crop_bbox)
+        self.verify.sizes(
+            slide.wsi_width, slide.wsi_height, offset_x, offset_y,
+            patch_width, patch_height, overlap_width, overlap_height,
+            annotation.dot_bbox_width, annotation.dot_bbox_height)
+        self.verify.on_params(on_annotation, on_foreground)
+        self.verify.make_dirs()
+
         self.slide = slide
         self.filepath = slide.filename
         self.filestem = slide.filestem
@@ -139,10 +146,6 @@ class Patcher:
         self.save_to = save_to
 
         self.result = {"result": []}
-        self.verify = Verify(
-            save_to, self.filestem, method, start_sample, finished_sample,
-            no_patches, crop_bbox)
-        self.verify.verify_dirs()
 
     def __str__(self):
         return "wsiprocess.patcher.Patcher {}".format(self.slide.filename)
@@ -510,11 +513,11 @@ class Patcher:
         """
         for cls in classes:
             if not self.no_patches:
-                self.verify.verify_dir(
+                self.verify.make_dir(
                     "{}/{}/patches/{}".format(
                         self.save_to, self.filestem, cls))
             if self.method == "segmentation":
-                self.verify.verify_dir(
+                self.verify.make_dir(
                     "{}/{}/masks/{}".format(self.save_to, self.filestem, cls))
 
         if self.start_sample:
@@ -541,7 +544,7 @@ class Patcher:
 
     def get_mini_patch_parallel(self, classes=False):
         for cls in classes:
-            self.verify.verify_dir(
+            self.verify.make_dir(
                 "{}/{}/mini_patches/{}".format(
                     self.save_to, self.filestem, cls))
 

@@ -5,7 +5,7 @@ rule files, etc. Mainly runs for cli.
 """
 
 from pathlib import Path
-from .error import SizeError
+from .error import SizeError, OnParamError
 
 
 class Verify:
@@ -47,30 +47,30 @@ class Verify:
         self.no_patches = no_patches
         self.crop_bbox = crop_bbox
 
-    def verify_dirs(self):
+    def make_dirs(self):
         """Ensure the output directories exists for each tasks.
         """
         base_dir = Path(self.save_to)/self.filestem
-        self.verify_dir(base_dir)
+        self.make_dir(base_dir)
         if self.method == "none" and not self.no_patches:
-            self.verify_dir(base_dir/"patches"/"foreground")
+            self.make_dir(base_dir/"patches"/"foreground")
         if self.method == "segmentation":
-            self.verify_dir(base_dir/"masks")
+            self.make_dir(base_dir/"masks")
         if self.start_sample:
-            self.verify_dir(base_dir/"start_sample")
+            self.make_dir(base_dir/"start_sample")
         if self.finished_sample:
-            self.verify_dir(base_dir/"finished_sample")
+            self.make_dir(base_dir/"finished_sample")
         if self.crop_bbox:
-            self.verify_dir(base_dir/"mini_patches")
+            self.make_dir(base_dir/"mini_patches")
 
     @staticmethod
-    def verify_dir(path):
+    def make_dir(path):
         """Make output directory.
         """
         if not Path(path).exists():
             Path(path).mkdir(parents=True)
 
-    def verify_magnification(self, slide, magnification):
+    def magnification(self, slide, magnification):
         """Check if the slide has data for the magnification the user specified.
 
         Args:
@@ -82,26 +82,45 @@ class Verify:
         msg = "{} {}".format(basemsg, slide.slide.magnification)
         assert slide.slide.magnification < magnification, msg
 
-    @staticmethod
-    def verify_sizes(
-            wsi_width, wsi_height, patch_width, patch_height,
-            overlap_width, overlap_height):
+    def sizes(
+            self, wsi_width, wsi_height, offset_x, offset_y,
+            patch_width, patch_height, overlap_width, overlap_height,
+            dot_bbox_width, dot_bbox_height):
         """Verify the sizes of the slide, the patch and the overlap area.
-
-        Args:
-            wsi_width (int): The width of the slide.
-            wsi_height (int): The height of the slide.
-            patch_width (int): The width of the output patches.
-            patch_height (int): The height of the output patches.
-            overlap_width (int): The width of the overlap areas of patches.
-            overlap_height (int): The height of the overlap areas of patches.
 
         Raises:
             wsiprocess.error.SizeError: If the sizes are invalid.
         """
-        if not (wsi_width > patch_width or wsi_height > patch_height):
+        if wsi_width < patch_width or wsi_height < patch_height:
             raise SizeError("WSI have to be larger than the patches.")
-        if not (patch_width > overlap_width or patch_height > overlap_height):
+        if wsi_width < offset_x or wsi_height < offset_y:
+            raise SizeError("Offset must be less than wsi size.")
+        if patch_width <= overlap_width or patch_height <= overlap_height:
             raise SizeError("Patches have to be larger than the overlap size.")
         if patch_width < 0 or patch_height < 0:
             raise SizeError("Patches has to be larger than 1.")
+        if dot_bbox_width == 0 or dot_bbox_height == 0:
+            raise SizeError("Translated bbox must be larger than 0.")
+        if dot_bbox_width > patch_width:
+            raise SizeError("Translated bbox is larger than patch width.")
+        if dot_bbox_height > patch_height:
+            raise SizeError("Translated bbox is larger than patch height.")
+
+    def on_params(self, on_annotation, on_foreground):
+        """Verify the ratio of on_annotation.
+
+        Args:
+            on_annotation (float): Overlap ratio of patches and annotations.
+            on_foreground (float): Overlap ratio of patches and foreground area
+
+        Raises:
+            wsiprocess.error.SizeError: If the sizes are invalid.
+        """
+        if not isinstance(on_annotation, bool):
+            if on_annotation <= 0 or on_annotation > 1:
+                raise OnParamError(
+                    "on_annotation is between 0 and 1 excluding 0.")
+
+        if on_foreground <= 0 or on_foreground > 1:
+            raise OnParamError(
+                "on_foreground is between 0 and 1 excluding 0.")
