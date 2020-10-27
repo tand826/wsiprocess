@@ -18,7 +18,7 @@ class AnnotationParser:
         mask_coords (dict): Coordinates of the masks.
     """
 
-    def __init__(self, path, slidename=False):
+    def __init__(self, path, slidename):
         self.path = path
         assert Path(self.path).exists(), "This annotation file does not exist."
 
@@ -32,9 +32,9 @@ class AnnotationParser:
             self.read_annotations(slidename)
             self.read_labels()
             self.read_coordinates(slidename)
-            self.verify_annotations()
 
-            self.parse_mask_coords()
+        self.verify_annotations()
+        self.parse_mask_coords()
 
     def read_classes(self):
         query = "select uid, name from Classes"
@@ -96,7 +96,6 @@ class AnnotationParser:
                 # type2 is rectangle annotation with lefttop and rightbottom
                 # type3 is polygon annotation or magicwand annotation.
                 # type4 is important position annotation with a dot.
-                # type5 is circle anntoation.
                 coordinate = [
                     [coord["x"], coord["y"]]
                     for order, coord in value.items()
@@ -109,19 +108,21 @@ class AnnotationParser:
                 right = value[2]["x"]
                 top = value[1]["y"]
                 bottom = value[2]["y"]
-                center_x = (left + right) / 2
-                center_y = (top + bottom) / 2
-                radius = np.abs((right - left) / 2)
-                coordinate = self.bbox_to_circle(center_x, center_y, radius)
+                coordinate = self.bbox_to_circle(left, top, right, bottom)
                 self.mask_coords[cls].append(coordinate)
+
             else:
                 raise NotImplementedError("Unknown annotation type")
 
-    def bbox_to_circle(self, center_x, center_y, radius):
-        coordinate = list()
-        for theta in np.linspace(0, 2*np.pi, int(radius*2)):
-            coordinate.append([
+    def bbox_to_circle(self, left, top, right, bottom):
+        center_x = (left + right) / 2
+        center_y = (top + bottom) / 2
+        radius = np.abs((right - left) / 2)
+        coordinate = [
+            [
                 int(center_x + np.cos(theta) * radius),
                 int(center_y + np.sin(theta) * radius)
-            ])
+            ]
+            for theta in np.linspace(0, 2*np.pi, int(radius*2))
+        ]
         return coordinate
