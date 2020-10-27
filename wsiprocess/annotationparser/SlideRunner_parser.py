@@ -11,6 +11,7 @@ class AnnotationParser:
 
     Args:
         path (str): Path to the annotation file.
+        slidename (str): Basename of the slide.
 
     Attributes:
         path (str): Path to the annotation file.
