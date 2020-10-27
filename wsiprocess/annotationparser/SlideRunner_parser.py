@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import numpy as np
 from collections import defaultdict
 import sqlite3
 from pathlib import Path
@@ -104,7 +105,23 @@ class AnnotationParser:
 
             elif self.annotations[annoId]["type"] == 5:
                 # type5 is circle anntoation.
-                pass
-
+                left = value[1]["x"]
+                right = value[2]["x"]
+                top = value[1]["y"]
+                bottom = value[2]["y"]
+                center_x = (left + right) / 2
+                center_y = (top + bottom) / 2
+                radius = np.abs((right - left) / 2)
+                coordinate = self.bbox_to_circle(center_x, center_y, radius)
+                self.mask_coords[cls].append(coordinate)
             else:
                 raise NotImplementedError("Unknown annotation type")
+
+    def bbox_to_circle(self, center_x, center_y, radius):
+        coordinate = list()
+        for theta in np.linspace(0, 2*np.pi, int(radius*2)):
+            coordinate.append([
+                int(center_x + np.cos(theta) * radius),
+                int(center_y + np.sin(theta) * radius)
+            ])
+        return coordinate
