@@ -37,6 +37,8 @@ class AnnotationParser:
         self.parse_mask_coords()
 
     def read_classes(self):
+        """Read classes from Classes table.
+        """
         query = "select uid, name from Classes"
         self.cursor.execute(query)
         self.classes = list()
@@ -46,6 +48,9 @@ class AnnotationParser:
             self.uid2cls[uid] = name
 
     def read_slides(self):
+        """Read slides from Slides table.
+        A slide has unique ID and filename.
+        """
         self.cursor.execute("select uid, filename from Slides")
         self.slidename2uid = {
             filename: uid
@@ -53,9 +58,15 @@ class AnnotationParser:
         }
 
     def read_annotations(self, slidename):
+        """Read annotations from Annotations table.
+
+        A annotation has unique ID, Annotation Type, and Class.
+
+        Args:
+            slidename (str): Name of the slide to filter the data.
+        """
         query = "select uid, type, agreedClass from Annotations"
-        if slidename:
-            query += f" where slide=='{self.slidename2uid[slidename]}'"
+        query += f" where slide=='{self.slidename2uid[slidename]}'"
         self.cursor.execute(query)
         self.annotations = {
             uid: {"type": annoType, "class": cls}
@@ -63,6 +74,10 @@ class AnnotationParser:
         }
 
     def read_labels(self):
+        """Read labels from Annotations_label table.
+
+        A label has Annotation ID (sharing with Annotations), and Class.
+        """
         query = "select class, annoId from Annotations_label"
         self.cursor.execute(query)
         self.labels = {
@@ -71,22 +86,35 @@ class AnnotationParser:
         }
 
     def read_coordinates(self, slidename):
+        """Read coordinates from Annotations_coordinates table.
+
+        A coordinate has coordinate of x and y, Annotation ID and the order
+        of the coordinate.
+
+        Args:
+            slidename (str): Name of the slide to filter the data.
+        """
         query = "select coordinateX, coordinateY, annoId, orderIdx"
         query += " from Annotations_coordinates"
-        if slidename:
-            query += f" where slide=='{self.slidename2uid[slidename]}'"
+        query += f" where slide=='{self.slidename2uid[slidename]}'"
         self.cursor.execute(query)
         self.coordinates = defaultdict(dict)
         for x, y, annoId, order in self.cursor.fetchall():
             self.coordinates[annoId][order] = {"x": x, "y": y}
 
     def verify_annotations(self):
+        """Verify the number of annotations.
+
+        The numbers of annotations and labels and coordinates must be same.
+        """
         annotation_counts = len(self.annotations)
         if not len(self.labels) == len(self.coordinates) == annotation_counts:
             raise AnnotationLabelError("Some annotations have no label.")
 
     def parse_mask_coords(self):
         """Parse the coordinates of the mask.
+
+        Parse the coordinates to make a list containing lists of coordinates.
         """
         for annoId, value in self.coordinates.items():
             cls = self.uid2cls[self.labels[annoId]]
@@ -115,6 +143,18 @@ class AnnotationParser:
                 raise NotImplementedError("Unknown annotation type")
 
     def bbox_to_circle(self, left, top, right, bottom):
+        """Convert coordinates of bounding box to circle.
+
+        Args:
+            left (int): Smaller coordinate of in the x-axis direction
+            top (int): Smaller coordinate of in the y-axis direction
+            right (int): Larger coordinate of in the x-axis direction
+            bottom (int): Larger coordinate of in the y-axis direction
+
+        Returns:
+            coordinate (list(list)): List of list which contains one
+                coordinate representing a circle in coordinates.
+        """
         center_x = (left + right) / 2
         center_y = (top + bottom) / 2
         radius = np.abs((right - left) / 2)
