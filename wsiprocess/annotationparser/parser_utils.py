@@ -20,8 +20,11 @@ def detect_type(path):
     elif path.suffix == ".json":
         with open(path, "r") as f:
             data = json.load(f)
-        if data["annotationTool"] == "WSIDissector":
-            return "WSIDissector"
+        if "annotationTool" in data:
+            if data["annotationTool"] == "WSIDissector":
+                return "WSIDissector"
+        elif data[0].keys() >= {"type", "id", "geometry", "properties"}:
+            return "QuPath"
     elif path.suffix == ".sqlite":
         try:
             con = sqlite3.connect(path)

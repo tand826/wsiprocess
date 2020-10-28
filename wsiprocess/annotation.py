@@ -52,9 +52,6 @@ class Annotation:
     def read_annotation(self, annotation_type=False):
         """Parse the annotation data.
 
-        WSIDissector is going to be added as an annotation type.
-        Currently, ASAP is available.
-
         Args:
             annotation_type (str): If provided, pass the auto type detection.
         """
@@ -69,6 +66,9 @@ class Annotation:
         elif annotation_type == "SlideRunner":
             from .annotationparser.SlideRunner_parser import AnnotationParser
             parsed = AnnotationParser(self.path, self.slidename)
+        elif annotation_type == "QuPath":
+            from .annotationparser.QuPath_parser import AnnotationParser
+            parsed = AnnotationParser(self.path)
         elif annotation_type == "Empty":
             class AnnotationParser:
                 classes = []
