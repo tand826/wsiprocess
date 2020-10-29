@@ -10,7 +10,7 @@ TESTDIR = "./"
 
 METHODS = ("none", "classification", "detection", "segmentation", "foo")
 WSIS = (
-    f"{SAMPLEDIR}/test.tiff",
+    f"{TESTDIR}/test.tiff",
     None,
     f"{TESTDIR}/corrupted.ndpi")
 ANNOTATIONS = (
@@ -43,7 +43,8 @@ def test_make_small_pyramidal_tiff():
         slide = pyvips.Image.new_from_file(f"{SAMPLEDIR}/CMU-1.ndpi")
         slide_small = slide.crop(7000, 18000, 1280, 1280)
         slide_small.tiffsave(
-            "test.tiff", compression="jpeg", pyramid=True, tile=True)
+            f"{TESTDIR}/test.tiff", compression="jpeg", pyramid=True,
+            tile=True)
 
 
 def test_cli_pass():
