@@ -24,15 +24,14 @@ class AnnotationParser:
         assert Path(self.path).exists(), "This annotation file does not exist."
 
         self.mask_coords = defaultdict(list)
-
         with sqlite3.connect(path) as con:
             self.cursor = con.cursor()
 
             self.read_classes()
             self.read_slides()
-            self.read_annotations(slidename)
+            self.read_annotations(Path(slidename).name)
             self.read_labels()
-            self.read_coordinates(slidename)
+            self.read_coordinates(Path(slidename).name)
 
         self.verify_annotations()
         self.parse_mask_coords()
