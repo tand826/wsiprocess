@@ -35,7 +35,7 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
     1. Install the following packages with your package manager.
 
         ```
-        build-essential pkg-config libglib2.0-dev libexpat1-dev libtiff5-dev libjpeg-turbo8-dev libgsf-1-dev openslide-tools libpng-dev
+        build-essential pkg-config libglib2.0-dev libexpat1-dev libtiff5-dev libjpeg-turbo8-dev libgsf-1-dev libopenslide-dev libpng-dev
         ```
 
     2. Download libvips v8.10.1 from [here](https://github.com/libvips/libvips/releases).
