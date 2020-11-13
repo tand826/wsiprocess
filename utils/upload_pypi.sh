@@ -1,5 +1,5 @@
 cd ../tests
-pytest tests
+pytest tests.py
 
 cd ../
 rm -f -r wsiprocess.egg-info/* dist/*
