@@ -22,6 +22,7 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 
 [WSIPatcher](https://github.com/tand826/WSIPatcher) will give you GUI.
 
+See [Wiki](https://github.com/tand826/wsiprocess/wiki) for [available aplications for annotation](https://github.com/tand826/wsiprocess/wiki/annotation_applications), and [speed comparison](https://github.com/tand826/wsiprocess/wiki/speed_comparison) between patched images and loading from raw WSIs.
 
 
 # Installation
@@ -358,14 +359,14 @@ pytest tests.py
 # Citation
 
 ```
-@software{takumi_ando_2020_4065072,
+@software{takumi_ando_2020_4269953,
   author       = {Takumi Ando},
-  title        = {tand826/wsiprocess: version 0.6},
-  month        = oct,
+  title        = {tand826/wsiprocess: version 0.7},
+  month        = nov,
   year         = 2020,
   publisher    = {Zenodo},
-  version      = {v0.6},
-  doi          = {10.5281/zenodo.4065072},
-  url          = {https://doi.org/10.5281/zenodo.4065072}
+  version      = {v0.7},
+  doi          = {10.5281/zenodo.4269953},
+  url          = {https://doi.org/10.5281/zenodo.4269953}
 }
 ```
