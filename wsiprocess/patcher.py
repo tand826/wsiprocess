@@ -124,9 +124,8 @@ class Patcher:
             self.offset_y,
             self.wsi_height,
             patch_height - overlap_height)][:-1]
-        self.iterator = list(product(self.x_lefttop, self.y_lefttop))
-        self.last_x = self.wsi_width - patch_width
-        self.last_y = self.wsi_height - patch_height
+        self.last_x = self.slide.width - patch_width
+        self.last_y = self.slide.height - patch_height
 
         self.start_sample = start_sample
         self.finished_sample = finished_sample
