@@ -164,7 +164,7 @@ wsiprocess segmentation xxx.tiff xxx.xml
 #### Extract patches with mask of foreground area for evaluation or inference of models. The mask has pixels with 1 as foreground which are originally from 10 to 230 in the scale of 0-255, and pixels with 0 as background which are originally from 0 to 10 and from 230 to 255.
 
 ```bash
-wsiprocess none xxx.tif --minmax 10-230
+wsiprocess evaluation xxx.tif --minmax 10-230
 ```
 
 #### Just to check the thumbnails to see where the annotations should be.
@@ -338,14 +338,14 @@ pytest tests.py
 # Citation
 
 ```
-@software{takumi_ando_2020_4269953,
+@software{takumi_ando_2021_4629396,
   author       = {Takumi Ando},
-  title        = {tand826/wsiprocess: version 0.7},
-  month        = nov,
-  year         = 2020,
+  title        = {tand826/wsiprocess: version 0.8},
+  month        = mar,
+  year         = 2021,
   publisher    = {Zenodo},
-  version      = {v0.7},
-  doi          = {10.5281/zenodo.4269953},
-  url          = {https://doi.org/10.5281/zenodo.4269953}
+  version      = {v0.8},
+  doi          = {10.5281/zenodo.4629396},
+  url          = {https://doi.org/10.5281/zenodo.4629396}
 }
 ```
