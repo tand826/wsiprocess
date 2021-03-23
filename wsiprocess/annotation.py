@@ -149,7 +149,7 @@ class Annotation:
                 defines foreground as the pixels with the value between "min"
                 and "max".
         """
-        self.base_masks(slide.wsi_height, slide.wsi_width)
+        self.base_masks(slide.height, slide.width)
         self.main_masks()
         if foreground:
             self.make_foreground_mask(
@@ -281,11 +281,7 @@ class Annotation:
         """
         if "foreground" in self.classes:
             return
-        thumb = slide.get_thumbnail(size)
-        thumb = np.ndarray(
-            buffer=thumb.write_to_memory(),
-            dtype=np.uint8,
-            shape=[thumb.height, thumb.width, thumb.bands])
+        thumb = np.asarray(slide.get_thumbnail(size))
         thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
         if method == "minmax":
             mask = self._minmax_mask(thumb_gray, min_, max_)
