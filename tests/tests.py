@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 import pytest
 import pyvips
+import openslide
 import wsiprocess as wp
 import wsiprocess.cli as cli
 
@@ -73,7 +74,7 @@ def test_cli_wsi_blank():
 
 def test_cli_wsi_corrupted():
     wsi = WSIS[2]
-    with pytest.raises(pyvips.error.Error):
+    with pytest.raises(openslide.lowlevel.OpenSlideUnsupportedFormatError):
         cli.main([METHODS[0], wsi])
 
 
