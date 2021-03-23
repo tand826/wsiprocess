@@ -36,12 +36,10 @@ class Args:
             help="The offset pixel along the y-axis.")
         parser.add_argument(
             "-dw", "--dot_bbox_width", type=int, default=30,
-            help="Width of bbox translated from dot annotation."
-        )
+            help="Width of bbox translated from dot annotation.")
         parser.add_argument(
             "-dh", "--dot_bbox_height", type=int,
-            help="Height of bbox translated from dot annotation."
-        )
+            help="Height of bbox translated from dot annotation.")
         parser.add_argument(
             "-ss", "--start_sample", action="store_true",
             help="Generate samples at the start of the process.")
@@ -54,6 +52,9 @@ class Args:
         parser.add_argument(
             "-ep", "--extract_patches", action="store_true",
             help="[Not Available]Extract the patches and save them as images.")
+        parser.add_argument(
+            "-ve", "--verbose", action="store_true",
+            help="Show progress bar while patching.")
 
     def set_wsi_arg(self, parser):
         parser.add_argument(
@@ -233,7 +234,8 @@ def main(command=None):
         start_sample=args.start_sample,
         finished_sample=args.finished_sample,
         no_patches=args.no_patches,
-        crop_bbox=crop_bbox)
+        crop_bbox=crop_bbox,
+        verbose=args.verbose)
     patcher.get_patch_parallel(annotation.classes)
 
     if args.method == "detection":

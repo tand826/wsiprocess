@@ -8,7 +8,7 @@ import wsiprocess.cli as cli
 SAMPLEDIR = "../sample"
 TESTDIR = "./"
 
-METHODS = ("none", "classification", "detection", "segmentation", "foo")
+METHODS = ("evaluation", "classification", "detection", "segmentation", "foo")
 WSIS = (
     f"{TESTDIR}/test.tiff",
     None,
@@ -35,6 +35,7 @@ MAGNIFICATIONS = ("10", "1", "80", "40", "20")
 VOC_STYLE = ("False", "True")
 COCO_STYLE = ("False", "True")
 YOLO_STYLE = ("False", "True")
+VERBOSE = ("False", "True")
 
 
 def test_make_small_pyramidal_tiff():
@@ -236,3 +237,11 @@ def test_cli_dot_to_bbox():
             METHODS[2], WSIS[0], ANNOTATIONS[1],
             "-dw", dot_bbox_width
         ])
+
+
+def test_verbose():
+    cli.main([METHODS[0], WSIS[0], "-ve"])
+    cli.main([METHODS[1], WSIS[0], ANNOTATIONS[0], "-ve"])
+
+    cli.main([METHODS[0], WSIS[0]])
+    cli.main([METHODS[1], WSIS[0], ANNOTATIONS[0]])

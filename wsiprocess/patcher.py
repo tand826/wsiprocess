@@ -5,7 +5,9 @@
 import random
 from itertools import product
 import json
+
 from joblib import Parallel, delayed
+from tqdm import tqdm
 import numpy as np
 import cv2
 from pathlib import Path
@@ -44,6 +46,7 @@ class Patcher:
             "no_patches" is set, Patcher extracts patches.
         no_patches (bool, optional): If set, Patcher runs without extracting
             patches and saves them to disk.
+        verbose (bool, optional): If set, a progress bar appears when patching.
 
     Attributes:
         slide (wsiprocess.slide.Slide): Slide object.
@@ -74,6 +77,7 @@ class Patcher:
             finish.
         extract_patches (bool): Whether to save patches when Patcher runs.
         no_patches (bool): Whether to save patches when Patcher runs.
+        verbose (bool, optional): If set, a progress bar appears when patching.
 
         x_lefttop (list): Offsets of patches to the x-axis direction except for
             the right edge.
@@ -91,7 +95,7 @@ class Patcher:
             patch_width=256, patch_height=256, overlap_width=0,
             overlap_height=0, offset_x=0, offset_y=0, on_foreground=0.5,
             on_annotation=0.5, start_sample=False, finished_sample=False,
-            no_patches=False, crop_bbox=False):
+            no_patches=False, crop_bbox=False, verbose=False):
         self.verify = Verify(
             save_to, slide.filestem, method, start_sample, finished_sample,
             no_patches, crop_bbox)
@@ -125,13 +129,17 @@ class Patcher:
             self.offset_y,
             self.wsi_height,
             patch_height - overlap_height)][:-1]
-        self.iterator = list(product(self.x_lefttop, self.y_lefttop))
+
         self.last_x = self.slide.width - patch_width
         self.last_y = self.slide.height - patch_height
+
+        self.get_iterator()
 
         self.start_sample = start_sample
         self.finished_sample = finished_sample
         self.no_patches = no_patches
+
+        self.verbose = verbose
 
         self.on_foreground = on_foreground
         self.annotation = annotation
@@ -150,6 +158,15 @@ class Patcher:
 
     def __str__(self):
         return "wsiprocess.patcher.Patcher {}".format(self.slide.filename)
+
+    def get_iterator(self):
+        self.iterator = list(product(self.x_lefttop, self.y_lefttop))
+        bottomedge = [(x, self.last_y) for x in self.x_lefttop]
+        rightedge = [(self.last_x, y) for y in self.y_lefttop]
+        rightbottom = [(self.last_x, self.last_y)]
+        self.iterator += bottomedge
+        self.iterator += rightedge
+        self.iterator += rightbottom
 
     def save_patch_result(self, x, y, cls):
         """Save the extracted patch data to result
@@ -526,18 +543,25 @@ class Patcher:
         if self.start_sample:
             self.get_random_sample("start", 3)
 
-        parallel = Parallel(n_jobs=cores, backend="threading", verbose=0)
+        def Runner(**joblib_args):
+            def run(**tqdm_args):
+                def tmp(op_iter):
+                    def progress(args): return lambda x: tqdm(x, **args)
+                    bar = progress(tqdm_args)
+                    return Parallel(**joblib_args)(bar(op_iter))
+                return tmp
+            return run
+
+        if self.verbose:
+            run = Runner(n_jobs=cores, backend="threading", verbose=0)
+            runner = run(
+                desc=f"[{self.slide.filename} {self.p_width}x{self.p_height}]")
+        else:
+            runner = Parallel(n_jobs=cores, backend="threading", verbose=0)
+
         # from the left top to just before the right bottom.
-        parallel([delayed(self.get_patch)(x, y, classes)
-                  for x, y in self.iterator])
-        # the bottom edge.
-        parallel([delayed(self.get_patch)(x, self.last_y, classes)
-                  for x in self.x_lefttop])
-        # the right edge
-        parallel([delayed(self.get_patch)(self.last_x, y, classes)
-                  for y in self.y_lefttop])
-        # right bottom patch
-        self.get_patch(self.last_x, self.last_y, classes)
+        runner([delayed(self.get_patch)(x, y, classes)
+                for x, y in self.iterator])
 
         # save results
         self.save_results()
