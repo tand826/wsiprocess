@@ -104,14 +104,14 @@ class Args:
             help="Method to use.")
         self.method_args.required = True
 
-    def set_none_args(self):
-        parser_none = self.method_args.add_parser(
-            "none",
-            help="Arguments for not specific method.")
-        self.set_wsi_arg(parser_none)
-        self.add_on_foreground(parser_none)
-        self.add_binarization_method(parser_none)
-        self.set_common_args(parser_none)
+    def set_evaluation_args(self):
+        parser_eval = self.method_args.add_parser(
+            "evaluation",
+            help="Arguments for methods with no annotation data.")
+        self.set_wsi_arg(parser_eval)
+        self.add_on_foreground(parser_eval)
+        self.add_binarization_method(parser_eval)
+        self.set_common_args(parser_eval)
 
     def set_classification_args(self):
         """ Arguments for classification """
@@ -163,7 +163,7 @@ class Args:
         self.set_base_parser()
 
         self.set_method_args()
-        self.set_none_args()
+        self.set_evaluation_args()
         self.set_classification_args()
         self.set_detection_args()
         self.set_segmentation_args()
@@ -172,7 +172,7 @@ class Args:
 
 
 def process_annotation(args, slide, rule):
-    if args.method == "none":
+    if args.method == "evaluation":
         annotation = wp.annotation("")
         annotation.dot_to_bbox(args.dot_bbox_width, args.dot_bbox_height)
         if args.minmax:
@@ -212,7 +212,10 @@ def main(command=None):
             thumbs_dir.mkdir(parents=True)
         annotation.export_thumb_masks(thumbs_dir)
 
-    on_annotation = False if args.method == "none" else args.on_annotation
+    if args.method == "evaluation":
+        on_annotation = False
+    else:
+        on_annotation = args.on_annotation
     crop_bbox = args.crop_bbox if hasattr(args, "crop_bbox") else False
 
     patcher = wp.patcher(

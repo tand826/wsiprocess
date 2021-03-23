@@ -75,7 +75,7 @@ class Annotation:
                 mask_coords = {}
 
                 def __init__(self, path):
-                    print("Annotation File is Empty")
+                    pass
             parsed = AnnotationParser(self.path)
         self.classes = parsed.classes
         self.mask_coords = parsed.mask_coords
