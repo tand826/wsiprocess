@@ -52,7 +52,7 @@ class Verify:
         """
         base_dir = Path(self.save_to)/self.filestem
         self.make_dir(base_dir)
-        if self.method == "none" and not self.no_patches:
+        if self.method == "evaluation" and not self.no_patches:
             self.make_dir(base_dir/"patches"/"foreground")
         if self.method == "segmentation":
             self.make_dir(base_dir/"masks")

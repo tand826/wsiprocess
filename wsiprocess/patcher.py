@@ -18,8 +18,9 @@ class Patcher:
 
     Args:
         slide (wsiprocess.slide.Slide): Slide object.
-        method (str): Method name to run. One of {"none", "classification",
-            "detection", "segmentation}. Characters are converted to lowercase.
+        method (str): Method name to run. One of {"evaluation",
+            "classification", "detection", "segmentation}. Characters are
+            converted to lowercase.
         annotation (wsiprocess.annotation.Annotation, optional):
             Annotation object.
         save_to (str, optional): The root of the output directory.
@@ -50,8 +51,8 @@ class Patcher:
         wsi_height (int): Height of the slide.
         filepath (str): Path to the whole slide image.
         filestem (str): Stem of the file name.
-        method (str): Method name to run. One of {"none", "classification",
-            "detection", "segmentation}
+        method (str): Method name to run. One of {"evaluation",
+            "classification", "detection", "segmentation}
         annotation (wsiprocess.annotation.Annotation):
             Annotation object.
         masks (dict): Masks to show the location of classes.
@@ -159,7 +160,7 @@ class Patcher:
             cls (str): Class of the patch or the bounding box or the segmented
                 area.
         """
-        if self.method == "none":
+        if self.method == "evaluation":
             self.result["result"].append({"x": x,
                                           "y": y,
                                           "w": self.p_width,
@@ -280,7 +281,8 @@ class Patcher:
         left_on_patch = (patch_left <= bblefts) & (bblefts <= patch_right)
         right_on_patch = (patch_left <= bbrights) & (bbrights <= patch_right)
         top_on_patch = (patch_top <= bbtops) & (bbtops <= patch_bottom)
-        bottom_on_patch = (patch_top <= bbbottoms) & (bbbottoms <= patch_bottom)
+        bottom_on_patch = (patch_top <= bbbottoms) & (
+            bbbottoms <= patch_bottom)
 
         topleft_on_patch = left_on_patch & top_on_patch
         topright_on_patch = right_on_patch & top_on_patch
@@ -317,7 +319,8 @@ class Patcher:
         left_on_patch = (patch_left <= bblefts) & (bblefts <= patch_right)
         right_on_patch = (patch_left <= bbrights) & (bbrights <= patch_right)
         top_on_patch = (patch_top <= bbtops) & (bbtops <= patch_bottom)
-        bottom_on_patch = (patch_top <= bbbottoms) & (bbbottoms <= patch_bottom)
+        bottom_on_patch = (patch_top <= bbbottoms) & (
+            bbbottoms <= patch_bottom)
 
         # One side is on the patch
         leftside_on_patch = (left_on_patch) &\

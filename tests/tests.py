@@ -157,7 +157,7 @@ def test_cli_rule_empty():
 def test_cli_save_to_root():
     # SAVE_TOS = (".", "/", "")
     save_to = SAVE_TOS[1]
-    with pytest.raises(PermissionError):
+    with pytest.raises(OSError):
         cli.main([
             METHODS[0], WSIS[0],
             "-st", save_to
