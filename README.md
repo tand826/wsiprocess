@@ -6,6 +6,7 @@
 ![Downloads](https://pepy.tech/badge/wsiprocess)
 ![PyPI](https://img.shields.io/pypi/v/wsiprocess)
 ![conda](https://anaconda.org/tand826/wsiprocess/badges/version.svg)
+
 </div>
 
 Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
@@ -24,31 +25,11 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 
 See [Wiki](https://github.com/tand826/wsiprocess/wiki) for [available aplications for annotation](https://github.com/tand826/wsiprocess/wiki/annotation_applications), and [speed comparison](https://github.com/tand826/wsiprocess/wiki/speed_comparison) between patched images and loading from raw WSIs.
 
-
 # Installation
 
 ### pip User
 
-1. Install [libvips](https://libvips.github.io/libvips/)
-
-  - Linux
-
-    1. Install the following packages with your package manager.
-
-        ```
-        build-essential pkg-config libglib2.0-dev libexpat1-dev libtiff5-dev libjpeg-turbo8-dev libgsf-1-dev libopenslide-dev libpng-dev
-        ```
-
-    2. Download libvips v8.10.1 from [here](https://github.com/libvips/libvips/releases).
-
-    3. Install libvips
-        ```
-        tar xvfz vips-8.10.1.tar.gz
-        cd vips-8.10.1 && ./configure && make -j && sudo make install
-        ```
-
-   - MacOS - `brew install vips`
-   - Windows - Install tarball from [here](https://github.com/libvips/build-win64)
+1. Install [openslide](https://openslide.org/) or [libvips](https://libvips.github.io/libvips/). See [wiki] for installation hints.
 
 2. Install wsiprocess
 
@@ -204,7 +185,6 @@ wsiprocess detection xxx.tif xxx.xml --crop_bbox
 wsiprocess classification xxx.tif xxx.xml --dot_bbox_width 100
 ```
 
-
 - Need recommendation for choice of arguments? Type `wsiprocess -h` or `wsiprocess [your method] -h` to see options.
 
 ### As a docker command line tool (not working on)
@@ -218,7 +198,6 @@ docker run --name wsiprocess_container -v [your files directory]:/data -it -d ws
 ```
 
 ### Convert to VOC / COCO / YOLO style format
-
 
 ```bash
 # If already extracted patches...

@@ -100,7 +100,7 @@ class Patcher:
             save_to, slide.filestem, method, start_sample, finished_sample,
             no_patches, crop_bbox)
         self.verify.sizes(
-            slide.wsi_width, slide.wsi_height, offset_x, offset_y,
+            slide.width, slide.height, offset_x, offset_y,
             patch_width, patch_height, overlap_width, overlap_height,
             annotation.dot_bbox_width, annotation.dot_bbox_height)
         self.verify.on_params(on_annotation, on_foreground)
@@ -110,8 +110,8 @@ class Patcher:
         self.filepath = slide.filename
         self.filestem = slide.filestem
         self.method = method.lower()
-        self.wsi_width = slide.wsi_width
-        self.wsi_height = slide.wsi_height
+        self.wsi_width = slide.width
+        self.wsi_height = slide.height
         self.p_width = int(patch_width)
         self.p_height = int(patch_height)
         self.p_area = patch_width * patch_height
@@ -157,7 +157,7 @@ class Patcher:
         self.result = {"result": []}
 
     def __str__(self):
-        return "wsiprocess.patcher.Patcher {}".format(self.slide.filename)
+        return "wsiprocess.patcher.Patcher {}".format(self.slide.path)
 
     def get_iterator(self):
         self.iterator = list(product(self.x_lefttop, self.y_lefttop))
@@ -517,10 +517,10 @@ class Patcher:
             on_annotation_classes = ["foreground"]
         for cls in on_annotation_classes:
             if not self.no_patches:
-                patch = self.slide.slide.crop(
+                patch = self.slide.crop(
                     x, y, self.p_width, self.p_height)
-                patch.jpegsave(
-                    "{}/{}/patches/{}/{:06}_{:06}.jpg".format(
+                patch.save(
+                    "{}/{}/patches/{}/{:06}_{:06}.png".format(
                         self.save_to, self.filestem, cls, x, y))
             self.save_patch_result(x, y, cls)
 
@@ -578,13 +578,13 @@ class Patcher:
         for patch in self.result["result"]:
             for bb in patch["bbs"]:
                 if bb["class"] in classes:
-                    mini_patch = self.slide.slide.crop(
+                    mini_patch = self.slide.crop(
                         patch["x"] + bb["x"],
                         patch["y"] + bb["y"],
                         bb["w"],
                         bb["h"])
-                    mini_patch.jpegsave(
-                        "{}/{}/mini_patches/{}/{:06}_{:06}.jpg".format(
+                    mini_patch.save(
+                        "{}/{}/mini_patches/{}/{:06}_{:06}.png".format(
                             self.save_to, self.filestem, bb["class"],
                             patch["x"] + bb["x"], patch["y"] + bb["y"]))
 
@@ -627,7 +627,7 @@ class Patcher:
         for i in range(sample_count):
             x = random.choice(self.x_lefttop)
             y = random.choice(self.y_lefttop)
-            patch = self.slide.slide.crop(x, y, self.p_width, self.p_height)
-            patch.pngsave(
+            patch = self.slide.crop(x, y, self.p_width, self.p_height)
+            patch.save(
                 "{}/{}/{}_sample/{:06}_{:06}.png".format(
                     self.save_to, self.filestem, phase, x, y))

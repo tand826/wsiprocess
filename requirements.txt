@@ -1,7 +1,0 @@
-joblib
-lxml
-numpy
-opencv-python
-pillow
-pyvips
-tqdm
