@@ -1,24 +1,31 @@
-wsiprocess.converters
-=====================
+wsiprocess.converters package
+=============================
 
+Submodules
+----------
 
-wsiprocess.converters.wsiprocess\_to\_coco
-------------------------------------------
 
 .. automodule:: wsiprocess.converters.wsiprocess_to_coco
    :members:
    :undoc-members:
+   :show-inheritance:
 
-wsiprocess.converters.wsiprocess\_to\_voc
----------------------------------------
 
 .. automodule:: wsiprocess.converters.wsiprocess_to_voc
    :members:
    :undoc-members:
+   :show-inheritance:
 
-wsiprocess.converters.wsiprocess\_to\_yolo
-----------------------------------------
 
 .. automodule:: wsiprocess.converters.wsiprocess_to_yolo
    :members:
    :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: wsiprocess.converters
+   :members:
+   :undoc-members:
+   :show-inheritance:
