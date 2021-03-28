@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-from pathlib import Path
 from lxml import etree
 import numpy as np
 
+from .parser_utils import BaseParser
 
-class AnnotationParser:
+
+class ASAPAnnotation(BaseParser):
     """Annotation Parser for ASAP.
 
     Args:
@@ -19,8 +20,7 @@ class AnnotationParser:
     """
 
     def __init__(self, path):
-        self.path = path
-        assert Path(self.path).exists(), "This annotation file does not exist."
+        super().__init__(path)
 
         tree = etree.parse(self.path)
         self.annotations = tree.xpath(
@@ -31,7 +31,6 @@ class AnnotationParser:
             group.attrib["Name"]
             for group in self.annotation_groups
         ]
-        self.mask_coords = {}
         for cls in self.classes:
             self.mask_coords[cls] = []
         self.read_mask_coords()

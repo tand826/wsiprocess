@@ -9,7 +9,8 @@ def detect_type(path):
     """Detect the type of input file.
 
     Returns:
-        file_type (str): One of {"ASAP", "WSIDissector", "Empty"}
+        file_type (str): One of {"ASAP", "WSIDissector", "SlideRunner",
+            "WSIDissector", "Empty"}
     """
     path = Path(path)
     if path.suffix == ".xml":
@@ -40,3 +41,20 @@ def detect_type(path):
     else:
         file_type = "Empty"
     return file_type
+
+
+class BaseParser:
+    """Base class for Parsers"""
+
+    def __init__(self, path):
+        """
+        Args:
+            path (str): Path to the annotation file.
+        Attributes:
+            path (str): Path to the annotation file.
+        """
+        self.path = path
+        assert Path(self.path).exists(), "This annotation file does not exist."
+
+        self.classes = []
+        self.mask_coords = {}

@@ -5,8 +5,10 @@ import sqlite3
 from pathlib import Path
 from wsiprocess.error import AnnotationLabelError
 
+from .parser_utils import BaseParser
 
-class AnnotationParser:
+
+class SlideRunnerAnnotation(BaseParser):
     """Annotation Parser for SlideRunner v1.31.0
 
     Args:
@@ -20,8 +22,7 @@ class AnnotationParser:
     """
 
     def __init__(self, path, slidename):
-        self.path = path
-        assert Path(self.path).exists(), "This annotation file does not exist."
+        super().__init__(path)
 
         self.mask_coords = defaultdict(list)
         with sqlite3.connect(path) as con:

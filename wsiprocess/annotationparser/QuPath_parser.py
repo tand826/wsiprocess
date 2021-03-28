@@ -1,10 +1,11 @@
 import json
-from pathlib import Path
 from collections import defaultdict
 from wsiprocess.error import AnnotationLabelError
 
+from .parser_utils import BaseParser
 
-class AnnotationParser:
+
+class QuPathAnnotation(BaseParser):
     """Annotation Parser for QuPath.
 
     Args:
@@ -18,8 +19,7 @@ class AnnotationParser:
     """
 
     def __init__(self, path):
-        self.path = path
-        assert Path(self.path).exists(), "This annotation file does not exist."
+        super().__init__(path)
 
         with open(path, "r") as f:
             self.annotations = json.load(f)

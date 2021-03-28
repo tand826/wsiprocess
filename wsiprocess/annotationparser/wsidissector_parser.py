@@ -2,8 +2,10 @@
 
 import json
 
+from .parser_utils import BaseParser
 
-class AnnotationParser:
+
+class WSIDissectorAnnotation(BaseParser):
     """Annotation parser for WSIDissector
 
     Args:
@@ -18,12 +20,12 @@ class AnnotationParser:
     """
 
     def __init__(self, path):
-        self.path = path
+        super().__init__(path)
+
         with open(self.path, "r") as f:
             self.annotation = json.load(f)
         self.filename = self.annotation["slide"]
         self.classes = self.annotation["classes"]
-        self.mask_coords = {}
         for cls in self.classes:
             self.mask_coords[cls] = []
         self.read_mask_coords()
