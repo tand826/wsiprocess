@@ -9,42 +9,41 @@ on:
 
 jobs:
   deploy:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-    - name: Install dependencies
-      run: |
-        sudo apt-get install libvips
-        python -m pip install --upgrade pip
-        pip install setuptools wheel twine
-        pip install -r requirements.txt
-    - name: Build and publish
-      env:
-        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-      run: |
-        python setup.py sdist bdist_wheel
-        twine upload dist/*
-    - name: Build and publish to anaconda cloud
-      env:
-        ANACONDA_CLOUD_USERNAME: ${{ secrets.ANACONDA_CLOUD_USERNAME }}
-        ANACONDA_CLOUD_PASSWORD: ${{ secrets.ANACONDA_CLOUD_PASSWORD }}
-      run: |
-        anaconda login --username $ANACONDA_CLOUD_USERNAME --password $ANACONDA_CLOUD_PASSWORD
-        conda skeleton pypi wsiprocess --output-dir ./conda_tmp
-        for ver in 6 7 8
-        do
-            conda-build --python 3.${ver} . --output-folder ./conda_tmp
-            conda convert --platform all ./conda_tmp/osx-64/wsiprocess-0.4-py3${ver}_0.tar.bz2 -o conda_tmp
-            for platform in linux-32 linux-64 linux-aarch64 linux-armv6l linux-armv7l linux-ppc64le osx-64 win-32 win-64
-            do
-                anaconda upload ./conda_tmp/${platform}/wsiprocess-0.4-py3${ver}_0.tar.bz2
-            done
-        done
-        rm -rf ./conda_tmp
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install setuptools wheel twine
+          python -c 'from setuptools.config import read_configuration;[print(package) for package in read_configuration("setup.cfg")["options"]["install_requires"]]' | xargs -I {} pip install {}
+      - name: Build and publish
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: |
+          python setup.py sdist bdist_wheel
+          twine upload dist/*
+      - name: Build and publish to anaconda cloud
+        env:
+          ANACONDA_CLOUD_USERNAME: ${{ secrets.ANACONDA_CLOUD_USERNAME }}
+          ANACONDA_CLOUD_PASSWORD: ${{ secrets.ANACONDA_CLOUD_PASSWORD }}
+        run: |
+          wpversion=`python -c 'import wsiprocess;print(wsiprocess.__version__)'`
+          anaconda login --username $ANACONDA_CLOUD_USERNAME --password $ANACONDA_CLOUD_PASSWORD
+          conda skeleton pypi wsiprocess --output-dir ./conda_tmp
+          for ver in 6 7 8
+          do
+              conda-build --python 3.${ver} . --output-folder ./conda_tmp
+              conda convert --platform all ./conda_tmp/osx-64/wsiprocess-${wpversion}-py3${ver}_0.tar.bz2 -o conda_tmp
+              for platform in linux-32 linux-64 linux-aarch64 linux-armv6l linux-armv7l linux-ppc64le osx-64 win-32 win-64
+              do
+                  anaconda upload ./conda_tmp/${platform}/wsiprocess-${wpversion}-py3${ver}_0.tar.bz2
+              done
+          done
+          rm -rf ./conda_tmp
