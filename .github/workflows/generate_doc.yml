@@ -38,7 +38,7 @@ jobs:
           git config --global user.email "tand826@mail"
           git config --global user.name tand826
           git fetch
-          git clean -f
+          git stash
           git checkout -b docs origin/docs
           git add docs
           git commit -m "generate documentation from github action"
