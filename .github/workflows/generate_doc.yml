@@ -2,7 +2,7 @@ name: generate_documentation
 
 on:
   release:
-    types: [ created ]
+    types: [created]
 
   workflow_dispatch:
 
@@ -32,9 +32,10 @@ jobs:
           rm requirements.txt wsiprocess.rst wsiprocess.annotationparser.rst wsiprocess.converters.rst
           mv _build/html/* ./
           mv wsiprocess.html index.html
-          
+
       - name: push to doc branch
         run: |
+          git fetch
           git checkout -b docs origin/docs
           git add docs
           git commit -m "generate documentation from github action"
