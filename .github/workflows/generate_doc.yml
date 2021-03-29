@@ -1,0 +1,41 @@
+name: generate_documentation
+
+on:
+  release:
+    types: [ created ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: install sphinx
+        run: |
+          pip install sphinx
+          cd docs
+          pip install -r requirements.txt
+
+      - name: build html
+        run: |
+          cd docs
+          sphinx-apidoc ../wsiprocess -o ./ -f --ext-autodoc -E -T
+          make html
+          rm requirements.txt wsiprocess.rst wsiprocess.annotationparser.rst wsiprocess.converters.rst
+          mv _build/html/* ./
+          mv wsiprocess.html index.html
+          
+      - name: push to doc branch
+        run: |
+          git checkout -b docs origin/docs
+          git add docs
+          git commit -m "generate documentation from github action"
+          git push origin docs
