@@ -38,7 +38,6 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.todo',
     'sphinx.ext.autodoc',
-    'sphinxemoji.sphinxemoji'
 ]
 conf = read_configuration("../setup.cfg")
 autodoc_mock_imports = [i.strip() for i in conf["options"]["install_requires"]]
