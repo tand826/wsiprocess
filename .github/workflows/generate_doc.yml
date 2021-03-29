@@ -35,6 +35,8 @@ jobs:
 
       - name: push to doc branch
         run: |
+          git config --global user.email "tand826@mail"
+          git config --global user.name tand826
           git fetch
           git checkout -b docs origin/docs
           git add docs
