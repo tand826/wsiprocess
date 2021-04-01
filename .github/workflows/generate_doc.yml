@@ -39,6 +39,6 @@ jobs:
           git config --global user.name tand826
           git fetch
           git checkout -b docs origin/docs -f
-          git add docs
+          git add docs/*
           git commit -m "generate documentation from github action"
           git push origin docs
