@@ -29,14 +29,15 @@ jobs:
           cd docs
           sphinx-apidoc ../wsiprocess -o ./ -f -E -T --ext-autodoc --ext-githubpages
           make html
-          rm requirements.txt wsiprocess.rst wsiprocess.annotationparser.rst wsiprocess.converters.rst
           mv _build/html/* ./
           mv wsiprocess.html index.html
+          rm -rf _build requirements.txt wsiprocess.rst wsiprocess.annotationparser.rst wsiprocess.converters.rst
 
       - name: push to doc branch
         run: |
           git config --global user.email "tand826@mail"
           git config --global user.name tand826
+          git config advice.addIgnoredFile false
           git fetch
           git checkout -b docs origin/docs -f
           git add docs/*
