@@ -6,7 +6,7 @@ import openslide
 import wsiprocess as wp
 import wsiprocess.cli as cli
 
-SAMPLEDIR = "../sample"
+SAMPLEDIR = "../examples"
 TESTDIR = "./"
 
 METHODS = ("evaluation", "classification", "detection", "segmentation", "foo")
