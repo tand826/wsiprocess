@@ -27,7 +27,7 @@ jobs:
       - name: build html
         run: |
           cd docs
-          sphinx-apidoc ../wsiprocess -o ./ -f --ext-autodoc -E -T
+          sphinx-apidoc ../wsiprocess -o ./ -f -E -T --ext-autodoc --ext-githubpages
           make html
           rm requirements.txt wsiprocess.rst wsiprocess.annotationparser.rst wsiprocess.converters.rst
           mv _build/html/* ./
