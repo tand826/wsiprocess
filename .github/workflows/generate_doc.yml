@@ -35,9 +35,10 @@ jobs:
           cd docs
           sphinx-apidoc ../wsiprocess -o ./ -f -E -T --ext-autodoc --ext-githubpages
           make html
+          rm -rf _sources/ _static/ Makefile *.py *.html *.js objects.inv
           mv _build/html/* ./
+          rm -rf _build
           mv wsiprocess.html index.html
-          rm -rf _build requirements.txt wsiprocess.rst wsiprocess.annotationparser.rst wsiprocess.converters.rst
 
           cd ../
           git add docs/*
