@@ -36,13 +36,14 @@ class ToCOCOConverter:
     """Converter class.
     """
 
-    def __init__(self, params=False):
+    def __init__(self, params=False, per_wsi=False):
         if params:
             self.root = Path(params["root"])
             self.save_to = SaveTo(f"{params['save_to']}/coco")
             self.ratio_arg = params["ratio_arg"]
         else:
             self.getargs()
+        self.per_wsi = per_wsi
         self.test_is_available = len(self.ratio_arg.split(":")) == 3
         self.phases = ["train", "val"]
         if self.test_is_available:
@@ -56,17 +57,18 @@ class ToCOCOConverter:
         self.set_id()
 
     def set_id(self):
-        if self.test_is_available:
-            target = "instances_val2014.json"
-        else:
-            target = "instances_test2014.json"
-        if (self.save_to.annotations/target).exists():
-            with open(self.save_to.annotations/target, "r") as f:
-                data = json.load(f)
-                last_image_id = data["images"][-1]["id"]
-                last_annotation_id = data["annotations"][-1]["id"]
-        else:
-            last_image_id, last_annotation_id = 0, 0
+        last_image_id, last_annotation_id = 0, 0
+        for phase in self.phases[::-1]:
+            target = f"instances_{phase}2014.json"
+            if (self.save_to.annotations/target).exists():
+                with open(self.save_to.annotations/target, "r") as f:
+                    data = json.load(f)
+                    try:
+                        last_image_id = data["images"][-1]["id"]
+                        last_annotation_id = data["annotations"][-1]["id"]
+                    except IndexError:
+                        continue
+
         self.image_id = last_image_id + 1
         self.annotation_id = last_annotation_id + 1
 
@@ -74,8 +76,7 @@ class ToCOCOConverter:
         self.make_link_to_images()
         self.add_info()
         self.add_categories()
-        self.add_images()
-        self.add_annotations()
+        self.add_images_and_annotations()
         self.save_data()
 
     def getargs(self):
@@ -92,6 +93,9 @@ class ToCOCOConverter:
         self.ratio_arg = args.ratio
 
     def get_ratio(self):
+        if self.per_wsi:
+            self.ratio = {p: r for p, r in zip(self.phases, [0, 0, 1])}
+            return
         ratios = list(map(float, self.ratio_arg.split(":")))
         self.ratio = {p: r / sum(ratios) for p, r in zip(self.phases, ratios)}
 
@@ -140,45 +144,51 @@ class ToCOCOConverter:
             for phase in self.phases:
                 self.add_category(phase, idx, cls)
 
-    def add_images(self):
+    def add_images_and_annotations(self):
+        if self.per_wsi:
+            self.add_image("test", self.annotation["slide"])
+            for path in self.paths["test"]:
+                self.add_annotation("test", Path("0_0"))
+            return
         for phase in self.phases:
             for path in self.paths[phase]:
                 self.add_image(phase, path)
-
-    def add_annotations(self):
-        for phase in self.phases:
-            for path in self.paths[phase]:
-                x, y = map(int, path.stem.split("_")[-2:])
-                self.add_annotation(phase, x, y)
+                self.add_annotation(phase, path)
+                self.image_id += 1
 
     def add_category(self, phase, category_idx, name):
-        self.coco_data[phase]["categories"].append(category(
-            category_idx, name)
-        )
+        cat = category(category_idx, name)
+        if cat not in self.coco_data[phase]["categories"]:
+            self.coco_data[phase]["categories"].append(cat)
 
     def add_image(self, phase, file_name):
+        if self.per_wsi:
+            width = self.annotation["wsi_width"]
+            height = self.annotation["wsi_height"]
+        else:
+            width = self.annotation["patch_width"]
+            height = self.annotation["patch_height"]
         self.coco_data[phase]["images"].append(
-            image(
-                file_name, self.annotation["patch_width"],
-                self.annotation["patch_height"], self.image_id)
+            image(file_name, width, height, self.image_id)
         )
-        self.image_id += 1
 
-    def add_annotation(self, phase, x, y):
+    def add_annotation(self, phase, path):
+        x, y = map(int, path.stem.split("_")[-2:])
         for result in self.annotation["result"]:
-            if result["x"] != x or result["y"] != y:
+            if (not self.per_wsi) and (result["x"] != x or result["y"] != y):
                 continue
             offsetx = x
             offsety = y
             if result.get("bbs"):
                 for bb in result["bbs"]:
-                    bb["x"] %= self.annotation["patch_width"]
-                    bb["y"] %= self.annotation["patch_height"]
+                    if not self.per_wsi:
+                        bb["x"] %= self.annotation["patch_width"]
+                        bb["y"] %= self.annotation["patch_height"]
                     self.coco_data[phase]["annotations"].append(
                         annotation(
                             bb, offsetx, offsety, self.image_id,
                             self.annotation_id, self.annotation["classes"],
-                            mode="detection")
+                            mode="detection", per_wsi=self.per_wsi)
                     )
                     self.annotation_id += 1
             elif result.get("masks"):
@@ -186,7 +196,7 @@ class ToCOCOConverter:
                     annotations = annotation(
                         mask, offsetx, offsety, self.image_id,
                         self.annotation_id, self.annotation["classes"],
-                        mode="segmentation")
+                        mode="segmentation", per_wsi=self.per_wsi)
                     self.coco_data[phase]["annotations"].extend(annotations)
                     self.annotation_id += len(annotations)
 
@@ -240,7 +250,7 @@ def image(file_name, width, height, image_id):
 
 
 def annotation(
-        result, offsetx, offsety, image_id, annotation_id, classes, mode):
+        result, offsetx, offsety, image_id, annotation_id, classes, mode, per_wsi=False):
     if mode == "detection":
         bb = result
         return {
@@ -264,7 +274,9 @@ def annotation(
             mask_img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         annotations = []
         for contour in contours:
-            contour = contour.reshape(-1, 2) + [offsetx, offsety]
+            contour = contour.reshape(-1, 2)
+            if per_wsi:
+                contour += [offsetx, offsety]
             minx, miny = list(map(int, contour.min(axis=0)))
             maxx, maxy = list(map(int, contour.max(axis=0)))
             annotations.append({
