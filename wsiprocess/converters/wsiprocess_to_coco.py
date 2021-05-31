@@ -36,7 +36,7 @@ class ToCOCOConverter:
     """Converter class.
     """
 
-    def __init__(self, params=False, per_wsi=False):
+    def __init__(self, params=False, per_wsi=False, annotation=False):
         if params:
             self.root = Path(params["root"])
             self.save_to = SaveTo(f"{params['save_to']}/coco")
@@ -53,8 +53,29 @@ class ToCOCOConverter:
         self.paths = {phase: [] for phase in self.phases}
         self.get_base()
         self.get_ratio()
-        self.read_annotation()
+        if annotation:
+            self.annotation = annotation
+            self.assert_annotation()
+        else:
+            self.read_annotation()
         self.set_id()
+
+    def assert_annotation(self):
+        params = [
+            "classes",
+            "slide",
+            "wsi_height",
+            "wsi_width",
+            "patch_height",
+            "patch_width",
+            "result"
+        ]
+        asserted = True
+        for param in params:
+            if not self.annotation.get(param):
+                print(f"{param} not in annotation")
+                asserted = False
+        assert asserted, "Param not properly set"
 
     def set_id(self):
         last_image_id, last_annotation_id = 0, 0
@@ -250,7 +271,8 @@ def image(file_name, width, height, image_id):
 
 
 def annotation(
-        result, offsetx, offsety, image_id, annotation_id, classes, mode, per_wsi=False):
+        result, offsetx, offsety, image_id, annotation_id, classes, mode,
+        per_wsi=False):
     if mode == "detection":
         bb = result
         return {
