@@ -22,11 +22,8 @@ Example:
 import cv2
 import numpy as np
 from pathlib import Path
-from .annotationparser.parser_utils import BaseParser, detect_type
-from .annotationparser.ASAP_parser import ASAPAnnotation
-from .annotationparser.QuPath_parser import QuPathAnnotation
-from .annotationparser.SlideRunner_parser import SlideRunnerAnnotation
-from .annotationparser.WSIDissector_parser import WSIDissectorAnnotation
+from .annotationparser import parsers
+from .annotationparser.parser_utils import detect_type
 
 
 class Annotation:
@@ -62,15 +59,15 @@ class Annotation:
         if not annotation_type:
             annotation_type = detect_type(self.path)
         if annotation_type == "ASAP":
-            parsed = ASAPAnnotation(self.path)
+            parsed = parsers.ASAPAnnotation(self.path)
         elif annotation_type == "WSIDissector":
-            parsed = WSIDissectorAnnotation(self.path)
+            parsed = parsers.WSIDissectorAnnotation(self.path)
         elif annotation_type == "SlideRunner":
-            parsed = SlideRunnerAnnotation(self.path, self.slidename)
+            parsed = parsers.SlideRunnerAnnotation(self.path, self.slidename)
         elif annotation_type == "QuPath":
-            parsed = QuPathAnnotation(self.path)
+            parsed = parsers.QuPathAnnotation(self.path)
         elif annotation_type == "Empty":
-            parsed = BaseParser(self.path)
+            parsed = parsers.BaseParser(self.path)
         self.classes = parsed.classes
         self.mask_coords = parsed.mask_coords
 
