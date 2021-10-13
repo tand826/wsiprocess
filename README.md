@@ -21,9 +21,13 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 2. Make some annotations with WSI annotation tools. ([ASAP](https://github.com/computationalpathologygroup/ASAP/releases) and [SlideRunner v.1.31.0](https://github.com/DeepPathology/SlideRunner), [QuPath v0.2.3](https://github.com/qupath/qupath) are now available. See [wiki](https://github.com/tand826/wsiprocess/wiki) for details.)
 3. Then wsiprocess helps converting WSI + Annotation data into patches and easy-to-use annotation data.
 
+
 [WSIPatcher](https://github.com/tand826/WSIPatcher) will give you GUI.
 
-See [Wiki](https://github.com/tand826/wsiprocess/wiki) for [available aplications for annotation](https://github.com/tand826/wsiprocess/wiki/annotation_applications), and [speed comparison](https://github.com/tand826/wsiprocess/wiki/speed_comparison) between patched images and loading from raw WSIs.
+See [Wiki](https://github.com/tand826/wsiprocess/wiki) for 
+1. [available applications for annotation](https://github.com/tand826/wsiprocess/wiki/annotation_applications), 
+2. [speed comparison](https://github.com/tand826/wsiprocess/wiki/speed_comparison) between patched images and loading from raw WSIs,
+3. [how to use the other annotatiion files](https://github.com/tand826/wsiprocess/wiki/How-to-use-custom-annotation-parser).
 
 # Installation
 
