@@ -51,7 +51,7 @@ class ASAPAnnotation(BaseParser):
             if annotation.attrib["PartOfGroup"] == cls:
                 contour = []
                 for coord in annotation.xpath("Coordinates/Coordinate"):
-                    x = np.float(coord.attrib["X"])
-                    y = np.float(coord.attrib["Y"])
+                    x = np.float64(coord.attrib["X"])
+                    y = np.float64(coord.attrib["Y"])
                     contour.append([round(float(x)), round(float(y))])
                 self.mask_coords[cls].append(contour)
