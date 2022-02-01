@@ -39,7 +39,6 @@ class Annotation:
         """
         self.path = path
         self.slidename = slidename
-        self.dot_bbox_width = self.dot_bbox_height = 0
         self.is_image = is_image
         self.classes = []
         if not self.is_image:
