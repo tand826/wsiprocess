@@ -23,12 +23,6 @@ project = 'wsiprocess'
 copyright = '2021, Takumi Ando'
 author = 'Takumi Ando'
 
-# The short X.Y version
-version = 'v0.8'
-
-# The full version, including alpha/beta/rc tags
-release = 'v0.8'
-
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
@@ -42,6 +36,12 @@ extensions = [
 conf = read_configuration("../setup.cfg")
 autodoc_mock_imports = [i.strip() for i in conf["options"]["install_requires"]]
 autodoc_mock_imports.extend(["cv2", "openslide"])
+
+# The short X.Y version
+version = conf['metadata']['version']
+
+# The full version, including alpha/beta/rc tags
+release = conf['metadata']['version']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
