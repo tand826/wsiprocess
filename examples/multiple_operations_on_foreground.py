@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import wsiprocess as wp
 import cv2
 import numpy as np
@@ -34,5 +36,9 @@ lambdas = [otsu, dilate, erode]
 annotation.make_masks(
     slide, rule, size=5000, foreground="lambdas", lambdas=lambdas)
 
-patcher = wp.patcher(slide, "classification", annotation)
+Path('CMU-1/thumbs').mkdir(exist_ok=True)
+annotation.export_thumb_masks("CMU-1/thumbs")
+
+patcher = wp.patcher(
+    slide, "classification", annotation, on_annotation=0.1, on_foreground=0.1)
 patcher.get_patch_parallel(["benign", "malignant"])
