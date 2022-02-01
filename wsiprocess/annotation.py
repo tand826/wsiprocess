@@ -119,7 +119,7 @@ class Annotation:
 
     def make_masks(
             self, slide, rule=False, foreground="otsu", size=2000,
-            min_=30, max_=190):
+            min_=30, max_=190, lambdas=False):
         """Make masks from the slide and rule.
 
         Masks are for each class and foreground area.
@@ -144,7 +144,8 @@ class Annotation:
         self.main_masks()
         if foreground:
             self.make_foreground_mask(
-                slide, size, method=foreground, min_=min_, max_=max_)
+                slide, size, method=foreground, min_=min_, max_=max_,
+                lambdas=lambdas)
         if rule:
             self.classes = list(set(self.classes) & set(rule.classes))
             self.include_masks(rule)
@@ -252,7 +253,8 @@ class Annotation:
             self.mask_coords[cls] = [list(c) for c in base_set]
 
     def make_foreground_mask(
-            self, slide, size=2000, method="otsu", min_=30, max_=190):
+            self, slide, size=2000, method="otsu", min_=30, max_=190,
+            lambdas=False):
         """Make foreground mask.
 
         With otsu thresholding, make simple foreground mask.
@@ -269,6 +271,8 @@ class Annotation:
             max (int, optional): Used if method is "minmax". Annotation object
                 defines foreground as the pixels with the value between "min"
                 and "max".
+            lambdas (list(callable)): List of operations to compute on the
+                mask.
         """
         if "foreground" in self.classes:
             return
@@ -276,8 +280,10 @@ class Annotation:
         thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
         if method == "minmax":
             mask = self._minmax_mask(thumb_gray, min_, max_)
-        elif callable(method):
-            mask = method(thumb_gray)
+        elif method == "lambdas":
+            mask = thumb_gray
+            for lambd in lambdas:
+                mask = lambd(lambd)
         else:
             mask = self._otsu_method_mask(thumb_gray)
         self.masks["foreground"] = cv2.resize(mask, (slide.width,
