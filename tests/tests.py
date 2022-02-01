@@ -232,7 +232,7 @@ def test_cli_on_foreground():
 
 def test_cli_dot_to_bbox():
     # DOT_BBOX_WIDTH = (10, 0, 1000)
-    dot_bbox_width = DOT_BBOX_WIDTH[1]
+    dot_bbox_width = DOT_BBOX_WIDTH[2]
     with pytest.raises(wp.error.SizeError):
         cli.main([
             METHODS[2], WSIS[0], ANNOTATIONS[1],
