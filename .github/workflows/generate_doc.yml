@@ -23,6 +23,7 @@ jobs:
           pip install sphinx
           cd docs
           pip install -r requirements.txt
+          pip install https://github.com/tand826/wsiprocess
 
       - name: build and push
         run: |
