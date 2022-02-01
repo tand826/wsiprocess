@@ -22,7 +22,7 @@ Example:
 import cv2
 import numpy as np
 from pathlib import Path
-from .annotationparser import parsers
+import wsiprocess.annotationparser as parsers
 from .annotationparser.parser_utils import detect_type
 
 
@@ -283,7 +283,7 @@ class Annotation:
         elif method == "lambdas":
             mask = thumb_gray
             for lambd in lambdas:
-                mask = lambd(lambd)
+                mask = lambd(mask)
         else:
             mask = self._otsu_method_mask(thumb_gray)
         self.masks["foreground"] = cv2.resize(mask, (slide.width,
