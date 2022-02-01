@@ -15,19 +15,19 @@ def otsu(x):
     return mask
 
 
-def erode(x):
-    kernel = np.ones(5, 5).astype(np.uint8)
-    mask = cv2.erode(x, kernel=kernel, iterations=2)
-    return mask
-
-
 def dilate(x):
-    kernel = np.ones(5, 5).astype(np.uint8)
+    kernel = np.ones((5, 5), dtype=np.uint8)
     mask = cv2.dilate(x, kernel=kernel, iterations=1)
     return mask
 
 
-lambdas = [otsu, erode, dilate]
+def erode(x):
+    kernel = np.ones((5, 5), dtype=np.uint8)
+    mask = cv2.erode(x, kernel=kernel, iterations=2)
+    return mask
+
+
+lambdas = [otsu, dilate, erode]
 
 
 # size = 5000 for more precise mask generation
