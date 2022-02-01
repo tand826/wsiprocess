@@ -33,12 +33,9 @@ jobs:
           git checkout -b docs origin/docs -f
 
           cd docs
-          sphinx-apidoc ../wsiprocess -o ./ -f -E -T --ext-autodoc --ext-githubpages
+          sphinx-apidoc ../wsiprocess -o ./ -f --ext-autodoc
           make html
-          rm -rf _sources/ _static/ Makefile *.py *.html *.js objects.inv
           mv _build/html/* ./
-          rm -rf _build
-          mv wsiprocess.html index.html
 
           cd ../
           git add docs/*
