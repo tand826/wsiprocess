@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>wsiprocess.annotationparser package &mdash; wsiprocess 0.9 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="wsiprocess.converters package" href="wsiprocess.converters.html" />
+    <link rel="prev" title="wsiprocess package" href="wsiprocess.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="wsiprocess.html" class="icon icon-home"> wsiprocess
+          </a>
+              <div class="version">
+                0.9
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">wsiprocess.annotationparser package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-wsiprocess.annotationparser.ASAP_parser">wsiprocess.annotationparser.ASAP_parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-wsiprocess.annotationparser.QuPath_parser">wsiprocess.annotationparser.QuPath_parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-wsiprocess.annotationparser.SlideRunner_parser">wsiprocess.annotationparser.SlideRunner_parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-wsiprocess.annotationparser.WSIDissector_parser">wsiprocess.annotationparser.WSIDissector_parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-wsiprocess.annotationparser.parser_utils">wsiprocess.annotationparser.parser_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-wsiprocess.annotationparser">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wsiprocess.converters.html">wsiprocess.converters package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="wsiprocess.html">wsiprocess</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="wsiprocess.html" class="icon icon-home"></a> &raquo;</li>
+      <li>wsiprocess.annotationparser package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/wsiprocess.annotationparser.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="wsiprocess-annotationparser-package">
+<h1>wsiprocess.annotationparser package<a class="headerlink" href="#wsiprocess-annotationparser-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-wsiprocess.annotationparser.ASAP_parser">
+<span id="wsiprocess-annotationparser-asap-parser-module"></span><h2>wsiprocess.annotationparser.ASAP_parser module<a class="headerlink" href="#module-wsiprocess.annotationparser.ASAP_parser" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.annotationparser.ASAP_parser.</span></span><span class="sig-name descname"><span class="pre">ASAPAnnotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#wsiprocess.annotationparser.parser_utils.BaseParser" title="wsiprocess.annotationparser.parser_utils.BaseParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">wsiprocess.annotationparser.parser_utils.BaseParser</span></code></a></p>
+<p>Annotation Parser for ASAP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to the annotation file.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.path">
+<span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.path" title="Permalink to this definition"></a></dt>
+<dd><p>Path to the annotation file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.annotations">
+<span class="sig-name descname"><span class="pre">annotations</span></span><a class="headerlink" href="#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.annotations" title="Permalink to this definition"></a></dt>
+<dd><p>List of etree Elements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.annotation_groups">
+<span class="sig-name descname"><span class="pre">annotation_groups</span></span><a class="headerlink" href="#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.annotation_groups" title="Permalink to this definition"></a></dt>
+<dd><p>List of etree Elements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.classes">
+<span class="sig-name descname"><span class="pre">classes</span></span><a class="headerlink" href="#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.classes" title="Permalink to this definition"></a></dt>
+<dd><p>List of classes defined with ASAP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.mask_coords">
+<span class="sig-name descname"><span class="pre">mask_coords</span></span><a class="headerlink" href="#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.mask_coords" title="Permalink to this definition"></a></dt>
+<dd><p>Coordinates of the masks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.read_mask_coord">
+<span class="sig-name descname"><span class="pre">read_mask_coord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.read_mask_coord" title="Permalink to this definition"></a></dt>
+<dd><p>Parse the coordinates of the mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cls</strong> (<em>str</em>) – Target annotation class name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.read_mask_coords">
+<span class="sig-name descname"><span class="pre">read_mask_coords</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.read_mask_coords" title="Permalink to this definition"></a></dt>
+<dd><p>Parse coordinates of of the masks of all classes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-wsiprocess.annotationparser.QuPath_parser">
+<span id="wsiprocess-annotationparser-qupath-parser-module"></span><h2>wsiprocess.annotationparser.QuPath_parser module<a class="headerlink" href="#module-wsiprocess.annotationparser.QuPath_parser" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.annotationparser.QuPath_parser.</span></span><span class="sig-name descname"><span class="pre">QuPathAnnotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#wsiprocess.annotationparser.parser_utils.BaseParser" title="wsiprocess.annotationparser.parser_utils.BaseParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">wsiprocess.annotationparser.parser_utils.BaseParser</span></code></a></p>
+<p>Annotation Parser for QuPath.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to the annotation file.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.path">
+<span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.path" title="Permalink to this definition"></a></dt>
+<dd><p>Path to the annotation file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.annotations">
+<span class="sig-name descname"><span class="pre">annotations</span></span><a class="headerlink" href="#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.annotations" title="Permalink to this definition"></a></dt>
+<dd><p>List of etree Elements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.classes">
+<span class="sig-name descname"><span class="pre">classes</span></span><a class="headerlink" href="#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.classes" title="Permalink to this definition"></a></dt>
+<dd><p>List of classes defined with QuPath.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.mask_coords">
+<span class="sig-name descname"><span class="pre">mask_coords</span></span><a class="headerlink" href="#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.mask_coords" title="Permalink to this definition"></a></dt>
+<dd><p>Coordinates of the masks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.all_as_int">
+<span class="sig-name descname"><span class="pre">all_as_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.all_as_int" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.read_classes">
+<span class="sig-name descname"><span class="pre">read_classes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.read_classes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.read_coordinates">
+<span class="sig-name descname"><span class="pre">read_coordinates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.read_coordinates" title="Permalink to this definition"></a></dt>
+<dd><p>Parse the coordinates of the mask.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-wsiprocess.annotationparser.SlideRunner_parser">
+<span id="wsiprocess-annotationparser-sliderunner-parser-module"></span><h2>wsiprocess.annotationparser.SlideRunner_parser module<a class="headerlink" href="#module-wsiprocess.annotationparser.SlideRunner_parser" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.annotationparser.SlideRunner_parser.</span></span><span class="sig-name descname"><span class="pre">SlideRunnerAnnotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slidename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#wsiprocess.annotationparser.parser_utils.BaseParser" title="wsiprocess.annotationparser.parser_utils.BaseParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">wsiprocess.annotationparser.parser_utils.BaseParser</span></code></a></p>
+<p>Annotation Parser for SlideRunner v1.31.0</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Path to the annotation file.</p></li>
+<li><p><strong>slidename</strong> (<em>str</em>) – Basename of the slide.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.path">
+<span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.path" title="Permalink to this definition"></a></dt>
+<dd><p>Path to the annotation file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.classes">
+<span class="sig-name descname"><span class="pre">classes</span></span><a class="headerlink" href="#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.classes" title="Permalink to this definition"></a></dt>
+<dd><p>List of classes defined with ASAP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.mask_coords">
+<span class="sig-name descname"><span class="pre">mask_coords</span></span><a class="headerlink" href="#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.mask_coords" title="Permalink to this definition"></a></dt>
+<dd><p>Coordinates of the masks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.bbox_to_circle">
+<span class="sig-name descname"><span class="pre">bbox_to_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.bbox_to_circle" title="Permalink to this definition"></a></dt>
+<dd><p>Convert coordinates of bounding box to circle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>left</strong> (<em>int</em>) – Smaller coordinate of in the x-axis direction</p></li>
+<li><p><strong>top</strong> (<em>int</em>) – Smaller coordinate of in the y-axis direction</p></li>
+<li><p><strong>right</strong> (<em>int</em>) – Larger coordinate of in the x-axis direction</p></li>
+<li><p><strong>bottom</strong> (<em>int</em>) – Larger coordinate of in the y-axis direction</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>List of list which contains one</dt><dd><p>coordinate representing a circle in coordinates.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>coordinate (list(list))</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.parse_mask_coords">
+<span class="sig-name descname"><span class="pre">parse_mask_coords</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.parse_mask_coords" title="Permalink to this definition"></a></dt>
+<dd><p>Parse the coordinates of the mask.</p>
+<p>Parse the coordinates to make a list containing lists of coordinates.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_annotations">
+<span class="sig-name descname"><span class="pre">read_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slidename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_annotations" title="Permalink to this definition"></a></dt>
+<dd><p>Read annotations from Annotations table.</p>
+<p>A annotation has unique ID, Annotation Type, and Class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>slidename</strong> (<em>str</em>) – Name of the slide to filter the data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_classes">
+<span class="sig-name descname"><span class="pre">read_classes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_classes" title="Permalink to this definition"></a></dt>
+<dd><p>Read classes from Classes table.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_coordinates">
+<span class="sig-name descname"><span class="pre">read_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slidename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_coordinates" title="Permalink to this definition"></a></dt>
+<dd><p>Read coordinates from Annotations_coordinates table.</p>
+<p>A coordinate has coordinate of x and y, Annotation ID and the order
+of the coordinate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>slidename</strong> (<em>str</em>) – Name of the slide to filter the data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_labels">
+<span class="sig-name descname"><span class="pre">read_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_labels" title="Permalink to this definition"></a></dt>
+<dd><p>Read labels from Annotations_label table.</p>
+<p>A label has Annotation ID (sharing with Annotations), and Class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_slides">
+<span class="sig-name descname"><span class="pre">read_slides</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_slides" title="Permalink to this definition"></a></dt>
+<dd><p>Read slides from Slides table.
+A slide has unique ID and filename.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.verify_annotations">
+<span class="sig-name descname"><span class="pre">verify_annotations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.verify_annotations" title="Permalink to this definition"></a></dt>
+<dd><p>Verify the number of annotations.</p>
+<p>The numbers of annotations and labels and coordinates must be same.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-wsiprocess.annotationparser.WSIDissector_parser">
+<span id="wsiprocess-annotationparser-wsidissector-parser-module"></span><h2>wsiprocess.annotationparser.WSIDissector_parser module<a class="headerlink" href="#module-wsiprocess.annotationparser.WSIDissector_parser" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.annotationparser.WSIDissector_parser.</span></span><span class="sig-name descname"><span class="pre">WSIDissectorAnnotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#wsiprocess.annotationparser.parser_utils.BaseParser" title="wsiprocess.annotationparser.parser_utils.BaseParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">wsiprocess.annotationparser.parser_utils.BaseParser</span></code></a></p>
+<p>Annotation parser for WSIDissector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to the annotation file.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.path">
+<span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.path" title="Permalink to this definition"></a></dt>
+<dd><p>Path to the annotation file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.annotation">
+<span class="sig-name descname"><span class="pre">annotation</span></span><a class="headerlink" href="#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.annotation" title="Permalink to this definition"></a></dt>
+<dd><p>Annotation data loaded as json file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.filename" title="Permalink to this definition"></a></dt>
+<dd><p>Name of the targeted whole slide image file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.classes">
+<span class="sig-name descname"><span class="pre">classes</span></span><a class="headerlink" href="#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.classes" title="Permalink to this definition"></a></dt>
+<dd><p>List of the names of the classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.mask_coords">
+<span class="sig-name descname"><span class="pre">mask_coords</span></span><a class="headerlink" href="#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.mask_coords" title="Permalink to this definition"></a></dt>
+<dd><p>Coordinates of the masks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.read_mask_coords">
+<span class="sig-name descname"><span class="pre">read_mask_coords</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.read_mask_coords" title="Permalink to this definition"></a></dt>
+<dd><p>Parse the coordinates of masks.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-wsiprocess.annotationparser.parser_utils">
+<span id="wsiprocess-annotationparser-parser-utils-module"></span><h2>wsiprocess.annotationparser.parser_utils module<a class="headerlink" href="#module-wsiprocess.annotationparser.parser_utils" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.parser_utils.BaseParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.annotationparser.parser_utils.</span></span><span class="sig-name descname"><span class="pre">BaseParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.parser_utils.BaseParser" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for Parsers</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="wsiprocess.annotationparser.parser_utils.detect_type">
+<span class="sig-prename descclassname"><span class="pre">wsiprocess.annotationparser.parser_utils.</span></span><span class="sig-name descname"><span class="pre">detect_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotationparser.parser_utils.detect_type" title="Permalink to this definition"></a></dt>
+<dd><p>Detect the type of input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>One of {“ASAP”, “WSIDissector”, “SlideRunner”,</dt><dd><p>”WSIDissector”, “Empty”}</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>file_type (str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-wsiprocess.annotationparser">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-wsiprocess.annotationparser" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="wsiprocess.html" class="btn btn-neutral float-left" title="wsiprocess package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="wsiprocess.converters.html" class="btn btn-neutral float-right" title="wsiprocess.converters package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Takumi Ando.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
