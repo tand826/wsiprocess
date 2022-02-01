@@ -99,9 +99,9 @@ class Verify:
             raise SizeError("Patches have to be larger than the overlap size.")
         if patch_width < 0 or patch_height < 0:
             raise SizeError("Patches has to be larger than 1.")
-        if dot_bbox_width and dot_bbox_width > patch_width:
+        if dot_bbox_width is not False and dot_bbox_width > patch_width:
             raise SizeError("Translated bbox is larger than patch width.")
-        if dot_bbox_height and dot_bbox_height > patch_height:
+        if dot_bbox_height is not False and dot_bbox_height > patch_height:
             raise SizeError("Translated bbox is larger than patch height.")
 
     def on_params(self, on_annotation, on_foreground):
