@@ -200,8 +200,9 @@ class Annotation:
             for include in getattr(rule, cls)["includes"]:
                 if include not in self.masks:
                     continue
-                self.masks_include[cls] = cv2.bitwise_or(
-                    self.masks[cls], self.masks[include])
+                cv2.bitwise_or(
+                    self.masks[cls], self.masks[include],
+                    dst=self.masks_include[cls])
         self.masks = self.masks_include
 
     def merge_include_coords(self, rule):
@@ -233,8 +234,9 @@ class Annotation:
                     continue
                 overlap_area = cv2.bitwise_and(
                     self.masks[cls], self.masks[exclude])
-                self.masks_exclude[cls] = cv2.bitwise_xor(
-                    self.masks_exclude[cls], overlap_area)
+                cv2.bitwise_xor(
+                    self.masks_exclude[cls], overlap_area,
+                    dst=self.masks_exclude[cls])
         self.masks = self.masks_exclude
 
     def exclude_coords(self, rule):
