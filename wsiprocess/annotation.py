@@ -140,7 +140,7 @@ class Annotation:
                 defines foreground as the pixels with the value between "min"
                 and "max".
         """
-        self.base_masks(slide.height, slide.width)
+        self.base_masks(size, slide.height, slide.width)
         self.main_masks()
         if foreground:
             self.make_foreground_mask(
@@ -152,28 +152,42 @@ class Annotation:
             self.merge_include_coords(rule)
             self.exclude_masks(rule)
             # self.exclude_coords(rule)
+        self.resize_masks(slide)
 
-    def base_masks(self, wsi_height, wsi_width):
+    def base_masks(self, size, wsi_height, wsi_width):
         """Make base masks.
 
         Args:
-            wsi_height (int): The height of base masks.
-            wsi_width (int): The width of base masks.
+            size (int): The long side of masks.
+            wsi_height (int): The height of wsi.
+            wsi_width (int): The width of wsi.
         """
-        for cls in self.classes:
-            self.base_mask(cls, wsi_height, wsi_width)
+        height_is_long = wsi_height > wsi_width
 
-    def base_mask(self, cls, wsi_height, wsi_width):
+        longer = wsi_height if height_is_long else wsi_width
+        shorter = wsi_height if not height_is_long else wsi_width
+
+        if height_is_long:
+            mask_height = size
+            mask_width = int(size * shorter / longer)
+        else:
+            mask_height = int(size * shorter / longer)
+            mask_width = size
+
+        for cls in self.classes:
+            self.base_mask(cls, mask_height, mask_width)
+
+    def base_mask(self, cls, mask_height, mask_width):
         """ Masks have same size of as the slide.
 
         Masks are canvases of 0s.
 
         Args:
             cls (str): Class name for each mask.
-            wsi_height (int): The height of base masks.
-            wsi_width (int): The width of base masks.
+            mask_height (int): The height of base masks.
+            mask_width (int): The width of base masks.
         """
-        self.masks[cls] = np.zeros((wsi_height, wsi_width), dtype=np.uint8)
+        self.masks[cls] = np.zeros((mask_height, mask_width), dtype=np.uint8)
 
     def main_masks(self):
         """Main masks
@@ -200,9 +214,8 @@ class Annotation:
             for include in getattr(rule, cls)["includes"]:
                 if include not in self.masks:
                     continue
-                cv2.bitwise_or(
-                    self.masks[cls], self.masks[include],
-                    dst=self.masks_include[cls])
+                self.masks_include[cls] = cv2.bitwise_or(
+                    self.masks[cls], self.masks[include])
         self.masks = self.masks_include
 
     def merge_include_coords(self, rule):
@@ -234,9 +247,8 @@ class Annotation:
                     continue
                 overlap_area = cv2.bitwise_and(
                     self.masks[cls], self.masks[exclude])
-                cv2.bitwise_xor(
-                    self.masks_exclude[cls], overlap_area,
-                    dst=self.masks_exclude[cls])
+                self.masks_exclude[cls] = cv2.bitwise_xor(
+                    self.masks_exclude[cls], overlap_area)
         self.masks = self.masks_exclude
 
     def exclude_coords(self, rule):
@@ -288,9 +300,26 @@ class Annotation:
                 mask = lambd(mask)
         else:
             mask = self._otsu_method_mask(thumb_gray)
-        self.masks["foreground"] = cv2.resize(mask, (slide.width,
-                                                     slide.height))
+        self.masks["foreground"] = mask
         self.classes.append("foreground")
+
+    def resize_masks(self, slide):
+        """Resize the masks as the same size as the slide
+
+        Args:
+            slide (wsiprocess.slide.Slide): Slide object.
+        """
+        for cls in self.classes:
+            self.resize_mask(slide, cls)
+
+    def resize_mask(self, slide, cls):
+        """Resize a mask as the same size as the slide
+
+        Args:
+            slide (wsiprocess.slide.Slide): Slide object.
+        """
+        self.masks[cls] = cv2.resize(
+            self.masks[cls], (slide.width, slide.height))
 
     def _otsu_method_mask(self, thumb_gray):
         """Make mask of foreground with Otsu's method.
