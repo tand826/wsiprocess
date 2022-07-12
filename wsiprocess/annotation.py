@@ -141,7 +141,7 @@ class Annotation:
                 and "max".
         """
         self.base_masks(size, slide.height, slide.width)
-        self.main_masks()
+        self.main_masks(size, slide)
         if foreground:
             self.make_foreground_mask(
                 slide, size, method=foreground, min_=min_, max_=max_,
@@ -189,16 +189,18 @@ class Annotation:
         """
         self.masks[cls] = np.zeros((mask_height, mask_width), dtype=np.uint8)
 
-    def main_masks(self):
+    def main_masks(self, size, slide):
         """Main masks
 
         Write border lines following the rule and fill inside with 255.
         """
+        scale = size / max(slide.width, slide.height)
         for cls in self.classes:
             contours = np.array(self.mask_coords[cls], dtype=object)
             for contour in contours:
                 self.masks[cls] = cv2.drawContours(
-                    self.masks[cls], [np.int32(contour)], 0, True,
+                    self.masks[cls],
+                    [np.int32(np.array(contour)*scale)], 0, True,
                     thickness=cv2.FILLED)
 
     def include_masks(self, rule):
