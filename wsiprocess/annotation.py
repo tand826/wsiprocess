@@ -169,9 +169,9 @@ class Annotation:
 
         if height_is_long:
             mask_height = size
-            mask_width = int(size * shorter / longer)
+            mask_width = round(size * shorter / longer)
         else:
-            mask_height = int(size * shorter / longer)
+            mask_height = round(size * shorter / longer)
             mask_width = size
 
         for cls in self.classes:
