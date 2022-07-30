@@ -32,6 +32,7 @@ OFFSET_X = ("0", "1000", "1048576")
 OFFSET_Y = ("0", "1000", "1048576")
 DOT_BBOX_WIDTH = ("10", "0", "1000")
 DOT_BBOX_HEIGHT = ("10", "0", "1000")
+EXTS = ("png", "jpg")
 MAGNIFICATIONS = ("10", "1", "80", "40", "20")
 VOC_STYLE = ("False", "True")
 COCO_STYLE = ("False", "True")
@@ -238,6 +239,12 @@ def test_cli_dot_to_bbox():
             METHODS[2], WSIS[0], ANNOTATIONS[1],
             "-dw", dot_bbox_width
         ])
+
+
+def test_extensions():
+    cli.main([METHODS[0], WSIS[0], "-ex", EXTS[0]])
+    with pytest.warns(UserWarning):
+        cli.main([METHODS[0], WSIS[0], "-ex", EXTS[1]])
 
 
 def test_verbose():

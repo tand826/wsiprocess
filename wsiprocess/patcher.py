@@ -2,6 +2,7 @@
 """Patcher object to extract patches from whole slide images.
 """
 
+import warnings
 import random
 from itertools import product
 import json
@@ -38,6 +39,7 @@ class Patcher:
             and foreground area.
         on_annotation (float, optional): Ratio of overlap area between patches
             and annotation.
+        ext (str, optional): Extension of extracted patches.
         start_sample (bool, optional): Whether to save sample patches on
             Patcher starting.
         finished_sample (bool, optional): Whether to save sample patches on
@@ -94,8 +96,9 @@ class Patcher:
             self, slide, method, annotation=False, save_to=".",
             patch_width=256, patch_height=256, overlap_width=0,
             overlap_height=0, offset_x=0, offset_y=0, on_foreground=0.5,
-            on_annotation=0.5, start_sample=False, finished_sample=False,
-            no_patches=False, crop_bbox=False, verbose=False):
+            on_annotation=0.5, ext="png", start_sample=False,
+            finished_sample=False, no_patches=False, crop_bbox=False,
+            verbose=False):
         self.verify = Verify(
             save_to, slide.filestem, method, start_sample, finished_sample,
             no_patches, crop_bbox)
@@ -135,6 +138,7 @@ class Patcher:
 
         self.get_iterator()
 
+        self.ext = ext
         self.start_sample = start_sample
         self.finished_sample = finished_sample
         self.no_patches = no_patches
@@ -444,13 +448,13 @@ class Patcher:
         else:
             # Find mask coords
             patch_mask = self.masks[cls][y:y+self.p_height, x:x+self.p_width]
-            mask_png_path = "{}/{}/masks/{}/{:06}_{:06}.png".format(
-                self.save_to, self.filestem, cls, x, y)
-            cv2.imwrite(mask_png_path, patch_mask, (cv2.IMWRITE_PXM_BINARY, 1))
+            mask_path = "{}/{}/masks/{}/{:06}_{:06}.{}".format(
+                self.save_to, self.filestem, cls, x, y, self.ext)
+            cv2.imwrite(mask_path, patch_mask, (cv2.IMWRITE_PXM_BINARY, 1))
             # contours, _ = cv2.findContours(
             #   patch_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
             masks = []
-            mask = {"coords": mask_png_path, "class": cls}
+            mask = {"coords": mask_path, "class": cls}
             masks.append(mask)
             return masks
 
@@ -519,9 +523,13 @@ class Patcher:
             if not self.no_patches:
                 patch = self.slide.crop(
                     x, y, self.p_width, self.p_height)
+                if patch.mode == "RGBA" and self.ext == "jpg":
+                    warnings.warn(
+                        "patch has RGBA data. Discarding alpha to save as jpg")
+                    patch = patch.convert("RGB")
                 patch.save(
-                    "{}/{}/patches/{}/{:06}_{:06}.png".format(
-                        self.save_to, self.filestem, cls, x, y))
+                    "{}/{}/patches/{}/{:06}_{:06}.{}".format(
+                        self.save_to, self.filestem, cls, x, y, self.ext))
             self.save_patch_result(x, y, cls)
 
     def get_patch_parallel(self, classes=False, cores=-1):
@@ -577,16 +585,22 @@ class Patcher:
 
         for patch in self.result["result"]:
             for bb in patch["bbs"]:
-                if bb["class"] in classes:
-                    mini_patch = self.slide.crop(
-                        patch["x"] + bb["x"],
-                        patch["y"] + bb["y"],
-                        bb["w"],
-                        bb["h"])
-                    mini_patch.save(
-                        "{}/{}/mini_patches/{}/{:06}_{:06}.png".format(
-                            self.save_to, self.filestem, bb["class"],
-                            patch["x"] + bb["x"], patch["y"] + bb["y"]))
+                if bb["class"] not in classes:
+                    continue
+                mini_patch = self.slide.crop(
+                    patch["x"] + bb["x"],
+                    patch["y"] + bb["y"],
+                    bb["w"],
+                    bb["h"])
+                if mini_patch.mode == "RGBA" and self.ext == "jpg":
+                    warnings.warn(
+                        "patch has RGBA data. Discarding alpha to save as jpg")
+                    mini_patch = mini_patch.convert("RGB")
+                mini_patch.save(
+                    "{}/{}/mini_patches/{}/{:06}_{:06}.{}".format(
+                        self.save_to, self.filestem, bb["class"],
+                        patch["x"] + bb["x"], patch["y"] + bb["y"],
+                        self.ext))
 
     def patch_on_foreground(self, x, y):
         """Check if the patch is on the foreground area.
@@ -628,6 +642,10 @@ class Patcher:
             x = random.choice(self.x_lefttop)
             y = random.choice(self.y_lefttop)
             patch = self.slide.crop(x, y, self.p_width, self.p_height)
+            if patch.mode == "RGBA" and self.ext == "jpg":
+                warnings.warn(
+                    "patch has RGBA data. Discarding alpha to save as jpg")
+                patch = patch.convert("RGB")
             patch.save(
-                "{}/{}/{}_sample/{:06}_{:06}.png".format(
-                    self.save_to, self.filestem, phase, x, y))
+                "{}/{}/{}_sample/{:06}_{:06}.{}".format(
+                    self.save_to, self.filestem, phase, x, y, self.ext))

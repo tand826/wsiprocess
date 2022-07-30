@@ -41,6 +41,9 @@ class Args:
             "-dh", "--dot_bbox_height", type=int,
             help="Height of bbox translated from dot annotation.")
         parser.add_argument(
+            "-ex", "--ext", type=str, default="png",
+            help="Extension of extracted patches")
+        parser.add_argument(
             "-ss", "--start_sample", action="store_true",
             help="Generate samples at the start of the process.")
         parser.add_argument(
@@ -231,6 +234,7 @@ def main(command=None):
         on_annotation=on_annotation,
         offset_x=args.offset_x,
         offset_y=args.offset_y,
+        ext=args.ext,
         start_sample=args.start_sample,
         finished_sample=args.finished_sample,
         no_patches=args.no_patches,
