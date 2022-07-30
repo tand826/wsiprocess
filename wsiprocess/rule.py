@@ -33,6 +33,7 @@ Example:
         }
 """
 
+from pathlib import Path
 import json
 
 
@@ -40,7 +41,7 @@ class Rule:
     """Base class for rule.
 
     Args:
-        path (str): Path to the rule.json file.
+        rule(str or dict): Path to the rule.json or the rule dict.
 
     Attributes:
         classes (list): List of the classes. i.e. ["benign", "malignant"]
@@ -48,13 +49,25 @@ class Rule:
             i.e. {"benign": {"inclues": ["stroma"]}}
     """
 
-    def __init__(self, path):
+    def __init__(self, rule):
         self.classes = []
-        with open(path, "r") as f:
-            self.rule_file = json.load(f)
-        self.read_rule()
+        if isinstance(rule, (str, Path)):
+            with open(rule, "r") as f:
+                base_rule = json.load(f)
+
+        elif isinstance(rule, dict):
+            base_rule = rule
+
+        else:
+            raise NotImplementedError(
+                f"rule must be str or dist, but got {type(rule)}")
+
+        self.load_rule(base_rule)
 
     def read_rule(self):
+        self.load_rule(self.rule_file)
+
+    def load_rule(self, rule):
         """Read the rule file.
 
         Parse the rule file and save as the classes.
