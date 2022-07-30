@@ -72,7 +72,9 @@ class Rule:
 
         Parse the rule file and save as the classes.
         """
-        self.rule = {}
         for base, incl_excl in rule.items():
             setattr(self, base, incl_excl)
             self.classes.append(base)
+
+    def __getitem__(self, class_name):
+        return getattr(self, class_name)
