@@ -153,7 +153,7 @@ class Patcher:
             self.on_annotation = on_annotation
         else:
             self.masks = False
-            self.classes = ["none"]
+            self.classes = []
             self.on_annotation = False
 
         self.save_to = save_to
