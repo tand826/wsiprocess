@@ -482,6 +482,7 @@ class Patcher:
         self.result["overlap_hegiht"] = self.o_height
         self.result["offset_x"] = self.offset_x
         self.result["offset_y"] = self.offset_y
+        self.result["ext"] = self.ext
         self.result["start_sample"] = self.start_sample
         self.result["finished_sample"] = self.finished_sample
         self.result["no_patches"] = self.no_patches
