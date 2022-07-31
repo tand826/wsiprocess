@@ -253,7 +253,7 @@ def test_magnifications():
     # MAGNIFICATIONS = ("10", "1", "80", "40", "20")
     cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[0], "-dr"])
     cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[1], "-dr"])
-    cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[3], "-dr"])
+    cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[4], "-dr"])
 
 
 def test_magnifications_keyerror():
@@ -263,8 +263,8 @@ def test_magnifications_keyerror():
 
 def test_magnifications_largemagnification():
     with pytest.warns(UserWarning):
+        cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[3], "-dr"])
         cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[2], "-dr"])
-        cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[4], "-dr"])
 
 
 def test_verbose():
