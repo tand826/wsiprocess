@@ -4,6 +4,7 @@ Verify class works for verification of the output directory, annotation files,
 rule files, etc. Mainly runs for cli.
 """
 
+import warnings
 from pathlib import Path
 from .error import SizeError, OnParamError
 
@@ -51,6 +52,10 @@ class Verify:
         """Ensure the output directories exists for each tasks.
         """
         base_dir = Path(self.save_to)/self.filestem
+        if base_dir.exists():
+            warnings.warn(
+                "saving results to {}, but it already exists.".format(base_dir)
+            )
         self.make_dir(base_dir)
         if self.method == "evaluation" and not self.no_patches:
             self.make_dir(base_dir/"patches"/"foreground")
