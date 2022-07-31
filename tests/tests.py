@@ -13,7 +13,8 @@ METHODS = ("evaluation", "classification", "detection", "segmentation", "foo")
 WSIS = (
     f"{TESTDIR}/test.tiff",
     None,
-    f"{TESTDIR}/corrupted.ndpi")
+    f"{TESTDIR}/corrupted.ndpi",
+    f"{SAMPLEDIR}/CMU-1.ndpi")
 ANNOTATIONS = (
     f"{SAMPLEDIR}/CMU-1_classification.xml",
     f"{SAMPLEDIR}/CMU-1_detection.xml",
@@ -242,9 +243,28 @@ def test_cli_dot_to_bbox():
 
 
 def test_extensions():
+    # EXTS = ("png", "jpg")
     cli.main([METHODS[0], WSIS[0], "-ex", EXTS[0]])
     with pytest.warns(UserWarning):
         cli.main([METHODS[0], WSIS[0], "-ex", EXTS[1]])
+
+
+def test_magnifications():
+    # MAGNIFICATIONS = ("10", "1", "80", "40", "20")
+    cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[0], "-dr"])
+    cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[1], "-dr"])
+    cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[3], "-dr"])
+
+
+def test_magnifications_keyerror():
+    with pytest.raises(KeyError):
+        cli.main([METHODS[0], WSIS[0], "-ma", MAGNIFICATIONS[0], "-dr"])
+
+
+def test_magnifications_largemagnification():
+    with pytest.warns(UserWarning):
+        cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[2], "-dr"])
+        cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[4], "-dr"])
 
 
 def test_verbose():

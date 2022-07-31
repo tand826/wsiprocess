@@ -4,6 +4,7 @@ Slide is whole slide image, scanned with whole slide scanners.
 Mannually you can make pyramidical tiff file, which you can handle just the
 same as the scanned digital data, except for the magnification.
 """
+import warnings
 from .error import SlideLoadError
 from pathlib import Path
 import numpy as np
@@ -48,7 +49,10 @@ class Slide:
 
             self.width = self.slide.width
             self.height = self.slide.height
-            self.set_properties()
+        else:
+            raise NotImplementedError(
+                "backend={} is not available".format(self.backend))
+        self.set_properties()
 
     def __str__(self):
         return "wsiprocess.slide.Slide {} {}x{}".format(
@@ -94,6 +98,8 @@ class Slide:
             setattr(self, field, properties.get(field))
 
         self.magnification = properties.get("openslide.objective-power")
+        if self.magnification:
+            self.magnification = int(self.magnification)
 
     def crop(self, x, y, w, h):
         if self.backend == "openslide":

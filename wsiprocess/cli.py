@@ -44,6 +44,9 @@ class Args:
             "-ex", "--ext", type=str, default="png",
             help="Extension of extracted patches")
         parser.add_argument(
+            "-ma", "--magnification", type=int,
+            help="Magnification of extracted patches")
+        parser.add_argument(
             "-ss", "--start_sample", action="store_true",
             help="Generate samples at the start of the process.")
         parser.add_argument(
@@ -58,6 +61,9 @@ class Args:
         parser.add_argument(
             "-ve", "--verbose", action="store_true",
             help="Show progress bar while patching.")
+        parser.add_argument(
+            "-dr", "--dryrun", action="store_true",
+            help="Run patching only for first 100 patches.")
 
     def set_wsi_arg(self, parser):
         parser.add_argument(
@@ -68,10 +74,6 @@ class Args:
         parser.add_argument(
             "annotation", type=str, default=False,
             help="Path to the annotation file.")
-        parser.add_argument(
-            "-ma", "--magnification", choices={40, 20, 10}, default=40,
-            type=int,
-            help="Magnification to process.")
         parser.add_argument(
             "-ru", "--rule", type=Path,
             help="File to define the inclusion / exclusion relationship.")
@@ -235,11 +237,13 @@ def main(command=None):
         offset_x=args.offset_x,
         offset_y=args.offset_y,
         ext=args.ext,
+        magnification=args.magnification,
         start_sample=args.start_sample,
         finished_sample=args.finished_sample,
         no_patches=args.no_patches,
         crop_bbox=crop_bbox,
-        verbose=args.verbose)
+        verbose=args.verbose,
+        dryrun=args.dryrun)
     patcher.get_patch_parallel(annotation.classes)
 
     if args.method == "detection":

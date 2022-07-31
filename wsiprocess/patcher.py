@@ -39,6 +39,7 @@ class Patcher:
             and foreground area.
         on_annotation (float, optional): Ratio of overlap area between patches
             and annotation.
+        magnification (int, optional): Magnification of output patches.
         ext (str, optional): Extension of extracted patches.
         start_sample (bool, optional): Whether to save sample patches on
             Patcher starting.
@@ -49,6 +50,7 @@ class Patcher:
         no_patches (bool, optional): If set, Patcher runs without extracting
             patches and saves them to disk.
         verbose (bool, optional): If set, a progress bar appears when patching.
+        dryrun (bool, optional): Only run patching for first 100 patches.
 
     Attributes:
         slide (wsiprocess.slide.Slide): Slide object.
@@ -63,8 +65,10 @@ class Patcher:
         masks (dict): Masks to show the location of classes.
         classes (list): Classes to extract.
         save_to (str): The root of the output directory.
-        p_width (int): The width of the output patches.
-        p_height (int): The height of the output patches.
+        p_width (int): The width of the cropped patches. It magnification is
+            not set, it is same as output patches.
+        p_height (int): The height of the cropped patches. It magnification is
+            not set, it is same as output patches.
         p_area (int): The area of single patch.
         o_width (int): The width of the overlap areas of patches.
         o_height (int): The height of the overlap areas of patches.
@@ -74,12 +78,16 @@ class Patcher:
             foreground area.
         on_annotation (float): Ratio of overlap area between patches and
             annotation.
+        magnification (int): Magnification of output patches.
+        p_scale (float): Ratio of p_width or p_height to output patch size.
+        ext (str): Extension of extracted patches.
         start_sample (bool): Whether to save sample patches on Patcher start.
         finished_sample (bool): Whether to save sample patches on Patcher
             finish.
         extract_patches (bool): Whether to save patches when Patcher runs.
         no_patches (bool): Whether to save patches when Patcher runs.
         verbose (bool, optional): If set, a progress bar appears when patching.
+        dryrun (bool, optional): Only run patching for first 100 patches.
 
         x_lefttop (list): Offsets of patches to the x-axis direction except for
             the right edge.
@@ -96,9 +104,9 @@ class Patcher:
             self, slide, method, annotation=False, save_to=".",
             patch_width=256, patch_height=256, overlap_width=0,
             overlap_height=0, offset_x=0, offset_y=0, on_foreground=0.5,
-            on_annotation=0.5, ext="png", start_sample=False,
-            finished_sample=False, no_patches=False, crop_bbox=False,
-            verbose=False):
+            on_annotation=0.5, ext="png", magnification=False,
+            start_sample=False, finished_sample=False, no_patches=False,
+            crop_bbox=False, verbose=False, dryrun=False):
         self.verify = Verify(
             save_to, slide.filestem, method, start_sample, finished_sample,
             no_patches, crop_bbox)
@@ -115,9 +123,10 @@ class Patcher:
         self.method = method.lower()
         self.wsi_width = slide.width
         self.wsi_height = slide.height
-        self.p_width = int(patch_width)
-        self.p_height = int(patch_height)
-        self.p_area = patch_width * patch_height
+        self.set_magnification(slide, magnification)
+        self.p_width = int(patch_width*self.p_scale)
+        self.p_height = int(patch_height*self.p_scale)
+        self.p_area = self.p_width * self.p_height
         self.o_width = int(overlap_width)
         self.o_height = int(overlap_height)
         self.offset_x = int(offset_x)
@@ -136,9 +145,11 @@ class Patcher:
         self.last_x = self.slide.width - patch_width
         self.last_y = self.slide.height - patch_height
 
-        self.get_iterator()
+        self.dryrun = dryrun
+        self.get_iterator(dryrun)
 
         self.ext = ext
+
         self.start_sample = start_sample
         self.finished_sample = finished_sample
         self.no_patches = no_patches
@@ -163,7 +174,7 @@ class Patcher:
     def __str__(self):
         return "wsiprocess.patcher.Patcher {}".format(self.slide.path)
 
-    def get_iterator(self):
+    def get_iterator(self, dryrun=False):
         self.iterator = list(product(self.x_lefttop, self.y_lefttop))
         bottomedge = [(x, self.last_y) for x in self.x_lefttop]
         rightedge = [(self.last_x, y) for y in self.y_lefttop]
@@ -171,6 +182,24 @@ class Patcher:
         self.iterator += bottomedge
         self.iterator += rightedge
         self.iterator += rightbottom
+
+        if dryrun:
+            self.iterator = self.iterator[:100]
+
+    def set_magnification(self, slide, magnification):
+        self.magnification = magnification
+        if self.magnification:
+            if slide.magnification is None:
+                raise KeyError(
+                    "{} has no magnification property".format(slide.path))
+            if slide.magnification % self.magnification != 0:
+                msg = "magnification={} is not a factor of \
+                    slide.magnification={}"
+                warnings.warn(
+                    msg.format(self.magnification, slide.magnification))
+            self.p_scale = slide.magnification / self.magnification
+        else:
+            self.p_scale = 1
 
     def save_patch_result(self, x, y, cls):
         """Save the extracted patch data to result
@@ -490,6 +519,8 @@ class Patcher:
         self.result["on_annotation"] = self.on_annotation
         self.result["dot_bbox_width"] = self.dot_bbox_width
         self.result["dot_bbox_height"] = self.dot_bbox_height
+        self.result["magnification"] = self.magnification
+        self.result["dryrun"] = self.dryrun
         self.result["save_to"] = str(Path(self.save_to).absolute())
         self.result["classes"] = sorted(self.classes)
 
@@ -522,15 +553,9 @@ class Patcher:
             on_annotation_classes = ["foreground"]
         for cls in on_annotation_classes:
             if not self.no_patches:
-                patch = self.slide.crop(
-                    x, y, self.p_width, self.p_height)
-                if patch.mode == "RGBA" and self.ext == "jpg":
-                    warnings.warn(
-                        "patch has RGBA data. Discarding alpha to save as jpg")
-                    patch = patch.convert("RGB")
-                patch.save(
-                    "{}/{}/patches/{}/{:06}_{:06}.{}".format(
-                        self.save_to, self.filestem, cls, x, y, self.ext))
+                patch = self.crop_patch(x, y)
+                self.save_patch(patch, "{}/{}/patches/{}/{:06}_{:06}.{}".format(
+                    self.save_to, self.filestem, cls, x, y, self.ext))
             self.save_patch_result(x, y, cls)
 
     def get_patch_parallel(self, classes=False, cores=-1):
@@ -588,19 +613,20 @@ class Patcher:
             for bb in patch["bbs"]:
                 if bb["class"] not in classes:
                     continue
-                mini_patch = self.slide.crop(
+                # not properly works with the magnification settings
+                mini_patch = self.crop_patch(
                     patch["x"] + bb["x"],
                     patch["y"] + bb["y"],
                     bb["w"],
-                    bb["h"])
-                if mini_patch.mode == "RGBA" and self.ext == "jpg":
-                    warnings.warn(
-                        "patch has RGBA data. Discarding alpha to save as jpg")
-                    mini_patch = mini_patch.convert("RGB")
-                mini_patch.save(
+                    bb["h"]
+                )
+                self.save_patch(
+                    mini_patch,
                     "{}/{}/mini_patches/{}/{:06}_{:06}.{}".format(
-                        self.save_to, self.filestem, bb["class"],
-                        patch["x"] + bb["x"], patch["y"] + bb["y"],
+                        self.save_to, self.filestem,
+                        bb["class"],
+                        patch["x"] + bb["x"],
+                        patch["y"] + bb["y"],
                         self.ext))
 
     def patch_on_foreground(self, x, y):
@@ -613,8 +639,7 @@ class Patcher:
         Returns:
             (bool): Whether the patch is on the foreground area.
         """
-        patch_mask = self.masks["foreground"][y:y +
-                                              self.p_height, x:x+self.p_width]
+        patch_mask = self.masks["foreground"][y:y+self.p_height, x:x+self.p_width]
         return (patch_mask.sum() / self.p_area) >= self.on_foreground
 
     def patch_on_annotation(self, cls, x, y):
@@ -642,11 +667,27 @@ class Patcher:
         for i in range(sample_count):
             x = random.choice(self.x_lefttop)
             y = random.choice(self.y_lefttop)
-            patch = self.slide.crop(x, y, self.p_width, self.p_height)
-            if patch.mode == "RGBA" and self.ext == "jpg":
-                warnings.warn(
-                    "patch has RGBA data. Discarding alpha to save as jpg")
-                patch = patch.convert("RGB")
-            patch.save(
-                "{}/{}/{}_sample/{:06}_{:06}.{}".format(
-                    self.save_to, self.filestem, phase, x, y, self.ext))
+            patch = self.crop_patch(x, y)
+            self.save_patch(patch, "{}/{}/{}_sample/{:06}_{:06}.{}".format(
+                self.save_to, self.filestem, phase, x, y, self.ext))
+
+    def crop_patch(self, x, y, w=False, h=False):
+        if not w:
+            w = self.p_width
+        if not h:
+            h = self.p_height
+        return self.slide.crop(x, y, w, h)
+
+    def save_patch(self, patch, save_as):
+        if patch.mode == "RGBA" and self.ext == "jpg":
+            warnings.warn(
+                "patch has RGBA data. Discarding alpha to save as jpg")
+            patch = patch.convert("RGB")
+
+        if self.magnification:
+            patch = patch.resize((
+                int(self.p_width//self.p_scale),
+                int(self.p_height//self.p_scale)
+            ))
+
+        patch.save(save_as)
