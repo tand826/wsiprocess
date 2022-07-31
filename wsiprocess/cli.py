@@ -1,4 +1,5 @@
 import argparse
+import os
 from pathlib import Path
 import wsiprocess as wp
 
@@ -46,6 +47,9 @@ class Args:
         parser.add_argument(
             "-ma", "--magnification", type=int,
             help="Magnification of extracted patches")
+        parser.add_argument(
+            "-nj", "--n_jobs", type=int, default=os.cpu_count()//2,
+            help="The maximum number of concurrently running patching jobs.")
         parser.add_argument(
             "-ss", "--start_sample", action="store_true",
             help="Generate samples at the start of the process.")
@@ -244,7 +248,7 @@ def main(command=None):
         crop_bbox=crop_bbox,
         verbose=args.verbose,
         dryrun=args.dryrun)
-    patcher.get_patch_parallel(annotation.classes)
+    patcher.get_patch_parallel(annotation.classes, cores=args.n_jobs)
 
     if args.method == "detection":
         converter = wp.converter(
