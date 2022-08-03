@@ -73,8 +73,30 @@ class Rule:
         Parse the rule file and save as the classes.
         """
         for base, incl_excl in rule.items():
+            import pdb
+            pdb.set_trace()
+            self.assert_incl_excl(incl_excl)
             setattr(self, base, incl_excl)
             self.classes.append(base)
+
+    def assert_incl_excl(self, incl_excl):
+        """Assert the rule has assumed keys.
+
+        Supposed shape is like below:
+            {
+                "includes" : [
+                    "stroma"
+                ],
+                "excludes : [
+                    "malignant",
+                    "uncertain"
+                ]
+            }
+        """
+        assert isinstance(incl_excl, dict), "each object must be dict"
+        msg = "each dict must have {}"
+        assert "includes" in incl_excl.keys(), msg.format("includes")
+        assert "excludes" in incl_excl.keys(), msg.format("excludes")
 
     def __getitem__(self, class_name):
         return getattr(self, class_name)
