@@ -476,7 +476,8 @@ class Patcher:
             return []
         else:
             # Find mask coords
-            patch_mask = self.masks[cls][y:y+self.p_height, x:x+self.p_width]
+            patch_mask = self.annotation.get_patch_mask(
+                cls, x, y, self.p_width, self.p_height)
             mask_path = "{}/{}/masks/{}/{:06}_{:06}.{}".format(
                 self.save_to, self.filestem, cls, x, y, self.ext)
             cv2.imwrite(mask_path, patch_mask, (cv2.IMWRITE_PXM_BINARY, 1))
@@ -639,7 +640,8 @@ class Patcher:
         Returns:
             (bool): Whether the patch is on the foreground area.
         """
-        patch_mask = self.masks["foreground"][y:y+self.p_height, x:x+self.p_width]
+        patch_mask = self.annotation.get_patch_mask(
+            "foreground", x, y, self.p_width, self.p_height)
         return (patch_mask.sum() / self.p_area) >= self.on_foreground
 
     def patch_on_annotation(self, cls, x, y):
@@ -654,7 +656,8 @@ class Patcher:
         Returns:
             (bool): Whether the patch is on the anntation.
         """
-        patch_mask = self.masks[cls][y:y+self.p_height, x:x+self.p_width]
+        patch_mask = self.annotation.get_patch_mask(
+            cls, x, y, self.p_width, self.p_height)
         return (patch_mask.sum() / self.p_area) >= self.on_annotation
 
     def get_random_sample(self, phase, sample_count=1):

@@ -18,10 +18,11 @@ Example:
         import wsiprocess as wp
         annotation = wp.annotation("")
 """
+import warnings
+from pathlib import Path
 
 import cv2
 import numpy as np
-from pathlib import Path
 import wsiprocess.annotationparser as parsers
 from .annotationparser.parser_utils import detect_type
 
@@ -36,11 +37,17 @@ class Annotation:
                 Text data made with "WSIDissector" or "ASAP", and Image data
                 (non-pyramidical) are available.
             is_image(bool): Whether the image is image.
+
+        Attributes:
+            low_memory_consumption (bool): If true, annotaion object does not
+                keep the processed masks on the ram, and read the area from
+                disk when called get_patch.
         """
         self.path = path
         self.slidename = slidename
         self.dot_bbox_width = self.dot_bbox_height = False
         self.is_image = is_image
+        self.low_memory_consumption = False
         self.classes = []
         if not self.is_image:
             self.read_annotation()
@@ -118,7 +125,7 @@ class Annotation:
         self.masks[cls] = mask
 
     def make_masks(
-            self, slide, rule=False, foreground="otsu", size=2000,
+            self, slide, rule=False, foreground="otsu", size=5000,
             min_=30, max_=190, lambdas=False):
         """Make masks from the slide and rule.
 
@@ -140,19 +147,39 @@ class Annotation:
                 defines foreground as the pixels with the value between "min"
                 and "max".
         """
+        if rule:
+            self.classes = list(set(self.classes) & set(rule.classes))
+        self.check_memory_consumption(slide.height, slide.width)
+        self.set_scale(size, slide.height, slide.width)
         self.base_masks(size, slide.height, slide.width)
-        self.main_masks(size, slide)
+        self.main_masks(size, slide.height, slide.width)
         if foreground:
             self.make_foreground_mask(
                 slide, size, method=foreground, min_=min_, max_=max_,
                 lambdas=lambdas)
         if rule:
-            self.classes = list(set(self.classes) & set(rule.classes))
             self.include_masks(rule)
             self.merge_include_coords(rule)
             self.exclude_masks(rule)
             # self.exclude_coords(rule)
-        self.resize_masks(slide)
+        if not self.low_memory_consumption:
+            self.resize_masks(slide.height, slide.width)
+
+    def check_memory_consumption(self, wsi_height, wsi_width):
+        try:
+            classes = self.classes if self.classes else ["foreground"]
+            [np.zeros((wsi_height, wsi_width), dtype=np.uint8) for _ in classes]
+        except np.core._exceptions._ArrayMemoryError:
+            msg = "Full size mask is too large for the RAM. "
+            msg += "Running in low memory consumption mode."
+            warnings.warn(msg)
+            self.low_memory_consumption = True
+
+    def set_scale(self, size, wsi_height, wsi_width):
+        self.scale = self.get_scale(size, wsi_height, wsi_width)
+
+    def get_scale(self, size, wsi_height, wsi_width):
+        return size / max(wsi_height, wsi_width)
 
     def base_masks(self, size, wsi_height, wsi_width):
         """Make base masks.
@@ -162,17 +189,9 @@ class Annotation:
             wsi_height (int): The height of wsi.
             wsi_width (int): The width of wsi.
         """
-        height_is_long = wsi_height > wsi_width
-
-        longer = wsi_height if height_is_long else wsi_width
-        shorter = wsi_height if not height_is_long else wsi_width
-
-        if height_is_long:
-            mask_height = size
-            mask_width = round(size * shorter / longer)
-        else:
-            mask_height = round(size * shorter / longer)
-            mask_width = size
+        scale = self.get_scale(size, wsi_height, wsi_width)
+        mask_height = int(wsi_height * scale)
+        mask_width = int(wsi_width * scale)
 
         for cls in self.classes:
             self.base_mask(cls, mask_height, mask_width)
@@ -189,12 +208,12 @@ class Annotation:
         """
         self.masks[cls] = np.zeros((mask_height, mask_width), dtype=np.uint8)
 
-    def main_masks(self, size, slide):
+    def main_masks(self, size, wsi_height, wsi_width):
         """Main masks
 
         Write border lines following the rule and fill inside with 255.
         """
-        scale = size / max(slide.width, slide.height)
+        scale = self.get_scale(size, wsi_height, wsi_width)
         for cls in self.classes:
             contours = np.array(self.mask_coords[cls], dtype=object)
             for contour in contours:
@@ -269,7 +288,7 @@ class Annotation:
             self.mask_coords[cls] = [list(c) for c in base_set]
 
     def make_foreground_mask(
-            self, slide, size=2000, method="otsu", min_=30, max_=190,
+            self, slide, size=5000, method="otsu", min_=30, max_=190,
             lambdas=False):
         """Make foreground mask.
 
@@ -305,23 +324,20 @@ class Annotation:
         self.masks["foreground"] = mask
         self.classes.append("foreground")
 
-    def resize_masks(self, slide):
+    def resize_masks(self, wsi_height, wsi_width):
         """Resize the masks as the same size as the slide
 
         Args:
             slide (wsiprocess.slide.Slide): Slide object.
         """
         for cls in self.classes:
-            self.resize_mask(slide, cls)
+            self.resize_mask(wsi_height, wsi_width, cls)
 
-    def resize_mask(self, slide, cls):
-        """Resize a mask as the same size as the slide
+    def resize_mask(self, wsi_height, wsi_width, cls):
+        """Resize a mask as the same size as the slide"""
 
-        Args:
-            slide (wsiprocess.slide.Slide): Slide object.
-        """
         self.masks[cls] = cv2.resize(
-            self.masks[cls], (slide.width, slide.height))
+            self.masks[cls], (wsi_width, wsi_height))
 
     def _otsu_method_mask(self, thumb_gray):
         """Make mask of foreground with Otsu's method.
@@ -380,7 +396,7 @@ class Annotation:
         """
         mask = self.masks[cls]
         height, width = mask.shape
-        scale = max(size / height, size / width)
+        scale = self.get_scale(size, height, width)
         mask_resized = cv2.resize(mask, dsize=None, fx=scale, fy=scale)
         mask_scaled = mask_resized * 255
         cv2.imwrite(str(Path(save_to)/"{}_thumb.png".format(cls)), mask_scaled)
@@ -409,3 +425,15 @@ class Annotation:
         cv2.imwrite(
             str(Path(save_to)/"{}.png".format(cls)),
             self.masks[cls], (cv2.IMWRITE_PXM_BINARY, 1))
+
+    def get_patch_mask(self, cls, x, y, w, h):
+        if self.low_memory_consumption:
+            x_ = int(x * self.scale)
+            y_ = int(y * self.scale)
+            w_ = int(w * self.scale)
+            h_ = int(h * self.scale)
+            patch_mask = self.masks[cls][y_:y_+h_, x_:x_+w_]
+            return cv2.resize(patch_mask, dsize=(w, h))
+
+        else:
+            return self.masks[cls][y:y+h, x:x+w]
