@@ -73,8 +73,6 @@ class Rule:
         Parse the rule file and save as the classes.
         """
         for base, incl_excl in rule.items():
-            import pdb
-            pdb.set_trace()
             self.assert_incl_excl(incl_excl)
             setattr(self, base, incl_excl)
             self.classes.append(base)
