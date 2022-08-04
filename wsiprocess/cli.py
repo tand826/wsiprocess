@@ -188,10 +188,10 @@ def process_annotation(args, slide, rule):
         if args.minmax:
             min_, max_ = map(int, args.minmax.split("-"))
             annotation.make_masks(
-                slide, foreground="minmax", min_=min_, max_=max_)
+                slide, foreground_fn="minmax", min_=min_, max_=max_)
         else:
             annotation.make_masks(
-                slide, foreground="otsu")
+                slide, foreground_fn="otsu")
 
     else:
         annotation = wp.annotation(args.annotation, slidename=slide.filename)
@@ -199,9 +199,9 @@ def process_annotation(args, slide, rule):
         if hasattr(args, "minmax") and args.minmax:
             min_, max_ = map(int, args.minmax.split("-"))
             annotation.make_masks(
-                slide, rule, foreground="minmax", min_=min_, max_=max_)
+                slide, rule, foreground_fn="minmax", min_=min_, max_=max_)
         else:
-            annotation.make_masks(slide, rule, foreground=True)
+            annotation.make_masks(slide, rule, foreground_fn="otsu")
 
     if hasattr(args, "extract_foreground"):
         if not (args.extract_foreground and "foreground" in annotation.classes):

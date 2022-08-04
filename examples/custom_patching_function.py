@@ -14,6 +14,6 @@ def example_function(thumb_gray):
 
 slide = wp.slide("CMU-1.ndpi")
 annotation = wp.annotation("CMU-1_classification.xml")
-annotation.make_masks(slide, foreground=example_function)
+annotation.make_masks(slide, foreground_fn=example_function)
 patcher = wp.patcher(slide, "classification", annotation)
 patcher.get_patch_parallel(["benign"])

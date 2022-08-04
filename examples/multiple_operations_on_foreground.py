@@ -29,12 +29,16 @@ def erode(x):
     return mask
 
 
-lambdas = [otsu, dilate, erode]
+def foreground_fn(x):
+    x = otsu(x)
+    x = dilate(x)
+    x = erode(x)
+    return
 
 
 # size = 5000 for more precise mask generation
 annotation.make_masks(
-    slide, rule, size=5000, foreground="lambdas", lambdas=lambdas)
+    slide, rule, size=5000, foreground_fn=foreground_fn)
 
 Path('CMU-1/thumbs').mkdir(exist_ok=True)
 annotation.export_thumb_masks("CMU-1/thumbs")

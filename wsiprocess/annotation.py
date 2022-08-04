@@ -18,6 +18,7 @@ Example:
         import wsiprocess as wp
         annotation = wp.annotation("")
 """
+from typing import Callable
 import warnings
 from pathlib import Path
 
@@ -125,8 +126,8 @@ class Annotation:
         self.masks[cls] = mask
 
     def make_masks(
-            self, slide, rule=False, foreground="otsu", size=5000,
-            min_=30, max_=190, lambdas=False):
+            self, slide, rule=False, foreground_fn="otsu", size=5000,
+            min_=30, max_=190):
         """Make masks from the slide and rule.
 
         Masks are for each class and foreground area.
@@ -134,12 +135,9 @@ class Annotation:
         Args:
             slide (wsiprocess.slide.Slide): Slide object
             rule (:obj:`wsiprocess.rule.Rule`, optional): Rule object
-            foreground (str, optional): This can be {otsu, minmax}. If not set,
-                Annotation don't make foreground mask.
-            size (int, optional): Size of foreground mask on calculating with
-                the Otsu Thresholding.
-            method (str, optional): Binarization method. As default, calculates
-                with Otsu Thresholding.
+            foreground_fn (str or callable, optional): This can be {otsu,
+                minmax} or a user specified function.
+            size (int, optional): Size of foreground mask.
             min (int, optional): Used if method is "minmax". Annotation object
                 defines foreground as the pixels with the value between "min"
                 and "max".
@@ -153,10 +151,9 @@ class Annotation:
         self.set_scale(size, slide.height, slide.width)
         self.base_masks(size, slide.height, slide.width)
         self.main_masks(size, slide.height, slide.width)
-        if foreground:
-            self.make_foreground_mask(
-                slide, size, method=foreground, min_=min_, max_=max_,
-                lambdas=lambdas)
+        if foreground_fn:
+            self.foreground_mask(
+                slide, size, fn=foreground_fn, min_=min_, max_=max_)
         if rule:
             self.include_masks(rule)
             self.merge_include_coords(rule)
@@ -213,14 +210,18 @@ class Annotation:
 
         Write border lines following the rule and fill inside with 255.
         """
+
         scale = self.get_scale(size, wsi_height, wsi_width)
         for cls in self.classes:
-            contours = np.array(self.mask_coords[cls], dtype=object)
-            for contour in contours:
-                self.masks[cls] = cv2.drawContours(
-                    self.masks[cls],
-                    [np.int32(np.array(contour)*scale)], 0, True,
-                    thickness=cv2.FILLED)
+            self.main_mask(cls, scale)
+
+    def main_mask(self, cls, scale):
+        contours = np.array(self.mask_coords[cls], dtype=object)
+        for contour in contours:
+            self.masks[cls] = cv2.drawContours(
+                self.masks[cls],
+                [np.int32(np.array(contour)*scale)], 0, 1,
+                thickness=cv2.FILLED)
 
     def include_masks(self, rule):
         """Merge masks following the rule.
@@ -287,9 +288,8 @@ class Annotation:
                 base_set -= exclude_set
             self.mask_coords[cls] = [list(c) for c in base_set]
 
-    def make_foreground_mask(
-            self, slide, size=5000, method="otsu", min_=30, max_=190,
-            lambdas=False):
+    def foreground_mask(
+            self, slide, size=5000, fn="otsu", min_=30, max_=190):
         """Make foreground mask.
 
         With otsu thresholding, make simple foreground mask.
@@ -298,29 +298,33 @@ class Annotation:
             slide (wsiprocess.slide.Slide): Slide object.
             size (int, or function, optional): Size of foreground mask on
                 calculating with the Otsu Thresholding.
-            method (str, optional): Binarization method. As default, calculates
-                with Otsu Thresholding.
+            fn (str or function, optional): Binarization method. As default,
+                calculates with Otsu Thresholding.
             min (int, optional): Used if method is "minmax". Annotation object
                 defines foreground as the pixels with the value between "min"
                 and "max".
             max (int, optional): Used if method is "minmax". Annotation object
                 defines foreground as the pixels with the value between "min"
                 and "max".
-            lambdas (list(callable)): List of operations to compute on the
-                mask.
         """
         if "foreground" in self.classes:
+            print("foreground is already calculated.")
             return
         thumb = np.asarray(slide.get_thumbnail(size))
         thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
-        if method == "minmax":
-            mask = self._minmax_mask(thumb_gray, min_, max_)
-        elif method == "lambdas":
-            mask = thumb_gray
-            for lambd in lambdas:
-                mask = lambd(mask)
+        if isinstance(fn, str):
+            if fn == "minmax":
+                mask = self._minmax_mask(thumb_gray, min_, max_)
+            elif fn == "otsu":
+                mask = self._otsu_method_mask(thumb_gray)
+            else:
+                raise NotImplementedError(
+                    "{} is not implemented for making masks.".format(fn))
+        elif isinstance(fn, Callable):
+            mask = fn(thumb_gray)
         else:
-            mask = self._otsu_method_mask(thumb_gray)
+            raise NotImplementedError(
+                "{} is not implemented for making masks.".format(fn))
         self.masks["foreground"] = mask
         self.classes.append("foreground")
 
