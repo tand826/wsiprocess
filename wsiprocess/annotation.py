@@ -22,6 +22,7 @@ from typing import Callable
 import warnings
 from pathlib import Path
 
+import psutil
 import cv2
 import numpy as np
 import wsiprocess.annotationparser as parsers
@@ -163,10 +164,10 @@ class Annotation:
             self.resize_masks(slide.height, slide.width)
 
     def check_memory_consumption(self, wsi_height, wsi_width):
-        try:
-            classes = self.classes if self.classes else ["foreground"]
-            [np.zeros((wsi_height, wsi_width), dtype=np.uint8) for _ in classes]
-        except np.core._exceptions._ArrayMemoryError:
+        num_classes = len(self.classes) if self.classes else 1
+        total_mask_size = num_classes*(wsi_height*wsi_width+120)
+        mask_is_too_large = total_mask_size > psutil.virtual_memory().available
+        if mask_is_too_large:
             msg = "Full size mask is too large for the RAM. "
             msg += "Running in low memory consumption mode."
             warnings.warn(msg)
