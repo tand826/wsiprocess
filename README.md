@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/wsiprocess.svg" style="width: 50%">
+<img src="https://raw.githubusercontent.com/tand826/wsiprocess/main/images/wsiprocess.svg" style="width: 50%">
 
 ![Documentation](https://readthedocs.org/projects/wsiprocess/badge/?version=latest)
 ![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4629396.svg)
@@ -14,7 +14,7 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 # Main Flow
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/description.gif" style="max-width: 80%">
+<img src="https://raw.githubusercontent.com/tand826/wsiprocess/main/images/description.gif" style="max-width: 80%">
 </div>
 
 1. Scan some WSIs.
@@ -56,12 +56,12 @@ conda install -c tand826 wsiprocess
 
 ### As a python module
 
-- see [examples](https://github.com/tand826/wsiprocess/tree/master/examples)
-- see [wsiprocess/cli.py](https://github.com/tand826/wsiprocess/blob/master/wsiprocess/cli.py) to check the detailed flow.
+- see [examples](https://github.com/tand826/wsiprocess/tree/main/examples)
+- see [wsiprocess/cli.py](https://github.com/tand826/wsiprocess/blob/main/wsiprocess/cli.py) to check the detailed flow.
 
 ### As a command line tool
 
-- see [examples](https://github.com/tand826/wsiprocess/tree/master/examples).
+- see [examples](https://github.com/tand826/wsiprocess/tree/main/examples).
 
 # Available annotation tools
 
