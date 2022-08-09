@@ -183,14 +183,14 @@ pytest tests.py
 # Citation
 
 ```
-@software{takumi_ando_2021_4629396,
+@software{takumi_ando_2022_5938308,
   author       = {Takumi Ando},
-  title        = {tand826/wsiprocess: version 0.8},
-  month        = mar,
-  year         = 2021,
+  title        = {tand826/wsiprocess: version 0.9},
+  month        = feb,
+  year         = 2022,
   publisher    = {Zenodo},
-  version      = {v0.8},
-  doi          = {10.5281/zenodo.4629396},
-  url          = {https://doi.org/10.5281/zenodo.4629396}
+  version      = {v0.9},
+  doi          = {10.5281/zenodo.5938308},
+  url          = {https://doi.org/10.5281/zenodo.5938308}
 }
 ```
