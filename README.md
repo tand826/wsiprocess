@@ -68,6 +68,7 @@ conda install -c tand826 wsiprocess
 - [ASAP](https://github.com/computationalpathologygroup/ASAP/)
 - [SlideRunner version 1.31.0](https://github.com/DeepPathology/SlideRunner)
 - [QuPath v0.2.3](https://github.com/qupath/qupath)
+- and your favorite tools with [custom parser](https://github.com/tand826/wsiprocess/wiki/How-to-use-custom-annotation-parser)
 
 details: [wiki](https://github.com/tand826/wsiprocess/wiki)
 
