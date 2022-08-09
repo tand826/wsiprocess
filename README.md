@@ -14,7 +14,7 @@ Convert Helper for Histopathological / Cytopathological Machine Learning Tasks
 # Main Flow
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/description.png" style="max-width: 80%">
+<img src="https://raw.githubusercontent.com/tand826/wsiprocess/master/images/description.gif" style="max-width: 80%">
 </div>
 
 1. Scan some WSIs.
