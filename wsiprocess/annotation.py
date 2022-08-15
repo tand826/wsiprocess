@@ -155,7 +155,8 @@ class Annotation:
         self.main_masks(size, slide.height, slide.width)
         if foreground_fn:
             self.foreground_mask(
-                slide, size, fn=foreground_fn, min_=min_, max_=max_)
+                slide, size, slide.height, slide.width, fn=foreground_fn,
+                min_=min_, max_=max_)
         if rule:
             self.include_masks(rule)
             self.merge_include_coords(rule)
@@ -295,7 +296,8 @@ class Annotation:
             self.mask_coords[cls] = [list(c) for c in base_set]
 
     def foreground_mask(
-            self, slide, size=5000, fn="otsu", min_=30, max_=190):
+            self, slide, size=5000, wsi_width=False, wsi_height=False,
+            fn="otsu", min_=30, max_=190):
         """Make foreground mask.
 
         With otsu thresholding, make simple foreground mask.
@@ -304,6 +306,8 @@ class Annotation:
             slide (wsiprocess.slide.Slide): Slide object.
             size (int, or function, optional): Size of foreground mask on
                 calculating with the Otsu Thresholding.
+            wsi_width (int or bool): Width of the wsi.
+            wsi_height (int or bool): Height of the wsi.
             fn (str or function, optional): Binarization method. As default,
                 calculates with Otsu Thresholding.
             min (int, optional): Used if method is "minmax". Annotation object
@@ -316,7 +320,16 @@ class Annotation:
         if "foreground" in self.classes:
             print("foreground is already calculated.")
             return
-        thumb = np.asarray(slide.get_thumbnail(size))
+
+        if wsi_width and wsi_height:
+            scale = self.get_scale(size, wsi_height, wsi_width)
+            thumb_height = self._round(str(wsi_height * scale))
+            thumb_width = self._round(str(wsi_width * scale))
+            thumb_size = (thumb_width, thumb_height)
+        else:
+            thumb_size = size
+
+        thumb = np.asarray(slide.get_thumbnail(thumb_size))
         thumb_gray = cv2.cvtColor(thumb, cv2.COLOR_RGB2GRAY)
         if isinstance(fn, str):
             if fn == "minmax":
