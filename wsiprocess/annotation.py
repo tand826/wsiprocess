@@ -21,6 +21,7 @@ Example:
 from typing import Callable
 import warnings
 from pathlib import Path
+from decimal import Decimal, ROUND_HALF_UP
 
 import psutil
 import cv2
@@ -188,11 +189,15 @@ class Annotation:
             wsi_width (int): The width of wsi.
         """
         scale = self.get_scale(size, wsi_height, wsi_width)
-        mask_height = int(wsi_height * scale)
-        mask_width = int(wsi_width * scale)
+        mask_height = self._round(str(wsi_height * scale))
+        mask_width = self._round(str(wsi_width * scale))
 
         for cls in self.classes:
             self.base_mask(cls, mask_height, mask_width)
+
+    def _round(self, num):
+        num = str(num)
+        return int(Decimal(num).quantize(Decimal('0'), rounding=ROUND_HALF_UP))
 
     def base_mask(self, cls, mask_height, mask_width):
         """ Masks have same size of as the slide.
