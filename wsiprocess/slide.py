@@ -4,7 +4,6 @@ Slide is whole slide image, scanned with whole slide scanners.
 Mannually you can make pyramidical tiff file, which you can handle just the
 same as the scanned digital data, except for the magnification.
 """
-import warnings
 from .error import SlideLoadError
 from pathlib import Path
 import numpy as np
@@ -75,10 +74,12 @@ class Slide:
         """Get thumbnail image.
 
         Args:
-            size (int, optional): Size of the exported thumbnail.
+            size (int or tuple, optional): Size of the exported thumbnail.
         """
         if self.backend == "openslide":
-            return self.slide.get_thumbnail((size, size))
+            if isinstance(size, int):
+                size = (size, size)
+            return self.slide.get_thumbnail(size)
         elif self.backend == "pyvips":
             return self.slide.thumbnail_image(size)
 

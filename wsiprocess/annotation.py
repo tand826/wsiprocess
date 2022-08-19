@@ -296,7 +296,7 @@ class Annotation:
             self.mask_coords[cls] = [list(c) for c in base_set]
 
     def foreground_mask(
-            self, slide, size=5000, wsi_width=False, wsi_height=False,
+            self, slide, size=5000, wsi_height=False, wsi_width=False,
             fn="otsu", min_=30, max_=190):
         """Make foreground mask.
 
