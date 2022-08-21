@@ -157,6 +157,7 @@ class Annotation:
             self.foreground_mask(
                 slide, size, slide.height, slide.width, fn=foreground_fn,
                 min_=min_, max_=max_)
+            self.fix_mask_size()
         if rule:
             self.include_masks(rule)
             self.merge_include_coords(rule)
@@ -346,6 +347,17 @@ class Annotation:
                 "{} is not implemented for making masks.".format(fn))
         self.masks["foreground"] = mask
         self.classes.append("foreground")
+
+    def fix_mask_size(self):
+        if "foreground" not in self.masks:
+            warnings.warn("foreground mask is not set yet.")
+            return
+
+        classes = self.classes.copy()
+        classes.remove("foreground")
+        height, width = self.masks[classes[0]].shape
+        if self.masks["foreground"].shape != (height, width):
+            self.masks["foreground"] = cv2.resize(self.masks["foreground"], (width, height))
 
     def resize_masks(self, wsi_height, wsi_width):
         """Resize the masks as the same size as the slide
