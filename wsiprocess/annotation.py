@@ -354,6 +354,8 @@ class Annotation:
             return
 
         classes = self.classes.copy()
+        if len(classes) == 1 and classes[0] == "foreground":
+            return
         classes.remove("foreground")
         height, width = self.masks[classes[0]].shape
         if self.masks["foreground"].shape != (height, width):
