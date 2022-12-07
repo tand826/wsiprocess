@@ -534,6 +534,9 @@ class Patcher:
             json.dump(self.result, f, indent=4)
 
         coords = pd.DataFrame(self.result["result"])
+        if not self.result["result"]:
+            return
+
         coords.sort_values(by=["x", "y"], inplace=True)
         coords.reset_index(drop=True, inplace=True)
         if self.method != "evaluation":
