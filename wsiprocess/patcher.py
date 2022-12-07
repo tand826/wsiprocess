@@ -12,6 +12,7 @@ from tqdm import tqdm
 import numpy as np
 import cv2
 from pathlib import Path
+import pandas as pd
 
 from .verify import Verify
 
@@ -527,9 +528,39 @@ class Patcher:
 
         self.remove_dup_in_results()
 
-        save_as = "{}/{}/results.json".format(self.save_to, self.filestem)
-        with open(save_as, "w") as f:
+        with open(
+            "{}/{}/results.json".format(self.save_to, self.filestem),
+                "w") as f:
             json.dump(self.result, f, indent=4)
+
+        coords = pd.DataFrame(self.result["result"])
+        coords.sort_values(by=["x", "y"], inplace=True)
+        coords.reset_index(drop=True, inplace=True)
+        if self.method != "evaluation":
+            for cls in self.classes:
+                coords[cls] = (coords["class"] == cls)
+
+            # aggregate if a patch has multiple classes
+            if coords.duplicated(subset=["x", "y", "w", "h"]).sum() > 0:
+                dup_to_keep = ~coords.duplicated(
+                    subset=["x", "y", "w", "h"], keep="first")
+
+                for i, row in coords[dup_to_keep].iterrows():
+                    dup_x = coords.x == row.x
+                    dup_y = coords.y == row.y
+                    dup_w = coords.w == row.w
+                    dup_h = coords.h == row.h
+                    dup = coords[dup_x & dup_y & dup_w & dup_h]
+                    coords.loc[i, self.classes] = dup[self.classes].any()
+
+                coords.drop_duplicates(
+                    subset=["x", "y", "w", "h"], keep="first", inplace=True)
+
+            coords.drop(columns="class", inplace=True)
+
+        coords.to_csv(
+            "{}/{}/coords.csv".format(self.save_to, self.filestem),
+            index=None)
 
     def get_patch(self, x, y, classes=False):
         """Extract a single patch.
