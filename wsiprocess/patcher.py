@@ -540,7 +540,7 @@ class Patcher:
 
         coords.sort_values(by=["x", "y"], inplace=True)
         coords.reset_index(drop=True, inplace=True)
-        if self.method != "evaluation":
+        if self.method == "classification":
             for cls in self.classes:
                 coords[cls] = (coords["class"] == cls)
 
@@ -561,6 +561,22 @@ class Patcher:
                     subset=["x", "y", "w", "h"], keep="first", inplace=True)
 
             coords.drop(columns="class", inplace=True)
+
+        elif self.method == "detection":
+            # column name: bbs
+            # not implemented
+            pass
+
+        elif self.method == "segmentation":
+            # column name: masks
+            for cls in self.classes:
+                coords[cls] = False
+
+            def mask_cls_to_column(x):
+                for mask in x.masks:
+                    coords.loc[x.name, mask["class"]] = True
+
+            coords.apply(mask_cls_to_column, axis=1)
 
         coords.to_csv(
             "{}/{}/coords.csv".format(self.save_to, self.filestem),
