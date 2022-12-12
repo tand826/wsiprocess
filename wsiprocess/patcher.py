@@ -481,7 +481,8 @@ class Patcher:
                 cls, x, y, self.p_width, self.p_height)
             mask_path = "{}/{}/masks/{}/{:06}_{:06}.{}".format(
                 self.save_to, self.filestem, cls, x, y, self.ext)
-            cv2.imwrite(mask_path, patch_mask, (cv2.IMWRITE_PXM_BINARY, 1))
+            if not self.no_patches:
+                cv2.imwrite(mask_path, patch_mask, (cv2.IMWRITE_PXM_BINARY, 1))
             # contours, _ = cv2.findContours(
             #   patch_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
             masks = []
