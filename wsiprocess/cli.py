@@ -249,7 +249,7 @@ def main(command=None):
         verbose=args.verbose,
         dryrun=args.dryrun)
     patcher.get_patch_parallel(
-        annotation.classes, max_workems=args.max_workers)
+        annotation.classes, max_workers=args.max_workers)
 
     if args.method == "detection":
         converter = wp.converter(
