@@ -627,9 +627,10 @@ class Patcher:
                 self.verify.make_dir(
                     "{}/{}/patches/{}".format(
                         self.save_to, self.filestem, cls))
-            if self.method == "segmentation":
-                self.verify.make_dir(
-                    "{}/{}/masks/{}".format(self.save_to, self.filestem, cls))
+                if self.method == "segmentation":
+                    self.verify.make_dir(
+                        "{}/{}/masks/{}".format(
+                            self.save_to, self.filestem, cls))
 
         if self.start_sample:
             self.get_random_sample("start", 3)
