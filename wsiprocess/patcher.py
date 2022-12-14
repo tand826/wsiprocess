@@ -6,8 +6,9 @@ import warnings
 import random
 from itertools import product
 import json
+import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from joblib import Parallel, delayed
 from tqdm import tqdm
 import numpy as np
 import cv2
@@ -610,13 +611,17 @@ class Patcher:
                     self.save_to, self.filestem, cls, x, y, self.ext))
             self.save_patch_result(x, y, cls)
 
-    def get_patch_parallel(self, classes=False, cores=-1):
+    def get_patch_parallel(self, classes=False, max_workers=-1):
         """Run get_patch() in parallel.
 
         Args:
             classes (list): Classes to extract.
-            cores (int): Threads to run. -1 means same as the number of cores.
+            max_workers (int): Workers to run. -1 runs with cores*5 threads.
         """
+        if max_workers == 0 | max_workers < -1:
+            msg = "max_workers must be 1 or larger, or -1"
+            msg += f", got {max_workers}"
+            warnings.warn(msg)
         for cls in classes:
             if not self.no_patches:
                 self.verify.make_dir(
@@ -629,25 +634,26 @@ class Patcher:
         if self.start_sample:
             self.get_random_sample("start", 3)
 
-        def Runner(**joblib_args):
-            def run(**tqdm_args):
-                def tmp(op_iter):
-                    def progress(args): return lambda x: tqdm(x, **args)
-                    bar = progress(tqdm_args)
-                    return Parallel(**joblib_args)(bar(op_iter))
-                return tmp
-            return run
-
-        if self.verbose:
-            run = Runner(n_jobs=cores, backend="threading", verbose=0)
-            runner = run(
-                desc=f"[{self.slide.filename} {self.p_width}x{self.p_height}]")
+        if max_workers == -1:
+            max_workers = os.cpu_count()*5
         else:
-            runner = Parallel(n_jobs=cores, backend="threading", verbose=0)
+            max_workers = max_workers
 
-        # from the left top to just before the right bottom.
-        runner([delayed(self.get_patch)(x, y, classes)
-                for x, y in self.iterator])
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = []
+            for x, y in self.iterator:
+                futures.append(
+                    executor.submit(
+                        self.get_patch,
+                        *(x, y, classes)
+                    )
+                )
+            if self.verbose:
+                desc = f"[{self.filepath} {self.p_width}x{self.p_height}]"
+                [_ for _ in tqdm(
+                    as_completed(futures),
+                    desc=desc,
+                    total=len(futures))]
 
         # save results
         self.save_results()

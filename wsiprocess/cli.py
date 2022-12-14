@@ -48,8 +48,8 @@ class Args:
             "-ma", "--magnification", type=int,
             help="Magnification of extracted patches")
         parser.add_argument(
-            "-nj", "--n_jobs", type=int, default=os.cpu_count()//2,
-            help="The maximum number of concurrently running patching jobs.")
+            "-mw", "--max_workers", type=int, default=os.cpu_count()//2,
+            help="The maximum number of workers to use in patching.")
         parser.add_argument(
             "-ss", "--start_sample", action="store_true",
             help="Generate samples at the start of the process.")
@@ -248,7 +248,8 @@ def main(command=None):
         crop_bbox=crop_bbox,
         verbose=args.verbose,
         dryrun=args.dryrun)
-    patcher.get_patch_parallel(annotation.classes, cores=args.n_jobs)
+    patcher.get_patch_parallel(
+        annotation.cmasses, max_workems=args.max_workers)
 
     if args.method == "detection":
         converter = wp.converter(
