@@ -32,7 +32,7 @@ from .annotationparser.parser_utils import detect_type
 
 class Annotation:
 
-    def __init__(self, path, is_image=False, slidename=False):
+    def __init__(self, path=False, is_image=False, slidename=False):
         """Initialize the anntation object.
 
         Args:
@@ -46,7 +46,7 @@ class Annotation:
                 keep the processed masks on the ram, and read the area from
                 disk when called get_patch.
         """
-        self.path = path
+        self.path = path if path else ""
         self.slidename = slidename
         self.dot_bbox_width = self.dot_bbox_height = False
         self.is_image = is_image
