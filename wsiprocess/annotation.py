@@ -76,6 +76,8 @@ class Annotation:
             parsed = parsers.SlideRunnerAnnotation(self.path, self.slidename)
         elif annotation_type == "QuPath":
             parsed = parsers.QuPathAnnotation(self.path)
+        elif annotation_type == "GeoJson":
+            parsed = parsers.GeoJsonAnnotation(self.path)
         elif annotation_type == "Empty":
             parsed = parsers.BaseParser(self.path)
         self.classes = parsed.classes

@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import shutil
 import pytest
 import pyvips
 import openslide
@@ -19,6 +20,7 @@ ANNOTATIONS = (
     f"{SAMPLEDIR}/CMU-1_classification.xml",
     f"{SAMPLEDIR}/CMU-1_detection.xml",
     f"{SAMPLEDIR}/CMU-1_segmentation.xml",
+    f"{TESTDIR}/test_annotation.geojson",
     f"{TESTDIR}/test_emptyfile.txt")
 RULES = (
     f"{SAMPLEDIR}/rule.json",
@@ -39,6 +41,10 @@ VOC_STYLE = ("False", "True")
 COCO_STYLE = ("False", "True")
 YOLO_STYLE = ("False", "True")
 VERBOSE = ("False", "True")
+
+
+def remove_result_dir(wsi):
+    shutil.rmtree(Path(wsi).stem)
 
 
 def test_make_small_pyramidal_tiff():
@@ -121,6 +127,17 @@ def test_cli_annotation_emptyfile():
     method = METHODS[1]
     annotation = ANNOTATIONS[3]
     cli.main([method, WSIS[0], annotation])
+
+
+def test_cli_geojson_annotation():
+    """
+    ANNOTATION = "test_annotation.geojson"
+    """
+    wsi = WSIS[3]
+    method = METHODS[1]
+    annotation = ANNOTATIONS[3]
+    cli.main([method, wsi, annotation])
+    remove_result_dir(wsi)
 
 
 def test_cli_none_with_annotation():
@@ -252,8 +269,11 @@ def test_extensions():
 def test_magnifications():
     # MAGNIFICATIONS = ("10", "1", "80", "40", "20")
     cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[0], "-dr"])
+    remove_result_dir(WSIS[3])
     cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[1], "-dr"])
+    remove_result_dir(WSIS[3])
     cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[4], "-dr"])
+    remove_result_dir(WSIS[3])
 
 
 def test_magnifications_keyerror():
@@ -264,7 +284,9 @@ def test_magnifications_keyerror():
 def test_magnifications_largemagnification():
     with pytest.warns(UserWarning):
         cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[3], "-dr"])
+        remove_result_dir(WSIS[3])
         cli.main([METHODS[0], WSIS[3], "-ma", MAGNIFICATIONS[2], "-dr"])
+        remove_result_dir(WSIS[3])
 
 
 def test_verbose():

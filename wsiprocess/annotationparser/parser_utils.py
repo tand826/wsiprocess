@@ -26,6 +26,8 @@ def detect_type(path):
                 return "WSIDissector"
         elif data[0].keys() >= {"type", "id", "geometry", "properties"}:
             return "QuPath"
+        elif data.get("type") == "FeatureCollection":
+            return "GeoJson"
     elif path.suffix == ".sqlite":
         try:
             con = sqlite3.connect(path)
