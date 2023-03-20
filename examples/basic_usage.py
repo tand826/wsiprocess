@@ -5,5 +5,5 @@ rule = wp.rule("rule.json")
 
 annotation.make_masks(slide, rule, foreground_fn="otsu")
 
-patcher = wp.patcher(slide, "classification", annotation)
+patcher = wp.patcher(slide, "classification", annotation, on_annotation=0.1)
 patcher.get_patch_parallel(["benign", "malignant"])
