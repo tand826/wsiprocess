@@ -150,6 +150,7 @@ class Annotation:
                 and "max".
         """
         if rule:
+            self.check_classes(self.classes, rule.classes)
             self.classes = list(set(self.classes) & set(rule.classes))
         self.check_memory_consumption(slide.height, slide.width)
         self.set_scale(size, slide.height, slide.width)
@@ -167,6 +168,12 @@ class Annotation:
             # self.exclude_coords(rule)
         if not self.low_memory_consumption:
             self.resize_masks(slide.height, slide.width)
+
+    def check_classes(self, annotation_class, rule_class):
+        if set(annotation_class) != set(rule_class):
+            msg = "classes in annotation and rule are different. "
+            msg += f"got annotation: {annotation_class}, rule: {rule_class}"
+            warnings.warn(msg)
 
     def check_memory_consumption(self, wsi_height, wsi_width):
         num_classes = len(self.classes) if self.classes else 1
