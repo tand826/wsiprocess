@@ -106,7 +106,7 @@ class Patcher:
             self, slide, method, annotation=False, save_to=".",
             patch_width=256, patch_height=256, overlap_width=0,
             overlap_height=0, offset_x=0, offset_y=0, on_foreground=0.5,
-            on_annotation=0.5, ext="png", magnification=False,
+            on_annotation=0.5, ext="jpg", magnification=False,
             start_sample=False, finished_sample=False, no_patches=False,
             crop_bbox=False, verbose=False, dryrun=False):
         self.verify = Verify(
