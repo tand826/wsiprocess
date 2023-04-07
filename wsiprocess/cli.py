@@ -7,6 +7,9 @@ import wsiprocess as wp
 class Args:
     def __init__(self, command):
         self.build_args(command)
+        self.fillattrs(keys=[
+            "annotation", "rule", "export_thumbs", "on_annotation", "minmax",
+            "crop_bbox", "extract_foreground"])
 
     def set_base_parser(self):
         self.base_parser = argparse.ArgumentParser(
@@ -180,32 +183,24 @@ class Args:
 
         self.base_parser.parse_args(command, namespace=self)
 
+    def fillattr(self, key: str):
+        if not hasattr(self, key):
+            setattr(self, key, False)
+
+    def fillattrs(self, keys):
+        for key in keys:
+            self.fillattr(key)
+
 
 def process_annotation(args, slide, rule):
-    if args.method == "evaluation":
-        annotation = wp.annotation("")
-        annotation.dot_to_bbox(args.dot_bbox_width, args.dot_bbox_height)
-        if args.minmax:
-            min_, max_ = map(int, args.minmax.split("-"))
-            annotation.make_masks(
-                slide, foreground_fn="minmax", min_=min_, max_=max_)
-        else:
-            annotation.make_masks(
-                slide, foreground_fn="otsu")
-
+    annotation = wp.annotation(args.annotation, slidename=slide.filename)
+    annotation.dot_to_bbox(args.dot_bbox_width, args.dot_bbox_height)
+    if args.minmax:
+        min_, max_ = map(int, args.minmax.split("-"))
+        annotation.make_masks(
+            slide, rule, foreground_fn="minmax", min_=min_, max_=max_)
     else:
-        annotation = wp.annotation(args.annotation, slidename=slide.filename)
-        annotation.dot_to_bbox(args.dot_bbox_width, args.dot_bbox_height)
-        if hasattr(args, "minmax") and args.minmax:
-            min_, max_ = map(int, args.minmax.split("-"))
-            annotation.make_masks(
-                slide, rule, foreground_fn="minmax", min_=min_, max_=max_)
-        else:
-            annotation.make_masks(slide, rule, foreground_fn="otsu")
-
-    if hasattr(args, "extract_foreground"):
-        if not (args.extract_foreground and "foreground" in annotation.classes):
-            annotation.classes.remove("foreground")
+        annotation.make_masks(slide, rule, foreground_fn="otsu")
 
     return annotation
 
@@ -213,20 +208,17 @@ def process_annotation(args, slide, rule):
 def main(command=None):
     args = Args(command)
     slide = wp.slide(args.wsi)
-    rule = wp.rule(args.rule) if hasattr(args, "rule") and args.rule else False
+    rule = wp.rule(args.rule) if args.rule else False
     annotation = process_annotation(args, slide, rule)
 
-    if hasattr(args, "export_thumbs") and args.export_thumbs:
+    if args.export_thumbs:
         thumbs_dir = args.save_to/slide.filestem/"thumbs"
-        if not thumbs_dir.exists():
-            thumbs_dir.mkdir(parents=True)
+        thumbs_dir.mkdir(parents=True, exist_ok=True)
         annotation.export_thumb_masks(thumbs_dir)
 
-    if args.method == "evaluation":
-        on_annotation = False
-    else:
-        on_annotation = args.on_annotation
-    crop_bbox = args.crop_bbox if hasattr(args, "crop_bbox") else False
+    extract_classes = annotation.classes
+    if not (args.extract_foreground and "foreground" in annotation.classes):
+        extract_classes.remove("foreground")
 
     patcher = wp.patcher(
         slide, args.method,
@@ -237,7 +229,7 @@ def main(command=None):
         overlap_width=args.overlap_width,
         overlap_height=args.overlap_height,
         on_foreground=args.on_foreground,
-        on_annotation=on_annotation,
+        on_annotation=args.on_annotation,
         offset_x=args.offset_x,
         offset_y=args.offset_y,
         ext=args.ext,
@@ -245,11 +237,12 @@ def main(command=None):
         start_sample=args.start_sample,
         finished_sample=args.finished_sample,
         no_patches=args.no_patches,
-        crop_bbox=crop_bbox,
+        crop_bbox=args.crop_bbox,
         verbose=args.verbose,
         dryrun=args.dryrun)
+
     patcher.get_patch_parallel(
-        annotation.classes, max_workers=args.max_workers)
+        extract_classes, max_workers=args.max_workers)
 
     if args.method == "detection":
         converter = wp.converter(
