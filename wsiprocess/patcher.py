@@ -39,8 +39,8 @@ class Patcher:
         offset_y (int, optional): The offset pixels along the y-axis.
         on_foreground (float, optional): Ratio of overlap area between patches
             and foreground area.
-        on_annotation (float, optional): Ratio of overlap area between patches
-            and annotation.
+        on_annotation (float or dict): Ratio of overlap area between patches
+            and annotation. dict is also available ex: {"label":value}.
         magnification (int, optional): Magnification of output patches.
         ext (str, optional): Extension of extracted patches.
         start_sample (bool, optional): Whether to save sample patches on
@@ -78,8 +78,8 @@ class Patcher:
         offset_y (int): The The offset pixels along the y-axis.
         on_foreground (float): Ratio of overlap area between patches and
             foreground area.
-        on_annotation (float): Ratio of overlap area between patches and
-            annotation.
+        on_annotation (float or dict): Ratio of overlap area between patches
+            and annotation. dict is also available ex: {"label":value}.
         magnification (int): Magnification of output patches.
         p_scale (float): Ratio of p_width or p_height to output patch size.
         ext (str): Extension of extracted patches.
@@ -163,7 +163,11 @@ class Patcher:
         if annotation:
             self.masks = annotation.masks
             self.classes = annotation.classes
-            self.on_annotation = on_annotation
+            if isinstance(on_annotation, float):
+                # if float, apply same threshold value for all classes
+                self.on_annotation = {cl: on_annotation for cl in self.classes}
+            else:
+                self.on_annotation = on_annotation
         else:
             self.masks = False
             self.classes = []
@@ -618,6 +622,9 @@ class Patcher:
             classes (list): Classes to extract.
             max_workers (int): Workers to run. -1 runs with cores*5 threads.
         """
+        for cls in classes:
+            assert cls in self.on_annotation, f"on_annotation of {cls} not set"
+
         if max_workers == 0 | max_workers < -1:
             msg = "max_workers must be 1 or larger, or -1"
             msg += f", got {max_workers}"
@@ -716,7 +723,7 @@ class Patcher:
         """
         patch_mask = self.annotation.get_patch_mask(
             cls, x, y, self.p_width, self.p_height)
-        return (patch_mask.sum() / self.p_area) >= self.on_annotation
+        return (patch_mask.sum() / self.p_area) >= self.on_annotation[cls]
 
     def get_random_sample(self, phase, sample_count=1):
         """Get random patch to check if the patcher can work properly.

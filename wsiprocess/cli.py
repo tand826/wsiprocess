@@ -1,6 +1,7 @@
 import argparse
 import os
 from pathlib import Path
+import json
 import wsiprocess as wp
 
 
@@ -100,7 +101,7 @@ class Args:
     def add_on_annotation(self, parser, slide_is_sparse=False):
         on_annotation_param = 0.0001 if slide_is_sparse else 0.01
         parser.add_argument(
-            "-oa", "--on_annotation", type=float, default=on_annotation_param,
+            "-oa", "--on_annotation", type=json.loads, default=on_annotation_param,
             help="The ratio of overlapped area of a patch and the annotated.")
 
     def add_binarization_method(self, parser):
