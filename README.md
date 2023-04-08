@@ -1,7 +1,6 @@
 <div align="center">
 <img src="https://raw.githubusercontent.com/tand826/wsiprocess/main/images/wsiprocess.svg" style="width: 50%">
 
-![Documentation](https://readthedocs.org/projects/wsiprocess/badge/?version=latest)
 ![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4629396.svg)
 ![Downloads](https://pepy.tech/badge/wsiprocess)
 ![PyPI](https://img.shields.io/pypi/v/wsiprocess)
