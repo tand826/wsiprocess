@@ -119,7 +119,7 @@ class Verify:
         Raises:
             wsiprocess.error.SizeError: If the sizes are invalid.
         """
-        if isinstance(on_annotation, float):
+        if isinstance(on_annotation, (float, int)):
             if on_annotation <= 0 or on_annotation > 1:
                 raise OnParamError(
                     "on_annotation is between 0 and 1 excluding 0.")
