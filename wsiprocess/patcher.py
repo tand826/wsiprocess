@@ -163,7 +163,7 @@ class Patcher:
         if annotation:
             self.masks = annotation.masks
             self.classes = annotation.classes
-            if isinstance(on_annotation, float):
+            if isinstance(on_annotation, (float, int)):
                 # if float, apply same threshold value for all classes
                 self.on_annotation = {cl: on_annotation for cl in self.classes}
             else:
