@@ -37,14 +37,13 @@ jobs:
           git config --local user.name tand826
           git remote set-url origin git@github.com:tand826/wsiprocess.git
 
-          git fetch
-          git checkout -b docs origin/docs -f
-
           cd docs
           sphinx-apidoc ../wsiprocess -o ./ -f --ext-autodoc
           make html
           mv _build/html/* ./
 
+          git fetch
+          git checkout -b docs origin/docs -f
           git add ./*
           git commit -m "generate documentation from github action"
           git push origin docs
