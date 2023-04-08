@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>wsiprocess package &mdash; wsiprocess 0.9 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="wsiprocess.annotationparser package" href="wsiprocess.annotationparser.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            wsiprocess
+          </a>
+              <div class="version">
+                0.9
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="wsiprocess.annotationparser.html">wsiprocess.annotationparser package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wsiprocess.converters.html">wsiprocess.converters package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wsiprocess.pytorch.html">wsiprocess.pytorch package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">wsiprocess</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">wsiprocess package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/wsiprocess.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="wsiprocess-package">
+<h1>wsiprocess package<a class="headerlink" href="#wsiprocess-package" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="wsiprocess.annotationparser.html">wsiprocess.annotationparser package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.annotationparser.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.annotationparser.html#module-wsiprocess.annotationparser.ASAP_parser">wsiprocess.annotationparser.ASAP_parser module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation"><code class="docutils literal notranslate"><span class="pre">ASAPAnnotation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.path"><code class="docutils literal notranslate"><span class="pre">ASAPAnnotation.path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.annotations"><code class="docutils literal notranslate"><span class="pre">ASAPAnnotation.annotations</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.annotation_groups"><code class="docutils literal notranslate"><span class="pre">ASAPAnnotation.annotation_groups</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.classes"><code class="docutils literal notranslate"><span class="pre">ASAPAnnotation.classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.mask_coords"><code class="docutils literal notranslate"><span class="pre">ASAPAnnotation.mask_coords</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.read_mask_coord"><code class="docutils literal notranslate"><span class="pre">ASAPAnnotation.read_mask_coord()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.ASAP_parser.ASAPAnnotation.read_mask_coords"><code class="docutils literal notranslate"><span class="pre">ASAPAnnotation.read_mask_coords()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.annotationparser.html#module-wsiprocess.annotationparser.GeoJson_parser">wsiprocess.annotationparser.GeoJson_parser module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.GeoJson_parser.GeoJsonAnnotation"><code class="docutils literal notranslate"><span class="pre">GeoJsonAnnotation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.GeoJson_parser.GeoJsonAnnotation.read_annotation"><code class="docutils literal notranslate"><span class="pre">GeoJsonAnnotation.read_annotation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.annotationparser.html#module-wsiprocess.annotationparser.QuPath_parser">wsiprocess.annotationparser.QuPath_parser module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation"><code class="docutils literal notranslate"><span class="pre">QuPathAnnotation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.path"><code class="docutils literal notranslate"><span class="pre">QuPathAnnotation.path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.annotations"><code class="docutils literal notranslate"><span class="pre">QuPathAnnotation.annotations</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.classes"><code class="docutils literal notranslate"><span class="pre">QuPathAnnotation.classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.mask_coords"><code class="docutils literal notranslate"><span class="pre">QuPathAnnotation.mask_coords</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.all_as_int"><code class="docutils literal notranslate"><span class="pre">QuPathAnnotation.all_as_int()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.read_classes"><code class="docutils literal notranslate"><span class="pre">QuPathAnnotation.read_classes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.QuPath_parser.QuPathAnnotation.read_coordinates"><code class="docutils literal notranslate"><span class="pre">QuPathAnnotation.read_coordinates()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.annotationparser.html#module-wsiprocess.annotationparser.SlideRunner_parser">wsiprocess.annotationparser.SlideRunner_parser module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation"><code class="docutils literal notranslate"><span class="pre">SlideRunnerAnnotation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.path"><code class="docutils literal notranslate"><span class="pre">SlideRunnerAnnotation.path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.classes"><code class="docutils literal notranslate"><span class="pre">SlideRunnerAnnotation.classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.mask_coords"><code class="docutils literal notranslate"><span class="pre">SlideRunnerAnnotation.mask_coords</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.bbox_to_circle"><code class="docutils literal notranslate"><span class="pre">SlideRunnerAnnotation.bbox_to_circle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.parse_mask_coords"><code class="docutils literal notranslate"><span class="pre">SlideRunnerAnnotation.parse_mask_coords()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_annotations"><code class="docutils literal notranslate"><span class="pre">SlideRunnerAnnotation.read_annotations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_classes"><code class="docutils literal notranslate"><span class="pre">SlideRunnerAnnotation.read_classes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_coordinates"><code class="docutils literal notranslate"><span class="pre">SlideRunnerAnnotation.read_coordinates()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_labels"><code class="docutils literal notranslate"><span class="pre">SlideRunnerAnnotation.read_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.read_slides"><code class="docutils literal notranslate"><span class="pre">SlideRunnerAnnotation.read_slides()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.SlideRunner_parser.SlideRunnerAnnotation.verify_annotations"><code class="docutils literal notranslate"><span class="pre">SlideRunnerAnnotation.verify_annotations()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.annotationparser.html#module-wsiprocess.annotationparser.WSIDissector_parser">wsiprocess.annotationparser.WSIDissector_parser module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation"><code class="docutils literal notranslate"><span class="pre">WSIDissectorAnnotation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.path"><code class="docutils literal notranslate"><span class="pre">WSIDissectorAnnotation.path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.annotation"><code class="docutils literal notranslate"><span class="pre">WSIDissectorAnnotation.annotation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.filename"><code class="docutils literal notranslate"><span class="pre">WSIDissectorAnnotation.filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.classes"><code class="docutils literal notranslate"><span class="pre">WSIDissectorAnnotation.classes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.mask_coords"><code class="docutils literal notranslate"><span class="pre">WSIDissectorAnnotation.mask_coords</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.WSIDissector_parser.WSIDissectorAnnotation.read_mask_coords"><code class="docutils literal notranslate"><span class="pre">WSIDissectorAnnotation.read_mask_coords()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.annotationparser.html#module-wsiprocess.annotationparser.parser_utils">wsiprocess.annotationparser.parser_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.parser_utils.BaseParser"><code class="docutils literal notranslate"><span class="pre">BaseParser</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.annotationparser.html#wsiprocess.annotationparser.parser_utils.detect_type"><code class="docutils literal notranslate"><span class="pre">detect_type()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.annotationparser.html#module-wsiprocess.annotationparser">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wsiprocess.converters.html">wsiprocess.converters package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.converters.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.converters.html#module-wsiprocess.converters.base_converter">wsiprocess.converters.base_converter module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.base_converter.BaseConverter"><code class="docutils literal notranslate"><span class="pre">BaseConverter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.converters.html#module-wsiprocess.converters.wsiprocess_to_coco">wsiprocess.converters.wsiprocess_to_coco module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.SaveTo"><code class="docutils literal notranslate"><span class="pre">SaveTo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_annotation"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.add_annotation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_categories"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.add_categories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_category"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.add_category()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_image"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.add_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_images_and_annotations"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.add_images_and_annotations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_info"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.add_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.assert_annotation"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.assert_annotation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.convert"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.convert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.get_base"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.get_base()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.get_ratio"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.get_ratio()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.getargs"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.getargs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.make_link_to_images"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.make_link_to_images()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.read_annotation"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.read_annotation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.save_data"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.save_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.set_id"><code class="docutils literal notranslate"><span class="pre">ToCOCOConverter.set_id()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.annotation"><code class="docutils literal notranslate"><span class="pre">annotation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.base"><code class="docutils literal notranslate"><span class="pre">base()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.category"><code class="docutils literal notranslate"><span class="pre">category()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.image"><code class="docutils literal notranslate"><span class="pre">image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_coco.info"><code class="docutils literal notranslate"><span class="pre">info()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.converters.html#module-wsiprocess.converters.wsiprocess_to_voc">wsiprocess.converters.wsiprocess_to_voc module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter"><code class="docutils literal notranslate"><span class="pre">ToVOCConverter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.convert"><code class="docutils literal notranslate"><span class="pre">ToVOCConverter.convert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.getargs"><code class="docutils literal notranslate"><span class="pre">ToVOCConverter.getargs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.make_tree"><code class="docutils literal notranslate"><span class="pre">ToVOCConverter.make_tree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.makedirs"><code class="docutils literal notranslate"><span class="pre">ToVOCConverter.makedirs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.mkdirs"><code class="docutils literal notranslate"><span class="pre">ToVOCConverter.mkdirs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.move_to_test"><code class="docutils literal notranslate"><span class="pre">ToVOCConverter.move_to_test()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.read_result_file"><code class="docutils literal notranslate"><span class="pre">ToVOCConverter.read_result_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.to_jpg"><code class="docutils literal notranslate"><span class="pre">ToVOCConverter.to_jpg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.VOCTree"><code class="docutils literal notranslate"><span class="pre">VOCTree</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_base_text"><code class="docutils literal notranslate"><span class="pre">VOCTree.add_base_text()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_main_branches"><code class="docutils literal notranslate"><span class="pre">VOCTree.add_main_branches()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_objects"><code class="docutils literal notranslate"><span class="pre">VOCTree.add_objects()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_sub_branches"><code class="docutils literal notranslate"><span class="pre">VOCTree.add_sub_branches()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_text"><code class="docutils literal notranslate"><span class="pre">VOCTree.add_text()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.VOCTree.make_template"><code class="docutils literal notranslate"><span class="pre">VOCTree.make_template()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.VOCTree.set_size"><code class="docutils literal notranslate"><span class="pre">VOCTree.set_size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_voc.VOCTree.to_xml"><code class="docutils literal notranslate"><span class="pre">VOCTree.to_xml()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.converters.html#module-wsiprocess.converters.wsiprocess_to_yolo">wsiprocess.converters.wsiprocess_to_yolo module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter"><code class="docutils literal notranslate"><span class="pre">ToYOLOConverter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.convert"><code class="docutils literal notranslate"><span class="pre">ToYOLOConverter.convert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.get_image_paths"><code class="docutils literal notranslate"><span class="pre">ToYOLOConverter.get_image_paths()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.getargs"><code class="docutils literal notranslate"><span class="pre">ToYOLOConverter.getargs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.make_images"><code class="docutils literal notranslate"><span class="pre">ToYOLOConverter.make_images()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.make_labels"><code class="docutils literal notranslate"><span class="pre">ToYOLOConverter.make_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.make_paths"><code class="docutils literal notranslate"><span class="pre">ToYOLOConverter.make_paths()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.makedirs"><code class="docutils literal notranslate"><span class="pre">ToYOLOConverter.makedirs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.parse_ratio"><code class="docutils literal notranslate"><span class="pre">ToYOLOConverter.parse_ratio()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.read_result_file"><code class="docutils literal notranslate"><span class="pre">ToYOLOConverter.read_result_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.converters.html#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.rename_path"><code class="docutils literal notranslate"><span class="pre">ToYOLOConverter.rename_path()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.converters.html#module-wsiprocess.converters">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wsiprocess.pytorch.html">wsiprocess.pytorch package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.pytorch.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.pytorch.html#module-wsiprocess.pytorch.utils">wsiprocess.pytorch.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.pytorch.html#wsiprocess.pytorch.utils.ClassificationDataset"><code class="docutils literal notranslate"><span class="pre">ClassificationDataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.pytorch.html#wsiprocess.pytorch.utils.ClassificationDataset.read_labels"><code class="docutils literal notranslate"><span class="pre">ClassificationDataset.read_labels()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.pytorch.html#wsiprocess.pytorch.utils.SegmentationDataset"><code class="docutils literal notranslate"><span class="pre">SegmentationDataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.pytorch.html#wsiprocess.pytorch.utils.SegmentationDataset.read_masks"><code class="docutils literal notranslate"><span class="pre">SegmentationDataset.read_masks()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.pytorch.html#wsiprocess.pytorch.utils.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.pytorch.html#module-wsiprocess.pytorch.wsidataloader">wsiprocess.pytorch.wsidataloader module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.pytorch.html#module-wsiprocess.pytorch.wsidataset">wsiprocess.pytorch.wsidataset module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.pytorch.html#wsiprocess.pytorch.wsidataset.WSIDataset"><code class="docutils literal notranslate"><span class="pre">WSIDataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.pytorch.html#wsiprocess.pytorch.wsidataset.WSIDataset.read_coords"><code class="docutils literal notranslate"><span class="pre">WSIDataset.read_coords()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.pytorch.html#wsiprocess.pytorch.wsidataset.WSIDataset.read_patch"><code class="docutils literal notranslate"><span class="pre">WSIDataset.read_patch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.pytorch.html#wsiprocess.pytorch.wsidataset.WSIDataset.read_patch_from_disk"><code class="docutils literal notranslate"><span class="pre">WSIDataset.read_patch_from_disk()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="wsiprocess.pytorch.html#wsiprocess.pytorch.wsidataset.WSIDataset.read_patch_from_wsi"><code class="docutils literal notranslate"><span class="pre">WSIDataset.read_patch_from_wsi()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wsiprocess.pytorch.html#wsiprocess.pytorch.wsidataset.WSIsDataset"><code class="docutils literal notranslate"><span class="pre">WSIsDataset</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wsiprocess.pytorch.html#module-wsiprocess.pytorch">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-wsiprocess.annotation">
+<span id="wsiprocess-annotation-module"></span><h2>wsiprocess.annotation module<a class="headerlink" href="#module-wsiprocess.annotation" title="Permalink to this heading"></a></h2>
+<p>Annotation object.</p>
+<p>Annotation object is optional metadata for slide.
+This object can handle ASAP or WSIViewer style annotation.
+By adding annotationparser, you can process annotation data from other types of
+annotation tools.</p>
+<p class="rubric">Example</p>
+<p>Loading annotation data:: python</p>
+<blockquote>
+<div><p>import wsiprocess as wp
+annotation = wp.annotation(“path_to_annotation_file.xml”)</p>
+</div></blockquote>
+<p>Loading annotation data from image:: python</p>
+<blockquote>
+<div><p>import wsiprocess as wp
+annotation = wp.annotation(“”)</p>
+</div></blockquote>
+<dl class="py class">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.annotation.</span></span><span class="sig-name descname"><span class="pre">Annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slidename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.add_class">
+<span class="sig-name descname"><span class="pre">add_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.add_class" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.base_mask">
+<span class="sig-name descname"><span class="pre">base_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_width</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.base_mask" title="Permalink to this definition"></a></dt>
+<dd><p>Masks have same size of as the slide.</p>
+<p>Masks are canvases of 0s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cls</strong> (<em>str</em>) – Class name for each mask.</p></li>
+<li><p><strong>mask_height</strong> (<em>int</em>) – The height of base masks.</p></li>
+<li><p><strong>mask_width</strong> (<em>int</em>) – The width of base masks.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.base_masks">
+<span class="sig-name descname"><span class="pre">base_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_width</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.base_masks" title="Permalink to this definition"></a></dt>
+<dd><p>Make base masks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>int</em>) – The long side of masks.</p></li>
+<li><p><strong>wsi_height</strong> (<em>int</em>) – The height of wsi.</p></li>
+<li><p><strong>wsi_width</strong> (<em>int</em>) – The width of wsi.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.check_classes">
+<span class="sig-name descname"><span class="pre">check_classes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotation_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.check_classes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.check_memory_consumption">
+<span class="sig-name descname"><span class="pre">check_memory_consumption</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wsi_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_width</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.check_memory_consumption" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.dot_to_bbox">
+<span class="sig-name descname"><span class="pre">dot_to_bbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.dot_to_bbox" title="Permalink to this definition"></a></dt>
+<dd><p>Translate dot annotations to bounding boxes.</p>
+<p>If the len(self.mask_coords[cls][idx]) is 1, the annotation is a dot.
+And, the dot is the midpoint of the bounding box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>int</em>) – Width of the translated bounding box.</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – Height of the translated bounding box. If not set,
+height is equal to width.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.exclude_coords">
+<span class="sig-name descname"><span class="pre">exclude_coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.exclude_coords" title="Permalink to this definition"></a></dt>
+<dd><p>Exclude coordinations following the rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule</strong> (<a class="reference internal" href="#wsiprocess.rule.Rule" title="wsiprocess.rule.Rule"><em>wsiprocess.rule.Rule</em></a>) – Rule object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.exclude_masks">
+<span class="sig-name descname"><span class="pre">exclude_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.exclude_masks" title="Permalink to this definition"></a></dt>
+<dd><p>Exclude area from base mask with following the rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule</strong> (<a class="reference internal" href="#wsiprocess.rule.Rule" title="wsiprocess.rule.Rule"><em>wsiprocess.rule.Rule</em></a>) – Rule object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.export_mask">
+<span class="sig-name descname"><span class="pre">export_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.export_mask" title="Permalink to this definition"></a></dt>
+<dd><p>Export one binary mask image.</p>
+<p>Export mask image with 0 or 1 binaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_to</strong> (<em>str</em>) – Parent directory to save the thumbnails.</p></li>
+<li><p><strong>cls</strong> (<em>str</em>) – Class name for each mask.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.export_masks">
+<span class="sig-name descname"><span class="pre">export_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.export_masks" title="Permalink to this definition"></a></dt>
+<dd><p>Export binary mask images.</p>
+<p>For later computing such as segmentation, export the mask images.
+Exported masks have 0 or 1 binary data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>save_to</strong> (<em>str</em>) – Parent directory to save the thumbnails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.export_thumb_mask">
+<span class="sig-name descname"><span class="pre">export_thumb_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">512</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.export_thumb_mask" title="Permalink to this definition"></a></dt>
+<dd><p>Export a thumbnail of one of the masks.</p>
+<p>For prior check, export one thumbnail of one of the masks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cls</strong> (<em>str</em>) – Class name for each mask.</p></li>
+<li><p><strong>save_to</strong> (<em>str</em><em>, </em><em>optional</em>) – Parent directory to save the thumbnails.</p></li>
+<li><p><strong>size</strong> (<em>int</em><em>, </em><em>optional</em>) – Length of the long side of thumbnail.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.export_thumb_masks">
+<span class="sig-name descname"><span class="pre">export_thumb_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">512</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.export_thumb_masks" title="Permalink to this definition"></a></dt>
+<dd><p>Export thumbnail of masks.</p>
+<p>For prior check, export thumbnails of masks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_to</strong> (<em>str</em>) – Parent directory to save the thumbnails.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – Length of the long side of thumbnail.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.fix_mask_size">
+<span class="sig-name descname"><span class="pre">fix_mask_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.fix_mask_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.foreground_mask">
+<span class="sig-name descname"><span class="pre">foreground_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slide</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'otsu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">190</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.foreground_mask" title="Permalink to this definition"></a></dt>
+<dd><p>Make foreground mask.</p>
+<p>With otsu thresholding, make simple foreground mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slide</strong> (<a class="reference internal" href="#wsiprocess.slide.Slide" title="wsiprocess.slide.Slide"><em>wsiprocess.slide.Slide</em></a>) – Slide object.</p></li>
+<li><p><strong>size</strong> (<em>int</em><em>, or </em><em>function</em><em>, </em><em>optional</em>) – Size of foreground mask on
+calculating with the Otsu Thresholding.</p></li>
+<li><p><strong>wsi_width</strong> (<em>int</em><em> or </em><em>bool</em>) – Width of the wsi.</p></li>
+<li><p><strong>wsi_height</strong> (<em>int</em><em> or </em><em>bool</em>) – Height of the wsi.</p></li>
+<li><p><strong>fn</strong> (<em>str</em><em> or </em><em>function</em><em>, </em><em>optional</em>) – Binarization method. As default,
+calculates with Otsu Thresholding.</p></li>
+<li><p><strong>min</strong> (<em>int</em><em>, </em><em>optional</em>) – Used if method is “minmax”. Annotation object
+defines foreground as the pixels with the value between “min”
+and “max”.</p></li>
+<li><p><strong>max</strong> (<em>int</em><em>, </em><em>optional</em>) – Used if method is “minmax”. Annotation object
+defines foreground as the pixels with the value between “min”
+and “max”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.from_image">
+<span class="sig-name descname"><span class="pre">from_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.from_image" title="Permalink to this definition"></a></dt>
+<dd><p>Load mask data from an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask</strong> (<em>numpy.ndarray</em>) – 2D mask image with background as 0, and
+foreground as 255.</p></li>
+<li><p><strong>cls</strong> (<em>str</em>) – Name of the class of the mask image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.get_patch_mask">
+<span class="sig-name descname"><span class="pre">get_patch_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.get_patch_mask" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.get_scale">
+<span class="sig-name descname"><span class="pre">get_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_width</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.get_scale" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.include_masks">
+<span class="sig-name descname"><span class="pre">include_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.include_masks" title="Permalink to this definition"></a></dt>
+<dd><p>Merge masks following the rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule</strong> (<a class="reference internal" href="#wsiprocess.rule.Rule" title="wsiprocess.rule.Rule"><em>wsiprocess.rule.Rule</em></a>) – Rule object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.main_mask">
+<span class="sig-name descname"><span class="pre">main_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.main_mask" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.main_masks">
+<span class="sig-name descname"><span class="pre">main_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_width</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.main_masks" title="Permalink to this definition"></a></dt>
+<dd><p>Main masks</p>
+<p>Write border lines following the rule and fill inside with 255.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.make_masks">
+<span class="sig-name descname"><span class="pre">make_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slide</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">foreground_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'otsu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">190</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.make_masks" title="Permalink to this definition"></a></dt>
+<dd><p>Make masks from the slide and rule.</p>
+<p>Masks are for each class and foreground area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slide</strong> (<a class="reference internal" href="#wsiprocess.slide.Slide" title="wsiprocess.slide.Slide"><em>wsiprocess.slide.Slide</em></a>) – Slide object</p></li>
+<li><p><strong>rule</strong> (<a class="reference internal" href="#wsiprocess.rule.Rule" title="wsiprocess.rule.Rule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wsiprocess.rule.Rule</span></code></a>, optional) – Rule object</p></li>
+<li><p><strong>foreground_fn</strong> (<em>str</em><em> or </em><em>callable</em><em>, </em><em>optional</em>) – This can be {otsu,
+minmax} or a user specified function.</p></li>
+<li><p><strong>size</strong> (<em>int</em><em>, </em><em>optional</em>) – Size of foreground mask.</p></li>
+<li><p><strong>min</strong> (<em>int</em><em>, </em><em>optional</em>) – Used if method is “minmax”. Annotation object
+defines foreground as the pixels with the value between “min”
+and “max”.</p></li>
+<li><p><strong>max</strong> (<em>int</em><em>, </em><em>optional</em>) – Used if method is “minmax”. Annotation object
+defines foreground as the pixels with the value between “min”
+and “max”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.merge_include_coords">
+<span class="sig-name descname"><span class="pre">merge_include_coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.merge_include_coords" title="Permalink to this definition"></a></dt>
+<dd><p>Merge coordinations following the rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule</strong> (<a class="reference internal" href="#wsiprocess.rule.Rule" title="wsiprocess.rule.Rule"><em>wsiprocess.rule.Rule</em></a>) – Rule object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.read_annotation">
+<span class="sig-name descname"><span class="pre">read_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotation_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.read_annotation" title="Permalink to this definition"></a></dt>
+<dd><p>Parse the annotation data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>annotation_type</strong> (<em>str</em>) – If provided, pass the auto type detection.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.resize_mask">
+<span class="sig-name descname"><span class="pre">resize_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wsi_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.resize_mask" title="Permalink to this definition"></a></dt>
+<dd><p>Resize a mask as the same size as the slide</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.resize_masks">
+<span class="sig-name descname"><span class="pre">resize_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wsi_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_width</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.resize_masks" title="Permalink to this definition"></a></dt>
+<dd><p>Resize the masks as the same size as the slide</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>slide</strong> (<a class="reference internal" href="#wsiprocess.slide.Slide" title="wsiprocess.slide.Slide"><em>wsiprocess.slide.Slide</em></a>) – Slide object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.annotation.Annotation.set_scale">
+<span class="sig-name descname"><span class="pre">set_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_width</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.annotation.Annotation.set_scale" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-wsiprocess.cli">
+<span id="wsiprocess-cli-module"></span><h2>wsiprocess.cli module<a class="headerlink" href="#module-wsiprocess.cli" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.cli.</span></span><span class="sig-name descname"><span class="pre">Args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.add_annotation_args">
+<span class="sig-name descname"><span class="pre">add_annotation_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slide_is_sparse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.add_annotation_args" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.add_binarization_method">
+<span class="sig-name descname"><span class="pre">add_binarization_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.add_binarization_method" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.add_on_annotation">
+<span class="sig-name descname"><span class="pre">add_on_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slide_is_sparse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.add_on_annotation" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.add_on_foreground">
+<span class="sig-name descname"><span class="pre">add_on_foreground</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slide_is_sparse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.add_on_foreground" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.build_args">
+<span class="sig-name descname"><span class="pre">build_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.build_args" title="Permalink to this definition"></a></dt>
+<dd><p>Base Parser</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.fillattr">
+<span class="sig-name descname"><span class="pre">fillattr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.fillattr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.fillattrs">
+<span class="sig-name descname"><span class="pre">fillattrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.fillattrs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.set_base_parser">
+<span class="sig-name descname"><span class="pre">set_base_parser</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.set_base_parser" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.set_classification_args">
+<span class="sig-name descname"><span class="pre">set_classification_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.set_classification_args" title="Permalink to this definition"></a></dt>
+<dd><p>Arguments for classification</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.set_common_args">
+<span class="sig-name descname"><span class="pre">set_common_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.set_common_args" title="Permalink to this definition"></a></dt>
+<dd><p>Common Arguments</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.set_detection_args">
+<span class="sig-name descname"><span class="pre">set_detection_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.set_detection_args" title="Permalink to this definition"></a></dt>
+<dd><p>Arguments for detection tasks.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.set_evaluation_args">
+<span class="sig-name descname"><span class="pre">set_evaluation_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.set_evaluation_args" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.set_method_args">
+<span class="sig-name descname"><span class="pre">set_method_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.set_method_args" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.set_segmentation_args">
+<span class="sig-name descname"><span class="pre">set_segmentation_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.set_segmentation_args" title="Permalink to this definition"></a></dt>
+<dd><p>Arguments for segmentation tasks.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.cli.Args.set_wsi_arg">
+<span class="sig-name descname"><span class="pre">set_wsi_arg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.Args.set_wsi_arg" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="wsiprocess.cli.main">
+<span class="sig-prename descclassname"><span class="pre">wsiprocess.cli.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.main" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="wsiprocess.cli.process_annotation">
+<span class="sig-prename descclassname"><span class="pre">wsiprocess.cli.</span></span><span class="sig-name descname"><span class="pre">process_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slide</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.cli.process_annotation" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-wsiprocess.converter">
+<span id="wsiprocess-converter-module"></span><h2>wsiprocess.converter module<a class="headerlink" href="#module-wsiprocess.converter" title="Permalink to this heading"></a></h2>
+<p>Convert wsiprocess style annotation data to COCO or VOC style.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="wsiprocess.converter.Converter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.converter.</span></span><span class="sig-name descname"><span class="pre">Converter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratio_arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converter.Converter" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Converter Class
+Args:</p>
+<p>Attributes:</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.converter.Converter.to_coco">
+<span class="sig-name descname"><span class="pre">to_coco</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converter.Converter.to_coco" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.converter.Converter.to_voc">
+<span class="sig-name descname"><span class="pre">to_voc</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converter.Converter.to_voc" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.converter.Converter.to_yolo">
+<span class="sig-name descname"><span class="pre">to_yolo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converter.Converter.to_yolo" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-wsiprocess.error">
+<span id="wsiprocess-error-module"></span><h2>wsiprocess.error module<a class="headerlink" href="#module-wsiprocess.error" title="Permalink to this heading"></a></h2>
+<p>Custom errors for wsiprocess.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="wsiprocess.error.AnnotationLabelError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.error.</span></span><span class="sig-name descname"><span class="pre">AnnotationLabelError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.error.AnnotationLabelError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#wsiprocess.error.WsiProcessError" title="wsiprocess.error.WsiProcessError"><code class="xref py py-class docutils literal notranslate"><span class="pre">WsiProcessError</span></code></a></p>
+<p>Error of annotations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – Message to show in the stdout.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="wsiprocess.error.MissCombinationError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.error.</span></span><span class="sig-name descname"><span class="pre">MissCombinationError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.error.MissCombinationError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#wsiprocess.error.WsiProcessError" title="wsiprocess.error.WsiProcessError"><code class="xref py py-class docutils literal notranslate"><span class="pre">WsiProcessError</span></code></a></p>
+<p>Error of the combination of the method and the anntoation file.</p>
+<dl class="simple">
+<dt>Args</dt><dd><p>message (str): Message to show in the stdout.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="wsiprocess.error.OnParamError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.error.</span></span><span class="sig-name descname"><span class="pre">OnParamError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.error.OnParamError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#wsiprocess.error.WsiProcessError" title="wsiprocess.error.WsiProcessError"><code class="xref py py-class docutils literal notranslate"><span class="pre">WsiProcessError</span></code></a></p>
+<p>Error of on_annotation.</p>
+<p>on_annotation must be more than 0 and up to 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – Message to show in the stdout.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="wsiprocess.error.PatchSizeTooSmallError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.error.</span></span><span class="sig-name descname"><span class="pre">PatchSizeTooSmallError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.error.PatchSizeTooSmallError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#wsiprocess.error.WsiProcessError" title="wsiprocess.error.WsiProcessError"><code class="xref py py-class docutils literal notranslate"><span class="pre">WsiProcessError</span></code></a></p>
+<p>Error of the size of patches.</p>
+<p>This should be warning?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – Message to show in the stdout.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="wsiprocess.error.SizeError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.error.</span></span><span class="sig-name descname"><span class="pre">SizeError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.error.SizeError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#wsiprocess.error.WsiProcessError" title="wsiprocess.error.WsiProcessError"><code class="xref py py-class docutils literal notranslate"><span class="pre">WsiProcessError</span></code></a></p>
+<p>Error of sizes.</p>
+<p>The slide size is larger than the patches, and the patch size is larger
+than the overlap size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – Message to show in the stdout.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="wsiprocess.error.SlideLoadError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.error.</span></span><span class="sig-name descname"><span class="pre">SlideLoadError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.error.SlideLoadError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#wsiprocess.error.WsiProcessError" title="wsiprocess.error.WsiProcessError"><code class="xref py py-class docutils literal notranslate"><span class="pre">WsiProcessError</span></code></a></p>
+<p>Error on loading slides.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – Message to show in the stdout.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="wsiprocess.error.WsiProcessError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.error.</span></span><span class="sig-name descname"><span class="pre">WsiProcessError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.error.WsiProcessError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Root error class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – Message to show in the stdout.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-wsiprocess.patcher">
+<span id="wsiprocess-patcher-module"></span><h2>wsiprocess.patcher module<a class="headerlink" href="#module-wsiprocess.patcher" title="Permalink to this heading"></a></h2>
+<p>Patcher object to extract patches from whole slide images.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.patcher.</span></span><span class="sig-name descname"><span class="pre">Patcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slide</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_foreground</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_annotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'jpg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magnification</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_sample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finished_sample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_patches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_bbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dryrun</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Patcher object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slide</strong> (<a class="reference internal" href="#wsiprocess.slide.Slide" title="wsiprocess.slide.Slide"><em>wsiprocess.slide.Slide</em></a>) – Slide object.</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – Method name to run. One of {“evaluation”,
+“classification”, “detection”, “segmentation}. Characters are
+converted to lowercase.</p></li>
+<li><p><strong>annotation</strong> (<a class="reference internal" href="#wsiprocess.annotation.Annotation" title="wsiprocess.annotation.Annotation"><em>wsiprocess.annotation.Annotation</em></a><em>, </em><em>optional</em>) – Annotation object.</p></li>
+<li><p><strong>save_to</strong> (<em>str</em><em>, </em><em>optional</em>) – The root of the output directory.</p></li>
+<li><p><strong>patch_width</strong> (<em>int</em><em>, </em><em>optional</em>) – The width of the output patches.</p></li>
+<li><p><strong>patch_height</strong> (<em>int</em><em>, </em><em>optional</em>) – The height of the output patches.</p></li>
+<li><p><strong>overlap_width</strong> (<em>int</em><em>, </em><em>optional</em>) – The width of the overlap areas of
+patches.</p></li>
+<li><p><strong>overlap_height</strong> (<em>int</em><em>, </em><em>optional</em>) – The height of the overlap areas of
+patches.</p></li>
+<li><p><strong>offset_x</strong> (<em>int</em><em>, </em><em>optional</em>) – The offset pixels along the x-axis.</p></li>
+<li><p><strong>offset_y</strong> (<em>int</em><em>, </em><em>optional</em>) – The offset pixels along the y-axis.</p></li>
+<li><p><strong>on_foreground</strong> (<em>float</em><em>, </em><em>optional</em>) – Ratio of overlap area between patches
+and foreground area.</p></li>
+<li><p><strong>on_annotation</strong> (<em>float</em><em> or </em><em>dict</em>) – Ratio of overlap area between patches
+and annotation. dict is also available ex: {“label”:value}.</p></li>
+<li><p><strong>magnification</strong> (<em>int</em><em>, </em><em>optional</em>) – Magnification of output patches.</p></li>
+<li><p><strong>ext</strong> (<em>str</em><em>, </em><em>optional</em>) – Extension of extracted patches.</p></li>
+<li><p><strong>start_sample</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to save sample patches on
+Patcher starting.</p></li>
+<li><p><strong>finished_sample</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to save sample patches on
+Patcher finished its work.</p></li>
+<li><p><strong>extract_patches</strong> (<em>bool</em><em>, </em><em>optional</em>) – This is deprecated because unless
+“no_patches” is set, Patcher extracts patches.</p></li>
+<li><p><strong>no_patches</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set, Patcher runs without extracting
+patches and saves them to disk.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set, a progress bar appears when patching.</p></li>
+<li><p><strong>dryrun</strong> (<em>bool</em><em>, </em><em>optional</em>) – Only run patching for first 100 patches.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.slide">
+<span class="sig-name descname"><span class="pre">slide</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.slide" title="Permalink to this definition"></a></dt>
+<dd><p>Slide object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#wsiprocess.slide.Slide" title="wsiprocess.slide.Slide">wsiprocess.slide.Slide</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.wsi_width">
+<span class="sig-name descname"><span class="pre">wsi_width</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.wsi_width" title="Permalink to this definition"></a></dt>
+<dd><p>Width of the slide.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.wsi_height">
+<span class="sig-name descname"><span class="pre">wsi_height</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.wsi_height" title="Permalink to this definition"></a></dt>
+<dd><p>Height of the slide.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.filepath">
+<span class="sig-name descname"><span class="pre">filepath</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.filepath" title="Permalink to this definition"></a></dt>
+<dd><p>Path to the whole slide image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.filestem">
+<span class="sig-name descname"><span class="pre">filestem</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.filestem" title="Permalink to this definition"></a></dt>
+<dd><p>Stem of the file name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.method">
+<span class="sig-name descname"><span class="pre">method</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.method" title="Permalink to this definition"></a></dt>
+<dd><p>Method name to run. One of {“evaluation”,
+“classification”, “detection”, “segmentation}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.annotation">
+<span class="sig-name descname"><span class="pre">annotation</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.annotation" title="Permalink to this definition"></a></dt>
+<dd><p>Annotation object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#wsiprocess.annotation.Annotation" title="wsiprocess.annotation.Annotation">wsiprocess.annotation.Annotation</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.masks">
+<span class="sig-name descname"><span class="pre">masks</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.masks" title="Permalink to this definition"></a></dt>
+<dd><p>Masks to show the location of classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.classes">
+<span class="sig-name descname"><span class="pre">classes</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.classes" title="Permalink to this definition"></a></dt>
+<dd><p>Classes to extract.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.save_to">
+<span class="sig-name descname"><span class="pre">save_to</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.save_to" title="Permalink to this definition"></a></dt>
+<dd><p>The root of the output directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.p_width">
+<span class="sig-name descname"><span class="pre">p_width</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.p_width" title="Permalink to this definition"></a></dt>
+<dd><p>The width of the cropped patches. It magnification is
+not set, it is same as output patches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.p_height">
+<span class="sig-name descname"><span class="pre">p_height</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.p_height" title="Permalink to this definition"></a></dt>
+<dd><p>The height of the cropped patches. It magnification is
+not set, it is same as output patches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.p_area">
+<span class="sig-name descname"><span class="pre">p_area</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.p_area" title="Permalink to this definition"></a></dt>
+<dd><p>The area of single patch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.o_width">
+<span class="sig-name descname"><span class="pre">o_width</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.o_width" title="Permalink to this definition"></a></dt>
+<dd><p>The width of the overlap areas of patches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.o_height">
+<span class="sig-name descname"><span class="pre">o_height</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.o_height" title="Permalink to this definition"></a></dt>
+<dd><p>The height of the overlap areas of patches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.offset_x">
+<span class="sig-name descname"><span class="pre">offset_x</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.offset_x" title="Permalink to this definition"></a></dt>
+<dd><p>The The offset pixels along the x-axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.offset_y">
+<span class="sig-name descname"><span class="pre">offset_y</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.offset_y" title="Permalink to this definition"></a></dt>
+<dd><p>The The offset pixels along the y-axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.on_foreground">
+<span class="sig-name descname"><span class="pre">on_foreground</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.on_foreground" title="Permalink to this definition"></a></dt>
+<dd><p>Ratio of overlap area between patches and
+foreground area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.on_annotation">
+<span class="sig-name descname"><span class="pre">on_annotation</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.on_annotation" title="Permalink to this definition"></a></dt>
+<dd><p>Ratio of overlap area between patches
+and annotation. dict is also available ex: {“label”:value}.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.magnification">
+<span class="sig-name descname"><span class="pre">magnification</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.magnification" title="Permalink to this definition"></a></dt>
+<dd><p>Magnification of output patches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.p_scale">
+<span class="sig-name descname"><span class="pre">p_scale</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.p_scale" title="Permalink to this definition"></a></dt>
+<dd><p>Ratio of p_width or p_height to output patch size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.ext">
+<span class="sig-name descname"><span class="pre">ext</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.ext" title="Permalink to this definition"></a></dt>
+<dd><p>Extension of extracted patches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.start_sample">
+<span class="sig-name descname"><span class="pre">start_sample</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.start_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to save sample patches on Patcher start.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.finished_sample">
+<span class="sig-name descname"><span class="pre">finished_sample</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.finished_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to save sample patches on Patcher
+finish.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.extract_patches">
+<span class="sig-name descname"><span class="pre">extract_patches</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.extract_patches" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to save patches when Patcher runs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.no_patches">
+<span class="sig-name descname"><span class="pre">no_patches</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.no_patches" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to save patches when Patcher runs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.verbose" title="Permalink to this definition"></a></dt>
+<dd><p>If set, a progress bar appears when patching.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.dryrun">
+<span class="sig-name descname"><span class="pre">dryrun</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.dryrun" title="Permalink to this definition"></a></dt>
+<dd><p>Only run patching for first 100 patches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.x_lefttop">
+<span class="sig-name descname"><span class="pre">x_lefttop</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.x_lefttop" title="Permalink to this definition"></a></dt>
+<dd><p>Offsets of patches to the x-axis direction except for
+the right edge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.y_lefttop">
+<span class="sig-name descname"><span class="pre">y_lefttop</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.y_lefttop" title="Permalink to this definition"></a></dt>
+<dd><p>Offsets of patches to the y-axis direction except for
+the bottom edge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.iterator">
+<span class="sig-name descname"><span class="pre">iterator</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.iterator" title="Permalink to this definition"></a></dt>
+<dd><p>Offset coordinates of patches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.last_x">
+<span class="sig-name descname"><span class="pre">last_x</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.last_x" title="Permalink to this definition"></a></dt>
+<dd><p>X-axis offset of the right edge patch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.last_y">
+<span class="sig-name descname"><span class="pre">last_y</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.last_y" title="Permalink to this definition"></a></dt>
+<dd><p>Y-axis offset of the right edge patch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.result">
+<span class="sig-name descname"><span class="pre">result</span></span><a class="headerlink" href="#wsiprocess.patcher.Patcher.result" title="Permalink to this definition"></a></dt>
+<dd><p>Temporary storage for the computed result of patches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.annotation_cover_patch">
+<span class="sig-name descname"><span class="pre">annotation_cover_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.annotation_cover_patch" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the annotation is covering the whole patch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coords</strong> (<em>np.array</em>) – Coordinations of annotations.</p></li>
+<li><p><strong>px</strong> (<em>int</em>) – X coordinate of left top corner of the patch.</p></li>
+<li><p><strong>py</strong> (<em>int</em>) – Y coordinate of left top corner of the patch.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>List of np.int64s which are the indices</dt><dd><p>of bounding boxes on the patch.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>idx_of_bb_on_patch (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.corner_on_patch">
+<span class="sig-name descname"><span class="pre">corner_on_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.corner_on_patch" title="Permalink to this definition"></a></dt>
+<dd><p>Check if at least one of the corners is on the patch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coords</strong> (<em>np.array</em>) – Coordinations of annotations.</p></li>
+<li><p><strong>px</strong> (<em>int</em>) – X coordinate of left top corner of the patch.</p></li>
+<li><p><strong>py</strong> (<em>int</em>) – Y coordinate of left top corner of the patch.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>List of np.int64s which are the indices</dt><dd><p>of bounding boxes on the patch.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>idx_of_bb_on_patch (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.crop_patch">
+<span class="sig-name descname"><span class="pre">crop_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.crop_patch" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.find_bbs">
+<span class="sig-name descname"><span class="pre">find_bbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.find_bbs" title="Permalink to this definition"></a></dt>
+<dd><p>Find bounding boxes which are on the patch.</p>
+<dl class="simple">
+<dt>Bounding boxes with one of its corners on the patch is on the patch.</dt><dd><dl class="simple">
+<dt>ex<span class="classifier">annotation.mask_coords[“benign”][0]</span></dt><dd><p>= [small_x, small_y, large_x, large_y]
+= [bbleft, bbtop, bbright, bbbottom]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int</em>) – X-axis offset of patch.</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – Y-axis offset of patch.</p></li>
+<li><p><strong>cls</strong> (<em>str</em>) – Class of the patch or the bounding box or the segmented
+area.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.find_masks">
+<span class="sig-name descname"><span class="pre">find_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.find_masks" title="Permalink to this definition"></a></dt>
+<dd><p>Get the masked area corresponding to the given patch area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int</em>) – X-axis offset of a patch.</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – Y-axis offset of a patch.</p></li>
+<li><p><strong>cls</strong> (<em>str</em>) – Class of the patch or the bounding box or the segmented
+area.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>List containing a dict of coords and its class. This</dt><dd><p>coords is a path to the png image.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>masks (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.get_iterator">
+<span class="sig-name descname"><span class="pre">get_iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dryrun</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.get_iterator" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.get_mini_patch_parallel">
+<span class="sig-name descname"><span class="pre">get_mini_patch_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.get_mini_patch_parallel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.get_patch">
+<span class="sig-name descname"><span class="pre">get_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.get_patch" title="Permalink to this definition"></a></dt>
+<dd><p>Extract a single patch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int</em>) – X-axis offset of a patch.</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – Y-axis offset of a patch.</p></li>
+<li><p><strong>classes</strong> (<em>list</em>) – For the case of method is classification, extract
+the patch for multiple times if the patch is on the border of
+two or more classes. To prevent patcher to extract a single
+patch for multiple classes, <cite>on_annotation=1.0</cite> should work.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.get_patch_parallel">
+<span class="sig-name descname"><span class="pre">get_patch_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.get_patch_parallel" title="Permalink to this definition"></a></dt>
+<dd><p>Run get_patch() in parallel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>classes</strong> (<em>list</em>) – Classes to extract.</p></li>
+<li><p><strong>max_workers</strong> (<em>int</em>) – Workers to run. -1 runs with cores*5 threads.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.get_random_sample">
+<span class="sig-name descname"><span class="pre">get_random_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.get_random_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Get random patch to check if the patcher can work properly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phase</strong> (<em>str</em>) – When to check. One of {start, finish}</p></li>
+<li><p><strong>sample_count</strong> (<em>int</em>) – Number of patches to extract.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.patch_on_annotation">
+<span class="sig-name descname"><span class="pre">patch_on_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.patch_on_annotation" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the patch is on the annotation area of a class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cls</strong> (<em>str</em>) – Class of the patch or the bounding box or the segmented
+area.</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – X-axis offset of a patch.</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – Y-axis offset of a patch.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the patch is on the anntation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(bool)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.patch_on_foreground">
+<span class="sig-name descname"><span class="pre">patch_on_foreground</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.patch_on_foreground" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the patch is on the foreground area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int</em>) – X-axis offset of a patch.</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – Y-axis offset of a patch.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the patch is on the foreground area.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(bool)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.remove_dup_in_results">
+<span class="sig-name descname"><span class="pre">remove_dup_in_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.remove_dup_in_results" title="Permalink to this definition"></a></dt>
+<dd><p>Remove duplicate results in self.result[“results”]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.save_patch">
+<span class="sig-name descname"><span class="pre">save_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">patch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_as</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.save_patch" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.save_patch_result">
+<span class="sig-name descname"><span class="pre">save_patch_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.save_patch_result" title="Permalink to this definition"></a></dt>
+<dd><p>Save the extracted patch data to result</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int</em>) – X-axis offset of patch.</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – Y-axis offset of patch.</p></li>
+<li><p><strong>cls</strong> (<em>str</em>) – Class of the patch or the bounding box or the segmented
+area.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.save_results">
+<span class="sig-name descname"><span class="pre">save_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.save_results" title="Permalink to this definition"></a></dt>
+<dd><p>Save the extraction results.</p>
+<p>Saves some metadata with the patches results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.set_magnification">
+<span class="sig-name descname"><span class="pre">set_magnification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slide</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magnification</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.set_magnification" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.side_on_patch">
+<span class="sig-name descname"><span class="pre">side_on_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.side_on_patch" title="Permalink to this definition"></a></dt>
+<dd><p>Check if at least one of the side is on the patch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coords</strong> (<em>np.array</em>) – Coordinations of annotations.</p></li>
+<li><p><strong>px</strong> (<em>int</em>) – X coordinate of left top corner of the patch.</p></li>
+<li><p><strong>py</strong> (<em>int</em>) – Y coordinate of left top corner of the patch.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>List of np.int64s which are the indices</dt><dd><p>of bounding boxes on the patch.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>idx_of_bb_on_patch (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.patcher.Patcher.to_bb">
+<span class="sig-name descname"><span class="pre">to_bb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coord</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.patcher.Patcher.to_bb" title="Permalink to this definition"></a></dt>
+<dd><p>Convert coordinates to voc coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>coord</strong> (<em>list</em>) – <p>List of coordinates stored as below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="n">xOfOneCorner</span><span class="p">,</span> <span class="n">yOfOneCorner</span><span class="p">],</span>
+ <span class="p">[</span><span class="n">xOfApex</span><span class="p">,</span>      <span class="n">yOfApex</span><span class="p">]]</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>List of coordinates stored as below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">],</span>
+ <span class="p">[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">],</span>
+ <span class="p">[</span><span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span><span class="p">],</span>
+ <span class="p">[</span><span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">]]</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>outer_coord (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-wsiprocess.rule">
+<span id="wsiprocess-rule-module"></span><h2>wsiprocess.rule module<a class="headerlink" href="#module-wsiprocess.rule" title="Permalink to this heading"></a></h2>
+<p>Object to define rules for extracting patches.
+Rule file should be a json file or a dict. The content of rule.json is like
+below.</p>
+<p class="rubric">Example</p>
+<p>Json data below defines</p>
+<ul class="simple">
+<li><p>extract the patches of benign and malignant</p></li>
+<li><p>benign includes stroma but excludes malignant or uncertain</p></li>
+<li><p>malignant means malignant itself but excludes benign</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;benign&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;includes&quot;</span> <span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;stroma&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;excludes : [</span>
+            <span class="s2">&quot;malignant&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;uncertain&quot;</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;malignant&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;includes&quot;</span> <span class="p">:</span> <span class="p">[</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;excludes&quot;</span> <span class="p">:[</span>
+            <span class="s2">&quot;benign&quot;</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="wsiprocess.rule.Rule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.rule.</span></span><span class="sig-name descname"><span class="pre">Rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.rule.Rule" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for rule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rule</strong> (<em>str</em><em> or </em><em>dict</em>) – Path to the rule.json or the rule dict.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.rule.Rule.classes">
+<span class="sig-name descname"><span class="pre">classes</span></span><a class="headerlink" href="#wsiprocess.rule.Rule.classes" title="Permalink to this definition"></a></dt>
+<dd><p>List of the classes. i.e. [“benign”, “malignant”]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.rule.Rule.assert_incl_excl">
+<span class="sig-name descname"><span class="pre">assert_incl_excl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incl_excl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.rule.Rule.assert_incl_excl" title="Permalink to this definition"></a></dt>
+<dd><p>Assert the rule has assumed keys.</p>
+<p>Supposed shape is like below</p>
+<p>{“includes”: [“stroma”], “excludes”: [“malignant”, “uncertain”]}</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.rule.Rule.load_rule">
+<span class="sig-name descname"><span class="pre">load_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.rule.Rule.load_rule" title="Permalink to this definition"></a></dt>
+<dd><p>Read the rule file.</p>
+<p>Parse the rule file and save as the classes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-wsiprocess.slide">
+<span id="wsiprocess-slide-module"></span><h2>wsiprocess.slide module<a class="headerlink" href="#module-wsiprocess.slide" title="Permalink to this heading"></a></h2>
+<p>Slide object to pass to annotation object and patcher object.
+Slide is whole slide image, scanned with whole slide scanners.
+Mannually you can make pyramidical tiff file, which you can handle just the
+same as the scanned digital data, except for the magnification.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="wsiprocess.slide.Slide">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.slide.</span></span><span class="sig-name descname"><span class="pre">Slide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'openslide'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.slide.Slide" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Slide object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Path to the whole slide image file.</p></li>
+<li><p><strong>backend</strong> (<em>str</em>) – Openslide or pyivps.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.slide.Slide.path">
+<span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#wsiprocess.slide.Slide.path" title="Permalink to this definition"></a></dt>
+<dd><p>Path to the whole slide image file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.slide.Slide.slide">
+<span class="sig-name descname"><span class="pre">slide</span></span><a class="headerlink" href="#wsiprocess.slide.Slide.slide" title="Permalink to this definition"></a></dt>
+<dd><p>pyvips Image object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pyvips.Image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.slide.Slide.wsi_width">
+<span class="sig-name descname"><span class="pre">wsi_width</span></span><a class="headerlink" href="#wsiprocess.slide.Slide.wsi_width" title="Permalink to this definition"></a></dt>
+<dd><p>Width of slide.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.slide.Slide.wsi_height">
+<span class="sig-name descname"><span class="pre">wsi_height</span></span><a class="headerlink" href="#wsiprocess.slide.Slide.wsi_height" title="Permalink to this definition"></a></dt>
+<dd><p>Height of slide.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.slide.Slide.crop">
+<span class="sig-name descname"><span class="pre">crop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.slide.Slide.crop" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.slide.Slide.export_thumbnail">
+<span class="sig-name descname"><span class="pre">export_thumbnail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_as</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./thumb.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.slide.Slide.export_thumbnail" title="Permalink to this definition"></a></dt>
+<dd><p>Export thumbnail image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_as</strong> (<em>str</em>) – Path to save as the thumbnail image.</p></li>
+<li><p><strong>size</strong> (<em>int</em><em>, </em><em>optional</em>) – Size of the exported thumbnail.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.slide.Slide.get_thumbnail">
+<span class="sig-name descname"><span class="pre">get_thumbnail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.slide.Slide.get_thumbnail" title="Permalink to this definition"></a></dt>
+<dd><p>Get thumbnail image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>int</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – Size of the exported thumbnail.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.slide.Slide.load_slide">
+<span class="sig-name descname"><span class="pre">load_slide</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.slide.Slide.load_slide" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.slide.Slide.set_properties">
+<span class="sig-name descname"><span class="pre">set_properties</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.slide.Slide.set_properties" title="Permalink to this definition"></a></dt>
+<dd><p>Read the properties and set as attributes of slide obj.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.slide.Slide.magnification">
+<span class="sig-name descname"><span class="pre">magnification</span></span><a class="headerlink" href="#wsiprocess.slide.Slide.magnification" title="Permalink to this definition"></a></dt>
+<dd><p>Objective power of slide obj.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-wsiprocess.utils">
+<span id="wsiprocess-utils-module"></span><h2>wsiprocess.utils module<a class="headerlink" href="#module-wsiprocess.utils" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="wsiprocess.utils.show_bounding_box">
+<span class="sig-prename descclassname"><span class="pre">wsiprocess.utils.</span></span><span class="sig-name descname"><span class="pre">show_bounding_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">patch_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_as</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.utils.show_bounding_box" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="wsiprocess.utils.show_mask_on_patch">
+<span class="sig-prename descclassname"><span class="pre">wsiprocess.utils.</span></span><span class="sig-name descname"><span class="pre">show_mask_on_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">patch_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_as</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.utils.show_mask_on_patch" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-wsiprocess.verify">
+<span id="wsiprocess-verify-module"></span><h2>wsiprocess.verify module<a class="headerlink" href="#module-wsiprocess.verify" title="Permalink to this heading"></a></h2>
+<p>Verification script runs before the patcher works.
+Verify class works for verification of the output directory, annotation files,
+rule files, etc. Mainly runs for cli.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="wsiprocess.verify.Verify">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.verify.</span></span><span class="sig-name descname"><span class="pre">Verify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filestem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finished_sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_patches</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_bbox</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.verify.Verify" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Verification class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_to</strong> (<em>str</em>) – The root of the output directory.</p></li>
+<li><p><strong>filestem</strong> (<em>str</em>) – The name of the output directory.</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – Method name to run. One of {“none”, “classification”,
+“detection”, “segmentation}</p></li>
+<li><p><strong>start_sample</strong> (<em>bool</em>) – Whether to save sample patches on Patcher start.</p></li>
+<li><p><strong>finished_sample</strong> (<em>bool</em>) – Whether to save sample patches on Patcher
+finish.</p></li>
+<li><p><strong>extract_patches</strong> (<em>bool</em>) – [Deleted]Whether to save patches when Patcher
+runs.</p></li>
+<li><p><strong>no_patches</strong> (<em>bool</em>) – Whether to save patches when Patcher runs.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.verify.Verify.save_to">
+<span class="sig-name descname"><span class="pre">save_to</span></span><a class="headerlink" href="#wsiprocess.verify.Verify.save_to" title="Permalink to this definition"></a></dt>
+<dd><p>The root of the output directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.verify.Verify.filestem">
+<span class="sig-name descname"><span class="pre">filestem</span></span><a class="headerlink" href="#wsiprocess.verify.Verify.filestem" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the output directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.verify.Verify.method">
+<span class="sig-name descname"><span class="pre">method</span></span><a class="headerlink" href="#wsiprocess.verify.Verify.method" title="Permalink to this definition"></a></dt>
+<dd><p>Method name to run. One of {“none”, “classification”,
+“detection”, “segmentation}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.verify.Verify.start_sample">
+<span class="sig-name descname"><span class="pre">start_sample</span></span><a class="headerlink" href="#wsiprocess.verify.Verify.start_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to save sample patches on Patcher start.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.verify.Verify.finished_sample">
+<span class="sig-name descname"><span class="pre">finished_sample</span></span><a class="headerlink" href="#wsiprocess.verify.Verify.finished_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to save sample patches on Patcher
+finish.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.verify.Verify.extract_patches">
+<span class="sig-name descname"><span class="pre">extract_patches</span></span><a class="headerlink" href="#wsiprocess.verify.Verify.extract_patches" title="Permalink to this definition"></a></dt>
+<dd><p>[Deleted]Whether to save patches when Patcher
+runs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="wsiprocess.verify.Verify.no_patches">
+<span class="sig-name descname"><span class="pre">no_patches</span></span><a class="headerlink" href="#wsiprocess.verify.Verify.no_patches" title="Permalink to this definition"></a></dt>
+<dd><p>Whether to save patches when Patcher runs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.verify.Verify.magnification">
+<span class="sig-name descname"><span class="pre">magnification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slide</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magnification</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.verify.Verify.magnification" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the slide has data for the magnification the user specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slide</strong> (<em>wp.slide.Slide</em>) – Slide object to check.</p></li>
+<li><p><strong>magnification</strong> (<em>int</em>) – Target magnification value which has to be
+smaller than the magnification of the slide.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.verify.Verify.make_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.verify.Verify.make_dir" title="Permalink to this definition"></a></dt>
+<dd><p>Make output directory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.verify.Verify.make_dirs">
+<span class="sig-name descname"><span class="pre">make_dirs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.verify.Verify.make_dirs" title="Permalink to this definition"></a></dt>
+<dd><p>Ensure the output directories exists for each tasks.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.verify.Verify.on_params">
+<span class="sig-name descname"><span class="pre">on_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">on_annotation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_foreground</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.verify.Verify.on_params" title="Permalink to this definition"></a></dt>
+<dd><p>Verify the ratio of on_annotation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>on_annotation</strong> (<em>float</em>) – Overlap ratio of patches and annotations.</p></li>
+<li><p><strong>on_foreground</strong> (<em>float</em>) – Overlap ratio of patches and foreground area</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#wsiprocess.error.SizeError" title="wsiprocess.error.SizeError"><strong>wsiprocess.error.SizeError</strong></a> – If the sizes are invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="wsiprocess.verify.Verify.sizes">
+<span class="sig-name descname"><span class="pre">sizes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wsi_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wsi_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dot_bbox_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dot_bbox_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.verify.Verify.sizes" title="Permalink to this definition"></a></dt>
+<dd><p>Verify the sizes of the slide, the patch and the overlap area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#wsiprocess.error.SizeError" title="wsiprocess.error.SizeError"><strong>wsiprocess.error.SizeError</strong></a> – If the sizes are invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-wsiprocess">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-wsiprocess" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="wsiprocess.annotationparser.html" class="btn btn-neutral float-right" title="wsiprocess.annotationparser package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Takumi Ando.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
