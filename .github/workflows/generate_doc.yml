@@ -11,25 +11,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+        with :
+          ref: "main"
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.x"
+          python-version: "3.9"
 
-      - name: install sphinx
+      - name: install dependencies
         run: |
-          pip install sphinx
-          cd docs
-          pip install -r requirements.txt
-          pip install git+https://github.com/tand826/wsiprocess
+          pip install .
+          pip install -r docs/requirements.txt
 
       - name: build and push
         run: |
-          git config --global user.email "tand826@mail"
-          git config --global user.name tand826
-          git config advice.addIgnoredFile false
+          mkdir ~/.ssh
+          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+          echo "${{ secrets.DOC_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
+          
+          git config --local user.email "takumi.ando826@gmail.com"
+          git config --local user.name tand826
+          git remote set-url origin git@github.com:tand826/wsiprocess.git
+
           git fetch
           git checkout -b docs origin/docs -f
 
@@ -38,7 +45,6 @@ jobs:
           make html
           mv _build/html/* ./
 
-          cd ../
-          git add -f docs/*
+          git add ./*
           git commit -m "generate documentation from github action"
           git push origin docs

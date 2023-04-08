@@ -36,6 +36,7 @@ extensions = [
 conf = read_configuration("../setup.cfg")
 autodoc_mock_imports = [i.strip() for i in conf["options"]["install_requires"]]
 autodoc_mock_imports.extend(["cv2", "openslide"])
+autodoc_mock_imports.extend(["torch", "torchvision"])
 
 # The short X.Y version
 version = conf['metadata']['version']

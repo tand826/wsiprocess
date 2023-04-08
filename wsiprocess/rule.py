@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """Object to define rules for extracting patches.
-
-Rule file should be a json file.
-The content of rule.json is like below.
+Rule file should be a json file or a dict. The content of rule.json is like
+below.
 
 Example:
     Json data below defines
@@ -11,7 +10,7 @@ Example:
     - benign includes stroma but excludes malignant or uncertain
     - malignant means malignant itself but excludes benign
 
-    ::
+    .. code-block:: python
 
         {
             "benign" : {
@@ -45,8 +44,6 @@ class Rule:
 
     Attributes:
         classes (list): List of the classes. i.e. ["benign", "malignant"]
-        read_rule (dict): Dict of rules.
-            i.e. {"benign": {"inclues": ["stroma"]}}
     """
 
     def __init__(self, rule):
@@ -64,10 +61,7 @@ class Rule:
 
         self.load_rule(base_rule)
 
-    def read_rule(self):
-        self.load_rule(self.rule_file)
-
-    def load_rule(self, rule):
+    def load_rule(self, rule: dict):
         """Read the rule file.
 
         Parse the rule file and save as the classes.
@@ -77,19 +71,13 @@ class Rule:
             setattr(self, base, incl_excl)
             self.classes.append(base)
 
-    def assert_incl_excl(self, incl_excl):
+    def assert_incl_excl(self, incl_excl: dict):
         """Assert the rule has assumed keys.
 
-        Supposed shape is like below:
-            {
-                "includes" : [
-                    "stroma"
-                ],
-                "excludes : [
-                    "malignant",
-                    "uncertain"
-                ]
-            }
+        Supposed shape is like below
+
+        {"includes": ["stroma"], "excludes": ["malignant", "uncertain"]}
+
         """
         assert isinstance(incl_excl, dict), "each object must be dict"
         msg = "each dict must have {}"
