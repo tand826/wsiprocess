@@ -46,7 +46,7 @@ class Args:
             "-dh", "--dot_bbox_height", type=int,
             help="Height of bbox translated from dot annotation.")
         parser.add_argument(
-            "-ex", "--ext", type=str, default="png",
+            "-ex", "--ext", type=str, default="jpg",
             help="Extension of extracted patches")
         parser.add_argument(
             "-ma", "--magnification", type=int,
