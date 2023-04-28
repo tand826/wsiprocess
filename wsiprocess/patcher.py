@@ -510,6 +510,7 @@ class Patcher:
 
         """
         self.result["slide"] = self.slide.path
+        self.result["backend"] = self.slide.backend
         self.result["method"] = self.method
         self.result["wsi_width"] = self.wsi_width
         self.result["wsi_height"] = self.wsi_height

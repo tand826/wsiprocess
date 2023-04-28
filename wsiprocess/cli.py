@@ -77,6 +77,11 @@ class Args:
         parser.add_argument(
             "wsi", type=str,
             help="Path to the target wsi.")
+        parser.add_argument(
+            "-ba", "--backend", type=str,
+            default="openslide",
+            choices=["openslide", "pyvips", "bioformats"],
+            help="Backend to use for reading the wsi.")
 
     def add_annotation_args(self, parser, slide_is_sparse=False):
         parser.add_argument(
@@ -208,7 +213,7 @@ def process_annotation(args, slide, rule):
 
 def main(command=None):
     args = Args(command)
-    slide = wp.slide(args.wsi)
+    slide = wp.slide(args.wsi, backend=args.backend)
     rule = wp.rule(args.rule) if args.rule else False
     annotation = process_annotation(args, slide, rule)
 
