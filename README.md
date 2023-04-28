@@ -32,7 +32,7 @@ See [Wiki](https://github.com/tand826/wsiprocess/wiki) for
 
 ### pip User
 
-1. Install [openslide](https://openslide.org/) or [libvips](https://libvips.github.io/libvips/). See [wiki] for installation hints.
+1. Install [openslide](https://openslide.org/) or [libvips](https://libvips.github.io/libvips/) or [python-bioformats](https://pythonhosted.org/python-bioformats/). See [wiki] for installation hints.
 
 2. Install wsiprocess
 
