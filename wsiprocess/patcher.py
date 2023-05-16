@@ -7,7 +7,7 @@ import random
 from itertools import product
 import json
 import os
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 
 from tqdm import tqdm
 import numpy as np
@@ -648,20 +648,19 @@ class Patcher:
             max_workers = max_workers
 
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            futures = []
-            for x, y in self.iterator:
-                futures.append(
-                    executor.submit(
-                        self.get_patch,
-                        *(x, y, classes)
-                    )
-                )
+            xs = [iter[0] for iter in self.iterator]
+            ys = [iter[1] for iter in self.iterator]
             if self.verbose:
                 desc = f"[{self.filepath} {self.p_width}x{self.p_height}]"
-                [_ for _ in tqdm(
-                    as_completed(futures),
-                    desc=desc,
-                    total=len(futures))]
+                list(tqdm(executor.map(
+                    self.get_patch, xs, ys,
+                    [classes for _ in self.iterator]
+                ), desc=desc, total=len(self.iterator)))
+            else:
+                executor.map(
+                    self.get_patch, xs, ys,
+                    [classes for _ in self.iterator]
+                )
 
         # save results
         self.save_results()
