@@ -2,7 +2,7 @@
 import numpy as np
 from collections import defaultdict
 import sqlite3
-from pathlib import Path
+
 from wsiprocess.error import AnnotationLabelError
 
 from .parser_utils import BaseParser
@@ -13,7 +13,7 @@ class SlideRunnerAnnotation(BaseParser):
 
     Args:
         path (str): Path to the annotation file.
-        slidename (str): Basename of the slide.
+        slide (wsiprocess.Slide): Slide object.
 
     Attributes:
         path (str): Path to the annotation file.
@@ -21,7 +21,7 @@ class SlideRunnerAnnotation(BaseParser):
         mask_coords (dict): Coordinates of the masks.
     """
 
-    def __init__(self, path, slidename):
+    def __init__(self, path, slide):
         super().__init__(path)
 
         self.mask_coords = defaultdict(list)
@@ -30,9 +30,9 @@ class SlideRunnerAnnotation(BaseParser):
 
             self.read_classes()
             self.read_slides()
-            self.read_annotations(Path(slidename).name)
+            self.read_annotations(slide.filename)
             self.read_labels()
-            self.read_coordinates(Path(slidename).name)
+            self.read_coordinates(slide.filename)
 
         self.verify_annotations()
         self.parse_mask_coords()

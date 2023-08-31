@@ -32,7 +32,7 @@ from .annotationparser.parser_utils import detect_type
 
 class Annotation:
 
-    def __init__(self, path=False, is_image=False, slidename=False):
+    def __init__(self, path=False, is_image=False, slide=False):
         """Initialize the anntation object.
 
         Args:
@@ -47,7 +47,7 @@ class Annotation:
                 disk when called get_patch.
         """
         self.path = path if path else ""
-        self.slidename = slidename
+        self.slide = slide
         self.dot_bbox_width = self.dot_bbox_height = False
         self.is_image = is_image
         self.low_memory_consumption = False
@@ -73,7 +73,7 @@ class Annotation:
         elif annotation_type == "WSIDissector":
             parsed = parsers.WSIDissectorAnnotation(self.path)
         elif annotation_type == "SlideRunner":
-            parsed = parsers.SlideRunnerAnnotation(self.path, self.slidename)
+            parsed = parsers.SlideRunnerAnnotation(self.path, self.slide)
         elif annotation_type == "QuPath":
             parsed = parsers.QuPathAnnotation(self.path)
         elif annotation_type == "GeoJson":
