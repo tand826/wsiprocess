@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>wsiprocess.pytorch package &mdash; wsiprocess 0.9 documentation</title>
+  <title>wsiprocess.pytorch package &mdash; wsiprocess 1.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=fc837d61"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -32,7 +34,7 @@
             wsiprocess
           </a>
               <div class="version">
-                0.9
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -101,80 +103,80 @@
            <div itemprop="articleBody">
              
   <section id="wsiprocess-pytorch-package">
-<h1>wsiprocess.pytorch package<a class="headerlink" href="#wsiprocess-pytorch-package" title="Permalink to this heading"></a></h1>
+<h1>wsiprocess.pytorch package<a class="headerlink" href="#wsiprocess-pytorch-package" title="Link to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
 <section id="module-wsiprocess.pytorch.utils">
-<span id="wsiprocess-pytorch-utils-module"></span><h2>wsiprocess.pytorch.utils module<a class="headerlink" href="#module-wsiprocess.pytorch.utils" title="Permalink to this heading"></a></h2>
+<span id="wsiprocess-pytorch-utils-module"></span><h2>wsiprocess.pytorch.utils module<a class="headerlink" href="#module-wsiprocess.pytorch.utils" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="wsiprocess.pytorch.utils.ClassificationDataset">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.pytorch.utils.</span></span><span class="sig-name descname"><span class="pre">ClassificationDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.utils.ClassificationDataset" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.pytorch.utils.</span></span><span class="sig-name descname"><span class="pre">ClassificationDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.utils.ClassificationDataset" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.pytorch.utils.ClassificationDataset.read_labels">
-<span class="sig-name descname"><span class="pre">read_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.utils.ClassificationDataset.read_labels" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">read_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.utils.ClassificationDataset.read_labels" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="wsiprocess.pytorch.utils.SegmentationDataset">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.pytorch.utils.</span></span><span class="sig-name descname"><span class="pre">SegmentationDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.utils.SegmentationDataset" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.pytorch.utils.</span></span><span class="sig-name descname"><span class="pre">SegmentationDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.utils.SegmentationDataset" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.pytorch.utils.SegmentationDataset.read_masks">
-<span class="sig-name descname"><span class="pre">read_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.utils.SegmentationDataset.read_masks" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">read_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.utils.SegmentationDataset.read_masks" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="wsiprocess.pytorch.utils.main">
-<span class="sig-prename descclassname"><span class="pre">wsiprocess.pytorch.utils.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">foreground_fn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.utils.main" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">wsiprocess.pytorch.utils.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">foreground_fn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.utils.main" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="module-wsiprocess.pytorch.wsidataloader">
-<span id="wsiprocess-pytorch-wsidataloader-module"></span><h2>wsiprocess.pytorch.wsidataloader module<a class="headerlink" href="#module-wsiprocess.pytorch.wsidataloader" title="Permalink to this heading"></a></h2>
+<span id="wsiprocess-pytorch-wsidataloader-module"></span><h2>wsiprocess.pytorch.wsidataloader module<a class="headerlink" href="#module-wsiprocess.pytorch.wsidataloader" title="Link to this heading"></a></h2>
 </section>
 <section id="module-wsiprocess.pytorch.wsidataset">
-<span id="wsiprocess-pytorch-wsidataset-module"></span><h2>wsiprocess.pytorch.wsidataset module<a class="headerlink" href="#module-wsiprocess.pytorch.wsidataset" title="Permalink to this heading"></a></h2>
+<span id="wsiprocess-pytorch-wsidataset-module"></span><h2>wsiprocess.pytorch.wsidataset module<a class="headerlink" href="#module-wsiprocess.pytorch.wsidataset" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="wsiprocess.pytorch.wsidataset.WSIDataset">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.pytorch.wsidataset.</span></span><span class="sig-name descname"><span class="pre">WSIDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.wsidataset.WSIDataset" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.pytorch.wsidataset.</span></span><span class="sig-name descname"><span class="pre">WSIDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.wsidataset.WSIDataset" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.pytorch.wsidataset.WSIDataset.read_coords">
-<span class="sig-name descname"><span class="pre">read_coords</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.wsidataset.WSIDataset.read_coords" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">read_coords</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.wsidataset.WSIDataset.read_coords" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.pytorch.wsidataset.WSIDataset.read_patch">
-<span class="sig-name descname"><span class="pre">read_patch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.wsidataset.WSIDataset.read_patch" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">read_patch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.wsidataset.WSIDataset.read_patch" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.pytorch.wsidataset.WSIDataset.read_patch_from_disk">
-<span class="sig-name descname"><span class="pre">read_patch_from_disk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.float32</span></span></span><a class="headerlink" href="#wsiprocess.pytorch.wsidataset.WSIDataset.read_patch_from_disk" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">read_patch_from_disk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.float32</span></span></span><a class="headerlink" href="#wsiprocess.pytorch.wsidataset.WSIDataset.read_patch_from_disk" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.pytorch.wsidataset.WSIDataset.read_patch_from_wsi">
-<span class="sig-name descname"><span class="pre">read_patch_from_wsi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.float32</span></span></span><a class="headerlink" href="#wsiprocess.pytorch.wsidataset.WSIDataset.read_patch_from_wsi" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">read_patch_from_wsi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.float32</span></span></span><a class="headerlink" href="#wsiprocess.pytorch.wsidataset.WSIDataset.read_patch_from_wsi" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="wsiprocess.pytorch.wsidataset.WSIsDataset">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.pytorch.wsidataset.</span></span><span class="sig-name descname"><span class="pre">WSIsDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.wsidataset.WSIsDataset" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.pytorch.wsidataset.</span></span><span class="sig-name descname"><span class="pre">WSIsDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.pytorch.wsidataset.WSIsDataset" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
 </dd></dl>
 
 </section>
 <section id="module-wsiprocess.pytorch">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-wsiprocess.pytorch" title="Permalink to this heading"></a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-wsiprocess.pytorch" title="Link to this heading"></a></h2>
 </section>
 </section>
 
@@ -188,7 +190,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Takumi Ando.</p>
+    <p>&#169; Copyright 2023, Takumi Ando.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

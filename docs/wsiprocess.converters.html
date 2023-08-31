@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>wsiprocess.converters package &mdash; wsiprocess 0.9 documentation</title>
+  <title>wsiprocess.converters package &mdash; wsiprocess 1.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=fc837d61"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -33,7 +35,7 @@
             wsiprocess
           </a>
               <div class="version">
-                0.9
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -150,21 +152,21 @@
            <div itemprop="articleBody">
              
   <section id="wsiprocess-converters-package">
-<h1>wsiprocess.converters package<a class="headerlink" href="#wsiprocess-converters-package" title="Permalink to this heading"></a></h1>
+<h1>wsiprocess.converters package<a class="headerlink" href="#wsiprocess-converters-package" title="Link to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
 <section id="module-wsiprocess.converters.base_converter">
-<span id="wsiprocess-converters-base-converter-module"></span><h2>wsiprocess.converters.base_converter module<a class="headerlink" href="#module-wsiprocess.converters.base_converter" title="Permalink to this heading"></a></h2>
+<span id="wsiprocess-converters-base-converter-module"></span><h2>wsiprocess.converters.base_converter module<a class="headerlink" href="#module-wsiprocess.converters.base_converter" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="wsiprocess.converters.base_converter.BaseConverter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.base_converter.</span></span><span class="sig-name descname"><span class="pre">BaseConverter</span></span><a class="headerlink" href="#wsiprocess.converters.base_converter.BaseConverter" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.base_converter.</span></span><span class="sig-name descname"><span class="pre">BaseConverter</span></span><a class="headerlink" href="#wsiprocess.converters.base_converter.BaseConverter" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 </dd></dl>
 
 </section>
 <section id="module-wsiprocess.converters.wsiprocess_to_coco">
-<span id="wsiprocess-converters-wsiprocess-to-coco-module"></span><h2>wsiprocess.converters.wsiprocess_to_coco module<a class="headerlink" href="#module-wsiprocess.converters.wsiprocess_to_coco" title="Permalink to this heading"></a></h2>
+<span id="wsiprocess-converters-wsiprocess-to-coco-module"></span><h2>wsiprocess.converters.wsiprocess_to_coco module<a class="headerlink" href="#module-wsiprocess.converters.wsiprocess_to_coco" title="Link to this heading"></a></h2>
 <p>Converter to COCO style.</p>
 <p>wsiprocess_to_coco is convert helper which convert the wsiprocess output for
 COCO object detection format.
@@ -172,120 +174,120 @@ Only available for “detection” method, but works when extracting patches and
 after extraction.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.SaveTo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">SaveTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.SaveTo" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">SaveTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.SaveTo" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PosixPath</span></code></p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">ToCOCOConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">per_wsi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">ToCOCOConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">per_wsi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Converter class.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_annotation">
-<span class="sig-name descname"><span class="pre">add_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_annotation" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_annotation" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_categories">
-<span class="sig-name descname"><span class="pre">add_categories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_categories" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_categories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_categories" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_category">
-<span class="sig-name descname"><span class="pre">add_category</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_category" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_category</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_category" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_image">
-<span class="sig-name descname"><span class="pre">add_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_image" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_image" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_images_and_annotations">
-<span class="sig-name descname"><span class="pre">add_images_and_annotations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_images_and_annotations" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_images_and_annotations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_images_and_annotations" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_info">
-<span class="sig-name descname"><span class="pre">add_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_info" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.add_info" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.assert_annotation">
-<span class="sig-name descname"><span class="pre">assert_annotation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.assert_annotation" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">assert_annotation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.assert_annotation" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.convert">
-<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.convert" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.convert" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.get_base">
-<span class="sig-name descname"><span class="pre">get_base</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.get_base" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_base</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.get_base" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.get_ratio">
-<span class="sig-name descname"><span class="pre">get_ratio</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.get_ratio" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_ratio</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.get_ratio" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.getargs">
-<span class="sig-name descname"><span class="pre">getargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.getargs" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.getargs" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.make_link_to_images">
-<span class="sig-name descname"><span class="pre">make_link_to_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.make_link_to_images" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">make_link_to_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.make_link_to_images" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.read_annotation">
-<span class="sig-name descname"><span class="pre">read_annotation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.read_annotation" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">read_annotation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.read_annotation" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.save_data">
-<span class="sig-name descname"><span class="pre">save_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.save_data" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">save_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.save_data" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.set_id">
-<span class="sig-name descname"><span class="pre">set_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.set_id" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.ToCOCOConverter.set_id" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.annotation">
-<span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offsetx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offsety</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">per_wsi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.annotation" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offsetx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offsety</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">per_wsi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.annotation" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.base">
-<span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">base</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.base" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">base</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.base" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.category">
-<span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">category</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.category" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">category</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.category" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.image">
-<span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.image" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.image" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_coco.info">
-<span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">now</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.info" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_coco.</span></span><span class="sig-name descname"><span class="pre">info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">now</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_coco.info" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="module-wsiprocess.converters.wsiprocess_to_voc">
-<span id="wsiprocess-converters-wsiprocess-to-voc-module"></span><h2>wsiprocess.converters.wsiprocess_to_voc module<a class="headerlink" href="#module-wsiprocess.converters.wsiprocess_to_voc" title="Permalink to this heading"></a></h2>
+<span id="wsiprocess-converters-wsiprocess-to-voc-module"></span><h2>wsiprocess.converters.wsiprocess_to_voc module<a class="headerlink" href="#module-wsiprocess.converters.wsiprocess_to_voc" title="Link to this heading"></a></h2>
 <p>Converter to VOC style.</p>
 <p>wsiprocess_to_voc is convert helper which convert the wsiprocess output for
 VOC object detection format.
@@ -293,37 +295,37 @@ Only available for “detection” method, but works when extracting patches and
 after extraction.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_voc.</span></span><span class="sig-name descname"><span class="pre">ToVOCConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_voc.</span></span><span class="sig-name descname"><span class="pre">ToVOCConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Converter class.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.convert">
-<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.convert" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.convert" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.getargs">
-<span class="sig-name descname"><span class="pre">getargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.getargs" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.getargs" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.make_tree">
-<span class="sig-name descname"><span class="pre">make_tree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.make_tree" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">make_tree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.make_tree" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.makedirs">
-<span class="sig-name descname"><span class="pre">makedirs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.makedirs" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">makedirs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.makedirs" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.mkdirs">
-<span class="sig-name descname"><span class="pre">mkdirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subdirectory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.mkdirs" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">mkdirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subdirectory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.mkdirs" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.move_to_test">
-<span class="sig-name descname"><span class="pre">move_to_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.move_to_test" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">move_to_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.move_to_test" title="Link to this definition"></a></dt>
 <dd><p>If ratio has only two parameters like “8:2”, trainval.txt and test.txt
 would be generated. If ratio has 3 params like “8:1:1”, trainval.txt,
 val.txt and text.txt would be generated.</p>
@@ -331,65 +333,65 @@ val.txt and text.txt would be generated.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.read_result_file">
-<span class="sig-name descname"><span class="pre">read_result_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.read_result_file" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">read_result_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.read_result_file" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.to_jpg">
-<span class="sig-name descname"><span class="pre">to_jpg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.to_jpg" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">to_jpg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.ToVOCConverter.to_jpg" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.VOCTree">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_voc.</span></span><span class="sig-name descname"><span class="pre">VOCTree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_height</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_voc.</span></span><span class="sig-name descname"><span class="pre">VOCTree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_height</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_base_text">
-<span class="sig-name descname"><span class="pre">add_base_text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_base_text" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_base_text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_base_text" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_main_branches">
-<span class="sig-name descname"><span class="pre">add_main_branches</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_main_branches" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_main_branches</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_main_branches" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_objects">
-<span class="sig-name descname"><span class="pre">add_objects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_objects" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_objects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_objects" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_sub_branches">
-<span class="sig-name descname"><span class="pre">add_sub_branches</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_sub_branches" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_sub_branches</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_sub_branches" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_text">
-<span class="sig-name descname"><span class="pre">add_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">branch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_text" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">branch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.add_text" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.VOCTree.make_template">
-<span class="sig-name descname"><span class="pre">make_template</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.make_template" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">make_template</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.make_template" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.VOCTree.set_size">
-<span class="sig-name descname"><span class="pre">set_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.set_size" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.set_size" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_voc.VOCTree.to_xml">
-<span class="sig-name descname"><span class="pre">to_xml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.to_xml" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">to_xml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_voc.VOCTree.to_xml" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </section>
 <section id="module-wsiprocess.converters.wsiprocess_to_yolo">
-<span id="wsiprocess-converters-wsiprocess-to-yolo-module"></span><h2>wsiprocess.converters.wsiprocess_to_yolo module<a class="headerlink" href="#module-wsiprocess.converters.wsiprocess_to_yolo" title="Permalink to this heading"></a></h2>
+<span id="wsiprocess-converters-wsiprocess-to-yolo-module"></span><h2>wsiprocess.converters.wsiprocess_to_yolo module<a class="headerlink" href="#module-wsiprocess.converters.wsiprocess_to_yolo" title="Link to this heading"></a></h2>
 <p>Converter to YOLO style.</p>
 <p>wsiprocess_to_yolo is convert helper which convert the wsiprocess output for
 YOLO object detection format.
@@ -397,36 +399,36 @@ Only available for “detection” method, but works when extracting patches and
 after extraction.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_yolo.</span></span><span class="sig-name descname"><span class="pre">ToYOLOConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">wsiprocess.converters.wsiprocess_to_yolo.</span></span><span class="sig-name descname"><span class="pre">ToYOLOConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.convert">
-<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.convert" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.convert" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.get_image_paths">
-<span class="sig-name descname"><span class="pre">get_image_paths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.get_image_paths" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_image_paths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.get_image_paths" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.getargs">
-<span class="sig-name descname"><span class="pre">getargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.getargs" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.getargs" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.make_images">
-<span class="sig-name descname"><span class="pre">make_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.make_images" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">make_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.make_images" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.make_labels">
-<span class="sig-name descname"><span class="pre">make_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.make_labels" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">make_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.make_labels" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.make_paths">
-<span class="sig-name descname"><span class="pre">make_paths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.make_paths" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">make_paths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.make_paths" title="Link to this definition"></a></dt>
 <dd><p>If ratio has only two parameters like “8:2”, trainval.txt and test.txt
 would be generated. If ratio has 3 params like “8:1:1”, trainval.txt,
 val.txt and text.txt would be generated.</p>
@@ -434,29 +436,29 @@ val.txt and text.txt would be generated.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.makedirs">
-<span class="sig-name descname"><span class="pre">makedirs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.makedirs" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">makedirs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.makedirs" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.parse_ratio">
-<span class="sig-name descname"><span class="pre">parse_ratio</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.parse_ratio" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">parse_ratio</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.parse_ratio" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.read_result_file">
-<span class="sig-name descname"><span class="pre">read_result_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.read_result_file" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">read_result_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.read_result_file" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.rename_path">
-<span class="sig-name descname"><span class="pre">rename_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.rename_path" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rename_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#wsiprocess.converters.wsiprocess_to_yolo.ToYOLOConverter.rename_path" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </section>
 <section id="module-wsiprocess.converters">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-wsiprocess.converters" title="Permalink to this heading"></a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-wsiprocess.converters" title="Link to this heading"></a></h2>
 </section>
 </section>
 
@@ -471,7 +473,7 @@ val.txt and text.txt would be generated.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Takumi Ando.</p>
+    <p>&#169; Copyright 2023, Takumi Ando.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

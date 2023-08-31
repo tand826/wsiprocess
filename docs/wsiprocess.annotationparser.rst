@@ -20,6 +20,14 @@ wsiprocess.annotationparser.GeoJson\_parser module
    :undoc-members:
    :show-inheritance:
 
+wsiprocess.annotationparser.NDPView\_parser module
+--------------------------------------------------
+
+.. automodule:: wsiprocess.annotationparser.NDPView_parser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 wsiprocess.annotationparser.QuPath\_parser module
 -------------------------------------------------
 
