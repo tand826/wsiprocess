@@ -194,7 +194,7 @@ class Args:
 
 
 def process_annotation(args, slide, rule):
-    annotation = wp.annotation(args.annotation, slidename=slide.filename)
+    annotation = wp.annotation(args.annotation, slide=slide)
     annotation.dot_to_bbox(args.dot_bbox_width, args.dot_bbox_height)
     if args.minmax:
         min_, max_ = map(int, args.minmax.split("-"))
