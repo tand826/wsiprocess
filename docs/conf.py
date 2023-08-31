@@ -5,6 +5,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 from setuptools.config import read_configuration
+from datetime import datetime
 
 # -- Path setup --------------------------------------------------------------
 
@@ -20,7 +21,7 @@ sys.path.insert(0, os.path.abspath('../../wsiprocess'))
 # -- Project information -----------------------------------------------------
 
 project = 'wsiprocess'
-copyright = '2021, Takumi Ando'
+copyright = f'{datetime.now().strftime("%Y")}, Takumi Ando'
 author = 'Takumi Ando'
 
 # -- General configuration ---------------------------------------------------
