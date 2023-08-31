@@ -40,7 +40,7 @@ jobs:
           cd docs
           sphinx-apidoc ../wsiprocess -o ./ -f --ext-autodoc
           make html
-          mv _build/html/* ./
+          cp -r _build/html/* ./
 
           git add ./
           git commit -m "generate documentation from github action"
