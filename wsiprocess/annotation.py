@@ -78,6 +78,8 @@ class Annotation:
             parsed = parsers.QuPathAnnotation(self.path)
         elif annotation_type == "GeoJson":
             parsed = parsers.GeoJsonAnnotation(self.path)
+        elif annotation_type == "NDPView":
+            parsed = parsers.NDPViewAnnotation(self.path, self.slide)
         elif annotation_type == "Empty":
             parsed = parsers.BaseParser(self.path)
         self.classes = parsed.classes

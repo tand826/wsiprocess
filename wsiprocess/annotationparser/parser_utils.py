@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
+from collections import defaultdict
 from lxml import etree
 import json
 import sqlite3
@@ -40,6 +41,8 @@ def detect_type(path):
                 file_type = "SlideRunner"
         except Exception as e:
             print(e)
+    elif path.suffix == ".ndpa":
+        file_type = "NDPView"
     else:
         file_type = "Empty"
     return file_type
@@ -59,4 +62,4 @@ class BaseParser:
         assert Path(self.path).exists(), "This annotation file does not exist."
 
         self.classes = []
-        self.mask_coords = {}
+        self.mask_coords = defaultdict(list)
