@@ -58,7 +58,7 @@ class WSIDataset(torch.utils.data.Dataset):
     def read_patch_from_disk(self, **kwargs) -> torch.float32:
         x = kwargs["x"]
         y = kwargs["y"]
-        label = kwargs["label"]
+        label = kwargs.get("label") or "foreground"
         path = str(self.path/"patches"/label/f"{x:06}_{y:06}.{self.ext}")
         patch = io.read_image(path, mode=io.ImageReadMode.RGB)/255
         return patch
