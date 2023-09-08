@@ -65,7 +65,7 @@ def main(command, foreground_fn):
     if args.method == "evaluation":
         annotation = wp.annotation()
     else:
-        annotation = wp.annotation(args.annotation, slidename=slide.filename)
+        annotation = wp.annotation(args.annotation, slide=slide)
     annotation.dot_to_bbox(args.dot_bbox_width, args.dot_bbox_height)
 
     if foreground_fn:
